@@ -1,0 +1,87 @@
+#!groovy
+
+/*
+* TODO: Change 'when' conditions to 'tag "v*"', to prevent us pushing to
+  production when not intended (just because we tagged something that was not a
+  release)
+* TODO: Tag production image with git tag as well
+* TODO: DRY-up: refacter image pushing & deployment to a function
+*/
+
+pipeline {
+  agent any
+  environment {
+    DOCKER_IMAGE_NAME = "fixxx/omslagroute"
+    APP = "omslagroute"
+  }
+
+  stages {
+    stage("Checkout") {
+      checkout scm
+      environment {
+        COMMIT_HASH = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+      }
+    }
+
+    stage("Build docker image") {
+      // We only build a docker image when we're not deploying to production,
+      // to make make sure images deployed to production are deployed to
+      // acceptance first.
+      //
+      // To deploy to production, tag an existing commit (that has already been
+      // build) and push the tag.
+      when { not { buildingTag() } }
+
+      steps {
+        docker.withRegistry("${docker_registry_host}",'docker_registry_auth') {
+          def image = docker.build("${env.DOCKER_IMAGE}:${env.COMMIT_HASH}",
+            "--no-cache " +
+            "--shm-size 1G " +
+            " ./app")
+          image.push()
+          image.push("latest")
+        }
+      }
+    }
+
+    stage("Push acceptance image") {
+      when { not { buildingTag() } }
+      steps {
+        docker.withRegistry("${docker_registry_host}",'docker_registry_auth') {
+          def image = docker.image("${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
+          image.push("acceptance")
+        }
+      }
+    }
+
+    stage("Deploy to acceptance") {
+      when { not { buildingTag() } }
+      build job: 'Subtask_Openstack_Playbook',
+        parameters: [
+            [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+            [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+            [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e platform=secure -e app=${env.APP}"],
+        ]
+    }
+
+    stage("Push production image") {
+      when { buildingTag() }
+      steps {
+        docker.withRegistry("${docker_registry_host}",'docker_registry_auth') {
+          def image = docker.image("${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
+          image.push("production")
+        }
+      }
+    }
+
+    stage("Deploy to production") {
+      when { buildingTag() }
+      build job: 'Subtask_Openstack_Playbook',
+        parameters: [
+            [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+            [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+            [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: '-e platform=secure -e app=omslagroute'],
+        ]
+    }
+  }
+}
