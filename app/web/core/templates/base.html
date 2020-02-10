@@ -1,0 +1,18 @@
+{% load render_bundle from webpack_loader %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-commit="{{ SOURCE_COMMIT }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Omslagroute</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bundles/main.css' %}?v={{ SOURCE_COMMIT }}">
+</head>
+<body>
+{% block main %}
+<main>
+    <h1>Hello Omslagroute</h1>
+</main>
+{% endblock %}
+<script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
+</body>
+</html>
