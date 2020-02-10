@@ -19,5 +19,5 @@ docker-compose build
 Start watching static files changes scss:
 
 ```bash
-docker exec -it omslagroute_git_web_1 ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass --watch
+docker exec -it omslagroute_web_1 ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass --watch
 ```
