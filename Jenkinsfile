@@ -17,9 +17,11 @@ pipeline {
 
   stages {
     stage("Checkout") {
-      checkout scm
-      environment {
-        COMMIT_HASH = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+      steps {
+        checkout scm
+        environment {
+          COMMIT_HASH = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+        }
       }
     }
 
@@ -56,12 +58,14 @@ pipeline {
 
     stage("Deploy to acceptance") {
       when { not { buildingTag() } }
-      build job: 'Subtask_Openstack_Playbook',
-        parameters: [
-            [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-            [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
-            [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e platform=secure -e app=${env.APP}"],
-        ]
+      steps {
+        build job: 'Subtask_Openstack_Playbook',
+          parameters: [
+              [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+              [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+              [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e platform=secure -e app=${env.APP}"],
+          ]
+      }
     }
 
     stage("Push production image") {
@@ -76,12 +80,14 @@ pipeline {
 
     stage("Deploy to production") {
       when { buildingTag() }
-      build job: 'Subtask_Openstack_Playbook',
-        parameters: [
-            [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-            [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
-            [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: '-e platform=secure -e app=omslagroute'],
-        ]
+      steps {
+        build job: 'Subtask_Openstack_Playbook',
+          parameters: [
+              [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+              [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+              [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: '-e platform=secure -e app=omslagroute'],
+          ]
+      }
     }
   }
 }
