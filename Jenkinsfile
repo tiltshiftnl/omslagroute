@@ -13,14 +13,15 @@ pipeline {
   environment {
     DOCKER_IMAGE_NAME = "fixxx/omslagroute"
     APP = "omslagroute"
+    DOCKER_REGISTRY = "repo.secure.amsterdam.nl"
   }
 
   stages {
     stage("Checkout") {
       steps {
         checkout scm
-        environment {
-          COMMIT_HASH = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+        script {
+          env.COMMIT_HASH = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
         }
       }
     }
@@ -35,8 +36,8 @@ pipeline {
       when { not { buildingTag() } }
 
       steps {
-        docker.withRegistry("${docker_registry_host}",'docker_registry_auth') {
-          def image = docker.build("${env.DOCKER_IMAGE}:${env.COMMIT_HASH}",
+        script {
+          def image = docker.build("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}",
             "--no-cache " +
             "--shm-size 1G " +
             " ./app")
@@ -49,8 +50,8 @@ pipeline {
     stage("Push acceptance image") {
       when { not { buildingTag() } }
       steps {
-        docker.withRegistry("${docker_registry_host}",'docker_registry_auth') {
-          def image = docker.image("${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
+        script {
+          def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
           image.push("acceptance")
         }
       }
@@ -71,8 +72,8 @@ pipeline {
     stage("Push production image") {
       when { buildingTag() }
       steps {
-        docker.withRegistry("${docker_registry_host}",'docker_registry_auth') {
-          def image = docker.image("${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
+        script {
+          def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
           image.push("production")
         }
       }
