@@ -1,4 +1,3 @@
-.env
 *.backup
 *.pyc
 *.mo
