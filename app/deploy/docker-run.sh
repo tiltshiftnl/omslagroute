@@ -12,5 +12,5 @@ ls -al /static/
 chmod -R 777 /static
 
 # run uwsgi  --http :9090
-cd /app/
+#cd /app/
 exec uwsgi

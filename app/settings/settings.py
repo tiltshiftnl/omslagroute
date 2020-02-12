@@ -46,7 +46,7 @@ MIDDLEWARE = (
 ROOT_URLCONF = 'web.urls'
 
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'local')
 WSGI_APPLICATION = 'wsgi.application'
 
 # Email
@@ -160,10 +160,7 @@ EMAIL_PORT = 1025
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CORS and allowed hosts
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(',')
-CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST', '').split(',')
-CORS_ORIGIN_ALLOW_ALL = False
-
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/looplijsten/admin/login/',
