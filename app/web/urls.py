@@ -9,6 +9,7 @@ urlpatterns = [
 
     path('', HomePageView.as_view(), name='home'),
 
+    path('health', health_default),
     path('omslagroute/health', health_default),
     path('omslagroute/health-db', health_db),
 
