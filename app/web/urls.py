@@ -7,7 +7,7 @@ from web.health.views import health_default, health_db
 
 urlpatterns = [
 
-    path('', HomePageView.as_view(), name='shome'),
+    path('', HomePageView.as_view(), name='home'),
 
     path('omslagroute/health', health_default),
     path('omslagroute/health-db', health_db),

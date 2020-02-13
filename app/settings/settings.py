@@ -57,8 +57,9 @@ ADMINS = (
 )
 
 # Database
+DEFAULT_DATABASE_NAME = 'default'
 DATABASES = {
-    'default': {
+    DEFAULT_DATABASE_NAME: {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DATABASE_NAME'),
         'USER': os.environ.get('DATABASE_USER'),
