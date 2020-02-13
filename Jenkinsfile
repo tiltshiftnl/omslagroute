@@ -11,7 +11,7 @@
 pipeline {
   agent any
   environment {
-    DOCKER_IMAGE_NAME = "fixxx/omslagroute"
+    DOCKER_IMAGE = "fixxx/omslagroute"
     APP = "omslagroute"
     DOCKER_REGISTRY = "repo.secure.amsterdam.nl"
   }
