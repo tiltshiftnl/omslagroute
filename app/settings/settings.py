@@ -58,16 +58,25 @@ ADMINS = (
 
 # Database
 DEFAULT_DATABASE_NAME = 'default'
-DATABASES = {
-    DEFAULT_DATABASE_NAME: {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOST', 'database'),
-        'PORT': '5432',
-    },
-}
+
+if os.environ.get('DATABASE_NAME'):
+    DATABASES = {
+        DEFAULT_DATABASE_NAME: {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST', 'database'),
+            'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
+        DEFAULT_DATABASE_NAME: {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # General

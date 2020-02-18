@@ -5,7 +5,7 @@ set -x
 
 echo Collecting static files
 python manage.py collectstatic --settings settings.settings --no-input
-# python manage.py migrate settings.settings --noinput
+python manage.py migrate  --settings settings.settings --no-input
 
 ls -al /static/
 
