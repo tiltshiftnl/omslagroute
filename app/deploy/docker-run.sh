@@ -11,4 +11,4 @@ ls -al /static/
 
 chmod -R 777 /static
 
-exec uwsgi
+exec uwsgi app.ini
