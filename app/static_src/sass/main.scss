@@ -1,10 +1,10 @@
-  @import 
-  'basics/variables', 
+  @import
+  'basics/variables',
   'basics/mediaqueries',
   'basics/typography',
-  'basics/general.scss',
-  'basics/grid.scss',
-  'basics/forms.scss';
+  'basics/general',
+  'basics/grid',
+  'basics/forms';
 
 
 
@@ -63,7 +63,7 @@ h1 {
     padding: 1rem;
   }
 
-  a, 
+  a,
   a:visited,
   a:hover {
     border: 1px solid transparent;
