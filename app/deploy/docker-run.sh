@@ -8,4 +8,4 @@ python manage.py migrate  --settings settings.settings --no-input
 
 chmod -R 777 /static
 
-exec uwsgi --chdir /app --http 0.0.0.0:8080 --wsgi-file wsgi.py --master --processes 4 --threads 2
+exec uwsgi app.ini
