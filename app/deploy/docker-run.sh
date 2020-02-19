@@ -3,12 +3,9 @@ set -u   # crash on missing env variables
 set -e   # stop on any error
 set -x
 
-echo Collecting static files
 python manage.py collectstatic --settings settings.settings --no-input
 python manage.py migrate  --settings settings.settings --no-input
 
-ls -al /static/
-
 chmod -R 777 /static
 
-exec uwsgi app.ini
+exec uwsgi --chdir /app --http 0.0.0.0:8080 --wsgi-file wsgi.py --master --processes 4 --threads 2
