@@ -1,5 +1,66 @@
 {% extends 'base.html' %}
 
-{% block main %}
-{{ block.super }}
+{% block header %}
+    {{ block.super }}
 {% endblock %}
+
+{% block user %}
+    <!-- <div class="site-login">
+        <a href="/login">Log in</a>
+    </div> -->
+{% endblock %}
+
+{% block main %}
+    <main class="site-main">
+        <!-- <section class="section-login">
+            <h2>Log in</h2>
+            <form class="section-login__title">
+                <p>
+                    <label>Jouw rol:</label>
+                    <select>
+                        <option>
+                            zorgaanbieder
+                        </option>
+                        <option>
+                            afdeling wonen
+                        </option>
+                    </select>
+                </p>
+
+                <p>
+                    <label>Wachtwoord</label>
+                    <input type="password" />
+                </p>
+
+                <button type="submit">Ga door</button>
+            </form>
+        </section> -->
+
+        <section class="section-downloads">
+            <h2>Actuele informatie en formulieren</h2>
+            <div class="downloads">
+                <article class="download__box">
+                    <a href="#" download>
+                        <h3>Uitleg omslagroute</h3>
+                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
+                    </a>
+                </article>
+
+                <article class="download__box">
+                    <a href="#" download>
+                        <h3>Sjabloon Individueel Trajectplan (ITP)</h3>
+                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
+                    </a>
+                </article>
+
+                <article class="download__box">
+                    <a href="#" download>
+                        <h3>Formulier aanvraag omslag</h3>
+                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
+                    </a>
+                </article>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+ 

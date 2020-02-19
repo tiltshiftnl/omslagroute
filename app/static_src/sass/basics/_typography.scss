@@ -1,0 +1,90 @@
+html {
+    font-size: 16px;
+
+    // @media screen and (min-width: $desktop-small) {
+    //     font-size: #{'calc(100% + 1.25)'};
+    // }
+}
+
+body {
+    font-family: 'Avenir LT Std', 'Avenir Next LT Pro', Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    color: $default-text-color;
+    -webkit-text-size-adjust: auto;
+}
+
+@supports (font-display: swap) {
+    body {
+        font-display: swap;
+    }
+}
+
+a {
+    color: red;
+    text-decoration-skip: ink;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: inherit;
+    font-style: inherit;
+    line-height: inherit;
+}
+
+h1 {
+    font-size: 1.8125em;
+    line-height: 1.37931em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    line-height: 1.25em
+}
+
+h3 {
+    font-size: 1.25em;
+    line-height: 1.4em
+}
+
+h4 {
+    font-size: 1.125em;
+    line-height: 1.55556em
+}
+
+p, ul, ol {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+b, strong, em, small, code {
+    line-height: $rhythm;
+}
+
+time {
+    font-size: .9rem;
+} 
+
+p { 
+    margin-top: 0;
+    margin-bottom: $rhythm;  
+
+    &:empty {
+        margin-bottom: 0;
+    }
+}
+
+a {
+    color: #767676
+}
+
+a:active,a:hover {
+    color: $Primary-Red;
+}

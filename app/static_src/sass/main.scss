@@ -1,4 +1,80 @@
-body {
-  background-color: red;
+  @import 
+  'basics/variables', 
+  'basics/mediaqueries',
+  'basics/typography',
+  'basics/general.scss',
+  'basics/grid.scss',
+  'basics/forms.scss';
+
+
+
+h1 {
+  margin: 0;
+  font-family: 'Avenir LT Std', 'Avenir Next LT Pro';
+}
+
+.site-header {
+  background-color: white;
   color: white;
+  display: grid;
+  grid-gap: 0 1.687rem;
+  grid-template-columns: auto 2fr 1fr;
+  justify-content: space-between;
+  align-content: flex-start;
+  max-width: 960px;
+  margin: 0px auto;
+
+  @media all and (min-width: 540px) {
+    height: 108px;
+    padding-top: 1.125rem; // 20px
+    color: black;
+  }
+}
+
+.site-navigation {
+  border-bottom: 44px solid #efefef;
+}
+
+.site-login {
+  text-align: right;
+}
+
+.site-main {
+  max-width: 960px;
+  margin: 0px auto;
+}
+
+.downloads {
+  display: grid;
+  grid-gap: 0 1.687rem;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+  align-content: flex-start;
+}
+
+.download__box {
+  height: 100%;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  a, 
+  a:visited,
+  a:hover {
+    border: 1px solid transparent;
+    color: inherit;
+    height: 100%;
+    text-decoration: none;
+    transition: border 200ms ease-out;
+  }
+
+  a:hover {
+    border-color: $Primary-Red;
+    transition: border 150ms ease-in;
+  }
 }

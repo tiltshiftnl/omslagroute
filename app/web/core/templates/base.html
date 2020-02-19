@@ -5,13 +5,25 @@
     <meta charset="UTF-8">
     <title>Hello Omslagroute</title>
     <link rel="stylesheet" type="text/css" href="{% static 'bundles/main.css' %}?v={{ SOURCE_COMMIT }}">
+    <link rel="icon" href="https://www.amsterdam.nl/favicon.ico" type="image/x-icon">
 </head>
 <body>
-{% block main %}
-<main>
-    <h1>Hello Omslagroute</h1>
-</main>
+
+{% block header %}
+    <header class="site-header">
+        <img src="{% static 'images/logo.svg' %}">
+        <h1 class="site-title">Omslagroute</h1>
+
+        {% block user %} 
+        {% endblock %}
+    </header>
+    <div class="site-navigation">
+    </div>
 {% endblock %}
+
+{% block main %}
+{% endblock %}
+
 <script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
 </body>
 </html>
