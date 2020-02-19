@@ -13,6 +13,8 @@ urlpatterns = [
     path('omslagroute/health', health_default),
     path('omslagroute/health-db', health_db),
 
+    path('documenten/', include('web.documents.urls')),
+
     path('admin/', admin.site.urls),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

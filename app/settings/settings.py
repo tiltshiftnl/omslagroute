@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'webpack_loader',
 
     'web.core',
+    'web.documents',
 
 )
 SOURCE_COMMIT = os.environ.get('COMMIT_SHA')
@@ -96,6 +97,8 @@ STATIC_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'static'))
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'media'))
+
+print(MEDIA_ROOT)
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),

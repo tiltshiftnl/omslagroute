@@ -44,6 +44,7 @@ services:
       - SENTRY_DSN=https://foo@foo.data.amsterdam.nl/0
     volumes:
       - ./app:/app
+      - ./media:/media
       - ./app/deploy:/deploy
     command: bash -c "
       cd /app &&

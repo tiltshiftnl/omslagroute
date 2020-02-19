@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <ul>
+    {% for document in document_list %}
+        <li><strong>{{ document.title }}</strong> - {{ document.uploaded|date:"D d M Y H:i" }} - <a href="{{ document.uploaded_file.url }}">download</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'nieuw_document' %}">Nieuw bestand</a>
+{% endblock %}
