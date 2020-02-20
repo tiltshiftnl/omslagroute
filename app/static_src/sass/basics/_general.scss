@@ -29,9 +29,9 @@ a.skip-main {
     
     &:focus,
     &:active {
-        background-color:$white;
+        background-color:$primary-white;
         border-radius: 15px;
-        border:4px solid $black;
+        border:4px solid $primary-black;
         height: auto;
         left: auto;
         margin: 10px 35%;

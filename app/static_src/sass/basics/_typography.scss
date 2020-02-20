@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    font-family: 'Avenir LT Std', 'Avenir Next LT Pro', Arial, Helvetica, sans-serif;
+    font-family: $default-font, Arial, Helvetica, sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -34,19 +34,20 @@ a {
 h1, h2, h3, h4, h5 {
     font-family: inherit;
     font-style: inherit;
-    line-height: inherit;
+    font-weight: 500;
 }
 
 h1 {
     font-size: 1.8125em;
+    font-weight: 600;
     line-height: 1.37931em;
-    margin-top: 0;
+    margin-top: 0.53em;
     margin-bottom: 0;
 }
 
 h2 {
     font-size: 1.5em;
-    line-height: 1.25em
+    line-height: 1.25em;
 }
 
 h3 {
@@ -59,22 +60,30 @@ h4 {
     line-height: 1.55556em
 }
 
+.page-intro {
+    font-size: 1.0875;
+    line-height: 1.510em;
+    font-weight: 500;
+    font-family: Avenir Next LT Pro;
+}
+
 p, ul, ol {
     margin-top: 0;
     margin-bottom: 1rem;
 }
 
 b, strong, em, small, code {
-    line-height: $rhythm;
+    line-height: 1rem;
 }
 
 time {
+    color: $neutral-grey4;
     font-size: .9rem;
 } 
 
 p { 
     margin-top: 0;
-    margin-bottom: $rhythm;  
+    margin-bottom: 1rem;  
 
     &:empty {
         margin-bottom: 0;
@@ -82,9 +91,9 @@ p {
 }
 
 a {
-    color: #767676
+    color: $primary-darkblue;
 }
 
 a:active,a:hover {
-    color: $Primary-Red;
+    color: $primary-red;
 }

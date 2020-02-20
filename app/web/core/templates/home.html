@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 {% block header %}
     {{ block.super }}
 {% endblock %}
@@ -41,6 +42,7 @@
             <div class="downloads">
                 <article class="download__box">
                     <a href="#" download>
+                        <img src="{% static 'images/checklist.svg' %}">
                         <h3>Uitleg omslagroute</h3>
                         <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
                     </a>
@@ -48,6 +50,7 @@
 
                 <article class="download__box">
                     <a href="#" download>
+                        <img src="{% static 'images/form.svg' %}" alt="Download">
                         <h3>Sjabloon Individueel Trajectplan (ITP)</h3>
                         <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
                     </a>
@@ -55,7 +58,24 @@
 
                 <article class="download__box">
                     <a href="#" download>
-                        <h3>Formulier aanvraag omslag</h3>
+                        <img src="{% static 'images/form.svg' %}">
+                        <h3>Formulier <br />Aanvraag Urgentie</h3>
+                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
+                    </a>
+                </article>
+
+                <article class="download__box">
+                    <a href="#" download>
+                        <img src="{% static 'images/form.svg' %}">
+                        <h3>Formulier <br />Aanvraag Omslag</h3>
+                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
+                    </a>
+                </article>
+
+                <article class="download__box">
+                    <a href="#" download>
+                        <img src="{% static 'images/form.svg' %}">
+                        <h3>Formulier <br />Voordracht Omklap</h3>
                         <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
                     </a>
                 </article>

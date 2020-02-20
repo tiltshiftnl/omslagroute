@@ -21,3 +21,7 @@ Start watching static files changes scss:
 ```bash
 docker-compose exec web ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass --watch
 ```
+
+# Used resources
+
+(Line Basic Icon Set)[https://www.iconfinder.com/iconsets/line-basic-icon-set] by Adlena Zhuvich for download icons. (Temporary)

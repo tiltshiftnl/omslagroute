@@ -9,20 +9,25 @@
 </head>
 <body>
 
-{% block header %}
-    <header class="site-header">
-        <img src="{% static 'images/logo.svg' %}">
-        <h1 class="site-title">Omslagroute</h1>
+<div class="container">
+    {% block skiplinks %}
+    {% endblock %}
 
-        {% block user %} 
-        {% endblock %}
-    </header>
-    <div class="site-navigation">
-    </div>
-{% endblock %}
+    {% block header %}
+        <header class="site-header">
+            <img src="{% static 'images/logo.svg' %}">
+            <h1 class="site-title">Omslagroute</h1>
 
-{% block main %}
-{% endblock %}
+            {% block user %} 
+            {% endblock %}
+        </header>
+        <div class="site-navigation">
+        </div>
+    {% endblock %}
+
+    {% block main %}
+    {% endblock %}
+</div>
 
 <script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
 </body>

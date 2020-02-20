@@ -6,16 +6,22 @@
   'basics/grid',
   'basics/forms';
 
+body {
+  background-color: $neutral-grey2;
+}
 
+.container {
+  background: $primary-white;
+  width: 100%;
+  margin: 0px auto;
 
-h1 {
-  margin: 0;
-  font-family: 'Avenir LT Std', 'Avenir Next LT Pro';
+  @media screen and (min-width: $large) {
+    max-width: 1400px;
+  }
 }
 
 .site-header {
-  background-color: white;
-  color: white;
+  background-color: $primary-white;
   display: grid;
   grid-gap: 0 1.687rem;
   grid-template-columns: auto 2fr 1fr;
@@ -24,15 +30,16 @@ h1 {
   max-width: 960px;
   margin: 0px auto;
 
-  @media all and (min-width: 540px) {
+  @media all and (min-width: $desktop) {
     height: 108px;
-    padding-top: 1.125rem; // 20px
-    color: black;
+    padding-top: 1.125rem;
   }
 }
 
 .site-navigation {
-  border-bottom: 44px solid #efefef;
+  min-height: 44px;
+  background-color: $neutral-grey1;
+  margin-bottom: calc(1.124rem * 2);
 }
 
 .site-login {
@@ -46,16 +53,20 @@ h1 {
 
 .downloads {
   display: grid;
-  grid-gap: 0 1.687rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.687rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
   justify-content: space-between;
   align-content: flex-start;
+  padding-bottom: calc(1.687rem * 4);
 }
 
 .download__box {
-  height: 100%;
+  color: $grey-light;
+  height: 100%; 
 
   a {
+    color: $primary-darkblue;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -66,15 +77,29 @@ h1 {
   a,
   a:visited,
   a:hover {
-    border: 1px solid transparent;
-    color: inherit;
+    color: $neutral-grey1;
+    border: 1px solid $primary-darkblue; 
+    border-radius: 2px;
     height: 100%;
-    text-decoration: none;
     transition: border 200ms ease-out;
+    text-decoration: none;
+
+    h3 { 
+      color: $primary-darkblue;
+      text-decoration: none;
+      font-weight: 400;
+    }
   }
 
-  a:hover {
-    border-color: $Primary-Red;
+  a:hover,
+  a:focus {
+    border-color: $primary-red;
     transition: border 150ms ease-in;
+    text-decoration: none;
+
+    h3 {
+      color: $primary-red;
+      text-decoration: underline;
+    }
   }
 }
