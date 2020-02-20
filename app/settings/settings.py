@@ -27,6 +27,7 @@ INSTALLED_APPS = (
 
     'web.core',
     'web.documents',
+    'web.users',
 
 )
 SOURCE_COMMIT = os.environ.get('COMMIT_SHA')
@@ -42,6 +43,7 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'web.core.middleware.LoginFormMiddleware',
 )
 
 ROOT_URLCONF = 'web.urls'
@@ -97,8 +99,6 @@ STATIC_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'static'))
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'media'))
-
-print(MEDIA_ROOT)
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),

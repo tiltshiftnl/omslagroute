@@ -18,12 +18,16 @@
             <img src="{% static 'images/logo.svg' %}">
             <h1 class="site-title">Omslagroute</h1>
 
-            {% block user %} 
+            {% block user %}
             {% endblock %}
         </header>
         <div class="site-navigation">
         </div>
     {% endblock %}
+
+    {# START login/logout#}
+    {% include 'users/login.html' %}
+    {# END login/logout#}
 
     {% block main %}
     {% endblock %}
