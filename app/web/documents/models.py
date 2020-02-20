@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from .statics import ICON_LIST
 
 
 class Document(models.Model):
@@ -42,11 +43,22 @@ class DocumentType(models.Model):
         verbose_name=_('Type naam'),
         max_length=100,
     )
+    icon = models.CharField(
+        verbose_name=_('Icon'),
+        max_length=50,
+        choices=ICON_LIST,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = _('Bestands type')
         verbose_name_plural = _('Bestands types')
         ordering = ('type_name', )
+
+    @property
+    def icon_path(self):
+        return 'images/%s.svg' % self.icon
 
     def __str__(self):
         return self.type_name

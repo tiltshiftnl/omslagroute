@@ -41,6 +41,9 @@
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
             <div class="downloads">
+                {% for document_type in document_type_list %}
+                {% include "download.html" with object=document_type %}
+                {% endfor %}
                 {% include "download.html" with title="Uitleg Omslagroute" %}
                 {% include "download.html" with icon="form" title="Sjabloon Individueel Trajectplan (ITP)" %}
                 {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Urgentie" %}
