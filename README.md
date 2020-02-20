@@ -22,6 +22,12 @@ Start watching static files changes scss:
 docker-compose exec web ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass --watch
 ```
 
+Migrate database without restarting containers:
+
+```bash
+docker-compose exec web migrate
+```
+
 # Used resources
 
 (Line Basic Icon Set)[https://www.iconfinder.com/iconsets/line-basic-icon-set] by Adlena Zhuvich for download icons. (Temporary)
