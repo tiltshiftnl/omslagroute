@@ -10,7 +10,7 @@ class DocumentList(ListView):
 
 class DocumentCreate(CreateView):
     model = Document
-    fields = ['title', 'uploaded_file', ]
+    fields = ['title', 'uploaded_file', 'document_type']
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('documenten')
 
