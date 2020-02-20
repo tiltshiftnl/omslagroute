@@ -1,105 +1,156 @@
-  @import
-  'basics/variables',
-  'basics/mediaqueries',
-  'basics/typography',
-  'basics/general',
-  'basics/grid',
-  'basics/forms';
+@import 
+    "basics/variables", 
+    "basics/mediaqueries", 
+    "basics/typography",
+    "basics/grid", 
+    "basics/forms";
+
+* {
+    box-sizing: border-box;
+}
+
+.sr-only {
+    border: 0;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+a.skip-main {
+    height: 1px;
+    transform: translateY(-100px);
+    transition: transform 0.36s ease-in;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    z-index: -5;
+
+    &:focus,
+    &:active {
+        background-color: $primary-white;
+        border-radius: 15px;
+        border: 4px solid $primary-black;
+        height: auto;
+        left: auto;
+        margin: 10px 35%;
+        overflow: auto;
+        padding: 20px;
+        text-align: center;
+        top: 30px;
+        width: 30%;
+    }
+
+    &:focus {
+        transform: translateY(0);
+        opacity: 1;
+        transition: transform 0.36s ease-out;
+    }
+}
 
 body {
-  background-color: $neutral-grey2;
+    background-color: $neutral-grey2;
+    margin: 0;
 }
 
 .container {
-  background: $primary-white;
-  width: 100%;
-  margin: 0px auto;
+    background: $primary-white;
+    width: 100%;
+    margin: 0px auto;
 
-  @media screen and (min-width: $large) {
-    max-width: 1400px;
-  }
+    @media screen and (min-width: $large) {
+        max-width: 1400px;
+    }
 }
 
 .site-header {
-  background-color: $primary-white;
-  display: grid;
-  grid-gap: 0 1.687rem;
-  grid-template-columns: auto 2fr 1fr;
-  justify-content: space-between;
-  align-content: flex-start;
-  max-width: 960px;
-  margin: 0px auto;
+    background-color: $primary-white;
+    display: grid;
+    grid-gap: 0 1.687rem;
+    grid-template-columns: auto 2fr 1fr;
+    justify-content: space-between;
+    align-content: flex-start;
+    max-width: 960px;
+    margin: 0px auto;
 
-  @media all and (min-width: $desktop) {
-    height: 108px;
-    padding-top: 1.125rem;
-  }
+    @media all and (min-width: $desktop) {
+        height: 108px;
+        padding-top: 1.125rem;
+    }
 }
 
 .site-navigation {
-  min-height: 44px;
-  background-color: $neutral-grey1;
-  margin-bottom: calc(1.124rem * 2);
+    min-height: 44px;
+    background-color: $neutral-grey1;
+    margin-bottom: calc(1.124rem * 2);
 }
 
 .site-login {
-  text-align: right;
+    text-align: right;
 }
 
 .site-main {
-  max-width: 960px;
-  margin: 0px auto;
+    max-width: 960px;
+    margin: 0px auto;
 }
 
 .downloads {
-  display: grid;
-  grid-gap: 1.687rem;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
-  justify-content: space-between;
-  align-content: flex-start;
-  padding-bottom: calc(1.687rem * 4);
+    display: grid;
+    grid-gap: 1.687rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    justify-content: space-between;
+    align-content: flex-start;
+    padding-bottom: calc(1.687rem * 4);
 }
 
 .download__box {
-  color: $grey-light;
-  height: 100%; 
-
-  a {
-    color: $primary-darkblue;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-
-  a,
-  a:visited,
-  a:hover {
-    color: $neutral-grey1;
-    border: 1px solid $primary-darkblue; 
-    border-radius: 2px;
+    color: $grey-light;
     height: 100%;
-    transition: border 200ms ease-out;
-    text-decoration: none;
 
-    h3 { 
-      color: $primary-darkblue;
-      text-decoration: none;
-      font-weight: 400;
+    a {
+        color: $primary-darkblue;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-between;
+        padding: 1rem;
     }
-  }
 
-  a:hover,
-  a:focus {
-    border-color: $primary-red;
-    transition: border 150ms ease-in;
-    text-decoration: none;
+    a,
+    a:visited,
+    a:hover {
+        color: $neutral-grey1;
+        border: 1px solid $primary-darkblue;
+        border-radius: 2px;
+        height: 100%;
+        transition: border 200ms ease-out;
+        text-decoration: none;
 
-    h3 {
-      color: $primary-red;
-      text-decoration: underline;
+        h3 {
+            color: $primary-darkblue;
+            text-decoration: none;
+            font-weight: 400;
+        }
     }
-  }
+
+    a:hover,
+    a:focus {
+        border-color: $primary-red;
+        transition: border 50ms ease-in;
+        text-decoration: none;
+
+        h3 {
+            color: $primary-red;
+            text-decoration: underline;
+        }
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
 }

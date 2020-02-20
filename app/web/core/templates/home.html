@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+
 {% block header %}
     {{ block.super }}
 {% endblock %}
@@ -40,61 +41,13 @@
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
             <div class="downloads">
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/checklist.svg' %}">
-                        <h3>Uitleg omslagroute</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
-
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/form.svg' %}" alt="Download">
-                        <h3>Sjabloon Individueel Trajectplan (ITP)</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
-
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/form.svg' %}">
-                        <h3>Formulier <br />Aanvraag Urgentie</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
-
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/form.svg' %}">
-                        <h3>Formulier <br />Aanvraag Omslag</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
-
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/form.svg' %}">
-                        <h3>Formulier <br />Aanvraag Begeleid Wonen</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
-
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/form.svg' %}">
-                        <h3>Formulier <br />Aanvraag Verlenging Beschermd Wonen</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
-
-                <article class="download__box">
-                    <a href="#" download>
-                        <img src="{% static 'images/form.svg' %}">
-                        <h3>Formulier <br />Voordracht Omklap</h3>
-                        <p><time timestamp="20200219">Laatst gewijzigd: 19 febr.</time></p>
-                    </a>
-                </article>
+                {% include "download.html" with title="Uitleg Omslagroute" %}
+                {% include "download.html" with icon="form" title="Sjabloon Individueel Trajectplan (ITP)" %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Urgentie" %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Omslag" %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Begeleid Wonen" %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Verlenging Beschermd Wonen" %}
+                {% include "download.html" with icon="form" title="Formulier <br />Voordracht Omklap" %}
             </div>
         </section>
     </main>
