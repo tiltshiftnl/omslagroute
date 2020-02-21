@@ -7,6 +7,8 @@ class Document(models.Model):
     title = models.CharField(
         verbose_name=_('Titel'),
         max_length=100,
+        blank=True,
+        null=True,
     )
     document_type = models.ForeignKey(
         to='DocumentType',
@@ -30,7 +32,9 @@ class Document(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        if self.document_type:
+            return self.document_type.type_name
+        return self.uploaded
 
     class Meta:
         verbose_name = _('Bestand')

@@ -2,7 +2,10 @@
 
 {% block main %}
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
-    {{ form.as_p }}
+    <p>{{ form.uploaded_file.label_tag }}</p>
+    <p>{{ form.uploaded_file }}</p>
+
+    <p>{{ form.document_type }}</p>
     <input type="submit" value="Upload">
 </form>
 {% endblock %}
