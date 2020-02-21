@@ -2,6 +2,7 @@ from django.contrib.auth.forms import (
     AuthenticationForm
 )
 from django.http.response import HttpResponseRedirect
+from django.contrib.auth import login, authenticate
 
 
 class LoginFormMiddleware:
@@ -10,21 +11,27 @@ class LoginFormMiddleware:
 
     def __call__(self, request):
 
+        form = AuthenticationForm(request)
         if request.method == 'POST' and 'is_top_login_form' in request.POST:
+            print('before AuthenticationForm')
             form = AuthenticationForm(data=request.POST)
+            print('after AuthenticationForm')
             if form.is_valid():
-                from django.contrib.auth import login
+                print('before login')
                 login(request, form.get_user())
-
+                print('after login')
+                # print(request.user.is_authenticated)
+                # if request.user.is_authenticated:
                 return HttpResponseRedirect(request.POST.get('next', '/'))
-
-        else:
-            form = AuthenticationForm(request)
+            else:
+                print('not valid')
 
         # attach the form to the request so it can be accessed within the templates
-        request.login_form = form
+        print(form)
 
+        request.login_form = form
         response = self.get_response(request)
+        print(response)
 
         return response
 

@@ -1,7 +1,12 @@
-from django.forms import ModelForm
+from django import forms
 from .models import Document
 
 
-class DocumentForm(ModelForm):
+class DocumentForm(forms.ModelForm):
+
     class Meta:
         model = Document
+        fields = ('uploaded_file', 'document_type',)
+        widgets = {
+            'document_type': forms.HiddenInput,
+        }
