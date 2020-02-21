@@ -13,9 +13,8 @@
             {% endif %}
 
             {% if object %}
-                <h3>{{ object.name }}</h3>
+                <h3>{{ object.icon_value }}<br>{{ object.name }}</h3>
                 <p><time timestamp="{{ document_version.uploaded|date }}">Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.</time></p>
-                {{ object.icon }}
             {% endif %}
         </a>
 

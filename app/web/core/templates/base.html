@@ -19,13 +19,13 @@
             <h1>Omslagroute</h1>
             {% if request.user.is_authenticated %}
                 <div class="site-logout">
-                    <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                    Ingelogd als: <strong>{{ request.user.first_name }}</strong> |  <a href="{% url 'uitloggen' %}">Uitloggen</a>
                 </div>
             {% endif %}
         </header>
         <div class="site-navigation">
         </div>
-    {% endblock %} 
+    {% endblock %}
 
     {% block main %}
     {% endblock %}

@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from .statics import ICON_LIST
+from .statics import ICON_LIST, ICON_DICT
 
 
 class DocumentVersion(models.Model):
@@ -40,6 +40,7 @@ class Document(models.Model):
     name = models.CharField(
         verbose_name=_('Type naam'),
         max_length=100,
+        unique=True,
     )
     icon = models.CharField(
         verbose_name=_('Icon'),
@@ -57,6 +58,10 @@ class Document(models.Model):
     @property
     def icon_path(self):
         return 'images/%s.svg' % self.icon
+
+    @property
+    def icon_value(self):
+        return ICON_DICT.get(self.icon)
 
     def __str__(self):
         return self.name

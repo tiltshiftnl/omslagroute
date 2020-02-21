@@ -1,4 +1,7 @@
 ICON_LIST = (
     ('form', 'Formulier'),
-    ('checklist', 'Checklist'),
+    ('document', 'Document'),
+    ('checklist', 'Sjabloon'),
 )
+
+ICON_DICT = dict(icon for icon in ICON_LIST)
