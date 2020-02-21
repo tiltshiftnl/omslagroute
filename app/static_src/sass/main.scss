@@ -106,9 +106,11 @@ body {
     grid-template-rows: auto;
     justify-content: space-between;
     padding-bottom: calc(1.687rem * 4);
+    margin: 0;
+    padding-left: 0;
 }
 
-.download {
+.document {
     color: $grey-light;
     height: 100%;
     position: relative;
@@ -129,7 +131,8 @@ body {
     }
 }
 
-.download__link {
+.version,
+.document--add__new {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -168,7 +171,7 @@ body {
     }
 }
 
-.download__replace {
+.version__add {
     opacity: 0;
     padding: 5px 10px;
     position: absolute;
