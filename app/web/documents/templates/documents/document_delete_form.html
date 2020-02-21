@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<form method="post">{% csrf_token %}
+    <p>Weet je zeker dat je het document <strong>"{{ object.name|striptags }}"</strong> met alle versies wil verwijderen?</p>
+    <input type="submit" value="Verwijder">
+    <a href="{% url 'document_list' %}">Annuleer</a>
+</form>
+{% endblock %}
