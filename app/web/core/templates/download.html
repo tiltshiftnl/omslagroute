@@ -2,8 +2,8 @@
 
 
 <li class="document">
-    {% with document=object.document_to_document_version.all.0 %}
-        <a href="{{ document.uploaded_file.url }}" class="version" download>
+    {% with document_version=object.document_to_document_version.all.0 %}
+        <a href="{{ document_version.uploaded_file.url }}" class="version" download>
             {% if object %}
                 <img src="{% static object.icon_path %}">
             {% elif icon %}
@@ -13,22 +13,12 @@
             {% endif %}
 
             {% if object %}
-                <h3>{{ document.title }}</h3>
-                <p><time timestamp="{{ document.uploaded|date }}">Laatst gewijzigd: {{ document.uploaded|date:"j b" }}.</time></p>
-            {% else %}
-                <h3>{{ title }}</h3>
-                <p><time timestamp="{{ date }}">Laatst gewijzigd: {{ date }}</time></p>
+                <h3>{{ object.name }}</h3>
+                <p><time timestamp="{{ document_version.uploaded|date }}">Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.</time></p>
+                {{ object.icon }}
             {% endif %}
         </a>
 
-        {% if object %}
-            <h3>{{ object.name|safe }}</h3>
-            <p><time timestamp="{{ document.uploaded|date }}">Laatst gewijzigd: {{ document.uploaded|date:"j b" }}.</time></p>
-        {% else %}
-            <h3>{{ title }}</h3>
-            <p><time timestamp="{{ date }}">Laatst gewijzigd: {{ date }}</time></p>
-        {% endif %}
-    </a>
         {% if request.user.is_authenticated and object %}
             <p>
                 <a href="{% url 'add_document_version_to_document' object.id %}" class="version__add">
