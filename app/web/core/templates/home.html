@@ -12,13 +12,13 @@
             {# START login/logout#}
                 {% include 'users/login.html' %}
             {# END login/logout#}
-        {% endif %} 
+        {% endif %}
 
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
             <div class="downloads">
-                {% for document_type in document_type_list %}
-                {% include "download.html" with object=document_type %}
+                {% for document in document_list %}
+                {% include "download.html" with object=document %}
                 {% endfor %}
                 {% include "download.html" with title="Uitleg Omslagroute" date="12 februari" %}
                 {% include "download.html" with icon="form" title="Sjabloon Individueel Trajectplan (ITP)" date="12 februari"  %}

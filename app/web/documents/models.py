@@ -3,17 +3,11 @@ from django.utils.translation import ugettext_lazy as _
 from .statics import ICON_LIST
 
 
-class Document(models.Model):
-    title = models.CharField(
-        verbose_name=_('Titel'),
-        max_length=100,
-        blank=True,
-        null=True,
-    )
-    document_type = models.ForeignKey(
-        to='DocumentType',
-        verbose_name='Type document',
-        related_name='type_to_document',
+class DocumentVersion(models.Model):
+    document = models.ForeignKey(
+        to='Document',
+        verbose_name='Document',
+        related_name='document_to_document_version',
         on_delete=models.CASCADE,
         blank=True,
         null=True,
@@ -23,7 +17,7 @@ class Document(models.Model):
         upload_to='uploads'
     )
     uploaded = models.DateTimeField(
-        verbose_name=_('Upload datum/tijd'),
+        verbose_name=_('Initieel opgeslagen datum/tijd'),
         auto_now_add=True,
     )
     saved = models.DateTimeField(
@@ -32,18 +26,18 @@ class Document(models.Model):
     )
 
     def __str__(self):
-        if self.document_type:
-            return self.document_type.type_name
-        return self.uploaded
+        if self.document:
+            return self.document.name
+        return self.uploaded.strftime('Y-M-d')
 
     class Meta:
-        verbose_name = _('Bestand')
-        verbose_name_plural = _('Bestanden')
+        verbose_name = _('Document versie')
+        verbose_name_plural = _('Document versies')
         ordering = ('-uploaded', )
 
 
-class DocumentType(models.Model):
-    type_name = models.CharField(
+class Document(models.Model):
+    name = models.CharField(
         verbose_name=_('Type naam'),
         max_length=100,
     )
@@ -56,13 +50,13 @@ class DocumentType(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Bestands type')
-        verbose_name_plural = _('Bestands types')
-        ordering = ('type_name', )
+        verbose_name = _('Document')
+        verbose_name_plural = _('Documenten')
+        ordering = ('name', )
 
     @property
     def icon_path(self):
         return 'images/%s.svg' % self.icon
 
     def __str__(self):
-        return self.type_name
+        return self.name

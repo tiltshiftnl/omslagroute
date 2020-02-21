@@ -7,7 +7,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'document_type_list': DocumentType.objects.all()
+            'document_list': Document.objects.filter(document_to_document_version__isnull=False)
         })
         return super().get_context_data(**kwargs)
 

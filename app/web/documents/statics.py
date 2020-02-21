@@ -1,4 +1,4 @@
 ICON_LIST = (
-    ('form', 'form'),
-    ('checklist', 'checklist'),
+    ('form', 'Formulier'),
+    ('checklist', 'Checklist'),
 )
