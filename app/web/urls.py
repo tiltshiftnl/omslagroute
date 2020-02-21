@@ -15,7 +15,7 @@ urlpatterns = [
     path('omslagroute/health', health_default),
     path('omslagroute/health-db', health_db),
 
-    path('documenten/', include('web.documents.urls')),
+    path('document/', include('web.documents.urls')),
 
     path('uitloggen/', generic_logout, name='uitloggen'),
 
