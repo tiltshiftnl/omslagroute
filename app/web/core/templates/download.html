@@ -1,8 +1,8 @@
 {% load staticfiles %}
 
-<article class="download__container">
+<article class="download">
     {% with document=object.document_to_document_version.all.0 %}
-    <a href="{{ document.uploaded_file.url }}" class="download__box" download>
+    <a href="{{ document.uploaded_file.url }}" class="download__link" download>
         {% if object %}
             <img src="{% static object.icon_path %}">
         {% elif icon %}
@@ -22,5 +22,6 @@
         {% if request.user.is_authenticated and object %}
         <a href="{% url 'add_document_version_to_document' object.id %}">nieuwe versie uploaded</a>
         {% endif %}
+    </a>
     {% endwith %}
 </article>

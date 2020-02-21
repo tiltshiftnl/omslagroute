@@ -108,13 +108,28 @@ body {
     padding-bottom: calc(1.687rem * 4);
 }
 
-.download__container {
+.download {
     color: $grey-light;
     height: 100%;
+    position: relative;
+
+    &:hover,
+    &:focus {
+        .download__replace {
+            opacity: 1;
+            transition: opacity 50ms ease-in;
+        }
+    }
+
+    &:focus-within {
+        .download__replace {
+            opacity: 1;
+            transition: opacity 50ms ease-in;
+        }
+    }
 }
 
-.download__box {
-    // color: $primary-darkblue;
+.download__link {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -125,10 +140,7 @@ body {
     &:visited,
     &:hover {
         color: $neutral-grey1;
-        border: 1px solid $primary-darkblue;
-        border-radius: 2px;
-        height: 100%;
-        transition: border 200ms ease-out;
+        height: 100%; 
         text-decoration: none;
 
         h3 {
@@ -140,8 +152,6 @@ body {
 
     &:hover,
     &:focus {
-        border-color: $primary-red;
-        transition: border 50ms ease-in;
         text-decoration: none;
 
         h3 {
@@ -152,5 +162,20 @@ body {
 
     > :last-child {
         margin-bottom: 0;
+    }
+}
+
+.download__replace {
+    opacity: 0;
+    text-align: center;
+    padding: 5px 10px;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    transition: opacity 250ms ease-out;
+    z-index: 1;
+
+    &:hover {
+        filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
     }
 }

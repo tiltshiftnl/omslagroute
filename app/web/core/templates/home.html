@@ -2,10 +2,6 @@
 
 {% load staticfiles %}
 
-{% block header %}
-    {{ block.super }}
-{% endblock %}
-
 {% block main %}
     <main class="site-main">
         {% if not request.user.is_authenticated %}
@@ -18,15 +14,18 @@
             <h2>Actuele informatie en formulieren</h2>
             <div class="downloads">
                 {% for document in document_list %}
-                {% include "download.html" with object=document %}
+                    {% include "download.html" with object=document %}
                 {% endfor %}
+
                 {% include "download.html" with title="Uitleg Omslagroute" date="12 februari" %}
                 {% include "download.html" with icon="form" title="Sjabloon Individueel Trajectplan (ITP)" date="12 februari"  %}
                 {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Urgentie" date="12 februari"  %}
                 {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Omslag" date="12 februari"  %}
                 {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Begeleid Wonen"  date="12 februari" %}
                 {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Verlenging Beschermd Wonen" date="12 februari"  %}
-                {% include "download.html" with icon="form" title="Formulier <br />Voordracht Omklap" date="12 februari"  %}
+                {% include "download.html" with icon="form" title="Formulier <br />Voordracht Omklap" date="12 februari" %}
+
+                {% include "upload.html" %}
             </div>
         </section>
     </main>
