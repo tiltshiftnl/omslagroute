@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <form method="post">{% csrf_token %}
+    <p>{{ form.name.label_tag }}</p>
+    <p>{{ form.name }}</p>
+
+    <p>{{ form.icon.tag }}</p>
+    <p>{{ form.icon }}</p>
+    <input type="submit" value="Upload">
+</form>
+{% endblock %}

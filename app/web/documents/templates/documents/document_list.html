@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<ul>
+    {% for document in document_list %}
+        <li>
+            <dl>
+                <dt>Naam</dt>
+                <dd>{{ document.name|striptags }} <a href="{% url 'document_delete' document.id %}"><strong>Verwijder dit document </strong></a></dd>
+                <dt>Icoon</dt>
+                <dd>{{ document.icon }}</dd>
+                <dt>Aantal documenten</dt>
+                <dd>{{ document.document_to_document_version.all|length }}</dd>
+            </dl>
+            <ul>
+                {% for document_version in document.document_to_document_version.all %}
+                    <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>
+                {% endfor %}
+
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'document_create' %}">Nieuw document</a>
+{% endblock %}

@@ -1,15 +1,28 @@
-from django.views.generic import *
-from .models import DocumentVersion
+from django.views.generic import CreateView, DeleteView, ListView
+from .models import DocumentVersion, Document
 from django.urls import reverse_lazy
 from .forms import DocumentForm
 
 
 class DocumentList(ListView):
-    model = DocumentVersion
-    template_name_suffix = 'en'
+    model = Document
+    template_name_suffix = '_list'
+
+
+class DocumentDelete(DeleteView):
+    model = Document
+    template_name_suffix = '_delete_form'
+    success_url = reverse_lazy('document_list')
 
 
 class DocumentCreate(CreateView):
+    model = Document
+    fields = ('name', 'icon')
+    template_name_suffix = '_create_form'
+    success_url = reverse_lazy('document_list')
+
+
+class DocumentVersionCreate(CreateView):
     model = DocumentVersion
     form_class = DocumentForm
     template_name_suffix = '_create_form'
@@ -20,6 +33,7 @@ class DocumentCreate(CreateView):
         initial = initial.copy()
         initial['document'] = self.kwargs.get('document')
         return initial
+
 
 
 
