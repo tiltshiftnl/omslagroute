@@ -16,18 +16,16 @@
     {% block header %}
         <header class="site-header">
             <img src="{% static 'images/logo.svg' %}">
-            <h1 class="site-title">Omslagroute</h1>
-
-            {% block user %}
-            {% endblock %}
+            <h1>Omslagroute</h1>
+            {% if request.user.is_authenticated %}
+                <div class="site-logout">
+                    <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                </div>
+            {% endif %}
         </header>
         <div class="site-navigation">
         </div>
-    {% endblock %}
-
-    {# START login/logout#}
-    {% include 'users/login.html' %}
-    {# END login/logout#}
+    {% endblock %} 
 
     {% block main %}
     {% endblock %}

@@ -6,37 +6,13 @@
     {{ block.super }}
 {% endblock %}
 
-{% block user %}
-    <!-- <div class="site-login">
-        <a href="/login">Log in</a>
-    </div> -->
-{% endblock %}
-
 {% block main %}
     <main class="site-main">
-        <!-- <section class="section-login">
-            <h2>Log in</h2>
-            <form class="section-login__title">
-                <p>
-                    <label>Jouw rol:</label>
-                    <select>
-                        <option>
-                            zorgaanbieder
-                        </option>
-                        <option>
-                            afdeling wonen
-                        </option>
-                    </select>
-                </p>
-
-                <p>
-                    <label>Wachtwoord</label>
-                    <input type="password" />
-                </p>
-
-                <button type="submit">Ga door</button>
-            </form>
-        </section> -->
+        {% if not request.user.is_authenticated %}
+            {# START login/logout#}
+                {% include 'users/login.html' %}
+            {# END login/logout#}
+        {% endif %} 
 
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
@@ -44,13 +20,13 @@
                 {% for document_type in document_type_list %}
                 {% include "download.html" with object=document_type %}
                 {% endfor %}
-                {% include "download.html" with title="Uitleg Omslagroute" %}
-                {% include "download.html" with icon="form" title="Sjabloon Individueel Trajectplan (ITP)" %}
-                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Urgentie" %}
-                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Omslag" %}
-                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Begeleid Wonen" %}
-                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Verlenging Beschermd Wonen" %}
-                {% include "download.html" with icon="form" title="Formulier <br />Voordracht Omklap" %}
+                {% include "download.html" with title="Uitleg Omslagroute" date="12 februari" %}
+                {% include "download.html" with icon="form" title="Sjabloon Individueel Trajectplan (ITP)" date="12 februari"  %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Urgentie" date="12 februari"  %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Omslag" date="12 februari"  %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Begeleid Wonen"  date="12 februari" %}
+                {% include "download.html" with icon="form" title="Formulier <br />Aanvraag Verlenging Beschermd Wonen" date="12 februari"  %}
+                {% include "download.html" with icon="form" title="Formulier <br />Voordracht Omklap" date="12 februari"  %}
             </div>
         </section>
     </main>

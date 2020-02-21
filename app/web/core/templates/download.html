@@ -1,8 +1,8 @@
 {% load staticfiles %}
 
-<article class="download__box">
+<article class="download__container">
     {% with document=object.type_to_document.all.0 %}
-    <a href="{{ document.uploaded_file.url }}" download>
+    <a href="{{ document.uploaded_file.url }}" class="download__box" download>
         {% if object %}
             <img src="{% static object.icon_path %}">
         {% elif icon %}
@@ -10,12 +10,14 @@
         {% else %}
             <img src="{% static 'images/checklist.svg' %}">
         {% endif %}
+
         {% if object %}
-        <h3>{{ document.title }}</h3>
+            <h3>{{ document.title }}</h3>
+            <p><time timestamp="{{ document.uploaded|date }}">Laatst gewijzigd: {{ document.uploaded|date:"j b" }}.</time></p>
         {% else %}
-        <h3>{{ title }}</h3>
+            <h3>{{ title }}</h3>
+            <p><time timestamp="{{ date }}">Laatst gewijzigd: {{ date }}</time></p>
         {% endif %}
-        <p><time timestamp="20200219">Laatst gewijzigd: {{ document.uploaded|date:"j b" }}.</time></p>
     </a>
     {% endwith %}
 </article>

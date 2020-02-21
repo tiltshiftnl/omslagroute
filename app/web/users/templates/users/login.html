@@ -1,21 +1,25 @@
 {% if not request.user.is_authenticated %}
-<form method="post">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ request.login_form.username.label_tag }}</td>
-    <td>{{ request.login_form.username }}</td>
-</tr>
-<tr>
-    <td>{{ request.login_form.password.label_tag }}</td>
-    <td>{{ request.login_form.password }}</td>
-</tr>
-</table>
+    <section class="section-login">
+        <h2 class="section-login__title">Log in</h2>
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            
+            <table>
+                <tr>
+                    <td>{{ request.login_form.username.label_tag }}</td>
+                    <td>{{ request.login_form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ request.login_form.password.label_tag }}</td>
+                    <td>{{ request.login_form.password }}</td>
+                </tr>
+            </table>
 
-<input type="submit" value="login">
-<input type="hidden" name="next" value="{{ request.get_full_path }}">
-<input type="hidden" name="is_top_login_form" >
-</form>
+            <input type="submit" value="login">
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <input type="hidden" name="is_top_login_form" >
+        </form>
+    </section>
 {% else %}
     <a href="{% url 'uitloggen' %}">Uitloggen</a>
 {% endif %}
