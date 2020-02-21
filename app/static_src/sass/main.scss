@@ -68,14 +68,14 @@ body {
 }
 
 .site-header {
+    align-content: flex-start;
     background-color: $primary-white;
     display: grid;
     grid-gap: 0 1.687rem;
     grid-template-columns: auto 2fr 1fr;
     justify-content: space-between;
-    align-content: flex-start;
-    max-width: 960px;
     margin: 0px auto;
+    max-width: 960px;
 
     @media all and (min-width: $desktop) {
         height: 108px;
@@ -84,9 +84,9 @@ body {
 }
 
 .site-navigation {
-    min-height: 44px;
     background-color: $neutral-grey1;
     margin-bottom: calc(1.124rem * 2);
+    min-height: 44px;
 }
 
 .site-logout {
@@ -99,12 +99,12 @@ body {
 }
 
 .downloads {
+    align-content: flex-start;
     display: grid;
     grid-gap: 1.687rem;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
     justify-content: space-between;
-    align-content: flex-start;
     padding-bottom: calc(1.687rem * 4);
 }
 
@@ -139,14 +139,17 @@ body {
     &,
     &:visited,
     &:hover {
+        border-radius: 2px;
+        border: 1px solid $primary-darkblue;
         color: $neutral-grey1;
         height: 100%; 
         text-decoration: none;
+        transition: border 200ms ease-out;
 
         h3 {
             color: $primary-darkblue;
-            text-decoration: none;
             font-weight: 400;
+            text-decoration: none;
         }
     }
 
@@ -167,11 +170,11 @@ body {
 
 .download__replace {
     opacity: 0;
-    text-align: center;
     padding: 5px 10px;
     position: absolute;
-    top: 1rem;
     right: 1rem;
+    text-align: center;
+    top: 1rem;
     transition: opacity 250ms ease-out;
     z-index: 1;
 
