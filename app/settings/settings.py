@@ -84,8 +84,8 @@ else:
 
 # General
 APPEND_SLASH = True
-TIME_ZONE = 'UTC'
-LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Europe/Amsterdam'
+LANGUAGE_CODE = 'nl-nl'
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = False
