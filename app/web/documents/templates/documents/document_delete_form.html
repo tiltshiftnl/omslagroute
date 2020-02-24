@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<form method="post">{% csrf_token %}
-    <h1>Verwijder document</h1>
-    <p>Weet je zeker dat je het document <strong>"{{ object.name|striptags }}"</strong>{% if object.document_to_document_version.all|length %} met alle versies{% endif %} wilt verwijderen?</p>
-    {% if object.document_to_document_version.all|length %}
-    <strong>versies:</strong>
-    <ul>
-        {% for document_version in object.document_to_document_version.all %}
-            <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>
-        {% endfor %}
 
-    </ul>
-    {% endif %}
+<main class="site-main">
+    <form method="post">{% csrf_token %}
+        <h1>Verwijder document</h1>
+        <p>Weet je zeker dat je het document <strong>"{{ object.name|striptags }}"</strong>{% if object.document_to_document_version.all|length %} met alle versies{% endif %} wilt verwijderen?</p>
+        {% if object.document_to_document_version.all|length %}
+        <strong>versies:</strong>
+        <ul>
+            {% for document_version in object.document_to_document_version.all %}
+                <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>
+            {% endfor %}
 
-    <input type="submit" value="Verwijder">
-    <a href="{% url 'document_list' %}">Annuleer</a>
-</form>
+        </ul>
+        {% endif %}
+
+        <input type="submit" value="Verwijder">
+        <a href="{% url 'document_list' %}">Annuleer</a>
+    </form>
+</main>
 {% endblock %}

@@ -43,7 +43,6 @@ select {
 [type="submit"] {
     border-color: transparent;
     box-sizing: content-box;
-    padding: 15px 12px;
     background-color: $primary-darkblue;
     color: $primary-white;
     min-width: 70px;
@@ -57,4 +56,8 @@ select {
         background-color: $neutral-grey2;
         color: $neutral-grey3;
     }
+}
+
+[type="file"] {
+    margin-top: 10px;
 }
