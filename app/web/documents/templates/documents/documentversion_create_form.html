@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block main %}
+    <h1>Document versie toevoegen</h1>
+    <p>U kunt hier een versie toevoegen aan het document <strong>"{{ document|striptags }}"</strong></p>
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
     <p>{{ form.uploaded_file.label_tag }}</p>
     <p>{{ form.uploaded_file }}</p>
 
     <p>{{ form.document }}</p>
     <input type="submit" value="Upload">
+    <a href="{% url 'document_list' %}">Annuleer</a>
 </form>
 {% endblock %}

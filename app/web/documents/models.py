@@ -28,7 +28,11 @@ class DocumentVersion(models.Model):
     def __str__(self):
         if self.document:
             return self.document.name
-        return self.uploaded.strftime('Y-M-d')
+        return self.uploaded.strftime('%Y-%m-%d, %H:%M:%S')
+
+    @property
+    def uploaded_str(self):
+        return self.uploaded.strftime('%Y-%m-%d, %H:%M:%S')
 
     class Meta:
         verbose_name = _('Document versie')

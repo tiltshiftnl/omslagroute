@@ -43,7 +43,7 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'web.core.middleware.LoginFormMiddleware',
+    #'web.core.middleware.LoginFormMiddleware',
 )
 
 ROOT_URLCONF = 'web.urls'
@@ -174,6 +174,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CORS and allowed hosts
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+
+LOGIN_URL = '/'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/looplijsten/admin/login/',

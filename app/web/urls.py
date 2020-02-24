@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from web.core.views import HomePageView
 from web.health.views import health_default, health_db
-from web.users.views import generic_logout
+from web.users.views import generic_logout, generic_login
 
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
 
     path('document/', include('web.documents.urls')),
 
+    path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
 
     path('admin/', admin.site.urls),
