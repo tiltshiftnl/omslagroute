@@ -46,7 +46,7 @@ MIDDLEWARE = (
     #'web.core.middleware.LoginFormMiddleware',
 )
 
-ROOT_URLCONF = 'web.urls'
+ROOT_URLCONF = os.environ.get('DJANGO_ROOT_URLCONF', 'web.urls_temp')
 
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'local')
