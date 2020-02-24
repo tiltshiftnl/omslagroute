@@ -1,26 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block main %}
-<ul>
-    {% for document in document_list %}
-        <li style="margin-bottom: 100px;">
-            <span>{{ document.name|striptags }}</span><br>
-            <a href="{% url 'document_update' document.id %}"><strong>Wijzig dit document </strong></a><br>
-            <a href="{% url 'document_delete' document.id %}"><strong>Verwijder dit document </strong></a><br>
-            <img src="{% static document.icon_path %}"><br>
-            <span>Aantal documenten: <strong>{{ document.document_to_document_version.all|length }}</strong></span><br>
-            <a href="{% url 'add_document_version_to_document' document.id %}"><strong>Nieuwe versie toevoegen </strong></a><br>
-            {% if document.document_to_document_version.all|length %}
-            <ul>
-                {% for document_version in document.document_to_document_version.all %}
-                    <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }} <a href="{% url 'documentversion_delete' document_version.id %}"><strong>Verwijder versie</strong></a></li>
-                {% endfor %}
 
-            </ul>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+<main class="site-main">
+    <ul>
+        {% for document in document_list %}
+            <li style="margin-bottom: 100px;">
+                <span>{{ document.name|striptags }}</span><br>
+                <a href="{% url 'document_update' document.id %}"><strong>Wijzig dit document </strong></a><br>
+                <a href="{% url 'document_delete' document.id %}"><strong>Verwijder dit document </strong></a><br>
+                <img src="{% static document.icon_path %}"><br>
+                <span>Aantal documenten: <strong>{{ document.document_to_document_version.all|length }}</strong></span><br>
+                <a href="{% url 'add_document_version_to_document' document.id %}"><strong>Nieuwe versie toevoegen </strong></a><br>
+                {% if document.document_to_document_version.all|length %}
+                <ul>
+                    {% for document_version in document.document_to_document_version.all %}
+                        <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }} <a href="{% url 'documentversion_delete' document_version.id %}"><strong>Verwijder versie</strong></a></li>
+                    {% endfor %}
 
-<a href="{% url 'document_create' %}">Voeg document toe</a>
+                </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'document_create' %}">Voeg document toe</a>
+</main>
 {% endblock %}
