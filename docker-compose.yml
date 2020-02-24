@@ -24,6 +24,7 @@ services:
       - DJANGO_DEBUG=True
       - DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost
       - DJANGO_ROOT_URLCONF=web.urls
+      - DJANGO_STATIC_URL=/static
       - ADMIN_USERNAME=admin
       - ADMIN_PASSWORD=insecure
       - DATABASE_NAME=omslagroute
