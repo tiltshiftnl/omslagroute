@@ -45,6 +45,10 @@ a.skip-main {
     }
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: $neutral-grey2;
     margin: 0;
@@ -53,6 +57,7 @@ body {
 .container {
     background: $primary-white;
     width: 100%;
+    height: 100%;
     margin: 0px auto;
 
     @media screen and (min-width: $large) {
@@ -89,4 +94,5 @@ body {
 .site-main {
     max-width: 960px;
     margin: 0px auto;
+    padding-bottom: 2rem;
 }

@@ -1,0 +1,60 @@
+input {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+label {
+    display: block;
+}
+
+.help-text {
+    font-size: .9rem;
+    color: $neutral-grey4;
+    margin: 5px 0 0 0;
+}
+
+.form-field {
+    margin: 10px 15px;
+}
+
+[type="text"],
+[type="submit"],
+select {
+    border: 1px solid $neutral-grey4;
+    color: $neutral-grey4;
+    padding: 15px 12px;
+    min-width: 70px;
+    max-width: 620px;
+    margin: 10px 15px;
+
+    @media screen and (min-width: $desktop) {
+        margin: 10px 0;
+    }
+
+    &:hover {
+        color: $primary-black; 
+    }
+
+    &[disabled] {
+        color: $neutral-grey3;
+    } 
+}
+
+[type="submit"] {
+    border-color: transparent;
+    box-sizing: content-box;
+    padding: 15px 12px;
+    background-color: $primary-darkblue;
+    color: $primary-white;
+    min-width: 70px;
+    max-width: 620px;
+
+    &:hover {
+        color: $primary-white; 
+    }
+
+    &[disabled] {
+        background-color: $neutral-grey2;
+        color: $neutral-grey3;
+    }
+}

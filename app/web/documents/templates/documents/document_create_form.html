@@ -1,13 +1,29 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <form method="post">{% csrf_token %}
-    <p>{{ form.name.label_tag }}</p>
-    <p>{{ form.name }}</p>
+    <main class="site-main">
+        <form method="post">{% csrf_token %}
+            <div class="form-field">
+                {{ form.name.label_tag }} 
+                <p class="help-text">
+                    (Naam document)
+                </p>
+                {{ form.name }}
+            </div>
 
-    <p>{{ form.icon.tag }}</p>
-    <p>{{ form.icon }}</p>
-    <input type="submit" value="Maak aan">
-    <a href="{% url 'document_list' %}">Annuleer</a>
-</form>
+            <div class="form-field">
+                {{ form.icon.label_tag }}
+                <div class="help-text">
+                    (Wat voor document is dit?)
+                </div>
+                {{ form.icon.tag }}
+                {{ form.icon }}
+            </div>
+
+            <div class="form-field">
+                <input type="submit" value="Maak aan">
+                <a href="{% url 'document_list' %}">Annuleer</a>
+            </div>
+        </form>
+    </main>
 {% endblock %}
