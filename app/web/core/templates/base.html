@@ -3,7 +3,7 @@
 <html lang="en" data-commit="{{ SOURCE_COMMIT }}">
 <head>
     <meta charset="UTF-8">
-    <title>Hello Omslagroute</title>
+    <title>Omslagroute</title>
     <link rel="stylesheet" type="text/css" href="{% static 'bundles/main.css' %}?v={{ SOURCE_COMMIT }}">
     <link rel="icon" href="https://www.amsterdam.nl/favicon.ico" type="image/x-icon">
 </head>
@@ -14,11 +14,11 @@
 
     {% block header %}
         <header class="site-header">
-            <img src="{% static 'images/logo.svg' %}">
+            <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}"></a>
             <h1>Omslagroute</h1>
             {% if request.user.is_authenticated %}
                 <div class="site-logout">
-                    Ingelogd als: <strong>{{ request.user.first_name }}</strong> |  <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                    Ingelogd als: <strong>{% if request.user.is_superuser %}<a href="/admin">admin {% endif %}{{ request.user.first_name }}{% if request.user.is_superuser %}</a{% endif %}</strong> |  <a href="{% url 'uitloggen' %}">Uitloggen</a>
                 </div>
             {% endif %}
         </header>

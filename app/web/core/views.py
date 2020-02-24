@@ -8,12 +8,8 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         document_list = Document.objects.all()
-        #if not auth_test(self.request.user, 'wonen'):
-           #document_list.filter(document_to_document_version__isnull=False)
 
         kwargs.update({
             'document_list': document_list
         })
-        print('HomePageView')
         return super().get_context_data(**kwargs)
-

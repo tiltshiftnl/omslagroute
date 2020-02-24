@@ -17,6 +17,7 @@ label {
     margin: 10px 15px;
 }
 
+[type="password"],
 [type="text"],
 [type="submit"],
 select {
@@ -32,12 +33,12 @@ select {
     }
 
     &:hover {
-        color: $primary-black; 
+        color: $primary-black;
     }
 
     &[disabled] {
         color: $neutral-grey3;
-    } 
+    }
 }
 
 [type="submit"] {
@@ -49,7 +50,7 @@ select {
     max-width: 620px;
 
     &:hover {
-        color: $primary-white; 
+        color: $primary-white;
     }
 
     &[disabled] {
