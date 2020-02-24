@@ -11,7 +11,7 @@
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
             {% if document_list %}
-            <ul class="downloads">
+            <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
                 {% for document in document_list %}
                     {% include "download.html" with object=document %}
                 {% endfor %}
