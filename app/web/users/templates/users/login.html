@@ -1,22 +1,24 @@
 {% if not request.user.is_authenticated %}
     <section class="section-login">
         <h2 class="section-login__title">Log in</h2>
-        <form class="login-form" method="post">
+        <form class="login-form" method="post" action="{% url 'inloggen' %}">
             {% csrf_token %}
-            
+            {% if request.GET.error == 'login' %}
+                <p>Er ging iets mit met de login</p>
+            {% endif %}
             <table>
                 <tr>
-                    <td>{{ request.login_form.username.label_tag }}</td>
-                    <td>{{ request.login_form.username }}</td>
+                    <td>{{ login_form.username.label_tag }}</td>
+                    <td>{{ login_form.username }}</td>
                 </tr>
                 <tr>
-                    <td>{{ request.login_form.password.label_tag }}</td>
-                    <td>{{ request.login_form.password }}</td>
+                    <td>{{ login_form.password.label_tag }}</td>
+                    <td>{{ login_form.password }}</td>
                 </tr>
             </table>
 
             <input type="submit" value="login">
-            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{{ request.path }}{% endif %}">
             <input type="hidden" name="is_top_login_form" >
         </form>
     </section>

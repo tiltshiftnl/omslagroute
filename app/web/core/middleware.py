@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import (
+from web.users.forms import (
     AuthenticationForm
 )
 from django.http.response import HttpResponseRedirect
@@ -20,7 +20,7 @@ class LoginFormMiddleware:
                 print('before login')
                 login(request, form.get_user())
                 print('after login')
-                # print(request.user.is_authenticated)
+                print(request.user.groups.all())
                 # if request.user.is_authenticated:
                 return HttpResponseRedirect(request.POST.get('next', '/'))
             else:

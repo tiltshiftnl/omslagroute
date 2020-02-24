@@ -1,24 +1,32 @@
 {% extends 'base.html' %}
 
-{% load staticfiles %}
+{% load staticfiles auth_tags %}
 
 {% block main %}
     <main class="site-main">
         {% if not request.user.is_authenticated %}
-            {# START login/logout#}
-                {% include 'users/login.html' %}
-            {# END login/logout#}
+            {% include 'users/login.html' %}
         {% endif %}
 
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
+            {% if document_list %}
             <ul class="downloads">
                 {% for document in document_list %}
                     {% include "download.html" with object=document %}
                 {% endfor %}
 
-                {% include "upload.html" %}
+                {% if request.user|has_group:"wonen" %}
+                    {% include "upload.html" %}
+                {% endif %}
             </ul>
+
+            {% if request.user|has_group:"wonen" %}
+            <a href="{% url 'document_list' %}">Documenten beheer</a>
+            {% endif %}
+            {% else %}
+            <p>Er zijn nog geen documenten geüpload</p>
+            {% endif %}
         </section>
     </main>
 {% endblock %}

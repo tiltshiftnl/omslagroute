@@ -4,20 +4,16 @@
 {% with document_version=object.document_to_document_version.all.0 %}
 <li class="document">
         <a href="{{ document_version.uploaded_file.url }}" class="version" download>
-            {% if object %}
-                <img src="{% static object.icon_path %}">
-            {% elif icon %}
-                <img src="{% static 'images/form.svg' %}">
-            {% else %}
-                <img src="{% static 'images/checklist.svg' %}">
-            {% endif %}
-
-            {% if object %}
+            <img src="{% static object.icon_path %}">
                 <h3>{{ object.icon_value }}<br>{{ object.name }}</h3>
-                <p><time timestamp="{{ document_version.uploaded|date }}">Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.</time></p>
-            {% endif %}
+                <p>
+                {% if request.user|has_group:"wonen" %}
+                   Aantal versies: <strong>{{ object.document_to_document_version.all|length }}</strong><br>
+                {% endif %}
+                <time timestamp="{{ document_version.uploaded|date }}">Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.</time>
+                </p>
         </a>
-        {% if request.user|has_group:"wonen" and object %}
+        {% if request.user|has_group:"wonen" %}
             <p>
                 <a href="{% url 'add_document_version_to_document' object.id %}" class="version__add">
                     <img src="{% static 'images/replace.svg' %}" title="Vervang document">

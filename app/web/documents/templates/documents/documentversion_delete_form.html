@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<form method="post">{% csrf_token %}
+    <h1>Verwijder document versie</h1>
+    <p>Weet je zeker dat je de versie geupload op <strong>"tijd: {{ object.uploaded|date:"H:i" }}, datum: {{ object.uploaded|date:"j b Y" }}"</strong> voor het document <strong>"{{ object.document.name|striptags }}"</strong> wilt verwijderen?</p>
+    <input type="submit" value="Verwijder">
+    <a href="{% url 'document_list' %}">Annuleer</a>
+</form>
+{% endblock %}
