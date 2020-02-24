@@ -10,23 +10,7 @@
 
         <section class="section-downloads">
             <h2>Actuele informatie en formulieren</h2>
-            {% if document_list %}
-            <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
-                {% for document in document_list %}
-                    {% include "download.html" with object=document %}
-                {% endfor %}
-
-                {% if request.user|has_group:"wonen" %}
-                    {% include "upload.html" %}
-                {% endif %}
-            </ul>
-
-            {% if request.user|has_group:"wonen" %}
-            <a href="{% url 'document_list' %}">Documenten beheer</a>
-            {% endif %}
-            {% else %}
-            <p>Er zijn nog geen documenten geüpload</p>
-            {% endif %}
+            {% include 'documents/document_list.html' with document_list=document_list %}
         </section>
     </main>
 {% endblock %}

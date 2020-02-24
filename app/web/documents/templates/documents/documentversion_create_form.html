@@ -3,8 +3,8 @@
 {% block main %}
 
 <main class="site-main">
-    <h2>Document versie toevoegen</h2>
-    <p>U kunt hier een versie toevoegen aan het document <strong>"{{ document|striptags }}"</strong></p>
+    <h2>Document uploaden</h2>
+    <p>U kunt hier een document uploaden voor <strong>"{{ document|striptags }}"</strong></p>
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-field">

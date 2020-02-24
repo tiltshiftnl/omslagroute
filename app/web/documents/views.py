@@ -17,8 +17,8 @@ class DocumentList(UserPassesTestMixin, ListView):
 
 class DocumentDelete(UserPassesTestMixin, DeleteView):
     model = Document
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('document_list')
+    template_name_suffix = '_delete_form_page'
+    success_url = reverse_lazy('home')
 
     def test_func(self):
         return auth_test(self.request.user, 'wonen')
@@ -33,7 +33,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
     model = Document
     fields = ('name', 'icon')
     template_name_suffix = '_create_form'
-    success_url = reverse_lazy('document_list')
+    success_url = reverse_lazy('home')
 
     def test_func(self):
         return auth_test(self.request.user, 'wonen')
@@ -48,7 +48,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     model = Document
     fields = ('name', 'icon')
     template_name_suffix = '_update_form'
-    success_url = reverse_lazy('document_list')
+    success_url = reverse_lazy('home')
 
     def test_func(self):
         return auth_test(self.request.user, 'wonen')
@@ -88,7 +88,7 @@ class DocumentVersionCreate(UserPassesTestMixin, CreateView):
 class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
     model = DocumentVersion
     template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('document_list')
+    success_url = reverse_lazy('home')
 
     def test_func(self):
         return auth_test(self.request.user, 'wonen')

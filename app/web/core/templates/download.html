@@ -4,27 +4,20 @@
 {% with document_version=object.document_to_document_version.all.0 %}
 <li class="document">
         <a href="{{ document_version.uploaded_file.url }}" class="document__version" download>
-            {% if object %}
-                <img src="{% static object.icon_path %}" class="document__icon" alt="">
-            {% elif icon %}
-                <img src="{% static 'images/form.svg' %}" class="document__icon" alt="">
-            {% else %}
-                <img src="{% static 'images/checklist.svg' %}" class="document__icon" alt="">
-            {% endif %}
+            <img src="{% static object.icon_path %}" class="document__icon" alt="">
 
             {% if object %}
                 <div class="document__header">
                     <span class="document__type">{{ object.icon_value }}</span>
                     <h3 class="document__name">{{ object.name }}</h3>
                 </div>
-                <time timestamp="{{ document_version.uploaded|date }}" class="document__date">Publicatiedatum: {{ document_version.uploaded|date:"j b" }}.</time> 
+                <time timestamp="{{ document_version.uploaded|date }}" class="document__date">Publicatiedatum: {{ document_version.uploaded|date:"j b" }}.</time>
             {% endif %}
         </a>
         {% if request.user|has_group:"wonen" and object %}
             <p>
                 <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update">
-                    Voeg versie toe
-                </a>
+                    Nieuwe upload
             </p>
         {% endif %}
     </a>
