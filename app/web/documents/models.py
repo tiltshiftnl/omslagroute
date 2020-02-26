@@ -13,7 +13,7 @@ class DocumentVersion(models.Model):
         null=True,
     )
     uploaded_file = models.FileField(
-        verbose_name=_('Bestand'),
+        verbose_name=_('Selecteer een bestand'),
         upload_to='uploads'
     )
     uploaded = models.DateTimeField(
