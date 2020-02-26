@@ -275,7 +275,7 @@ if os.environ.get("SWIFT_AUTH_URL"):
     SWIFT_AUTH_URL = os.environ.get("SWIFT_AUTH_URL")
     SWIFT_USERNAME = os.environ.get("SWIFT_USERNAME")
     SWIFT_PASSWORD = os.environ.get("SWIFT_PASSWORD")
-    SWIFT_TENANT_NAME = os.environ.get("SWIFT_TENANT")
+    SWIFT_TENANT_ID = os.environ.get("SWIFT_TENANT")
     SWIFT_CONTAINER_NAME = 'media'
 
     DEFAULT_FILE_STORAGE = 'swift.storage.SwiftStorage'
