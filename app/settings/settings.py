@@ -277,6 +277,5 @@ if os.environ.get("SWIFT_AUTH_URL"):
     SWIFT_PASSWORD = os.environ.get("SWIFT_PASSWORD")
     SWIFT_TENANT_ID = os.environ.get("SWIFT_TENANT")
     SWIFT_CONTAINER_NAME = 'media'
-
     DEFAULT_FILE_STORAGE = 'swift.storage.SwiftStorage'
     THUMBNAIL_DEFAULT_STORAGE = 'swift.storage.SwiftStorage'
