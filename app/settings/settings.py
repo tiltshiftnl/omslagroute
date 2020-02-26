@@ -69,6 +69,7 @@ if os.environ.get("SWIFT_AUTH_URL"):
     DEFAULT_FILE_STORAGE = 'swift.storage.SwiftStorage'
     THUMBNAIL_DEFAULT_STORAGE = 'swift.storage.SwiftStorage'
 
+
 # Database
 DEFAULT_DATABASE_NAME = 'default'
 
