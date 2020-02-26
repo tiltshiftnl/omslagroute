@@ -19,9 +19,9 @@
             {{ form.document }}
         </div>
 
-        <div class="form-field">
-            <input type="submit" value="Upload">
-            <p><a href="{% url 'document_list' %}">Annuleer</a></p>
+        <div class="form-field form-field--buttons">
+            <input type="submit" value="Upload" class="button button--primary">
+            <a href="{% url 'document_list' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
 </main>
