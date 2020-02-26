@@ -59,16 +59,6 @@ ADMINS = (
     ('admin', 'p.curet@mail.amsterdam.nl'),
 )
 
-# swift storage
-if os.environ.get("SWIFT_AUTH_URL"):
-    SWIFT_AUTH_URL = os.environ.get("SWIFT_AUTH_URL")
-    SWIFT_USERNAME = os.environ.get("SWIFT_USER")
-    SWIFT_PASSWORD = os.environ.get("SWIFT_PASSWORD")
-    SWIFT_TENANT_NAME = os.environ.get("SWIFT_TENANT")
-
-    DEFAULT_FILE_STORAGE = 'swift.storage.SwiftStorage'
-    THUMBNAIL_DEFAULT_STORAGE = 'swift.storage.SwiftStorage'
-
 
 # Database
 DEFAULT_DATABASE_NAME = 'default'
@@ -279,3 +269,14 @@ BRK_ACCESS_URL = os.getenv('BRK_ACCESS_URL')
 BRK_API_OBJECT_EXPAND_URL = 'https://acc.api.data.amsterdam.nl/brk/object-expand/'
 
 BAG_API_SEARCH_URL = 'https://api.data.amsterdam.nl/atlas/search/adres/'
+
+# swift storage
+if os.environ.get("SWIFT_AUTH_URL"):
+    SWIFT_AUTH_URL = os.environ.get("SWIFT_AUTH_URL")
+    SWIFT_USERNAME = os.environ.get("SWIFT_USER")
+    SWIFT_PASSWORD = os.environ.get("SWIFT_PASSWORD")
+    SWIFT_TENANT_NAME = os.environ.get("SWIFT_TENANT")
+    SWIFT_CONTAINER_NAME = 'media'
+
+    DEFAULT_FILE_STORAGE = 'swift.storage.SwiftStorage'
+    THUMBNAIL_DEFAULT_STORAGE = 'swift.storage.SwiftStorage'
