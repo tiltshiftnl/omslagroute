@@ -273,7 +273,7 @@ BAG_API_SEARCH_URL = 'https://api.data.amsterdam.nl/atlas/search/adres/'
 # swift storage
 if os.environ.get("SWIFT_AUTH_URL"):
     SWIFT_AUTH_URL = os.environ.get("SWIFT_AUTH_URL")
-    SWIFT_USERNAME = os.environ.get("SWIFT_USERNAME")
+    SWIFT_USERNAME = os.environ.get("SWIFT_USER")
     SWIFT_PASSWORD = os.environ.get("SWIFT_PASSWORD")
     SWIFT_TENANT_ID = os.environ.get("SWIFT_TENANT")
     SWIFT_CONTAINER_NAME = 'media'
