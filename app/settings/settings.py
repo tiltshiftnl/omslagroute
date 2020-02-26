@@ -46,7 +46,7 @@ MIDDLEWARE = (
     #'web.core.middleware.LoginFormMiddleware',
 )
 
-ROOT_URLCONF = os.environ.get('DJANGO_ROOT_URLCONF', 'web.urls_temp')
+ROOT_URLCONF = os.environ.get('DJANGO_ROOT_URLCONF', 'web.urls')
 
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'local')
@@ -94,7 +94,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/omslagroute/static/')
+STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 STATIC_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'static'))
 
 MEDIA_URL = '/media/'
