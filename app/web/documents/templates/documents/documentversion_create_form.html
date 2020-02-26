@@ -4,19 +4,22 @@
 
 <main class="site-main">
     <h2>Document uploaden</h2>
-    <p>U kunt hier een document uploaden voor <strong>"{{ document|striptags }}"</strong></p>
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-field">
-            {{ form.uploaded_file.label_tag }}
+            <legend>
+                U kunt hier een nieuwe versie uploaden van het {{ document.icon_value|lower }} {{ document|striptags }}.
+            </legend>
             <p class="help-text">
-                (Naam document)
+                Kies een PDF of Word bestand om te uploaden.
             </p>
             {{ form.uploaded_file }}
+            {{ form.uploaded_file.label_tag }}
+            <div id="file-upload-filename" class="form-field__uploaded"></div>
+            {{ form.document }}
         </div>
 
         <div class="form-field">
-            <p>{{ form.document }}</p>
             <input type="submit" value="Upload">
             <p><a href="{% url 'document_list' %}">Annuleer</a></p>
         </div>

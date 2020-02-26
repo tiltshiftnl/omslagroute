@@ -1,3 +1,7 @@
+legend {
+    margin-bottom: 15px;
+}
+
 input {
     font-family: inherit;
     font-size: inherit;
@@ -64,5 +68,49 @@ select {
 }
 
 [type="file"] {
+    &,
+    &::-webkit-file-upload-button {
+        display: none; // of visibility hidden?
+    }
+    
+    &:hover + label,
+    &:focus + label {
+        border: 1px solid $primary-red;
+    }
+}
+
+[type="file"] + label {
+    background-color: $neutral-grey1;
+    margin-top: 10px;
+    min-width: 70px;
+    max-width: 620px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+    position: relative;
+    text-decoration: underline;
+    color: $primary-darkblue;
+    cursor: pointer;
+
+    &::after {
+        content: ' ';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url("/static/images/upload.svg");
+        background-size: contain;
+        position: relative;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+    &:hover {
+        color: $primary-red;
+    }
+}
+
+.form-field__uploaded {
     margin-top: 10px;
 }

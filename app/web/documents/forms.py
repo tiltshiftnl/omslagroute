@@ -8,5 +8,7 @@ class DocumentForm(forms.ModelForm):
         model = DocumentVersion
         fields = ('uploaded_file', 'document',)
         widgets = {
+            'uploaded_file': forms.FileInput(attrs={'id': "file-upload"}),
             'document': forms.HiddenInput,
         }
+            
