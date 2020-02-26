@@ -67,10 +67,22 @@ select {
     }
 }
 
+// HTML for below:
+// <input type="file" id="file_upload">
+// <label for="file_upload">
+
 [type="file"] {
-    &,
+    opacity: 0;
+    height: 0;
+    float: left;
+    width: 0;
+
+    &:focus {
+        outline: 0;
+    }
+
     &::-webkit-file-upload-button {
-        display: none; // of visibility hidden?
+        visibility: hidden;
     }
     
     &:hover + label,
