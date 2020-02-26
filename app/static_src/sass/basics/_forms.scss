@@ -15,6 +15,10 @@ label {
 
 .form-field {
     margin: 10px 15px;
+
+    @media screen and (min-width: $desktop) {
+        margin: 10px 0;
+    }
 }
 
 [type="password"],
