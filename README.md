@@ -25,7 +25,7 @@ docker-compose exec web ./node_modules/.bin/node-sass -o ./assets/bundles/ stati
 Migrate database without restarting containers:
 
 ```bash
-docker-compose exec web migrate
+docker-compose exec web python manage.py migrate
 ```
 
 # Used resources
