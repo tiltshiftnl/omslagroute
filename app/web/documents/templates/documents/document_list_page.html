@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block main %}
 
-<main class="site-main">
+{% block main %} 
+    <h2>Document list</h2>
+
     <ul>
         {% for document in document_list %}
             <li style="margin-bottom: 100px;">
@@ -25,5 +26,4 @@
     </ul>
 
     <a href="{% url 'document_create' %}">Voeg document toe</a>
-</main>
 {% endblock %}

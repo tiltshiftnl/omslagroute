@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <main class="site-main">
-        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <h2>Create</h2>
 
-            {{ form.as_p }}
-            {{ documentversionformset }}
-
-            <div class="form-field">
-                <input type="submit" value="Maak aan">
-                <a href="{% url 'home' %}">Annuleer</a>
-            </div>
-        </form>
-    </main>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        {{ documentversionformset }}
+ 
+        <div class="form-field form-field--buttons">
+            <input type="submit" value="Uploaden en toevoegen" class="button button--primary">
+            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
 {% endblock %}

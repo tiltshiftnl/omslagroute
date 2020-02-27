@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
-{% block main %}
-
-<main class="site-main">
+{% block main %} 
+    <h2>Verwijder document</h2>
+    
     <form method="post">{% csrf_token %}
-        <h1>Verwijder document</h1>
         <p>Weet je zeker dat je het document <strong>"{{ object.name|striptags }}"</strong>{% if object.document_to_document_version.all|length %} met alle versies{% endif %} wilt verwijderen?</p>
         {% if object.document_to_document_version.all|length %}
         <strong>versies:</strong>
@@ -12,12 +11,12 @@
             {% for document_version in object.document_to_document_version.all %}
                 <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>
             {% endfor %}
-
         </ul>
         {% endif %}
 
-        <input type="submit" value="Verwijder">
-        <a href="{% url 'document_list' %}">Annuleer</a>
-    </form>
-</main>
+        <div class="form-field form-field--buttons">
+            <input type="submit" value="Verwijder" class="button button--primary">
+            <a href="{% url 'document_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form> 
 {% endblock %}

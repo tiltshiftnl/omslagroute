@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
-{% block main %}
+{% comment %}
+    Upload a new version of an existing document
+    http://0.0.0.0:8088/document/nieuw/2
+{% endcomment %}
 
-<main class="site-main">
+{% block main %}
     <h2>Document uploaden</h2>
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
@@ -10,12 +13,16 @@
             <legend>
                 U kunt hier een nieuwe versie uploaden van het {{ document.icon_value|lower }} {{ document|striptags }}.
             </legend>
+
             <p class="help-text">
                 Kies een PDF of Word bestand om te uploaden.
             </p>
+
             {{ form.uploaded_file }}
             {{ form.uploaded_file.label_tag }}
+
             <div id="file-upload-filename" class="form-field__uploaded"></div>
+            
             {{ form.document }}
         </div>
 
@@ -24,5 +31,4 @@
             <a href="{% url 'document_list' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
-</main>
 {% endblock %}

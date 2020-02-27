@@ -1,15 +1,28 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <h1>Document wijzigen</h1>
-    <p>U kunt hier hier het document <strong>"{{ form.instance.name|striptags }}"</strong> wijzigen</p>
-    <form method="post">{% csrf_token %}
-    <p>Naam</p>
-    <p>{{ form.name }}</p>
+    <h2>Document wijzigen</h2>
+    
+    <form method="post">
+        {% csrf_token %}
 
-    <p>Icon</p>
-    <p>{{ form.icon }}</p>
-    <input type="submit" value="Wijzigingen opslaan">
-    <a href="{% url 'document_list' %}">Annuleer</a>
-</form>
+        <legend>
+            U kunt hier hier het document <strong>"{{ form.instance.name|striptags }}"</strong> wijzigen.
+        </legend>
+        
+        <div class="form-field">
+            <p>Naam</p>
+            <p>{{ form.name }}</p>
+        </div>
+        
+        <div class="form-field">
+            <p>Documenttype</p>
+            <p>{{ form.icon }}</p>
+        </div>
+
+        <div class="form-field form-field--buttons">
+            <input type="submit" value="Wijzigingen opslaan" class="button button--primary">
+            <a href="{% url 'document_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
 {% endblock %}
