@@ -8,16 +8,22 @@ ENV COMMIT_SHA=${COMMIT}
 
 RUN adduser --system datapunt
 
-RUN pip install --upgrade pip
-
 # update
 RUN apt-get update
+
+
+RUN pip install --upgrade pip
+
 # install curl
-RUN apt-get install curl
+RUN apt-get install -y curl
 # get install script and pass it to execute:
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
 # and install node
 RUN apt-get install nodejs
+
+# install nginx
+RUN apt-get install -y nginx
+# RUN apt-get install -y --no-install-recommends apt-utils
 
 RUN mkdir -p /static && chown datapunt /static
 RUN mkdir -p /app && chown datapunt /app
@@ -25,7 +31,9 @@ RUN mkdir -p /downloads && chown datapunt /downloads
 RUN mkdir -p /certificates && chown datapunt /certificates
 RUN mkdir -p /deploy && chown datapunt /deploy
 RUN mkdir -p /var/log/uwsgi && chown datapunt /var/log/uwsgi
+RUN mkdir /var/uwsgi/
 
+COPY ./nginx/vhost.conf /etc/nginx/sites-enabled/
 COPY . /app/
 COPY deploy /deploy/
 
@@ -40,6 +48,5 @@ RUN ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass
 COPY requirements.txt /app/
 
 RUN pip install --no-cache-dir -r requirements.txt
-USER datapunt
 
 CMD ["/deploy/docker-run.sh"]
