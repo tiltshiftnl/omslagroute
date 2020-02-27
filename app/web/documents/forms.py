@@ -1,14 +1,33 @@
 from django import forms
-from .models import DocumentVersion
+from django.forms import widgets
+from .models import *
+from django.forms.models import inlineformset_factory
+
+
+class DocumentVersionForm(forms.ModelForm):
+    class Meta:
+        model = DocumentVersion
+        exclude = ()
+        widgets = {
+            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'class': 'my-upload'}),
+            'document': forms.HiddenInput,
+        }
 
 
 class DocumentForm(forms.ModelForm):
-
     class Meta:
-        model = DocumentVersion
-        fields = ('uploaded_file', 'document',)
+        model = Document
+        exclude = ()
         widgets = {
-            'uploaded_file': forms.FileInput(attrs={'id': "file-upload"}),
-            'document': forms.HiddenInput,
+            'icon': forms.RadioSelect(attrs={'class': 'my-radio-select'})
         }
-            
+
+
+DocumentVersionFormSet = inlineformset_factory(
+    parent_model=Document,
+    model=DocumentVersion,
+    form=DocumentVersionForm,
+    can_delete=False,
+    extra=1
+
+)

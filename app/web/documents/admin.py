@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Document, DocumentVersion
+from .models import *
 
 
 @admin.register(DocumentVersion)
