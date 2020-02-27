@@ -5,6 +5,7 @@ set -x
 
 #cp /app/nginx/vhost.conf /etc/nginx/sites-enabled/
 #chmod 777 /etc/nginx/sites-enabled/vhost.conf
+# rm /etc/nginx/sites-enabled/default.conf
 
 python manage.py collectstatic --settings settings.settings --no-input
 python manage.py migrate --settings settings.settings --no-input
@@ -22,5 +23,5 @@ nginx -t
 echo "Start nginx"
 /etc/init.d/nginx start
 
-exec uwsgi app.ini
+exec uwsgi uwsgi.ini
 

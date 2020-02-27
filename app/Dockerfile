@@ -30,8 +30,8 @@ RUN mkdir -p /app && chown datapunt /app
 RUN mkdir -p /downloads && chown datapunt /downloads
 RUN mkdir -p /certificates && chown datapunt /certificates
 RUN mkdir -p /deploy && chown datapunt /deploy
-RUN mkdir -p /var/log/uwsgi && chown datapunt /var/log/uwsgi
-RUN mkdir /var/uwsgi/
+RUN mkdir -p /var/log/uwsgi && chown root:root /var/log/uwsgi
+RUN mkdir -p /var/uwsgi/ && chown root:root /var/log/uwsgi
 
 COPY ./nginx/vhost.conf /etc/nginx/sites-enabled/
 COPY . /app/
