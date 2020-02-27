@@ -1,10 +1,14 @@
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from .models import DocumentVersion, Document
+from .models import *
 from django.urls import reverse_lazy
-from .forms import DocumentForm
+from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
+from django.shortcuts import render, get_object_or_404
+from django.db import transaction
+from django.http.response import HttpResponse
+from django.forms.models import inlineformset_factory
 
 
 class DocumentList(UserPassesTestMixin, ListView):
@@ -92,6 +96,42 @@ class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return auth_test(self.request.user, 'wonen')
+
+
+class DocumentVersionFormSetCreate(CreateView):
+    model = Document
+    # fields = ('name', 'icon',)
+    form_class = DocumentForm
+    template_name_suffix = '_and_docversion_create_form'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['documentversionformset'] = DocumentVersionFormSet(self.request.POST, self.request.FILES)
+        else:
+            data['documentversionformset'] = DocumentVersionFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        familymembers = context['documentversionformset']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if familymembers.is_valid():
+                familymembers.instance = self.object
+                familymembers.save()
+        return super().form_valid(form)
+
+
+def document_file(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    first_file = document.document_to_document_version.all()[0]
+
+    print(first_file.uploaded_file)
+    return HttpResponse('test')
+
 
 
 

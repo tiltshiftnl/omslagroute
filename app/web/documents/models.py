@@ -49,9 +49,8 @@ class Document(models.Model):
     icon = models.CharField(
         verbose_name=_('Icon'),
         max_length=50,
+        default='form',
         choices=ICON_LIST,
-        blank=True,
-        null=True,
     )
 
     class Meta:
