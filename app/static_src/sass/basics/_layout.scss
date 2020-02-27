@@ -87,8 +87,12 @@ body {
     min-height: 44px;
 }
 
-.site-logout {
+.site-userinfo {
     text-align: right;
+}
+
+.site-userinfo__username {
+    font-weight: bold;
 }
 
 .site-main {

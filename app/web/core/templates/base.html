@@ -17,13 +17,13 @@
             <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}"></a>
             <h1>Omslagroute</h1>
             {% if request.user.is_authenticated %}
-                <div class="site-logout">
-                    Ingelogd als: <strong>
+                <div class="site-userinfo">
+                    Ingelogd als: 
                         {% if request.user.is_superuser %}
-                            <a href="/admin">admin
+                            <a href="/admin" class="site-userinfo__username">admin</a>
                         {% endif %}
-                            {{ request.user.first_name }}
-                        {% if request.user.is_superuser %}</a>{% endif %}</strong> |  <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                            <span class="site-userinfo__username">{{ request.user.first_name }}</span>
+                         | <a href="{% url 'uitloggen' %}">Uitloggen</a>
                 </div>
             {% endif %}
         </header>
