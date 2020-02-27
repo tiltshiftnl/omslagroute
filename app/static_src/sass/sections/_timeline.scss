@@ -1,0 +1,112 @@
+$toplevel-moment: 1.5rem;
+$sublevel-moment: 1rem;
+$timeline-width: .2rem;
+$padding-left: 2rem;
+
+// just to be able to have some white space between header and details elements
+.section-timeline__spacing {
+    padding-top: 1.5rem;
+}
+
+.details {
+    border-top: 0;
+    border-bottom: 0;
+    position: relative;
+
+    &--toplevel > summary::after {
+        content: ' ';
+        background-color: $primary-darkblue;
+        border-radius: 50%;
+        width: $toplevel-moment;
+        height:  $toplevel-moment;
+        position: absolute;
+        left: calc(
+            -#{$toplevel-moment / 2} +
+            -#{$timeline-width  / 2} 
+            );
+        top: -.3rem;
+        z-index: 2;
+    }
+
+    // &--sublevel > summary::after {
+    //     content: ' ';
+    //     background-color: $supplement-lightblue;
+    //     border-radius: 50%;
+    //     width: 1rem;
+    //     height: 1rem;
+    //     left: calc(
+    //         -#{$sublevel-moment / 2} +
+    //         -#{$timeline-width  / 2} + 
+    //         -#{$padding-left}
+    //     );
+    //     position: absolute;
+    // }
+}
+
+summary {
+    font-weight: bold;
+    border: 0;
+    width: 100%;
+    position: relative;
+    -webkit-appearance:none;
+    list-style-image: none;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+}
+
+.details {
+    > .details__content,
+    > summary {
+        padding-left: 2rem;
+        border-left: .2rem solid $primary-darkblue;
+        padding-bottom: .5rem;
+    }
+    
+    > .details__content {
+        padding-bottom: 2rem;
+    }
+
+    &:last-of-type {
+        > .details__content,
+        > summary {
+            border-left: 0;
+        }
+
+        > summary::after {
+            left: calc(
+                -#{$toplevel-moment / 2} +
+                #{$timeline-width  / 2} 
+                )
+        }
+    }
+}
+
+.details[open] {
+    > * {
+        z-index: 1;
+        position: relative;
+    }
+
+    &::before {
+        background-color: $neutral-grey1;
+        padding: 10px;
+        content: ' ';
+        position: absolute;
+        display: block;
+        left: -2rem;
+        top: -1.5rem;
+        z-index: 0;
+        width: calc(100% + 2rem);
+        height: calc(100% - .5rem);
+    }
+
+    .details {
+        border-left: 0;
+
+        &:not(:last-of-type) {
+            margin-bottom: 20px;
+        }
+    }
+}

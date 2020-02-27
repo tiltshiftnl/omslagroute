@@ -8,5 +8,23 @@
             <hr />
         {% endif %}
 
+        <section class="section-timeline">
+            <h2>De Omslagroute</h2>
+            <div class="section-timeline__spacing">
+                <details class="details details--toplevel" open>
+                    <summary>Onderzoeksfase</summary>
+                    <div class="details__content">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit inventore nobis, eaque illum odio maxime voluptates pariatur incidunt expedita numquam cumque rerum! Aperiam debitis voluptatem distinctio a! Perferendis, earum doloremque?</p>
+                    </div>
+                </details>
+                <details class="details details--toplevel" >
+                    <summary>Onderzoeksfase</summary>
+                    <div class="details__content">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit inventore nobis, eaque illum odio maxime voluptates pariatur incidunt expedita numquam cumque rerum! Aperiam debitis voluptatem distinctio a! Perferendis, earum doloremque?</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+        
         {% include 'documents/snippets/document_list.html' with document_list=document_list %}
 {% endblock %}
