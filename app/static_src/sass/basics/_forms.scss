@@ -1,14 +1,10 @@
+// ********************
+// GENERAL FORM ELEMENTS
+// Each field and label is grouped in a .form-field container
+// ********************
+    
 legend {
     margin-bottom: 15px;
-}
-
-input {
-    font-family: inherit;
-    font-size: inherit;
-}
-
-label {
-    display: block;
 }
 
 .help-text {
@@ -25,13 +21,26 @@ label {
     }
 }
 
+.form-field--buttons {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: auto auto;
+    justify-content: flex-start;
+}
+
+label {
+    display: block;
+}
+
 [type="password"],
 [type="text"],
 [type="submit"],
 select {
+    font-family: inherit;
+    font-size: inherit;
     border: 1px solid $neutral-grey4;
     color: $neutral-grey4;
-    padding: 15px 12px;
+    padding: 12px 15px;
     min-width: 70px;
     max-width: 620px;
     margin: 10px 15px;
@@ -49,16 +58,13 @@ select {
     }
 }
 
-.form-field--buttons {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: auto auto;
-    justify-content: flex-start;
-}
-
-// HTML for below:
+// ********************
+// FILE UPLOAD FIELD
+//  
 // <input type="file" id="file_upload">
 // <label for="file_upload">
+// 
+// ********************
 
 [type="file"] {
     opacity: 0;
@@ -77,6 +83,11 @@ select {
     &:hover + label,
     &:focus + label {
         border: 1px solid $primary-red;
+    }
+
+    &:focus + label {
+        outline: 1px dotted #212121;
+        outline: 5px auto -webkit-focus-ring-color;
     }
 }
 
@@ -114,4 +125,91 @@ select {
 
 .form-field__uploaded {
     margin-top: 10px;
+}
+
+// ********************
+// RADIO BUTTONS 
+// ********************
+
+ul.form-field__radiogroup {
+    list-style-type: none;
+    padding: 0;
+    min-width: 70px;
+    max-width: 620px;
+
+    li {
+        margin-top: 10px;
+    }
+
+    &:focus-within {
+        outline: 1px dotted #212121;
+        outline: 5px auto -webkit-focus-ring-color;
+    }
+}
+
+.form-field__radio {
+    opacity: 0;
+    height: 0;
+    float: left;
+    width: 0;
+    margin: 0;
+
+    &:checked + .form-field__radiolabel::before {
+        border-color: $primary-black;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 0.3125em $primary-white;
+        background-color: $primary-black;
+    }
+
+    &:checked:focus + .form-field__radiolabel::before {
+        border: 1px solid $primary-black;
+    }
+
+    &:disabled + .form-field__radiolabel {
+        color: $neutral-grey3;
+
+        &::before {
+            border-color: $neutral-grey3;
+        }
+
+        &:hover::before,
+        &:focus::before {
+            box-shadow: none;
+            border-color: inherit;
+        }
+    }
+}
+
+.form-field__radiolabel {
+    position: relative;
+
+    &::before { 
+        border-radius: 50%;
+        display: inline-block;
+        width: 1.25rem;
+        min-width: 1.25rem;
+        height: 1.25rem;
+        min-height: 1.25em;
+        border: 1px solid $neutral-grey4;
+        margin-right: 0.75rem;
+        content: '';
+        transform: translateY(.25rem);
+    }
+
+    &:hover::before {
+        box-shadow: inset 0 0 1px 1px #000;
+        border: 1px solid $primary-black;
+    }
+
+    &:focus::before {
+        box-shadow: inset 0 0 1px 1px #000;
+        border: 1px solid $primary-black;
+        // box-shadow: 0 0 0 0.3125em orange; #Amsterdam.nl style
+    }
+}
+
+li:focus-within .form-field__radiolabel::before {
+    box-shadow: inset 0 0 1px 1px #000;
+    border: 1px solid $primary-black;
+    box-shadow: 0 0 0 0.3125em orange;
 }

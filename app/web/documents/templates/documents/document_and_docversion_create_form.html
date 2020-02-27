@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
 
+{% comment %}
+    Create a new document and upload a first version
+    URL: /document/nieuw
+{% endcomment %}
+
 {% block main %}
-    <h2>Create</h2>
+    <h2>Nieuw document toevoegen</h2>
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
-        {{ form.as_p }}
-        {{ documentversionformset }}
- 
+
+        {{ documentversionformset.management_form }}
+
+        <div class="form-field">
+            <label for="id_name">{{ form.name.label }}</label>
+            {{ form.name }}
+        </div>
+        
+        <div class="form-field">
+            <label for="id_icon">{{ form.icon.label }}</label>
+            <ul class="form-field__radiogroup">
+                {% for radio in form.icon %}
+                    <li>                
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}" class="form-field__radiolabel">
+                            {{ radio.choice_label }}
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="form-field">
+            {% for form in documentversionformset.forms %}
+                {{ form.uploaded_file }}
+                <label for="file-upload">{{ form.uploaded_file.label }}</label>
+                <div id="file-upload-filename" class="form-field__uploaded"></div>
+            {% endfor %}
+        </div>
+
         <div class="form-field form-field--buttons">
             <input type="submit" value="Uploaden en toevoegen" class="button button--primary">
             <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>

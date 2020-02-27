@@ -24,8 +24,8 @@ class DocumentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
         self.empty_label=None
-        self.fields['name'].label = "Naam"
-        self.fields['icon'].label = "Icon"
+        self.fields['name'].label = "Titel van het document:"
+        self.fields['icon'].label = "Om wat voor soort document gaat het?"
 
         # Removes the first choice (meant to clean up select) 
 
@@ -38,7 +38,8 @@ class DocumentForm(forms.ModelForm):
         model = Document
         exclude = ()
         widgets = {
-            'icon': forms.RadioSelect(attrs={'class': 'my-radio-select'})
+            # 'name': forms.TextInput(attrs={'placeholder': 'Bestandsnaam'}),
+            'icon': forms.RadioSelect(attrs={'class': 'form-field__radio'})
         }
 
 
@@ -48,5 +49,4 @@ DocumentVersionFormSet = inlineformset_factory(
     form=DocumentVersionForm,
     can_delete=False,
     extra=1
-
 )
