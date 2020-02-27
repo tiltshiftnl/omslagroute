@@ -64,7 +64,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
 
 class DocumentVersionCreate(UserPassesTestMixin, CreateView):
     model = DocumentVersion
-    form_class = DocumentForm
+    form_class = DocumentVersionForm
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('home')
 

@@ -8,13 +8,13 @@ class DocumentVersionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
-        self.fields['uploaded_file'].label = "New Email Label"
+        self.fields['uploaded_file'].label = "Selecteer een bestand"
 
     class Meta:
         model = DocumentVersion
         exclude = ()
         widgets = {
-            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'class': 'my-upload'}),
+            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'required': 'required'}),
             'document': forms.HiddenInput,
         }
 

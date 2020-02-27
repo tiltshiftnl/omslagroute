@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% comment %}
-    Upload a new version of an existing document
-    http://0.0.0.0:8088/document/nieuw/2
+    Upload a new version of an existing document 
+    URL:    /document/update/2
 {% endcomment %}
 
 {% block main %}
@@ -28,7 +28,7 @@
 
         <div class="form-field form-field--buttons">
             <input type="submit" value="Upload" class="button button--primary">
-            <a href="{% url 'document_list' %}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
 {% endblock %}
