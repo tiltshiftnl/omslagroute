@@ -27,6 +27,7 @@ INSTALLED_APPS = (
 
     'web.core',
     'web.documents',
+    'web.timeline',
     'web.users',
 
 )
