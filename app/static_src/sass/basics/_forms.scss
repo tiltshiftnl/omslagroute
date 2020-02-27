@@ -56,68 +56,6 @@ select {
     justify-content: flex-start;
 }
 
-.button {
-    box-sizing: content-box;
-    color: $primary-white;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    font-weight: bold;
-    margin: 0;
-    max-width: 620px;
-    min-width: 70px;
-    margin-top: 10px;
-    padding: 12px 15px;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-        outline: 1px solid $primary-darkblue;
-    }
-
-    &[disabled] {
-        background-color: $neutral-grey2;
-        color: $neutral-grey3;
-    }
-}
-
-.button--primary,
-[type="submit"] {
-    border-color: transparent;
-    background-color: $primary-darkblue;
-
-    &:hover,
-    &:focus {
-        color: $primary-white;
-    }
-}
-
-.button--secondary {
-    border: 1px solid $primary-darkblue;
-    background-color: $primary-white;
-    color: $primary-darkblue;
-    
-    &:hover,
-    &:focus {
-        color: $primary-darkblue;
-    }
-}
-
-.button__icon {
-    &:not(:only-child) {
-        margin-right: 10px;
-    }
-}
-
-.button__label {
-    &:not(:only-child) {
-        position: relative;
-        top: 2px;
-    }
-}
-
 // HTML for below:
 // <input type="file" id="file_upload">
 // <label for="file_upload">
