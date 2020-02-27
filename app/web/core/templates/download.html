@@ -1,8 +1,8 @@
 {% load staticfiles auth_tags %}
 
 {% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
-{% with document_version=object.document_to_document_version.all.0 %}
-<li class="document">
+    {% with document_version=object.document_to_document_version.all.0 %}
+    <li class="document">
         <a href="{{ document_version.uploaded_file.url }}" class="document__version" download>
             <img src="{% static object.icon_path %}" class="document__icon" alt="">
 
@@ -18,9 +18,9 @@
             <p>
                 <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update">
                     Nieuwe upload
+                </a>
             </p>
         {% endif %}
-    </a>
-</li>
-{% endwith %}
+    </li>
+    {% endwith %}
 {% endif %}
