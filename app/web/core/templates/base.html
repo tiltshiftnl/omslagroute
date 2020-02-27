@@ -18,7 +18,12 @@
             <h1>Omslagroute</h1>
             {% if request.user.is_authenticated %}
                 <div class="site-logout">
-                    Ingelogd als: <strong>{% if request.user.is_superuser %}<a href="/admin">admin {% endif %}{{ request.user.first_name }}{% if request.user.is_superuser %}</a{% endif %}</strong> |  <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                    Ingelogd als: <strong>
+                        {% if request.user.is_superuser %}
+                            <a href="/admin">admin
+                        {% endif %}
+                            {{ request.user.first_name }}
+                        {% if request.user.is_superuser %}</a>{% endif %}</strong> |  <a href="{% url 'uitloggen' %}">Uitloggen</a>
                 </div>
             {% endif %}
         </header>

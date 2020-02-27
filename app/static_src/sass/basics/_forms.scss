@@ -1,3 +1,7 @@
+legend {
+    margin-bottom: 15px;
+}
+
 input {
     font-family: inherit;
     font-size: inherit;
@@ -15,6 +19,10 @@ label {
 
 .form-field {
     margin: 10px 15px;
+
+    @media screen and (min-width: $desktop) {
+        margin: 10px 0;
+    }
 }
 
 [type="password"],
@@ -41,16 +49,29 @@ select {
     }
 }
 
-[type="submit"] {
-    border-color: transparent;
-    box-sizing: content-box;
-    background-color: $primary-darkblue;
-    color: $primary-white;
-    min-width: 70px;
-    max-width: 620px;
+.form-field--buttons {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: auto auto;
+    justify-content: flex-start;
+}
 
-    &:hover {
-        color: $primary-white;
+.button {
+    box-sizing: content-box;
+    color: $primary-white;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    max-width: 620px;
+    min-width: 70px;
+    padding: 10px 12px;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        outline: 1px solid $primary-darkblue;
     }
 
     &[disabled] {
@@ -59,6 +80,84 @@ select {
     }
 }
 
+.button--primary,
+[type="submit"] {
+    border-color: transparent;
+    background-color: $primary-darkblue;
+
+    &:hover,
+    &:focus {
+        color: $primary-white;
+    }
+}
+
+.button--secondary {
+    border: 1px solid $primary-darkblue;
+    background-color: $primary-white;
+    color: $primary-darkblue;
+    
+    &:hover,
+    &:focus {
+        color: $primary-darkblue;
+    }
+}
+
+// HTML for below:
+// <input type="file" id="file_upload">
+// <label for="file_upload">
+
 [type="file"] {
+    opacity: 0;
+    height: 0;
+    float: left;
+    width: 0;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    
+    &:hover + label,
+    &:focus + label {
+        border: 1px solid $primary-red;
+    }
+}
+
+[type="file"] + label {
+    background-color: $neutral-grey1;
+    margin-top: 10px;
+    min-width: 70px;
+    max-width: 620px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+    position: relative;
+    text-decoration: underline;
+    color: $primary-darkblue;
+    cursor: pointer;
+
+    &::after {
+        content: ' ';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url("/static/images/upload.svg");
+        background-size: contain;
+        position: relative;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+    &:hover {
+        color: $primary-red;
+    }
+}
+
+.form-field__uploaded {
     margin-top: 10px;
 }
