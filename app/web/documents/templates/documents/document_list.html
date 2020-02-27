@@ -3,6 +3,8 @@
         {% for document in document_list %}
             {% include "download.html" with object=document %}
         {% endfor %}
+
+        {% include 'upload.html' %}
     </ul>
 {% else %}
     <p>Er zijn nog geen documenten geüpload</p>

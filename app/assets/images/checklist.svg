@@ -1,11 +1,3 @@
-<svg height="65px" viewBox="0 0 130 130" width="65px" xmlns="http://www.w3.org/2000/svg">
-<path d="M103.741,107.704c0,3.678-2.973,6.66-6.639,6.66 H32.38c-3.666,0-6.639-2.982-6.639-6.66v-86.18c0-3.678,2.973-6.66,6.639-6.66h64.723c3.666,0,6.639,2.982,6.639,6.66V107.704z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"/>
-<g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2">
-    <line x1="58.069" x2="81.255" y1="82.94" y2="82.94"/>
-    <line x1="58.069" x2="81.255" y1="64.271" y2="64.271"/>
-    <line x1="58.069" x2="81.255" y1="44.386" y2="44.386"/>
-</g>
-<circle cx="46.056" cy="44.474" fill="none" r="4" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"/>
-<circle cx="46.056" cy="64.614" fill="none" r="4" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"/>
-<circle cx="46.056" cy="82.942" fill="none" r="4" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+<path fill="#000" fill-rule="evenodd" d="M20.6 5H40v35H11.2V22.5A11.3 11.3 0 1120.6 5zm-4.4 16.3V35H35V10H22.4a11.4 11.4 0 01-.2 3.8h10.3v2.4H21.3c-.4 1-1 1.8-1.7 2.6h12.9v2.4H18.7v-1.6c-.7.7-1.5 1.3-2.4 1.7zm2.6 2.4h13.7v2.6H18.7v-2.6zm0 5h13.7v2.6H18.7v-2.6zM11.2 20a8.7 8.7 0 100-17.5 8.7 8.7 0 000 17.5zM8.3 9.7l2.7 2.7L15.4 8l1.8 1.7L11 16l-4.4-4.4 1.7-1.8z"/>
 </svg>
