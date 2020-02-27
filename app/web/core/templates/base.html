@@ -32,19 +32,21 @@
     {% endblock %}
 
     {% block messages %}
-    {% if messages %}
-      <div class="container">
-          <ul class="systeem-berichten{% for message in messages %} {{ message.tags }}{% endfor %}">
-              {% for message in messages %}
-                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|striptags }}</li>
-              {% endfor %}
-          </ul>
-      </div>
-    {% endif %}
+        {% if messages %}
+            <div class="container">
+                <ul class="systeem-berichten{% for message in messages %} {{ message.tags }}{% endfor %}">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|striptags }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     {% endblock %}
 
-    {% block main %}
-    {% endblock %}
+    <main role="main" class="site-main">
+        {% block main %}
+        {% endblock %}
+    </main>
 </div>
 
 <script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
