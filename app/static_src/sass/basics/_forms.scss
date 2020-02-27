@@ -60,12 +60,15 @@ select {
     box-sizing: content-box;
     color: $primary-white;
     cursor: pointer;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-content: center;
     font-weight: bold;
     margin: 0;
     max-width: 620px;
     min-width: 70px;
-    padding: 10px 12px;
+    margin-top: 10px;
+    padding: 12px 15px;
     text-decoration: none;
 
     &:hover,
@@ -99,6 +102,19 @@ select {
     &:hover,
     &:focus {
         color: $primary-darkblue;
+    }
+}
+
+.button__icon {
+    &:not(:only-child) {
+        margin-right: 10px;
+    }
+}
+
+.button__label {
+    &:not(:only-child) {
+        position: relative;
+        top: 2px;
     }
 }
 

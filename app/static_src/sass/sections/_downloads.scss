@@ -18,73 +18,53 @@
     color: $grey-light;
     height: 100%;
     position: relative;
-
-    &:hover,
-    &:focus {
-        .document__version-update {
-            opacity: 1;
-            transition: opacity 50ms ease-in;
-        }
-    }
-
-    &:focus-within {
-        .document__version-update {
-            opacity: 1;
-            transition: opacity 50ms ease-in;
-        }
-    }
+    list-style-image: none;
 }
 
-.document__type {
-    color: $primary-black;
-    font-size: .9rem;
-}
-
-.document__name {
+.document__header {
+    text-decoration: none;
     margin-top: .5rem;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
 }
+    
+    .document__type {
+        color: $primary-black;
+        font-size: .9rem;
+    }
+
+    .document__name {
+        margin-top: .5rem;
+        margin-bottom: 0;
+        color: $primary-darkblue;
+    }
 
 .document__icon {
-    margin-bottom: 1rem;
+    flex: 0 0 40px;
 }
 
 .document__version,
 .document__new {
+    background-color: $neutral-grey1;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: space-between;
-    padding: 1rem;
-
-    .document__header {
-        color: $primary-darkblue;
-        text-decoration: none;
-        margin-top: .5rem;
-    }
-
+    padding: 1.5rem 1rem 1rem 1rem;
     
     &,
     &:visited {
-        border-radius: 2px;
-        border: 2px solid $primary-darkblue;
+        border: 1px solid $neutral-grey2;
         height: 100%; 
         text-decoration: none;
     }
 
     &:hover,
     &:focus {
-        border: 2px solid $primary-red;
         text-decoration: none;
-
-        .document__type,
-        .document__name,
-        .document__date {
-            color: $primary-red; 
-        }
-
-        .document__icon {
-            filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
-        }
+        box-shadow: 2px 2px 0px 1px $primary-red;
     }
 
     > :last-child {
@@ -96,15 +76,8 @@
     justify-content: center;
 }
 
-.document__version-update {
-    display: block;
-    padding: 10px 10px;
-    margin-top: 5px;
-    text-align: center;
-    transition: opacity 250ms ease-out;
-    z-index: 1;
-
-    &:hover {
-        filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+    .document__icon-wrapper {
+        display: flex;
+        flex: 1 1 60%;
+        justify-content: center;
     }
-}

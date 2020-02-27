@@ -16,8 +16,9 @@
         </a>
         {% if request.user|has_group:"wonen" and object %}
             <p>
-                <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update">
-                    Nieuwe upload
+                <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--secondary">
+                    <img src="{% static '/images/upload.svg' %}" class="button__icon" alt="" width="20" height="20"> 
+                    <span class="button__label">Vervangen</span>
                 </a>
             </p>
         {% endif %}

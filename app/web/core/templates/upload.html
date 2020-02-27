@@ -1,8 +1,12 @@
 {% load staticfiles %}
 
-<article class="document document--add">
-    <a href="{% url 'document_create' %}" class="document__new">
-        <img src="{% static 'images/upload.svg' %}" class="document__icon" alt="">
-        <h3>Voeg document toe</h3>
-    </a>
-</article>
+{% if request.user.is_authenticated %}
+    <li class="document document--add">
+        <a href="{% url 'document_create' %}" class="document__new">
+            <div class="document__icon-wrapper">
+                <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="">
+            </div>
+            <h3 class="document__name">Nieuw document</h3>
+        </a>
+    </li>
+{% endif %}
