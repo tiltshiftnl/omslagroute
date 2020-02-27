@@ -42,12 +42,12 @@ class DocumentVersion(models.Model):
 
 class Document(models.Model):
     name = models.CharField(
-        verbose_name=_('Type naam'),
+        verbose_name=_('Titel van het document'),
         max_length=100,
         unique=True,
     )
     icon = models.CharField(
-        verbose_name=_('Icon'),
+        verbose_name=_('Documenttype'),
         max_length=50,
         default='form',
         choices=ICON_LIST,
