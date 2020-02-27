@@ -27,10 +27,12 @@ class DocumentForm(forms.ModelForm):
         self.fields['name'].label = "Naam"
         self.fields['icon'].label = "Icon"
 
-        for field_name in self.fields:
-            field = self.fields.get(field_name)
-            if field and isinstance(field , forms.TypedChoiceField):
-                field.choices = field.choices[1:]
+        # Removes the first choice (meant to clean up select) 
+
+        # for field_name in self.fields:
+        #     field = self.fields.get(field_name)
+        #     if field and isinstance(field , forms.TypedChoiceField):
+        #         field.choices = field.choices[1:]
 
     class Meta:
         model = Document
