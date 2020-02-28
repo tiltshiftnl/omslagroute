@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.db import transaction
-from django.http.response import HttpResponse, HttpResponseForbidden
+from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse
 from django.forms.models import inlineformset_factory
 import os
 
@@ -130,6 +130,7 @@ def document_file(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     first_file = document.document_to_document_version.all()[0]
     filename = first_file.uploaded_file
+    #response = FileResponse(open('myfile.png', 'rb'))
     response = HttpResponse(mimetype='application/force-download')
     response['Content-Disposition'] = 'attachment;filename="%s"' % filename
     response["X-Sendfile"] = filename
