@@ -14,11 +14,7 @@ legend {
 }
 
 .form-field {
-    margin: 10px 15px;
-
-    @media screen and (min-width: $desktop) {
-        margin: 10px 0 0 0;
-    }
+    margin: 10px 0 0 0;
 }
 
 .form-field--buttons {
@@ -50,11 +46,7 @@ select {
     padding: 12px 15px;
     min-width: 70px;
     max-width: 620px;
-    margin: 10px 15px;
-
-    @media screen and (min-width: $desktop) {
-        margin: 10px 0 0 0;
-    }
+    margin: 10px 0 0 0;
 
     &:hover {
         color: $primary-black;
