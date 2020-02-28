@@ -48,6 +48,12 @@
         margin-top: .5rem;
         margin-bottom: 0;
         color: $primary-darkblue;
+        max-width: 180px;
+        
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
     }
 
 .document__icon {
