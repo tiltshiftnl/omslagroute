@@ -126,16 +126,15 @@ class DocumentVersionFormSetCreate(CreateView):
         return super().form_valid(form)
 
 
-def document_file(request, document_id):
-    document = get_object_or_404(Document, id=document_id)
-    first_file = document.document_to_document_version.all()[0]
-    filename = first_file.uploaded_file
-    #response = FileResponse(open('myfile.png', 'rb'))
-    response = HttpResponse(mimetype='application/force-download')
-    response['Content-Disposition'] = 'attachment;filename="%s"' % filename
-    response["X-Sendfile"] = filename
-    response['Content-length'] = os.stat("debug.py").st_size
-    print(first_file.uploaded_file)
+def document_file(request, document_version_id):
+    document_version = get_object_or_404(DocumentVersion, id=document_version_id)
+    filename =  document_version.uploaded_file
+    response = FileResponse(open(filename.path, 'rb'))
+    print(filename)
+    #response = HttpResponse(mimetype='application/force-download')
+    # response['Content-Disposition'] = 'attachment;filename="%s"' % filename
+    # response["X-Sendfile"] = filename
+    # response['Content-length'] = os.stat("debug.py").st_size
     return response
     # return HttpResponseForbidden()
 
