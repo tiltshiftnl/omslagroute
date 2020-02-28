@@ -5,6 +5,7 @@
 {% block main %}
         {% if not request.user.is_authenticated %}
             {% include 'users/login.html' %}
+            <hr />
         {% endif %}
 
         {% include 'documents/snippets/document_list.html' with document_list=document_list %}

@@ -45,6 +45,17 @@ a.skip-main {
     }
 }
 
+hr {
+    min-height: 1px;
+    height: 1px;
+    background-color: $neutral-grey2;
+    color: $neutral-grey2;
+    border-style: solid;
+    border: 0;
+    margin-bottom: 2rem;
+    margin-top: 2.5rem;
+}
+
 html, body {
     height: 100%;
 }
@@ -111,9 +122,5 @@ body {
 .site-main {
     max-width: 960px;
     margin: 0px auto;
-    padding-bottom: 2rem;
-}
-
-.section {
     padding-bottom: 2rem;
 }
