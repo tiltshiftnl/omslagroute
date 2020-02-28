@@ -3,6 +3,10 @@
 set -e   # stop on any error
 set -x
 
+#cp /app/nginx/vhost.conf /etc/nginx/sites-enabled/
+#chmod 777 /etc/nginx/sites-enabled/vhost.conf
+rm /etc/nginx/sites-enabled/default
+
 python manage.py collectstatic --settings settings.settings --no-input
 python manage.py migrate --settings settings.settings --no-input
 
@@ -12,4 +16,12 @@ fi
 
 chmod -R 777 /static
 
-exec uwsgi app.ini
+echo "Test nginx"
+nginx -t
+
+
+echo "Start nginx"
+/etc/init.d/nginx start
+
+exec uwsgi uwsgi.ini
+

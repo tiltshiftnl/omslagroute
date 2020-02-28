@@ -7,8 +7,9 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.db import transaction
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseForbidden
 from django.forms.models import inlineformset_factory
+import os
 
 
 class DocumentList(UserPassesTestMixin, ListView):
@@ -128,9 +129,14 @@ class DocumentVersionFormSetCreate(CreateView):
 def document_file(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     first_file = document.document_to_document_version.all()[0]
-
+    filename = first_file.uploaded_file
+    response = HttpResponse(mimetype='application/force-download')
+    response['Content-Disposition'] = 'attachment;filename="%s"' % filename
+    response["X-Sendfile"] = filename
+    response['Content-length'] = os.stat("debug.py").st_size
     print(first_file.uploaded_file)
-    return HttpResponse('test')
+    return response
+    # return HttpResponseForbidden()
 
 
 
