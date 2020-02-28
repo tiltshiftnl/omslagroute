@@ -8,3 +8,9 @@ function showFileName( event ) {
     const fileName = input.files[0].name;
     filesUploaded.textContent = 'Geselecteerd bestand: ' + fileName;
 }
+
+if (document.addEventListener){
+    document.addEventListener('invalid', function(e){
+        e.target.className += ' invalid';
+    }, true);
+}

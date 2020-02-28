@@ -15,6 +15,7 @@
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
             {{ form.name }}
+            <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
         
         <div class="form-field">
@@ -35,6 +36,7 @@
             {% for form in documentversionformset.forms %}
                 {{ form.uploaded_file }}
                 <label for="file-upload">{{ form.uploaded_file.label }}</label>
+                <p class="error-text">Het veld hierboven is verplicht</p>
                 <div id="file-upload-filename" class="form-field__uploaded"></div>
             {% endfor %}
         </div>
