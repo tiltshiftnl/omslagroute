@@ -46,6 +46,11 @@ class Document(models.Model):
         max_length=100,
         unique=True,
     )
+    description = models.TextField(
+        verbose_name=_('Omschrijving van het document'),
+        blank=True,
+        null=True,
+    )
     icon = models.CharField(
         verbose_name=_('Documenttype'),
         max_length=50,
