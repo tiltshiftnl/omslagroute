@@ -33,7 +33,7 @@ pipeline {
       //
       // To deploy to production, tag an existing commit (that has already been
       // build) and push the tag.
-      when { not { buildingTag() }
+      when { not { buildingTag() } }
 
       steps {
         script {
