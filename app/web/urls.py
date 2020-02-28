@@ -8,7 +8,6 @@ from web.users.views import generic_logout, generic_login
 
 
 urlpatterns = [
-
     path('', HomePageView.as_view(), name='home'),
     path('admin/env-vars', VariablesView.as_view(), name='variables'),
     path('admin/objectstore', ObjectStoreView.as_view(), name='objectstore'),
