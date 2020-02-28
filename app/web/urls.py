@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('', HomePageView.as_view(), name='home'),
     path('admin/env-vars', VariablesView.as_view(), name='variables'),
+    path('admin/objectstore', ObjectStoreView.as_view(), name='objectstore'),
 
     path('health', health_default),
     path('omslagroute/health', health_default),

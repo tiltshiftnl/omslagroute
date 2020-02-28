@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from web.documents.models import *
 import os
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.files.storage import default_storage
 
 
 class HomePageView(TemplateView):
@@ -28,5 +29,23 @@ class VariablesView(UserPassesTestMixin, TemplateView):
 
         kwargs.update({
             'var_list': dict(l),
+        })
+        return super().get_context_data(**kwargs)
+
+
+class ObjectStoreView(UserPassesTestMixin, TemplateView):
+    template_name = "objectstore.html"
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get_context_data(self, **kwargs):
+        default_storage.http_conn
+        resp_headers, containers = default_storage.http_conn.get_account()
+        print("Response headers: %s" % resp_headers)
+
+        kwargs.update({
+            'objectstore_container_list': containers,
+            'objectstore_container': [],
         })
         return super().get_context_data(**kwargs)
