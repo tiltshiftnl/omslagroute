@@ -7,10 +7,10 @@ LABEL commit=${COMMIT}
 ENV COMMIT_SHA=${COMMIT}
 
 RUN adduser --system datapunt
+RUN adduser datapunt sudo
 
 # update
 RUN apt-get update
-
 
 RUN pip install --upgrade pip
 
