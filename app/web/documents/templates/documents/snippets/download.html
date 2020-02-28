@@ -3,7 +3,7 @@
 {% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
     <li class="document">
-        <a href="{{ document_version.uploaded_file.url }}" class="document__version" download>
+        <a href="{% url 'download_document' document_version.id %}" class="document__version" download>
             <img src="{% static object.icon_path %}" class="document__icon" alt="">
             {% if object %}
                 <div class="document__header">
@@ -19,7 +19,7 @@
         {% if request.user|has_group:"wonen" and object %}
             <p>
                 <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--secondary">
-                    <img src="{% static '/images/upload.svg' %}" class="button__icon" alt="" width="20" height="20"> 
+                    <img src="{% static '/images/upload.svg' %}" class="button__icon" alt="" width="20" height="20">
                     <span class="button__label">Vervangen</span>
                 </a>
             </p>
