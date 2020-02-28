@@ -33,7 +33,7 @@ pipeline {
       //
       // To deploy to production, tag an existing commit (that has already been
       // build) and push the tag.
-      when { not { buildingTag() } }
+      when { expression { "master" == env.BRANCH_NAME } }
 
       steps {
         script {
@@ -48,7 +48,7 @@ pipeline {
     }
 
     stage("Push acceptance image") {
-      when { not { buildingTag() } }
+      when { expression { "master" == env.BRANCH_NAME } }
       steps {
         script {
           def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
@@ -58,7 +58,7 @@ pipeline {
     }
 
     stage("Deploy to acceptance") {
-      when { not { buildingTag() } }
+      when { expression { "master" == env.BRANCH_NAME } }
       steps {
         build job: 'Subtask_Openstack_Playbook',
           parameters: [
