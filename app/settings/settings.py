@@ -30,7 +30,7 @@ INSTALLED_APPS = (
     'web.users',
 
 )
-SOURCE_COMMIT = os.environ.get('COMMIT_SHA')
+SOURCE_COMMIT = os.environ.get('COMMIT_HASH')
 
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
 MIDDLEWARE = (
