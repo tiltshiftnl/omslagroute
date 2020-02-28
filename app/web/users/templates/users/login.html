@@ -1,27 +1,35 @@
 {% if not request.user.is_authenticated %}
-    <section class="section-login">
+    <section class="section section--login">
         <h2 class="section-login__title">Log in</h2>
         <form class="login-form" method="post" action="{% url 'inloggen' %}">
             {% csrf_token %}
-            {% if request.GET.error == 'login' %}
-                <p>Er ging iets mit met de login</p>
-            {% endif %}
-            <table>
-                <tr>
-                    <td>{{ login_form.username.label_tag }}</td>
-                    <td>{{ login_form.username }}</td>
-                </tr>
-                <tr>
-                    <td>{{ login_form.password.label_tag }}</td>
-                    <td>{{ login_form.password }}</td>
-                </tr>
-            </table>
 
-            <input type="submit" value="login">
-            <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{{ request.path }}{% endif %}">
-            <input type="hidden" name="is_top_login_form" >
+            {% if request.GET.error == 'login' %}
+                <p>Er ging iets mis met inloggen.</p>
+            {% endif %}
+
+            <div class="form-field">
+                <!-- {{ login_form.username.label_tag }} -->
+                <label for="id_username">Wat is je gebruikersnaam?</label>
+                {{ login_form.username }}
+                <p class="error-text">Het veld hierboven is verplicht</p>
+            </div>
+
+            <div class="form-field">
+                <!-- {{ login_form.password.label_tag }} -->
+                <label for="id_password">Wat is je wachtwoord?</label>
+                {{ login_form.password }}
+                <p class="error-text">Het veld hierboven is verplicht</p>
+            </div>
+
+            <div class="form-field">
+                <input type="submit" value="login" class="button button--primary">
+                <input type="hidden" name="next" value="{% if request.GET.next %}
+                    {{ request.GET.next }}{% else %}{{ request.path }}{% endif %}">
+                <input type="hidden" name="is_top_login_form">
+            </div>
         </form>
     </section>
 {% else %}
-    <a href="{% url 'uitloggen' %}">Uitloggen</a>
+    <a href="{% url 'uitloggen' %}" class="button button--secondary">Uitloggen</a>
 {% endif %}

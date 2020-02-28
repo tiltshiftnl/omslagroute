@@ -9,7 +9,6 @@
     <h2>Nieuw document toevoegen</h2>
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
-
         {{ documentversionformset.management_form }}
 
         <div class="form-field">

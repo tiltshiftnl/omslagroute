@@ -10,11 +10,11 @@ legend {
 .help-text {
     font-size: .9rem;
     color: $neutral-grey4;
-    margin: 5px 0 0 0;
+    margin-top: 5px;
 }
 
 .form-field {
-    margin: 10px 0 0 0;
+    margin-top: 10px;
 }
 
 .form-field--buttons {
@@ -37,7 +37,6 @@ label {
 
 [type="password"],
 [type="text"],
-[type="submit"],
 select {
     font-family: inherit;
     font-size: inherit;
@@ -46,7 +45,7 @@ select {
     padding: 12px 15px;
     min-width: 70px;
     max-width: 620px;
-    margin: 10px 0 0 0;
+    margin-top: 10px;
 
     &:hover {
         color: $primary-black;
@@ -56,7 +55,7 @@ select {
         color: $neutral-grey3;
     }
 
-    &.invalid {
+    &[required].invalid {
         border: 1px solid $primary-red;
         box-shadow: inset 0 0 0 1px $primary-red;
     }
@@ -98,12 +97,12 @@ select {
         outline: 5px auto -webkit-focus-ring-color;
     }
 
-    &.invalid + label {
+    &[required].invalid + label {
         border: 1px solid $primary-red;
         box-shadow: inset 0 0 0 1px $primary-red;
     }
 
-    &.invalid + label + .error-text {
+    &[required].invalid + label + .error-text {
         display: block;
     }
 }
