@@ -5,7 +5,7 @@ set -x
 
 #cp /app/nginx/vhost.conf /etc/nginx/sites-enabled/
 #chmod 777 /etc/nginx/sites-enabled/vhost.conf
-# rm /etc/nginx/sites-enabled/default.conf
+rm /etc/nginx/sites-enabled/default
 
 python manage.py collectstatic --settings settings.settings --no-input
 python manage.py migrate --settings settings.settings --no-input
