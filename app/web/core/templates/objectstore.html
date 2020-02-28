@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main %}
+<ul>
+<h2>Container list</h2>
+{% for container in objectstore_container_list %}
+    <li>{{ container }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
