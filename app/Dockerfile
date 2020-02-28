@@ -25,13 +25,13 @@ RUN apt-get install nodejs
 RUN apt-get install -y nginx
 # RUN apt-get install -y --no-install-recommends apt-utils
 
-RUN mkdir -p /static && chown datapunt /static
-RUN mkdir -p /app && chown datapunt /app
-RUN mkdir -p /downloads && chown datapunt /downloads
-RUN mkdir -p /certificates && chown datapunt /certificates
-RUN mkdir -p /deploy && chown datapunt /deploy
-RUN mkdir -p /var/log/uwsgi && chown root:root /var/log/uwsgi
-RUN mkdir -p /var/uwsgi/ && chown root:root /var/log/uwsgi
+RUN mkdir -p /static
+RUN mkdir -p /app
+RUN mkdir -p /downloads
+RUN mkdir -p /certificates
+RUN mkdir -p /deploy
+RUN mkdir -p /var/log/uwsgi
+RUN mkdir -p /var/uwsgi/
 
 COPY ./nginx/vhost.conf /etc/nginx/sites-enabled/
 COPY . /app/
@@ -40,10 +40,6 @@ COPY deploy /deploy/
 WORKDIR /app
 RUN npm install
 RUN ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass
-
-# when using webpack uncomment line below
-# RUN ./node_modules/.bin/webpack --config webpack.config.js
-
 
 COPY requirements.txt /app/
 
