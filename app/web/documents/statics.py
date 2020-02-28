@@ -1,7 +1,7 @@
-ICON_LIST = (
+DOCUMENT_TYPE_LIST = (
     ('form', 'Formulier'),
     ('document', 'Document'),
     ('checklist', 'Sjabloon'),
 )
 
-ICON_DICT = dict(icon for icon in ICON_LIST)
+DOCUMENT_TYPE_DICT = dict(document_type for document_type in DOCUMENT_TYPE_LIST)

@@ -4,10 +4,10 @@
     {% with document_version=object.document_to_document_version.all.0 %}
     <li class="document">
         <a href="{{ document_version.uploaded_file.url }}" class="document__version" download>
-            <img src="{% static object.icon_path %}" class="document__icon" alt="">
+            <img src="{% static object.document_type_path %}" class="document__icon" alt="">
             {% if object %}
                 <div class="document__header">
-                    <span class="document__type">{{ object.icon_value }}</span>
+                    <span class="document__type">{{ object.document_type_value }}</span>
                     <h3 class="document__name">{{ object.name }}</h3>
                 </div>
                 <time timestamp="{{ document_version.uploaded|date }}" class="document__date">

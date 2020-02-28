@@ -38,7 +38,7 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
 
 class DocumentCreate(UserPassesTestMixin, CreateView):
     model = Document
-    fields = ('name', 'icon')
+    fields = ('name', 'document_type')
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('home')
 
@@ -53,7 +53,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
 
 class DocumentUpdate(UserPassesTestMixin, UpdateView):
     model = Document
-    fields = ('name', 'icon')
+    fields = ('name', 'document_type')
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('home')
 
@@ -103,7 +103,7 @@ class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
 
 class DocumentVersionFormSetCreate(CreateView):
     model = Document
-    # fields = ('name', 'icon',)
+    # fields = ('name', 'document_type',)
     form_class = DocumentForm
     template_name_suffix = '_and_docversion_create_form'
     success_url = reverse_lazy('home')

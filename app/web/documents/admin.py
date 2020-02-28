@@ -9,4 +9,4 @@ class DocumentAdmin(admin.ModelAdmin):
 
 @admin.register(Document)
 class DocumentTypeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'icon')
+    list_display = ('name', 'document_type')
