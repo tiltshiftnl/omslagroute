@@ -1,7 +1,9 @@
 const fileUpload = document.getElementById( 'file-upload' );
-const filesUploaded = document.getElementById( 'file-upload-filename' );
+const filesUploaded = document.getElementById('file-upload-filename');
 
-fileUpload.addEventListener( 'change', showFileName );
+if (fileUpload && fileUpload.addEventListener) {
+    fileUpload.addEventListener('change', showFileName);
+}
 
 function showFileName( event ) {
     const input = event.srcElement;
