@@ -18,9 +18,9 @@
         </div>
         
         <div class="form-field">
-            <label for="id_icon">{{ form.icon.label }}</label>
+            <label for="id_document_type">{{ form.document_type.label }}</label>
             <ul class="form-field__radiogroup">
-                {% for radio in form.icon %}
+                {% for radio in form.document_type %}
                     <li>                
                         {{ radio.tag }}
                         <label for="{{ radio.id_for_label }}" class="form-field__radiolabel">

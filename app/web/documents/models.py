@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from .statics import ICON_LIST, ICON_DICT
+from .statics import DOCUMENT_TYPE_LIST, DOCUMENT_TYPE_DICT
 
 
 class DocumentVersion(models.Model):
@@ -46,16 +46,16 @@ class Document(models.Model):
         max_length=100,
         unique=True,
     )
+    document_type = models.CharField(
+        verbose_name=_('Wat voor soort document is het?'),
+        max_length=50,
+        default='form',
+        choices=DOCUMENT_TYPE_LIST,
+    )
     description = models.TextField(
         verbose_name=_('Omschrijving van het document'),
         blank=True,
         null=True,
-    )
-    icon = models.CharField(
-        verbose_name=_('Documenttype'),
-        max_length=50,
-        default='form',
-        choices=ICON_LIST,
     )
 
     class Meta:
@@ -64,12 +64,12 @@ class Document(models.Model):
         ordering = ('name', )
 
     @property
-    def icon_path(self):
-        return 'images/%s.svg' % self.icon
+    def document_type_path(self):
+        return 'images/%s.svg' % self.document_type
 
     @property
-    def icon_value(self):
-        return ICON_DICT.get(self.icon)
+    def document_type_value(self):
+        return DOCUMENT_TYPE_DICT.get(self.document_type)
 
     def __str__(self):
         return self.name

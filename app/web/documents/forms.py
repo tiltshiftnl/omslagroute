@@ -25,7 +25,7 @@ class DocumentForm(forms.ModelForm):
         self.label_suffix = ''
         self.empty_label=None
         self.fields['name'].label = "Titel van het document:"
-        self.fields['icon'].label = "Om wat voor soort document gaat het?"
+        self.fields['document_type'].label = "Om wat voor soort document gaat het?"
 
         # Removes the first choice (meant to clean up select) 
 
@@ -39,7 +39,7 @@ class DocumentForm(forms.ModelForm):
         exclude = ()
         widgets = {
             # 'name': forms.TextInput(attrs={'placeholder': 'Bestandsnaam'}),
-            'icon': forms.RadioSelect(attrs={'class': 'form-field__radio'})
+            'document_type': forms.RadioSelect(attrs={'class': 'form-field__radio'})
         }
 
 

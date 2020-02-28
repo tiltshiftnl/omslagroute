@@ -11,7 +11,7 @@
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-field">
             <legend>
-                U kunt hier een nieuwe versie uploaden van het {{ document.icon_value|lower }} {{ document|striptags }}.
+                U kunt hier een nieuwe versie uploaden van het {{ document.document_type_value|lower }} {{ document|striptags }}.
             </legend>
 
             <p class="help-text">
