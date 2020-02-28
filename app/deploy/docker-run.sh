@@ -20,8 +20,8 @@ echo "Test nginx"
 nginx -t
 
 
-echo "Start nginx"
-/etc/init.d/nginx start
+#echo "Start nginx"
+#/etc/init.d/nginx start
 
 exec uwsgi uwsgi.ini
 
