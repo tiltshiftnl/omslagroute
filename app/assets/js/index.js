@@ -1,5 +1,7 @@
-const fileUpload = document.getElementById( 'file-upload' );
-const filesUploaded = document.getElementById('file-upload-filename');
+require('details-polyfill');
+
+const fileUpload = document.getElementById('file-upload');
+const filesUploaded = document.getElementById( 'file-upload-filename' );
 
 if (fileUpload && fileUpload.addEventListener) {
     fileUpload.addEventListener('change', showFileName);
