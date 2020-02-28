@@ -10,6 +10,8 @@ from django.db import transaction
 from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse
 from django.forms.models import inlineformset_factory
 import os
+from django.core.files.storage import default_storage
+from django.conf import settings
 
 
 class DocumentList(UserPassesTestMixin, ListView):
@@ -128,8 +130,12 @@ class DocumentVersionFormSetCreate(CreateView):
 
 def document_file(request, document_version_id):
     document_version = get_object_or_404(DocumentVersion, id=document_version_id)
-    filename =  document_version.uploaded_file
-    response = FileResponse(open(filename.path, 'rb'))
+    filename = document_version.uploaded_file
+
+    resp_headers, obj_contents = default_storage.http_conn.get_object(settings.SWIFT_CONTAINER_NAME, filename.path)
+    with open(filename.path, 'w') as local:
+        response = FileResponse(local.write(obj_contents))
+    # response = FileResponse(open(filename.path, 'rb'))
     print(filename)
     #response = HttpResponse(mimetype='application/force-download')
     # response['Content-Disposition'] = 'attachment;filename="%s"' % filename
