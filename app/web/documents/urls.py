@@ -11,4 +11,5 @@ urlpatterns = [
     path('nieuw/<int:document>', DocumentVersionCreate.as_view(), name='add_document_version_to_document'),
     path('delete-versie/<int:pk>', DocumentVersionDelete.as_view(), name='documentversion_delete'),
     path('download/<int:document_version_id>', document_file, name='download_document'),
+    path('downloadobject', download_object, name='download_object'),
 ]

@@ -4,7 +4,8 @@ LABEL maintainer="datapunt@amsterdam.nl"
 ENV PYTHONUNBUFFERED 1
 ARG COMMIT=""
 LABEL commit=${COMMIT}
-ENV COMMIT_SHA=${COMMIT}
+ARG COMMIT_HASH
+ENV COMMIT_HASH=${COMMIT_HASH}
 
 RUN adduser --system datapunt
 RUN adduser datapunt sudo
@@ -38,6 +39,7 @@ COPY . /app/
 COPY deploy /deploy/
 
 WORKDIR /app
+
 RUN npm install
 RUN ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass
 

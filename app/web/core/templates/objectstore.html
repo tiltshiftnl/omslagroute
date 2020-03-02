@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 {% block main %}
+<h2>Object list</h2>
 <ul>
-<h2>Container list</h2>
 {% for container in objectstore_container_list %}
     <li>{{ container }}</li>
+{% endfor %}
+</ul>
+
+<h2>Document list</h2>
+<ul>
+{% for document in document_list %}
+    {% if document.document_to_document_version.all.0 %}
+    <li>{{ document.document_to_document_version.all.0 }} <a href="{% url 'download_document' document.document_to_document_version.all.0.id %}">download</a></li>
+    {% endif %}
 {% endfor %}
 </ul>
 
