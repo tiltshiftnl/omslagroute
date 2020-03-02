@@ -18,7 +18,6 @@
 }
 
 .document {
-    color: $grey-light;
     height: 100%;
     position: relative;
     list-style-image: none;
@@ -44,22 +43,16 @@
         font-size: .9rem;
     }
 
-    .document__name {
-        margin-top: .5rem;
-        color: $primary-black;
-        margin-bottom: 0;
+.document__name {
+    margin-top: .5rem;
+    margin-bottom: 0;
 
-        // @media screen and (min-width: $desktop) {
-        //     max-width: 180px;
-        
-        //     display: -webkit-box;
-        //     -webkit-line-clamp: 3;
-        //     -webkit-box-orient: vertical;  
-        //     overflow: hidden;
-        // }
+    @media screen and (min-width: $desktop) {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
     }
-
-    
+}
 
 .document__icon {
     align-self: center;
@@ -68,6 +61,7 @@
 
 .document__version,
 .document__new {
+    color: $primary-black;
     background-color: $neutral-grey1;
     display: flex;
     flex-direction: column;
@@ -86,10 +80,10 @@
     &:focus {
         text-decoration: none;
         box-shadow: 2px 2px 0px 1px $primary-red;
+        color: $primary-black;
 
         .document__name {
             text-decoration: underline;
-            color: $primary-black;
         }
     }
 
@@ -101,9 +95,3 @@
 .document__new {
     justify-content: center;
 }
-
-    .document__icon-wrapper {
-        display: flex;
-        flex: 1 1 60%;
-        justify-content: center;
-    }
