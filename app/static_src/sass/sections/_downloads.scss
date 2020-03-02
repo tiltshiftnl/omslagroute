@@ -7,7 +7,7 @@
         align-content: flex-start;
         display: grid;
         grid-gap: 1.687rem;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 20%);
         grid-template-rows: auto;
         justify-content: space-between;
     }
@@ -20,7 +20,7 @@
 .document {
     height: 100%;
     position: relative;
-    list-style-image: none;
+    list-style-type: none;
 
     @media all and (min-width: $desktop) {
         > a {
@@ -32,25 +32,23 @@
 .document__header {
     text-decoration: none;
     margin-top: .5rem;
-    flex: 1 1 auto;
+    flex: 1 1 50px;
     flex-direction: column;
     justify-content: center;
     display: flex;
+    align-content: center;
 }
-    
-    .document__type {
-        color: $primary-black;
-        font-size: .9rem;
-    }
 
 .document__name {
     margin-top: .5rem;
+    color: $primary-black;
     margin-bottom: 0;
 
     @media screen and (min-width: $desktop) {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;  
+        overflow: hidden;
     }
 }
 
@@ -93,5 +91,5 @@
 }
 
 .document__new {
-    justify-content: center;
+    justify-content: space-between;
 }
