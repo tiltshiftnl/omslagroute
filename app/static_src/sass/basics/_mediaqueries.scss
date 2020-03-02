@@ -12,11 +12,11 @@ html::after {
     content: 'default';
     z-index: 10;
 
-    @media screen and (min-width: $desktop) {
-        content: 'desktop'
-    }
+    // @media screen and (min-width: $desktop) {
+    //     content: 'desktop'
+    // }
 
-    @media screen and (min-width: $large) {
-        content: 'large'
-    }
+    // @media screen and (min-width: $large) {
+    //     content: 'large'
+    // }
 }
