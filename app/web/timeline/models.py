@@ -7,6 +7,11 @@ class Moment(models.Model):
         verbose_name=_('Naam'),
         max_length=100
     )
+    description = models.TextField(
+        verbose_name=_('Omschrijving van het moment'),
+        blank=True,
+        null=True,
+    )
     order = models.IntegerField(
         verbose_name=_('Sorteer')
     )
