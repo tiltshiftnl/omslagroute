@@ -8,7 +8,7 @@
     {% with document_version=object.document_to_document_version.all.0 %}
         <li class="document">
             <a href="{{ document_version.uploaded_file.url }}" class="version" download>
-                <img src="{% static object.document_type_path %}">
+                <img src="{% static object.document_type_path %}" width="40" height="40">
                 <h3>{{ object.document_type_value }}<br>{{ object.name }}</h3>
                 <p>
                     {% if request.user|has_group:"wonen" %}
