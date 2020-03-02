@@ -7,14 +7,14 @@
         align-content: flex-start;
         display: grid;
         grid-gap: 1.687rem;
-        grid-template-columns: repeat(5, 20%);
+        grid-template-columns: repeat(3, 1fr);
         grid-template-rows: auto;
         justify-content: space-between;
     }
-}
 
-.downloads--logged_in {
-    grid-gap: calc(1.687rem * 3.5) 1.687rem;
+    @media all and (min-width: $large) {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 .document {
@@ -22,6 +22,11 @@
     position: relative;
     list-style-type: none;
     background-color: $neutral-grey1;
+    margin-bottom: 1.5rem;
+
+    @media all and (min-width: $desktop) {
+        margin-bottom: 0;
+    }
 }
 
 .document__header {
@@ -36,12 +41,18 @@
 .document__name {
     color: $primary-black;
     margin-bottom: 0;
+    white-space:normal;
 
     @media screen and (min-width: $desktop) {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;  
         overflow: hidden;
+
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
     }
 }
 
