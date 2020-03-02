@@ -9,6 +9,8 @@ from swift.storage import SwiftStorage
 
 from swiftclient.service import SwiftService, SwiftError
 from sys import argv
+from web.timeline.models import *
+from web.users.auth import auth_test
 
 
 class HomePageView(TemplateView):
@@ -16,9 +18,11 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         document_list = Document.objects.all()
+        moment_list = Moment.objects.all()
 
         kwargs.update({
-            'document_list': document_list
+            'document_list': document_list,
+            'moment_list': moment_list,
         })
         return super().get_context_data(**kwargs)
 
