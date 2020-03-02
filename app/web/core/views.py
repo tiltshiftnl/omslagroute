@@ -3,6 +3,12 @@ from web.documents.models import *
 import os
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.files.storage import default_storage
+from django.conf import settings
+import logging
+from swift.storage import SwiftStorage
+
+from swiftclient.service import SwiftService, SwiftError
+from sys import argv
 
 
 class HomePageView(TemplateView):
@@ -40,12 +46,14 @@ class ObjectStoreView(UserPassesTestMixin, TemplateView):
         return self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
-        default_storage.http_conn
-        resp_headers, containers = default_storage.http_conn.get_account()
-        print("Response headers: %s" % resp_headers)
+
+        object_list = default_storage.listdir('uploads')[1]
+        for o in object_list:
+            print(default_storage.url(o))
+            print(default_storage.exists('uploads/%s' % default_storage.get_valid_name(o)))
 
         kwargs.update({
-            'objectstore_container_list': containers,
-            'objectstore_container': [],
+            'objectstore_container_list': ['uploads/%s' % default_storage.get_valid_name(o) for o in default_storage.listdir('uploads')[1]],
+            'document_list': Document.objects.all(),
         })
         return super().get_context_data(**kwargs)

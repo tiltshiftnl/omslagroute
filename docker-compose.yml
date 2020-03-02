@@ -16,6 +16,7 @@ services:
         target: /var/lib/postgresql/data
   web:
     build: ./app/
+    env_file: .env
     ports:
       - "8088:8088"
     environment:

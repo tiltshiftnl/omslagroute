@@ -7,11 +7,14 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.db import transaction
-from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse
+from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse, Http404
 from django.forms.models import inlineformset_factory
 import os
 from django.core.files.storage import default_storage
 from django.conf import settings
+import urllib
+import requests
+from urllib.request import urlopen
 
 
 class DocumentList(UserPassesTestMixin, ListView):
@@ -143,6 +146,17 @@ def document_file(request, document_version_id):
     # response['Content-length'] = os.stat("debug.py").st_size
     return response
     # return HttpResponseForbidden()
+
+
+def download_object(request):
+    valid_name = 'uploads/%s' % default_storage.get_valid_name('Aanvraag_herbeschikking.pdf')
+    if default_storage.exists(default_storage.url(valid_name)):
+        raise Http404()
+    openfile = default_storage._open(valid_name)
+
+    response = FileResponse(openfile)
+
+    return response
 
 
 
