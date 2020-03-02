@@ -5,10 +5,8 @@
 {% block main %}
         {% if not request.user.is_authenticated %}
             {% include 'users/login.html' %}
+            <hr />
         {% endif %}
 
-        <section class="section-downloads">
-            <h2>Actuele informatie en formulieren</h2>
-            {% include 'documents/snippets/document_list.html' with document_list=document_list %}
-        </section>
+        {% include 'documents/snippets/document_list.html' with document_list=document_list %}
 {% endblock %}

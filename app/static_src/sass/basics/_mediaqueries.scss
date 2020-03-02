@@ -15,4 +15,8 @@ html::after {
     @media screen and (min-width: $desktop) {
         content: 'desktop'
     }
+
+    @media screen and (min-width: $large) {
+        content: 'large'
+    }
 }

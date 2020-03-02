@@ -5,15 +5,25 @@
 {% endcomment %}
 
 {% block main %} 
-    {% if document_list %}
-        <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
-            {% for document in document_list %}
-                {% include "documents/snippets/download.html" with object=document %}
-            {% endfor %}
+    <section class="section section-downloads">
+        <h2>Actuele informatie en formulieren</h2>
 
-            {% include 'documents/snippets/upload.html' %}
-        </ul>
-    {% else %}
-        <p>Er zijn nog geen documenten geüpload</p>
-    {% endif %} 
+        {% if document_list %}
+            <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
+                {% for document in document_list %}
+                    {% include "documents/snippets/download.html" with object=document %}
+                {% endfor %}
+
+                {% include 'documents/snippets/upload.html' %}
+            </ul>
+        {% else %}
+            {% if request.user.is_authenticated %}
+                <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
+                    {% include 'documents/snippets/upload.html' %}
+                </ul>
+            {% else %}
+                <p>Er zijn nog geen documenten geüpload. Wanneer u bent ingelogd kunt u documenten uploaden.</p>
+            {% endif %}
+        {% endif %} 
+    </section>
 {% endblock %}

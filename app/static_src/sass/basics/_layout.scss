@@ -45,6 +45,17 @@ a.skip-main {
     }
 }
 
+hr {
+    min-height: 1px;
+    height: 1px;
+    background-color: $neutral-grey2;
+    color: $neutral-grey2;
+    border-style: solid;
+    border: 0;
+    margin-bottom: 2rem;
+    margin-top: 2.5rem;
+}
+
 html, body {
     height: 100%;
 }
@@ -57,38 +68,51 @@ body {
 .container {
     background: $primary-white;
     width: 100%;
-    height: 100%;
     margin: 0px auto;
 
     @media screen and (min-width: $large) {
         max-width: 1400px;
+        margin: 0px auto;
+    }
+}
+
+.site-header,
+.site-navigation,
+.site-main,
+.site-footer {
+    padding: 15px;
+
+    @media screen and (min-width: $large) {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
 .site-header {
-    align-content: flex-start;
     background-color: $primary-white;
-    display: grid;
-    grid-gap: 0 1.687rem;
-    grid-template-columns: auto 2fr 1fr;
-    justify-content: space-between;
     margin: 0px auto;
     max-width: 960px;
 
     @media all and (min-width: $desktop) {
+        align-content: flex-start;
+        display: grid;
+        grid-gap: 0 1.687rem;
+        grid-template-columns: auto 2fr 1fr;
+        justify-content: space-between;
         height: 108px;
-        padding-top: 1.125rem;
+        padding-top: 1.125rem; 
     }
 }
 
 .site-navigation {
     background-color: $neutral-grey1;
-    margin-bottom: calc(1.124rem * 2);
     min-height: 44px;
 }
 
-.site-userinfo {
-    text-align: right;
+@media all and (min-width: $desktop) {
+    .site-userinfo {
+        text-align: right;
+    }
 }
 
 .site-userinfo__username {
