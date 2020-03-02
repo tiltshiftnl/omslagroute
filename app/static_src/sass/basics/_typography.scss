@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    font-family: avenir next w01, $default-font, Arial, Helvetica, sans-serif;
+    font-family: $default-font, Arial, Helvetica, sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -61,7 +61,6 @@ h4 {
     font-size: 1.0875;
     line-height: 1.510em;
     font-weight: 500;
-    font-family: Avenir Next LT Pro;
 }
 
 p, ul, ol {
