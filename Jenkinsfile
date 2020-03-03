@@ -40,6 +40,7 @@ pipeline {
           def image = docker.build("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}",
             "--no-cache " +
             "--build-arg COMMIT_HASH=${env.COMMIT_HASH} " +
+            "--build-arg BRANCH_NAME=${env.BRANCH_NAME} " +
             "--shm-size 1G " +
             " ./app")
           image.push()

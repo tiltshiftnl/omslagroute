@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>Timeline beheer</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ moment_form_set.management_form }}
+        <ul>
+            {% for moment in moment_form_set %}
+             <li>
+             {% if not moment.instance.id %}
+                 <h2>Nieuw tijdslijn moment</h2>
+             {% endif %}
+              {{ moment.as_p }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="form-field form-field--buttons">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

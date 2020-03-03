@@ -104,12 +104,15 @@ class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
         return auth_test(self.request.user, 'wonen')
 
 
-class DocumentVersionFormSetCreate(CreateView):
+class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
     model = Document
     # fields = ('name', 'document_type',)
     form_class = DocumentForm
     template_name_suffix = '_and_docversion_create_form'
     success_url = reverse_lazy('home')
+
+    def test_func(self):
+        return auth_test(self.request.user, 'wonen')
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

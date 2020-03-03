@@ -1,6 +1,6 @@
-{% load staticfiles %}
+{% load staticfiles auth_tags %}
 
-{% if request.user.is_authenticated %}
+{% if request.user|has_group:"wonen" %}
     <li class="document document--add">
         <a href="{% url 'document_create' %}" class="document__new">
             <div class="document__icon-wrapper">

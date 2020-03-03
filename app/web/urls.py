@@ -17,6 +17,7 @@ urlpatterns = [
     path('omslagroute/health-db', health_db),
 
     path('document/', include('web.documents.urls')),
+    path('timeline/', include('web.timeline.urls')),
 
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
