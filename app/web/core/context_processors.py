@@ -7,5 +7,6 @@ from django.contrib.auth.forms import (
 def app_settings(request=None):
     return {
         'SOURCE_COMMIT': settings.SOURCE_COMMIT,
+        'BRANCH_NAME': settings.BRANCH_NAME,
         'login_form': AuthenticationForm(),
     }

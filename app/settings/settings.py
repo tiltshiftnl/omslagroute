@@ -32,6 +32,7 @@ INSTALLED_APPS = (
 
 )
 SOURCE_COMMIT = os.environ.get('COMMIT_HASH')
+BRANCH_NAME = os.environ.get('BRANCH_NAME')
 
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
 MIDDLEWARE = (

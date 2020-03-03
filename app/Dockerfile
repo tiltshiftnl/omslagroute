@@ -2,10 +2,11 @@ FROM amsterdam/python
 LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV PYTHONUNBUFFERED 1
-ARG COMMIT=""
-LABEL commit=${COMMIT}
+
 ARG COMMIT_HASH
+ARG BRANCH_NAME
 ENV COMMIT_HASH=${COMMIT_HASH}
+ENV BRANCH_NAME=${BRANCH_NAME}
 
 RUN adduser --system datapunt
 RUN adduser datapunt sudo
