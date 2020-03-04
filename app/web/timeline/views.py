@@ -18,7 +18,8 @@ def manage_timeline(request):
     if request.method == 'POST':
         formset = Moment_FormSet(request.POST, request.FILES)
         if formset.is_valid():
-            instances = formset.save(commit=False)
+            formset.save()
+            instances = formset.save()
             for instance in instances:
                 instance.save()
             for object in formset.deleted_objects:
