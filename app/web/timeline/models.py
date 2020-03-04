@@ -13,7 +13,8 @@ class Moment(models.Model):
         null=True,
     )
     order = models.IntegerField(
-        verbose_name=_('Sorteer')
+        verbose_name=_('Sorteer'),
+        default=1,
     )
     documents = models.ManyToManyField(
         to='documents.Document',
