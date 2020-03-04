@@ -45,7 +45,6 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'web.core.middleware.LoginFormMiddleware',
 )
 
 ROOT_URLCONF = os.environ.get('DJANGO_ROOT_URLCONF', 'web.urls')
@@ -177,6 +176,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CORS and allowed hosts
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+
+AUTH_GROUPNAME_PROCESS = 'proces'
 
 LOGIN_URL = '/'
 

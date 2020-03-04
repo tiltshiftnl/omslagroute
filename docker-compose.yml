@@ -23,7 +23,7 @@ services:
       - DJANGO_SETTINGS_MODULE=settings.settings
       - DJANGO_SECRET_KEY=local
       - DJANGO_DEBUG=True
-      - DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost
+      - DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost,*
       - DJANGO_ROOT_URLCONF=web.urls
       - DJANGO_STATIC_URL=/static/
       - ADMIN_USERNAME=admin

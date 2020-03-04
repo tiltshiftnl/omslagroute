@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db import transaction
 from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse, Http404
 from django.forms.models import inlineformset_factory
-import os
+from web.timeline.models import Moment
 from django.core.files.storage import default_storage
 from django.conf import settings
 import urllib
@@ -106,7 +106,6 @@ class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
 
 class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
     model = Document
-    # fields = ('name', 'document_type',)
     form_class = DocumentForm
     template_name_suffix = '_and_docversion_create_form'
     success_url = reverse_lazy('home')
@@ -124,31 +123,32 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        familymembers = context['documentversionformset']
+        documentversionformset = context['documentversionformset']
         with transaction.atomic():
             self.object = form.save()
+            if documentversionformset.is_valid():
+                documentversionformset.instance = self.object
+                documentversionformset.save()
 
-            if familymembers.is_valid():
-                familymembers.instance = self.object
-                familymembers.save()
         return super().form_valid(form)
 
 
-def document_file(request, document_version_id):
-    document_version = get_object_or_404(DocumentVersion, id=document_version_id)
-    filename = document_version.uploaded_file
+class CreateDocumentAddToMoment(DocumentVersionFormSetCreate):
+    def get_initial(self):
+        initial = super().get_initial()
+        initial = initial.copy()
+        get_object_or_404(Moment, pk=self.kwargs.get('moment_id'))
+        initial['moment_id'] = self.kwargs.get('moment_id')
+        return initial
 
-    resp_headers, obj_contents = default_storage.http_conn.get_object(settings.SWIFT_CONTAINER_NAME, filename.path)
-    with open(filename.path, 'w') as local:
-        response = FileResponse(local.write(obj_contents))
-    # response = FileResponse(open(filename.path, 'rb'))
-    print(filename)
-    #response = HttpResponse(mimetype='application/force-download')
-    # response['Content-Disposition'] = 'attachment;filename="%s"' % filename
-    # response["X-Sendfile"] = filename
-    # response['Content-length'] = os.stat("debug.py").st_size
-    return response
-    # return HttpResponseForbidden()
+    def form_valid(self, form):
+        valid = super().form_valid(form)
+        moment_id = self.kwargs.get('moment_id')
+        moment = Moment.objects.get(id=moment_id) if Moment.objects.filter(id=moment_id).count() else None
+        if moment:
+            with transaction.atomic():
+                moment.documents.add(self.object)
+        return valid
 
 
 def download_object(request):
@@ -156,9 +156,7 @@ def download_object(request):
     if default_storage.exists(default_storage.url(valid_name)):
         raise Http404()
     openfile = default_storage._open(valid_name)
-
     response = FileResponse(openfile)
-
     return response
 
 

@@ -10,18 +10,18 @@
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ documentversionformset.management_form }}
-
+        {{ form.moment_id }}
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
             {{ form.name }}
             <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
-        
+
         <div class="form-field">
             <label for="id_document_type">{{ form.document_type.label }}</label>
             <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
-                    <li>                
+                    <li>
                         {{ radio.tag }}
                         <label for="{{ radio.id_for_label }}" class="form-field__radiolabel">
                             {{ radio.choice_label }}
@@ -30,7 +30,7 @@
                 {% endfor %}
             </ul>
         </div>
-        
+
         <div class="form-field">
             {% for form in documentversionformset.forms %}
                 {{ form.uploaded_file }}
