@@ -3,9 +3,8 @@
 // tag image, push to repo, remove local tagged image
 def tag_image_as(tag) {
   script {
-    def repoImage = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}"
-    docker.image("${repoImage}:${env.COMMIT_HASH}").push(tag)
-    sh "docker rmi ${repoImage}:${tag} || true"
+    docker.image("${REPO_IMAGE}:${env.COMMIT_HASH}").push(tag)
+    sh "docker rmi ${REPO_IMAGE}:${tag} || true"
   }
 }
 
@@ -20,9 +19,8 @@ def tag_image_as(tag) {
 pipeline {
   agent any
   environment {
-    DOCKER_IMAGE = "fixxx/omslagroute"
     APP = "omslagroute"
-    DOCKER_REGISTRY = "repo.secure.amsterdam.nl"
+    REPO_IMAGE = "${DOCKER_REGISTRY_NO_PROTOCOL}/fixxx/omslagroute"
   }
 
   stages {
@@ -46,7 +44,7 @@ pipeline {
 
       steps {
         script {
-          def image = docker.build("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}",
+          def image = docker.build("${REPO_IMAGE}:${env.COMMIT_HASH}",
             "--no-cache " +
             "--build-arg COMMIT_HASH=${env.COMMIT_HASH} " +
             "--build-arg BRANCH_NAME=${env.BRANCH_NAME} " +
@@ -101,7 +99,7 @@ pipeline {
     always {
       script {
         // delete original image built on the build server
-        sh "docker rmi ${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH} || true"
+        sh "docker rmi ${REPO_IMAGE}:${env.COMMIT_HASH} || true"
       }
     }
   }
