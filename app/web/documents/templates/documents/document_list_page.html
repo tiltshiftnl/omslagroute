@@ -10,7 +10,9 @@
                 <span>{{ document.name|striptags }}</span><br>
                 <a href="{% url 'document_update' document.id %}"><strong>Wijzig dit document </strong></a><br>
                 <a href="{% url 'document_delete' document.id %}"><strong>Verwijder dit document </strong></a><br>
-                <img src="{% static document.document_type_path %}"><br>
+                <svg class="document__icon"  width="40" height="40" >
+                    <use href="#{{ object.document_type_value|lower }}" attr.xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40" />
+                </svg><br>
                 <span>Aantal documenten: <strong>{{ document.document_to_document_version.all|length }}</strong></span><br>
                 <a href="{% url 'add_document_version_to_document' document.id %}"><strong>Nieuwe versie toevoegen </strong></a><br>
                 {% if document.document_to_document_version.all|length %}

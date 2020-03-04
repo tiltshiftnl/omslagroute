@@ -5,7 +5,7 @@
             {% csrf_token %}
 
             {% if request.GET.error == 'login' %}
-                <p>Er ging iets mis met inloggen.</p>
+                <p class="error-text">Er ging iets mis met inloggen.</p>
             {% endif %}
 
             <div class="form-field">

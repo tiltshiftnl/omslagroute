@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    font-family: avenir next w01, $default-font, Arial, Helvetica, sans-serif;
+    font-family: $default-font, Arial, Helvetica, sans-serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -34,34 +34,33 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    font-size: 1.8125em;
+    font-size: 1.8125rem;
     font-weight: bold;
-    line-height: 1.37931em;
-    margin-top: 0.53em;
+    line-height: 1.37931rem;
+    margin-top: 0.53rem;
     margin-bottom: 0;
 }
 
 h2 {
-    font-size: 1.5em;
-    line-height: 1.25em;
+    font-size: 1.5rem;
+    line-height: 1.25rem;
     font-weight: bold;
 }
 
 h3 {
-    font-size: 1.25em;
-    line-height: 1.4em
+    font-size: 1rem;
+    line-height: 1.15rem
 }
 
 h4 {
-    font-size: 1.125em;
-    line-height: 1.55556em
+    font-size: 1.125rem;
+    line-height: 1.55556rem
 }
 
 .page-intro {
     font-size: 1.0875;
-    line-height: 1.510em;
+    line-height: 1.510rem;
     font-weight: 500;
-    font-family: Avenir Next LT Pro;
 }
 
 p, ul, ol {
@@ -75,7 +74,7 @@ b, strong, em, small, code {
 
 time {
     color: $neutral-grey4;
-    font-size: .9rem;
+    font-size: .8rem;
 } 
 
 p { 
