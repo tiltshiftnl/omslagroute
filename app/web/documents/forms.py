@@ -5,6 +5,7 @@ from django.forms.models import inlineformset_factory
 
 
 class DocumentVersionForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
@@ -20,6 +21,8 @@ class DocumentVersionForm(forms.ModelForm):
 
 
 class DocumentForm(forms.ModelForm):
+    # moment_id = forms.IntegerField(label='Moment id', required=False)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
@@ -27,7 +30,7 @@ class DocumentForm(forms.ModelForm):
         self.fields['name'].label = "Titel van het document:"
         self.fields['document_type'].label = "Om wat voor soort document gaat het?"
 
-        # Removes the first choice (meant to clean up select) 
+        # Removes the first choice (meant to clean up select)
 
         # for field_name in self.fields:
         #     field = self.fields.get(field_name)
