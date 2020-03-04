@@ -1,26 +1,28 @@
-{% if document_list %}
-    <ul>
+{% if moment_list %}
+    <section class="section-timeline">
+        <h2>De Omslagroute</h2>
+    
         {% for moment in moment_list %}
-            <li>{{ moment.name }}</li>
+            <div class="section-timeline__spacing">
+                <details class="details details--toplevel" data-moment-order="{{ moment.order }}" open>
+                    <summary>{{ moment.name }}</summary>
+                    <div class="details__content">
+                        <p>{{ moment.description }}</p>
+
+                       {% if moment.documents.all %}
+                            <ul>
+                                {% for document in moment.documents.all %}
+                                    <li>{{ document.name }}</li>
+                                {% empty %}
+                                    <!-- if we add a create document, put it here -->
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Voor deze fase zijn er geen documenten.</p>
+                        {% endif %}
+                    </div>
+                </details>
+            </div>
         {% endfor %}
-    </ul>
+    </section>
 {% endif %}
-
-
-<section class="section-timeline">
-    <h2>De Omslagroute</h2>
-    <div class="section-timeline__spacing">
-        <details class="details details--toplevel" open>
-            <summary>Onderzoeksfase</summary>
-            <div class="details__content">
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit inventore nobis, eaque illum odio maxime voluptates pariatur incidunt expedita numquam cumque rerum! Aperiam debitis voluptatem distinctio a! Perferendis, earum doloremque?</p>
-            </div>
-        </details>
-        <details class="details details--toplevel" >
-            <summary>Onderzoeksfase</summary>
-            <div class="details__content">
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit inventore nobis, eaque illum odio maxime voluptates pariatur incidunt expedita numquam cumque rerum! Aperiam debitis voluptatem distinctio a! Perferendis, earum doloremque?</p>
-            </div>
-        </details>
-    </div>
-</section>
