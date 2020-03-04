@@ -3,33 +3,32 @@
         <h2>De Omslagroute</h2>
     
         {% for moment in moment_list %}
-            <div class="section-timeline__spacing">
-                <details class="details details--toplevel" data-moment-order="{{ moment.order }}" open>
-                    <summary class="details__header">
-                        <span class="details__title">{{ moment.name }}</span>
-                        <svg class="details__header__open" width="14" height="9">
-                            <use href="#chevron-up" attr.xlink:href="#chevron-up" width="14" height="9" />
-                        </svg>
-                    </summary>
-                    <div class="details__content">
-                        <p>{{ moment.description }}</p>
+            <details class="details details--toplevel" data-moment-order="{{ moment.order }}">
+                <summary class="details__header">
+                    <span class="details__title">{{ moment.name }}</span>
+                    <svg class="details__header__open" width="14" height="9">
+                        <use href="#chevron-up" attr.xlink:href="#chevron-up" width="14" height="9" />
+                    </svg>
+                </summary>
+                    
+                <div class="details__content">
+                    <p>{{ moment.description }}</p>
 
-                       {% if moment.documents.all %}
+                    <!-- {% if moment.documents.all %}
+                        <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
+                            {% include 'documents/snippets/document_list.html' %}
+                        </ul>
+                    {% else %}
+                        {% if request.user.is_authenticated %}
                             <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
-                                {% include 'documents/snippets/document_list.html' %}
+                                {% include 'documents/snippets/upload.html' %}
                             </ul>
                         {% else %}
-                            {% if request.user.is_authenticated %}
-                                <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
-                                    {% include 'documents/snippets/upload.html' %}
-                                </ul>
-                            {% else %}
-                                <p>Voor deze fase zijn er geen documenten geüpload. Wanneer u bent ingelogd kunt u documenten uploaden.</p>
-                            {% endif %}
-                        {% endif %} 
-                    </div>
-                </details>
-            </div>
+                            <p>Voor deze fase zijn er geen documenten geüpload. Wanneer u bent ingelogd kunt u documenten uploaden.</p>
+                        {% endif %}
+                    {% endif %}  -->
+                </div>
+            </details>
         {% endfor %}
     </section>
 {% endif %}
