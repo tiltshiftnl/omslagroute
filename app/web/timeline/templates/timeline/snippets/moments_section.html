@@ -15,16 +15,18 @@
                         <p>{{ moment.description }}</p>
 
                        {% if moment.documents.all %}
-                            <ul>
-                                {% for document in moment.documents.all %}
-                                    <li>{{ document.name }}</li>
-                                {% empty %}
-                                    <!-- if we add a create document, put it here -->
-                                {% endfor %}
+                            <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
+                                {% include 'documents/snippets/document_list.html' %}
                             </ul>
                         {% else %}
-                            <p>Voor deze fase zijn er geen documenten.</p>
-                        {% endif %}
+                            {% if request.user.is_authenticated %}
+                                <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
+                                    {% include 'documents/snippets/upload.html' %}
+                                </ul>
+                            {% else %}
+                                <p>Voor deze fase zijn er geen documenten geüpload. Wanneer u bent ingelogd kunt u documenten uploaden.</p>
+                            {% endif %}
+                        {% endif %} 
                     </div>
                 </details>
             </div>
