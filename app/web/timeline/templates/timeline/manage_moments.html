@@ -5,8 +5,8 @@
 
     <form method="post">
         {% csrf_token %}
-
         {{ moment_form_set.management_form }}
+        {{ moment_form_set.errors }}
         <ul>
             {% for moment in moment_form_set %}
              <li>
