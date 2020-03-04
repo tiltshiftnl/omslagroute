@@ -1,5 +1,14 @@
 #!groovy
 
+// tag image, push to repo, remove local tagged image
+def tag_image_as(tag) {
+  script {
+    def repoImage = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}"
+    docker.image("${repoImage}:${env.COMMIT_HASH}").push(tag)
+    sh "docker rmi ${repoImage}:${tag} || true"
+  }
+}
+
 /*
 * TODO: Change 'when' conditions to 'tag "v*"', to prevent us pushing to
   production when not intended (just because we tagged something that was not a
@@ -44,7 +53,7 @@ pipeline {
             "--shm-size 1G " +
             " ./app")
           image.push()
-          image.push("latest")
+          tag_image_as("latest")
         }
       }
     }
@@ -52,10 +61,7 @@ pipeline {
     stage("Push acceptance image") {
       when { expression { "master" == env.BRANCH_NAME } }
       steps {
-        script {
-          def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
-          image.push("acceptance")
-        }
+        tag_image_as("acceptance")
       }
     }
 
@@ -74,10 +80,7 @@ pipeline {
     stage("Push production image") {
       when { expression { "production" == env.BRANCH_NAME } }
       steps {
-        script {
-          def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
-          image.push("production")
-        }
+        tag_image_as("production")
       }
     }
 
@@ -90,6 +93,15 @@ pipeline {
               [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
               [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: '-e platform=secure -e app=omslagroute'],
           ]
+      }
+    }
+  }
+
+  post {
+    always {
+      script {
+        // delete original image built on the build server
+        sh "docker rmi ${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH} || true"
       }
     }
   }
