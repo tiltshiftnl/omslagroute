@@ -1,6 +1,7 @@
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, View
 from .models import *
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -17,7 +18,13 @@ def manage_timeline(request):
     if request.method == 'POST':
         formset = Moment_FormSet(request.POST, request.FILES)
         if formset.is_valid():
-            formset.save()
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.save()
+            for object in formset.deleted_objects:
+                object.delete()
+            return HttpResponseRedirect(reverse('manage_timeline'))
+
     else:
         formset = Moment_FormSet()
     return render(request, 'timeline/manage_moments.html', {
