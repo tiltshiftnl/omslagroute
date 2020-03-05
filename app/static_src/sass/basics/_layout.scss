@@ -86,9 +86,9 @@ body {
 .site-footer {
     padding: 15px;
 
-    @media screen and (min-width: $large) {
-        padding-left: 0;
-        padding-right: 0;
+    @media screen and (min-width: $desktop) {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 
@@ -98,11 +98,15 @@ body {
     max-width: 960px;
 
     @media all and (min-width: $desktop) {
+        -ms-flex-line-pack: start;
         align-content: flex-start;
+        display: -ms-inline-flexbox;
         display: grid;
         grid-gap: 0 1.687rem;
         grid-template-columns: auto 2fr 1fr;
-        justify-content: space-between;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
         height: 108px;
         padding-top: 1.125rem; 
     }
