@@ -87,9 +87,12 @@ body {
     padding: 15px;
 
     @media screen and (min-width: $desktop) {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 0;
     }
+}
+
+.section {
+    padding: 0 15px;
 }
 
 .site-header {
@@ -99,10 +102,11 @@ body {
 
     @media all and (min-width: $desktop) {
         -ms-flex-line-pack: start;
-        align-content: flex-start;
-        display: -ms-inline-flexbox;
+        align-content: flex-start; 
+        display: -ms-grid;
         display: grid;
         grid-gap: 0 1.687rem;
+        -ms-grid-columns: auto 1.687rem 2fr 1.687rem 1fr;
         grid-template-columns: auto 2fr 1fr;
         -webkit-box-pack: justify;
             -ms-flex-pack: justify;
