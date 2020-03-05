@@ -12,9 +12,15 @@
                 <div class="document__header">
                     <h3 class="document__name">{{ object.document_type_value }} {{ object.name }}</h3>
                 </div>
-                <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
-                    Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.
-                </time>
+
+                {% if  document_version.uploaded %}
+                    <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
+                        Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.
+                    </time>
+                    {% else %}
+                    <span class="document__date">&nbsp;</span>
+                {% endif %}
+
             {% endif %}
         </a>
 
