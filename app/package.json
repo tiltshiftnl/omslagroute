@@ -19,6 +19,7 @@
     "node-sass": "^4.12.0",
     "webpack": "^4.41.5",
     "webpack-bundle-tracker": "^0.4.3",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "details-polyfill": "^1.1.0"
   }
 }

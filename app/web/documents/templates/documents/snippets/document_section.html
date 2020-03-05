@@ -1,0 +1,23 @@
+{% load static %}
+
+{% comment %}
+    http://0.0.0.0:8088/document/
+{% endcomment %}
+
+{% block main %} 
+    <section class="section section-downloads">
+        <h2>Actuele informatie en formulieren</h2>
+
+        {% if document_list %}
+            {% include 'documents/snippets/document_list.html' %}
+        {% else %}
+            {% if request.user.is_authenticated %}
+                <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
+                    {% include 'documents/snippets/upload.html' %}
+                </ul>
+            {% else %}
+                <p>Er zijn nog geen documenten geüpload. Wanneer u bent ingelogd kunt u documenten uploaden.</p>
+            {% endif %}
+        {% endif %} 
+    </section>
+{% endblock %}

@@ -8,5 +8,9 @@
             <hr />
         {% endif %}
 
-        {% include 'documents/snippets/document_list.html' with document_list=document_list %}
+        {% include 'timeline/snippets/moments_section.html' %}
+
+        <hr />
+
+        {% include 'documents/snippets/document_section.html' with document_list=document_list %}
 {% endblock %}

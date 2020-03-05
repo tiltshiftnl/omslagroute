@@ -1,0 +1,219 @@
+$toplevel-moment: 1.5rem;
+$sublevel-moment: 1rem;
+$timeline-width: 3px;
+$padding-left: 30px;
+
+.details-wrapper {
+    position: relative;
+
+    .dot {
+        content: ' ';
+        border-radius: 50%;
+        position: absolute;
+        z-index: 2;
+    }
+
+    .dot--large {
+        background-color: $primary-darkblue;
+        width: $toplevel-moment;
+        height:  $toplevel-moment;
+        left: calc(
+            #{$padding-left / 2} +
+            #{$timeline-width  / 2}
+            );
+        top: calc(#{$toplevel-moment / 2});
+    }
+
+    .dot--small {
+        background-color: $supplement-lightblue;
+        width: $sublevel-moment;
+        height: $sublevel-moment;
+        left: calc(
+            #{$padding-left / 2} +
+            #{$timeline-width  / 2} +
+            #{$sublevel-moment  / 4}
+        );
+        top: calc(
+            #{$toplevel-moment / 2} +
+            #{$sublevel-moment  / 4}
+            );
+    }
+
+    // blue line
+    &:not(:last-of-type)::before {
+        border-left: 3px solid $primary-darkblue;
+        top: 1rem;
+        position: absolute;
+        content: ' ';
+        height: 100%;
+        width: 0px;
+        left: calc(
+            #{$padding-left} -
+            #{$timeline-width}
+            );
+        z-index: 2;
+    } 
+}
+
+.details {
+    border-top: 0;
+    border-bottom: 0;
+    position: relative;
+    margin-left: $padding-left;
+
+    // blue line
+    &:not(:last-of-type)::before {
+        border-left: 3px solid $primary-darkblue;
+        top: 1rem;
+        position: absolute;
+        content: ' ';
+        height: 100%;
+        width: 0px;
+        left: calc(-1rem + 12px);
+        z-index: 2;
+    } 
+
+    &:hover,
+    &:focus {
+        background-color: $neutral-grey1;
+
+        .details__header::before {
+            height: 100%;
+            width: $padding-left;
+            content: ' ';
+            background-color: $neutral-grey1;
+            position: absolute;
+            left: -#{$padding-left};
+            top: 0;
+            border-left: 0;
+            z-index: 1;
+        }
+
+        .details__header:focus::before {
+            background-color: $neutral-grey2;
+        }
+    }
+    
+    &:focus {
+        summary::before,
+        .experiment {
+            outline: 0;
+        }
+    }
+}
+
+.details__header-opened {
+    display: none;
+}
+
+.details[open] {
+    background-color: $neutral-grey1;
+
+    .details__header-closed {
+        display: none;
+    }
+
+    .details__header-opened {
+        display: block;
+    }
+ 
+    .experiment {
+        height: 100%;
+        width: $padding-left;
+        content: ' ';
+        background-color: $neutral-grey1;
+        position: absolute;
+        left: -30px;
+        top: 0;
+        border-left: 0;
+    }
+}
+
+.details__header {
+    font-weight: bold;
+    border: 0;
+    width: 100%;
+    position: relative;
+    -webkit-appearance:none;
+    list-style-image: none;
+    display: flex;
+    align-items: center;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &::hover {
+        background-color: $neutral-grey1;
+    }
+
+    &:focus,
+    &:active {
+        outline: none;
+        background-color: $neutral-grey2;
+
+        &::before {
+            background-color: $neutral-grey2;
+            height: 100%;
+            width: $padding-left;
+            content: ' ';
+            position: absolute;
+            left: -#{$padding-left};
+            top: 0;
+            border-left: 0;
+            z-index: 1;
+        }
+    }
+    
+    &:focus-within {
+        &::before {
+            background-color: $neutral-grey2;
+            height: 100%;
+            width: $padding-left;
+            content: ' ';
+            position: absolute;
+            left: -#{$padding-left};
+            top: 0;
+            border-left: 0;
+            z-index: 1;
+        }
+    }
+}
+
+.details__toggle-icon {
+    margin-left: .5rem;
+}
+
+.details__header,
+.details__content {
+    padding: 1rem 1rem 1rem 2rem;
+}
+
+// specific to our usecase
+
+.downloads--timeline {
+    padding-bottom: 0; 
+
+    @media all and (min-width: $desktop) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media all and (min-width: $large) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .document__version {
+        border-color: $neutral-grey3;
+        background-color: $primary-white;
+    }
+
+    .document:only-child,
+    .document:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .document__change {
+        border-top: .5rem solid transparent;
+        margin: 0;
+    }
+}
