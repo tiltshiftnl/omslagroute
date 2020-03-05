@@ -3,7 +3,7 @@
 {% block main %}
     <h2>Timeline beheer</h2>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" data-decorator="timeline-form">
         {% csrf_token %}
         {{ moment_form_set.management_form }}
        
@@ -14,7 +14,7 @@
                 <h2>Nieuw tijdslijn moment</h2>
             {% endif %}
 
-            <fieldset>
+            <fieldset data-moment {% if not moment.instance.id %}data-new-moment{% endif %}>
                 <div class="form-field">
                     {{ moment.name.label_tag }} 
                     <p class="help-text">
