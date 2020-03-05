@@ -9,7 +9,7 @@
         <li class="document">
             <a href="{{ document_version.uploaded_file.url }}" class="version" download>
                 <svg class="document__icon"  width="40" height="40" >
-                    <use href="#{{ object.document_type_value|lower }}" attr.xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40" />
+                    <use href="#{{ object.document_type_value|lower }}" xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40" />
                 </svg>
                 <h3>{{ object.document_type_value }}<br>{{ object.name }}</h3>
                 <p>
@@ -25,7 +25,7 @@
                 <p>
                     <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--secondary">
                         <svg class="button__icon"  width="20" height="20" >
-                            <use href="#upload" attr.xlink:href="#upload"  width="20" height="20" />
+                            <use href="#upload" xlink:href="#upload"  width="20" height="20" />
                         </svg>
 
                         <span class="button__label">Vervangen</span>
