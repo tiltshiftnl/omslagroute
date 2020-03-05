@@ -59,7 +59,7 @@ $padding-left: 30px;
     border-top: 0;
     border-bottom: 0;
     position: relative;
-    margin-left: $padding-left;
+    left: $padding-left;
 
     // blue line
     &:not(:last-of-type)::before {
@@ -76,6 +76,7 @@ $padding-left: 30px;
     &:hover,
     &:focus {
         background-color: $neutral-grey1;
+        position: relative;
 
         .details__header::before {
             height: 100%;
@@ -96,7 +97,7 @@ $padding-left: 30px;
     
     &:focus {
         summary::before,
-        .experiment {
+        .details__headerhoverblock {
             outline: 0;
         }
     }
@@ -109,6 +110,10 @@ $padding-left: 30px;
 .details[open] {
     background-color: $neutral-grey1;
 
+    .details__header {
+        background-color: $neutral-grey1;
+    }
+
     .details__header-closed {
         display: none;
     }
@@ -117,7 +122,7 @@ $padding-left: 30px;
         display: block;
     }
  
-    .experiment {
+    .details__headerhoverblock {
         height: 100%;
         width: $padding-left;
         content: ' ';
@@ -143,8 +148,12 @@ $padding-left: 30px;
         display: none;
     }
 
-    &::hover {
+    &:hover {
         background-color: $neutral-grey1;
+
+        + .details__content {
+            background-color: $neutral-grey1;
+        }
     }
 
     &:focus,
@@ -189,16 +198,26 @@ $padding-left: 30px;
     padding: 1rem 1rem 1rem 2rem;
 }
 
+.details__content {
+    background-color: $neutral-grey1;
+}
+
+html.no-details details > summary::before {
+    content: " " !important;
+}
+
 // specific to our usecase
 
 .downloads--timeline {
     padding-bottom: 0; 
 
     @media all and (min-width: $desktop) {
+        -ms-grid-columns: 1fr 1fr 1fr;
         grid-template-columns: repeat(3, 1fr);
     }
 
     @media all and (min-width: $large) {
+        -ms-grid-columns: 1fr 1fr 1fr 1fr;
         grid-template-columns: repeat(4, 1fr);
     }
 
