@@ -20,18 +20,20 @@
 
     {% block header %}
         <header class="site-header">
-            <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}"></a>
-            <h1>Omslagroute</h1>
-            {% if request.user.is_authenticated %}
-                <div class="site-userinfo">
-                    Ingelogd als:
-                        {% if request.user.is_superuser %}
-                            <a href="/admin" class="site-userinfo__username">admin</a>
-                        {% endif %}
-                            <span class="site-userinfo__username">{{ request.user.first_name }}</span>
-                         | <a href="{% url 'uitloggen' %}">Uitloggen</a>
-                </div>
-            {% endif %}
+            <div class="site-header-wrapper">
+                <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}"></a>
+                <h1 class="site-title">Omslagroute</h1>
+                {% if request.user.is_authenticated %}
+                    <div class="site-userinfo">
+                        Ingelogd als:
+                            {% if request.user.is_superuser %}
+                                <a href="/admin" class="site-userinfo__username">admin</a>
+                            {% endif %}
+                                <span class="site-userinfo__username">{{ request.user.first_name }}</span>
+                            | <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                    </div>
+                {% endif %}
+            </div>
         </header>
         <div class="site-navigation">
         </div>

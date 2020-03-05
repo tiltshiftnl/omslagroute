@@ -4,15 +4,22 @@
     padding-left: 0;
 
     @media all and (min-width: $desktop) {
+        -ms-flex-line-pack: start;
         align-content: flex-start;
-        display: grid;
-        grid-gap: 1.687rem;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto;
-        justify-content: space-between;
+            display: -ms-grid;
+            display: grid;
+            grid-gap: 1.687rem;
+            -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr;
+            grid-template-columns: repeat(3, 1fr);
+            -ms-grid-rows: auto;
+            grid-template-rows: auto;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
     }
 
     @media all and (min-width: $large) {
+        -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr;
         grid-template-columns: repeat(5, 1fr);
     }
 }
