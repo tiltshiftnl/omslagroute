@@ -189,6 +189,12 @@ $padding-left: 30px;
     }
 }
 
+.details__header:hover,
+.details__title:hover,
+.details__toggle-icon:hover {
+    cursor: pointer;
+}
+
 .details__toggle-icon {
     margin-left: .5rem;
 }
