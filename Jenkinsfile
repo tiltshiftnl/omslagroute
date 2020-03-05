@@ -1,5 +1,13 @@
 #!groovy
 
+// tag image, push to repo, remove local tagged image
+def tag_image_as(tag) {
+  script {
+    docker.image("${DOCKER_IMAGE_URL}:${env.COMMIT_HASH}").push(tag)
+    sh "docker rmi ${DOCKER_IMAGE_URL}:${tag} || true"
+  }
+}
+
 /*
 * TODO: Change 'when' conditions to 'tag "v*"', to prevent us pushing to
   production when not intended (just because we tagged something that was not a
@@ -11,9 +19,8 @@
 pipeline {
   agent any
   environment {
-    DOCKER_IMAGE = "fixxx/omslagroute"
     APP = "omslagroute"
-    DOCKER_REGISTRY = "repo.secure.amsterdam.nl"
+    DOCKER_IMAGE_URL = "${DOCKER_REGISTRY_NO_PROTOCOL}/fixxx/omslagroute"
   }
 
   stages {
@@ -37,14 +44,14 @@ pipeline {
 
       steps {
         script {
-          def image = docker.build("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}",
+          def image = docker.build("${DOCKER_IMAGE_URL}:${env.COMMIT_HASH}",
             "--no-cache " +
             "--build-arg COMMIT_HASH=${env.COMMIT_HASH} " +
             "--build-arg BRANCH_NAME=${env.BRANCH_NAME} " +
             "--shm-size 1G " +
             " ./app")
           image.push()
-          image.push("latest")
+          tag_image_as("latest")
         }
       }
     }
@@ -52,10 +59,7 @@ pipeline {
     stage("Push acceptance image") {
       when { expression { "master" == env.BRANCH_NAME } }
       steps {
-        script {
-          def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
-          image.push("acceptance")
-        }
+        tag_image_as("acceptance")
       }
     }
 
@@ -74,10 +78,7 @@ pipeline {
     stage("Push production image") {
       when { expression { "production" == env.BRANCH_NAME } }
       steps {
-        script {
-          def image = docker.image("${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.COMMIT_HASH}")
-          image.push("production")
-        }
+        tag_image_as("production")
       }
     }
 
@@ -90,6 +91,15 @@ pipeline {
               [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
               [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: '-e platform=secure -e app=omslagroute'],
           ]
+      }
+    }
+  }
+
+  post {
+    always {
+      script {
+        // delete original image built on the build server
+        sh "docker rmi ${DOCKER_IMAGE_URL}:${env.COMMIT_HASH} || true"
       }
     }
   }
