@@ -91,26 +91,29 @@ body {
     }
 }
  
-
 .site-header {
     background-color: $primary-white;
     margin: 0px auto;
     max-width: 960px;
 
-    @media all and (min-width: $desktop) {
-        -ms-flex-line-pack: start;
-        align-content: flex-start; 
-        display: -ms-grid;
-        display: grid;
-        grid-gap: 0 1.687rem;
-        -ms-grid-columns: auto 1.687rem 2fr 1.687rem 1fr;
-        grid-template-columns: auto 2fr 1fr;
-        -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
-                justify-content: space-between;
-        height: 108px;
-        padding-top: 1.125rem; 
+    .site-header-wrapper {
+        @media all and (min-width: $desktop) {
+            -ms-flex-line-pack: start;
+            align-content: flex-start; 
+            display: -ms-flexbox;
+            display: grid;
+            grid-gap: 0 1.687rem;
+            grid-template-columns: auto 2fr 1fr;
+                -ms-flex-pack: start;
+                    justify-content: space-between;
+            height: 108px;
+            padding-top: 1.125rem; 
+        }
     }
+}
+
+.site-title {
+    margin-right: auto;
 }
 
 .site-navigation {
