@@ -3,26 +3,59 @@
 {% block main %}
     <h2>Timeline beheer</h2>
 
-    <form method="post" data-decorator="timeline-form">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ moment_form_set.management_form }}
-        {{ moment_form_set.errors }}
-        <ul>
-            {% for moment in moment_form_set %}
-             <li data-moment {% if not moment.instance.id %}data-new-moment{% endif %}>
-             {% if not moment.instance.id %}
-                 <h2>Nieuw tijdslijn moment</h2>
-             {% endif %}
-              {{ moment.as_p }}
-             <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
-             <a href="#" data-handler="moment-down">Naar beneden</a>
-            </li>
-            {% endfor %}
-        </ul>
+       
+        <!-- {{ moment_form_set.errors }} -->
+
+        {% for moment in moment_form_set %}
+            {% if not moment.instance.id %}
+                <h2>Nieuw tijdslijn moment</h2>
+            {% endif %}
+
+            <fieldset>
+                <div class="form-field">
+                    {{ moment.name.label_tag }} 
+                    <p class="help-text">
+                        (Naam)
+                    </p>
+                    {{ moment.name }}
+                </div>
+
+                <div class="form-field">
+                    {{ moment.description.label_tag }} 
+                    <p class="help-text">
+                        (Beschrijving)
+                    </p>
+                    {{ moment.description }}
+                </div>
+
+                <div class="form-field">
+                    <label for="id_document_type">{{ moment.documents.label_tag }}</label>
+                    <p class="help-text">
+                        (Welke documenten komen voor in deze fase?)
+                    </p>
+                    <ul class="form-field__checkboxgroup">
+                        {% for checkbox in moment.documents %}
+                            <li>
+                                {{ checkbox.tag }}
+                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabel">
+                                    {{ checkbox.choice_label }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
+                <a href="#" data-handler="moment-down">Naar beneden</a>
+            </fieldset>
+        {% endfor %} 
 
         <div class="form-field form-field--buttons">
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
-        </div>
+        </div> 
     </form>
 {% endblock %}
