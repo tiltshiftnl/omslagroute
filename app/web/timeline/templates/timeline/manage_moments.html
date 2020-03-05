@@ -7,18 +7,18 @@
         {% csrf_token %}
         {{ moment_form_set.management_form }}
         <!-- {{ moment_form_set.errors }} -->
-        
+
         {% for moment in moment_form_set %}
             {% if not moment.instance.id %}
                 <h2>Nieuw tijdslijn moment</h2>
             {% endif %}
-            
+
             <fieldset>
-           
+
                 {# {{ moment.as_p }} #}
 
                 <div class="form-field">
-                    {{ moment.name.label_tag }} 
+                    {{ moment.name.label_tag }}
                     <p class="help-text">
                         (Naam)
                     </p>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="form-field">
-                    {{ moment.description.label_tag }} 
+                    {{ moment.description.label_tag }}
                     <p class="help-text">
                         (Beschrijving)
                     </p>
@@ -48,7 +48,10 @@
                             </li>
                         {% endfor %}
                     </ul>
+                    <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
+                    <a href="#" data-handler="moment-down">Naar beneden</a>
                 </div>
+
             </fieldset>
         {% endfor %}
 
