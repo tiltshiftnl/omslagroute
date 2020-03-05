@@ -15,7 +15,7 @@
             
             <fieldset>
            
-                <!-- {{ moment.as_p }} -->
+                {# {{ moment.as_p }} #}
 
                 <div class="form-field">
                     {{ moment.name.label_tag }} 
@@ -42,7 +42,7 @@
                         {% for checkbox in moment.documents %}
                             <li>
                                 {{ checkbox.tag }}
-                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabel">
+                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabels">
                                     {{ checkbox.choice_label }}
                                 </label>
                             </li>

@@ -252,3 +252,9 @@ li:focus-within .form-field__checkboxlabel::before {
     border: 1px solid $primary-black;
     box-shadow: 0 0 0 0.3125em orange;
 }
+
+// temp
+
+.form-field__checkboxgroup li {
+    display: flex;
+}
