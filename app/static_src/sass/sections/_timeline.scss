@@ -173,20 +173,6 @@ $padding-left: 30px;
             z-index: 1;
         }
     }
-    
-    &:focus-within {
-        &::before {
-            background-color: $neutral-grey1;
-            height: 100%;
-            width: $padding-left;
-            content: ' ';
-            position: absolute;
-            left: -#{$padding-left};
-            top: 0;
-            border-left: 0;
-            z-index: 1;
-        }
-    }
 }
 
 .details__header:hover,
