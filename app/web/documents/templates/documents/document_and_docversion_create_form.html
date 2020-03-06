@@ -18,6 +18,12 @@
         </div>
 
         <div class="form-field">
+            <label for="id_description">{{ form.description.label }}</label>
+            {{ form.description }}
+            <p class="error-text">Het veld hierboven is verplicht</p>
+        </div>
+
+        <div class="form-field">
             <label for="id_document_type">{{ form.document_type.label }}</label>
             <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
