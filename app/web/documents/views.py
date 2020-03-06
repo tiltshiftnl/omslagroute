@@ -151,6 +151,11 @@ class CreateDocumentAddToMoment(DocumentVersionFormSetCreate):
         return valid
 
 
+def download_document(request):
+    response = FileResponse(openfile)
+    return response
+
+
 def download_object(request):
     valid_name = 'uploads/%s' % default_storage.get_valid_name('Aanvraag_herbeschikking.pdf')
     if default_storage.exists(default_storage.url(valid_name)):
