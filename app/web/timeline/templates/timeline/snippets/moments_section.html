@@ -1,7 +1,7 @@
 {% if moment_list %}
     <section class="section section-timeline">
         <h2>De Omslagroute</h2>
-    
+
         {% for moment in moment_list %}
             <div class="details-wrapper">
                 <div class="dot dot--large"></div>
@@ -22,16 +22,16 @@
                         <p>{{ moment.description }}</p>
 
                         {% if moment.documents.all %}
-                            {% include 'documents/snippets/document_list.html' with class='timeline' %}
+                            {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.documents.all  %}
                         {% else %}
                             {% if request.user.is_authenticated %}
                                 <ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %}">
-                                    {% include 'documents/snippets/upload.html' %}
+                                    {% include 'documents/snippets/upload.html' with moment_id=moment.id %}
                                 </ul>
                             {% else %}
                                 <p>Voor deze fase zijn er geen documenten geüpload. Wanneer u bent ingelogd kunt u documenten uploaden.</p>
                             {% endif %}
-                        {% endif %} 
+                        {% endif %}
                     </div>
 
                     <div class="details__headerhoverblock"></div>
