@@ -1,7 +1,4 @@
-<ul class="downloads {% if request.user.is_authenticated %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
-    {% for document in document_list %}
-        {% include "documents/snippets/download.html" with object=document %}
-    {% endfor %}
+{% for document in document_list %}
+    {% include "documents/snippets/download.html" with object=document %}
+{% endfor %}
 
-    {% include 'documents/snippets/upload.html' %}
-</ul>
