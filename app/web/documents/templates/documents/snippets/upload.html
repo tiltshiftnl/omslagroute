@@ -2,7 +2,7 @@
 
 {% if request.user|has_group:"wonen" %}
     <li class="document document--add">
-        <a href="{% url 'document_create' %}" class="document__new">
+        <a href="{% if moment_id %}{% url 'add_document_to_moment' moment_id %}{% else %}{% url 'document_create' %}{% endif %}" class="document__new">
             <div class="document__icon-wrapper">
                 <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="">
             </div>
