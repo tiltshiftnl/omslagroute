@@ -28,19 +28,43 @@ Array.prototype.sortOnData = function(key){
     });
 };
 
+
 !function (w, d) {
   const handlers = {
       'moment-up': function (e) {
           e.preventDefault();
-          const moment = _closest(e.target, '[data-moment]');
-          d.querySelector('form').moveMoment(-1, moment);
-         _closest(e.target, '[data-edit-timeline]').save();
+          const moment = _closest(e.target, '[data-id]');
+         _closest(e.target, '[data-edit-timeline]').order(-1, moment);
       },
       'moment-down': function (e) {
           e.preventDefault();
-          const moment = _closest(e.target, '[data-moment]');
-          d.querySelector('form').moveMoment(1, moment);
-         _closest(e.target, '[data-edit-timeline]').save();
+          const moment = _closest(e.target, '[data-id]');
+         _closest(e.target, '[data-edit-timeline]').order(1, moment);
+
+      },
+      'new-moment': function (e) {
+          e.preventDefault();
+          const self = _closest(e.target, '[data-handler="new-moment"]');
+          const moment = _closest(e.target, '[data-id]'),
+              proto = d.querySelector('[data-new-moment-proto]').cloneNode(true);
+          _insertAfter(proto, moment);
+          self.style.display = 'none';
+          proto.style.display = 'block';
+          proto.dataset.decorator = 'new-moment';
+          _decorate();
+      },
+      'exit-new-moment': function (e) {
+          e.preventDefault();
+          const self = _closest(e.target, '[data-handler="exit-new-moment"]'),
+              container = _closest(self, '[data-new-moment-proto]');
+          container.parentElement.removeChild(container);
+
+      },
+    'save-new-moment': function(e){
+        e.preventDefault();
+          const self = _closest(e.target, '[data-handler="save-new-moment"]'),
+            container = _closest(self, '[data-new-moment-proto]');
+          container.save();
 
       },
       'save-moment': function(e){
@@ -49,6 +73,49 @@ Array.prototype.sortOnData = function(key){
       }
   };
     const decorators = {
+        'new-moment': function () {
+            const self = this,
+                _getFormData = function () {
+                    var data = {},
+                        i,
+                        fields = self.querySelectorAll('input[type="text"], input[type="hidden"], textarea');
+                    for (i = 0; i < fields.length; i++){
+                        data[fields[i].getAttribute('name')] = fields[i].value;
+                    }
+                    return data;
+                },
+                _save = function(data){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/timeline/create-moment', true);
+                    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.setRequestHeader("X-CSRFToken", d.querySelector('input[name="csrfmiddlewaretoken"]').value);
+                    xhr.send(JSON.stringify(_getFormData()));
+                    xhr.onreadystatechange = function() {
+                      if (this.readyState === XMLHttpRequest.DONE) {
+                        const response = JSON.parse(this.response);
+                        if (this.status === 201) {
+                            self.dataset.id = response.message.id;
+                            d.querySelector('[data-edit-timeline]').save();
+                        }
+                        else if (this.status === 200){
+                            for (var k in response.message){
+                                if (response.message.hasOwnProperty(k)){
+                                self.querySelector('[name="'+ k +'"]').dataset.errorMessage = response.message[k]
+                                }
+                            }
+                        } else {
+                          alert('Er ging iets mis.');
+                        }
+                      }
+                    }
+                },
+                _init = function(){
+
+                };
+            _init();
+            self.save = _save;
+        },
         'edit-moment': function () {
             const self = this,
                 id = this.dataset.id,
@@ -95,10 +162,16 @@ Array.prototype.sortOnData = function(key){
                 momentContainer = self.querySelector('[data-moment-container]'),
                 savedMomentQ = '[data-id]',
                 _getFormData = function(){
-                  return Array.prototype.slice.call(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, index){return {"id": e.dataset.id, "order": index}});
+                  return _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e){return {"id": e.dataset.id, "order": e.dataset.order}});
                 },
-                _submit = function () {
-                    const data = _getFormData();
+                _getFormInitialData = function(){
+                  return _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, index){return {"id": e.dataset.id, "order": index}});
+                },
+                _save = function(){
+                    const data = _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, index){return {"id": e.dataset.id, "order": index}});
+                    _submit(data);
+                },
+                _submit = function (data) {
                      var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/timeline/order', true);
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -116,22 +189,38 @@ Array.prototype.sortOnData = function(key){
                     }
                 },
                 _order = function(direction, momentElem){
-                    const items = momentContainer.querySelectorAll(savedMomentQ);
+                    const items = _toArray(momentContainer.querySelectorAll(savedMomentQ));
+                    var i;
+                    items.sortOnData('order');
+                    const index = items.indexOf(momentElem),
+                        currentOrder = momentElem.dataset.order,
+                        nextElem = items[index + direction];
+                    if (nextElem){
+                        momentElem.dataset.order = nextElem.dataset.order;
+                        nextElem.dataset.order = currentOrder;
+                        items.sortOnData('order');
+                        for (i = 0; i < items.length; ++i) {
+                          momentContainer.appendChild(items[i]);
+                        }
+                        console.log(items.map(function(e){return {'id': e.dataset.id, 'order': e.dataset.order}}));
+                        _submit(items.map(function(e){return {'id': e.dataset.id, 'order': e.dataset.order}}));
+                    }
+                    // const data = _getFormData();
                 },
                 _init = function () {
-                    const items = momentContainer.querySelectorAll(savedMomentQ);
+                    const items = momentContainer.querySelectorAll(savedMomentQ),
+                        data = _getFormInitialData();
                     var i;
-                    momentContainer.style.display = 'flex';
-                    momentContainer.style.flexDirection = 'column';
                     for (i = 0; i < items.length; i++) {
                         items[i].dataset.order = i;
-                        items[i].style.order = i;
                     }
-                    _submit();
+                    console.log(_toArray(items).map(function(e){return {'id': e.dataset.id, 'order': e.dataset.order}}));
+
+                    _submit(data);
                 };
 
             self.dataset.editTimeline = self;
-            self.save = _submit;
+            self.save = _save;
             self.order = _order;
             _init();
         },
@@ -189,7 +278,40 @@ Array.prototype.sortOnData = function(key){
                     }
                     return out;
                 };
+    var _toArray = function(a){return Array.prototype.slice.call(a);};
+    var _insertAfter = function (newNode, referenceNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+var helpers = {
+    'ajax': function (options) {
+      var request = new XMLHttpRequest(),
+        headers = options.headers || [],
+        i;
+      request.open(options.type, options.url, true);
+      for (i = 0; i < headers.length; i++){
+        request.setRequestHeader(headers[i][0], headers[i][1]);
+      }
+      request.onreadystatechange = function () {
+        if (request.readyState == 4) {
+          if (request.status >= 200 && request.status < 400) {
+            if (options.callback && typeof (options.callback) == 'function') {
+              options.callback.call(request, request.responseText);
+            }
+          } else {
+            if (options.error && typeof (options.error) == 'function') {
+              options.error.call(request, request.responseText);
+            }
+          }
+          _decorate();
+        }
+      };
 
-  _decorate();
+      request.send(options.data);
+
+      return request;
+    }
+    }
+
+   _decorate();
 
 }(window, document.documentElement);

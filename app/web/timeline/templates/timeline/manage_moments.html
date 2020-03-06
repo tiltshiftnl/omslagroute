@@ -12,8 +12,7 @@
         {% for moment in moment_form_set %}
 
 
-            <fieldset data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}">
-{#                 {{ moment.order }}#}
+            <fieldset data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}" data-order="{{ moment.instance.order }}">
                 {% if not moment.instance.id %}
                     <h2>Nieuw tijdslijn moment</h2>
                 {% endif %}
@@ -34,32 +33,42 @@
                 </div>
 
                 <div class="form-field">
-                    <label for="id_document_type">{{ moment.documents.label_tag }}</label>
-                    <p class="help-text">
-                        (Welke documenten komen voor in deze fase?)
-                    </p>
-                    <ul class="form-field__checkboxgroup">
-                        {% for checkbox in moment.documents %}
-                            <li>
-                                {{ checkbox.tag }}
-                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabels">
-                                    {{ checkbox.choice_label }}
-                                </label>
-                            </li>
-                        {% endfor %}
-                    </ul>
                     <a href="#" data-handler="save-moment">Opslaan</a><br>
                     <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
                     <a href="#" data-handler="moment-down">Naar beneden</a>
                 </div>
 
+                <h2 style="text-align: center"><a href="#" data-handler="new-moment">+</a></h2>
             </fieldset>
         {% endfor %}
         </div>
+        <fieldset data-new-moment-proto style="display: none">
+            <h2>Nieuw timeline moment</h2>
+            <div class="form-field">
+                {{ form.name.label_tag }}
+                <p class="help-text">
+                    (Naam)
+                </p>
+                {{ form.name }}
+            </div>
 
-        <div class="form-field form-field--buttons">
-            <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
-        </div>
+            <div class="form-field">
+                {{ moment.description.label_tag }}
+                <p class="help-text">
+                    (Beschrijving)
+                </p>
+                {{ form.description }}
+            </div>
+
+            <div class="form-field">
+                <a href="#" data-handler="save-new-moment">Aanmaken</a>&nbsp;&nbsp;
+                <a href="#" data-handler="exit-new-moment">Annuleer</a>
+            </div>
+
+        </fieldset>
+{#        <div class="form-field form-field--buttons">#}
+{#            <input type="submit" value="Opslaan" class="button button--primary">#}
+{#            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>#}
+{#        </div>#}
     </form>
 {% endblock %}

@@ -13,6 +13,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, permission_required
 from django.forms.models import model_to_dict
 import json
+from django.core.exceptions import *
 
 
 @user_passes_test(auth_test, group_name='wonen')
@@ -42,11 +43,27 @@ def manage_timeline(request):
 def update_moment(request, moment_id):
     form = MomentForm(request.POST)
     if form.is_valid():
-        print(form.cleaned_data)
         instance = form.save()
-        print(instance.name)
         return JsonResponse(model_to_dict(instance))
     return JsonResponse(form.errors)
+
+
+@require_http_methods(["POST"])
+@user_passes_test(auth_test, group_name='wonen')
+def create_moment(request):
+    status_code = 400
+    message = 'error'
+    if request.is_ajax():
+        model_dict = dict((k, v) for k, v in json.loads(request.body).items())
+        form = MomentForm(model_dict)
+        if form.is_valid():
+            instance = form.save()
+            status_code = 201
+            message = {'id': instance.id}
+        else:
+            status_code = 200
+            message = form.errors
+    return JsonResponse({'message': message}, status=status_code)
 
 
 class MomentUpdateView(UserPassesTestMixin, UpdateView):
@@ -70,10 +87,11 @@ class MomentUpdateView(UserPassesTestMixin, UpdateView):
 def order_timeline(request):
     if request.is_ajax():
         data = json.loads(request.body)
-        moment_list = Moment.objects.filter(id__in=[o['id'] for o in data])
-        for i, moment in enumerate(moment_list):
-            moment.order = data[i]['order']
-        Moment.objects.bulk_update(moment_list, ['order'])
+        data_dict = dict(('%s' % o['id'], o['order']) for o in data)
+        moment_list = [{'m': m, 'order': data_dict['%s' % m.id]} for m in Moment.objects.filter(id__in=[o['id'] for o in data])]
+        for moment in moment_list:
+            moment['m'].order = moment['order']
+        Moment.objects.bulk_update([m['m'] for m in moment_list], ['order'])
         return JsonResponse({'message': 'Data is saved'}, status=200)
     return JsonResponse({'message': 'error'}, status=400)
 

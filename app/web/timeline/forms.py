@@ -8,6 +8,8 @@ from django.forms.models import inlineformset_factory
 
 
 class MomentForm(forms.ModelForm):
+    # name = forms.CharField(required=False)
+
     class Meta:
         model = Moment
         fields = ('name',
