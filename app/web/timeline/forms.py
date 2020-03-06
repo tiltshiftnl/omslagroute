@@ -12,10 +12,4 @@ class MomentForm(forms.ModelForm):
         model = Moment
         fields = ('name',
                   'description',
-                  'documents',
-                  'order',
         )
-        widgets = {
-            'documents': CheckboxSelectMultiple(attrs={'class': 'choices choices-full'}),
-            'order': forms.HiddenInput,
-        }

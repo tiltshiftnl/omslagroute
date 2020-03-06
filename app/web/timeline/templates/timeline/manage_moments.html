@@ -3,20 +3,20 @@
 {% block main %}
     <h2>Timeline beheer</h2>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
         {% csrf_token %}
+
         {{ moment_form_set.management_form }}
         <!-- {{ moment_form_set.errors }} -->
-
+        <div data-moment-container>
         {% for moment in moment_form_set %}
-            {% if not moment.instance.id %}
-                <h2>Nieuw tijdslijn moment</h2>
-            {% endif %}
 
-            <fieldset>
 
-                {# {{ moment.as_p }} #}
-
+            <fieldset data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}">
+{#                 {{ moment.order }}#}
+                {% if not moment.instance.id %}
+                    <h2>Nieuw tijdslijn moment</h2>
+                {% endif %}
                 <div class="form-field">
                     {{ moment.name.label_tag }}
                     <p class="help-text">
@@ -48,12 +48,14 @@
                             </li>
                         {% endfor %}
                     </ul>
+                    <a href="#" data-handler="save-moment">Opslaan</a><br>
                     <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
                     <a href="#" data-handler="moment-down">Naar beneden</a>
                 </div>
 
             </fieldset>
         {% endfor %}
+        </div>
 
         <div class="form-field form-field--buttons">
             <input type="submit" value="Opslaan" class="button button--primary">

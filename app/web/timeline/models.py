@@ -15,6 +15,8 @@ class Moment(models.Model):
     order = models.IntegerField(
         verbose_name=_('Sorteer'),
         default=1,
+        blank=True,
+        null=True,
     )
     documents = models.ManyToManyField(
         to='documents.Document',
@@ -25,4 +27,4 @@ class Moment(models.Model):
     class Meta:
         verbose_name = _('Moment')
         verbose_name_plural = _('Momenten')
-        ordering = ('-order',)
+        ordering = ('order',)
