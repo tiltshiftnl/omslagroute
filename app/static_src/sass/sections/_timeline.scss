@@ -225,7 +225,8 @@ html.no-details details > summary::before {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .document__version {
+    .document__version,
+    .document__new {
         border-color: $neutral-grey3;
         background-color: $primary-white;
     }
