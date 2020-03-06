@@ -11,9 +11,9 @@
             {% if object %}
                 <div class="document__header">
                     <h3 class="document__name">{{ object.document_type_value }} {{ object.name }}</h3>
-                </div>
+                </div> 
 
-                {% if  document_version.uploaded %}
+                {% if document_version.uploaded %}
                     <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
                         Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.
                     </time>
@@ -24,6 +24,13 @@
             {% endif %}
         </a>
 
+        <p class="document__description" data-tooltip="{{ object.description }}">
+            <svg class="document__description-icon" width="32" height="32" >
+                <title> {{ object.description }}</title>
+                <use href="#info" xlink:href="#info" width="32" height="32" />
+            </svg>
+        </p>    
+        
         {% if request.user|has_group:"wonen" and object %}
             <p class="document__change">
                 <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--secondary">
