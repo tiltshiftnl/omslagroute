@@ -58,6 +58,7 @@ $padding-left: 30px;
 .details {
     border-top: 0;
     border-bottom: 0;
+    display: block;
     position: relative;
     left: $padding-left;
 
@@ -136,6 +137,7 @@ $padding-left: 30px;
 
 .details__header {
     font-weight: bold;
+    display: block;
     border: 0;
     width: 100%;
     position: relative;
