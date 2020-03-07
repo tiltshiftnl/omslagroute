@@ -136,21 +136,13 @@ textarea {
     color: $primary-darkblue;
     cursor: pointer;
 
-    &::after {
-        content: ' ';
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        background-image: url("/static/images/upload.svg");
-        background-size: contain;
-        position: relative;
-        text-decoration: none;
-        margin-left: 10px;
-    }
-
     &:hover {
         color: $primary-red;
     }
+}
+
+.file-upload__icon {
+    margin-left: 15px;
 }
 
 .form-field__uploaded {
