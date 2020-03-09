@@ -61,6 +61,7 @@ $padding-left: 30px;
     display: block;
     position: relative;
     left: $padding-left;
+    width: calc(100% - 30px); //IE??
 
     // blue line
     &:not(:last-of-type)::before {
@@ -242,7 +243,7 @@ html.no-details details > summary::before {
     background-color: $primary-white;
     padding: 1rem 1rem 1rem 2rem;
     border: 0;
-    margin-left: 2rem;
+    margin: 2rem;
 }
 
 .new-moment__add {
