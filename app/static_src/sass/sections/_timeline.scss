@@ -235,22 +235,9 @@ html.no-details details > summary::before {
 }
 
 // timeline-management scherm 
-.section--timeline-management {
-    // .dot--large {
-    //     top: calc(#{$toplevel-moment * 1.25});
-    // }
-
-    // .dot--small {
-    //     top: calc(
-    //         #{$toplevel-moment / 2} +
-    //         #{$sublevel-moment / 4}
-    //         );
-    // }
-
-    // .details__header,
-    // .details__content {
-    //     padding: 2rem 1rem 2rem 2rem;
-    // }
+.details-wrapper--new-moment {
+    background-color: $neutral-grey1;
+    padding: 0 0 2rem 3.5rem;
 }
 
 .change-order {
@@ -258,11 +245,9 @@ html.no-details details > summary::before {
     display: inline;
 }
 
-.details > fieldset {
-    background-color: $primary-white;
-    padding: 1rem 1rem 1rem 2rem;
+.details-wrapper > fieldset {
     border: 0;
-    margin: 2rem;
+    padding: 0;
 }
 
 .new-moment__add {
@@ -302,7 +287,8 @@ html.no-details details > summary::before {
         left: 17px;
         position: absolute;
         padding: 0;
-        padding-top: 4px;
+        display: flex;
+        align-items: center;
     }
 
     &:disabled {

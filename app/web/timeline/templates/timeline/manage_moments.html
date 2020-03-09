@@ -95,22 +95,17 @@
                 </div> 
             {% endfor %}
         </div>
-            
-        <fieldset data-moment data-moment-proto style="display: none">
+        
+        <div class="details-wrapper details-wrapper--new-moment" data-moment data-moment-proto style="display: none">
+        <fieldset >
             <h2>Nieuw timeline moment</h2>
             <div class="form-field">
                 {{ form.name.label_tag }}
-                <p class="help-text">
-                    (Naam)
-                </p>
                 {{ form.name }}
             </div>
 
             <div class="form-field">
                 {{ moment.description.label_tag }}
-                <p class="help-text">
-                    (Beschrijving)
-                </p>
                 {{ form.description }}
             </div>
 
@@ -118,7 +113,7 @@
                 <button class="button button--primary" data-handler="save-and-exit-new-moment">Opslaan</button>
                 <button class="button button--secondary" data-handler="exit-new-moment">Annuleer</button>
             </div>
-        </fieldset>
+        </fieldset></div>
 
 {#        <div class="form-field form-field--buttons">#}
 {#            <input type="submit" value="Opslaan" class="button button--primary">#}
