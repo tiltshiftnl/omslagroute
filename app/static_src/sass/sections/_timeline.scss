@@ -313,6 +313,10 @@ html.no-details details > summary::before {
             visibility: visible;
             opacity: 1;
             z-index: 5;
+
+            &:hover {
+                box-shadow: none;
+            }
         }
     }
 
@@ -325,6 +329,7 @@ html.no-details details > summary::before {
             z-index: 5;
             visibility: visible;
             opacity: 1;
+            box-shadow: none;
         }
     }
 }
