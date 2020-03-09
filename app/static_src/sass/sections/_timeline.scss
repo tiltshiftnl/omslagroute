@@ -262,6 +262,11 @@ html.no-details details > summary::before {
     padding: 0;
 }
 
+.details__editform {
+    border: 0;
+    padding: 0 0 2rem 2rem;
+}
+
 .new-moment__add {
     display: flex;
     align-items: center;

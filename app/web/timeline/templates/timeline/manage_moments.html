@@ -48,25 +48,17 @@
                         <div class="details__content">
                             <p>{{ moment.instance.description }}</p>
 
-                            <a href="#edit--{{ moment.instance.id }}">Pas deze stap aan</a>
-
-                            <ul class="downloads">
+                            <p><a href="#edit--{{ moment.instance.id }}">Pas deze stap aan</a></p>
+ 
                             {% if moment.instance.documents.all %}
-                                {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.instance.documents.all  %}
-                            {% endif %} 
-                            </ul>
+                                <p>{{ moment.instance.documents.all|length }} document(en)</p>
+                            {% endif %}  
                         </div>
 
                         <div class="details__headerhoverblock"></div>
 
-                        <fieldset data-decorator="edit-moment" id="edit--{{ moment.instance.id }}">
-                            <!-- {% if not moment.instance.id %}
-                                <h2>Nieuw tijdslijn moment</h2>
-                            {% else %}
-                                <h2>{{ moment.instance.id }}</h2>
-                                <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
-                                <a href="#" data-handler="delete-moment">Verwijderen</a>
-                            {% endif %} -->
+                        <fieldset class="details__editform" data-decorator="edit-moment" id="edit--{{ moment.instance.id }}">
+                            <h4>Stap aanpassen</h4>
 
                             <div class="form-field">
                                 {{ moment.name.label_tag }}
@@ -85,7 +77,7 @@
                             </div>
 
                             <div class="form-field">
-                                <a href="#" class="button button--primary" data-handler="save-moment">Opslaan</a><br>
+                                <button class="button button--primary" data-handler="save-moment">Opslaan</button>
                             </div>
                         </fieldset>
                     </details>
