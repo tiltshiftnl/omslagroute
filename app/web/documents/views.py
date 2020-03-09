@@ -164,10 +164,5 @@ def download_documentversion(request, id):
         raise Http404()
     openfile = default_storage.open(default_storage.generate_filename(documentversion.uploaded_file.name))
     response = FileResponse(openfile)
-    response['Content-Disposition'] = 'attachment; filename=%s' % documentversion.uploaded_file.name
+    response['Content-Disposition'] = 'attachment; filename=%s' % default_storage.generate_filename(documentversion.uploaded_file.name)
     return response
-
-
-
-
-
