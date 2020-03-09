@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block main %} 
     <h2>Document list</h2>
@@ -18,7 +19,9 @@
                 {% if document.document_to_document_version.all|length %}
                 <ul>
                     {% for document_version in document.document_to_document_version.all %}
-                        <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }} <a href="{% url 'documentversion_delete' document_version.id %}"><strong>Verwijder versie</strong></a></li>
+                        {% language 'nl' %}
+                            <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }} <a href="{% url 'documentversion_delete' document_version.id %}"><strong>Verwijder versie</strong></a></li>
+                        {% endlanguage %}
                     {% endfor %}
 
                 </ul>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block main %} 
     <h2>Verwijder document</h2>
@@ -9,7 +10,9 @@
         <strong>versies:</strong>
         <ul>
             {% for document_version in object.document_to_document_version.all %}
+                {% language 'nl' %}
                 <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>
+                {% endlanguage %}
             {% endfor %}
         </ul>
         {% endif %}

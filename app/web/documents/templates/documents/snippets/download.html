@@ -14,9 +14,12 @@
                 </div> 
 
                 {% if document_version.uploaded %}
-                    <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
-                        Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.
-                    </time>
+                    
+                        {% language 'nl' %}
+                        <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
+                            Gewijzigd: {{ document_version.uploaded|date:"j b" }}.
+                        </time>
+                        {% endlanguage %}
                     {% else %}
                     <span class="document__date">&nbsp;</span>
                 {% endif %}
