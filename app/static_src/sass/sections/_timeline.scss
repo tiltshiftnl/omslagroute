@@ -107,7 +107,7 @@ $padding-left: 30px;
 .details__header-opened {
     display: none;
 }
-
+ 
 .details[open] {
     background-color: $neutral-grey1;
 
@@ -133,6 +133,7 @@ $padding-left: 30px;
         top: 0;
         border-left: 0;
     }
+ 
 }
 
 .details__header {
@@ -143,6 +144,8 @@ $padding-left: 30px;
     position: relative;
     -webkit-appearance:none;
     list-style-image: none;
+
+    display: flex;
 
     &::-webkit-details-marker {
         display: none;
@@ -175,6 +178,11 @@ $padding-left: 30px;
     }
 }
 
+.change-order {
+    margin-left: auto;
+    display: inline;
+}
+
 .details__header:hover,
 .details__title:hover,
 .details__toggle-icon:hover {
@@ -183,6 +191,7 @@ $padding-left: 30px;
 
 .details__title {
     display: inline;
+    margin: 0;
 }
 
 .details__toggle-icon {
@@ -205,7 +214,6 @@ html.no-details details > summary::before {
 // specific to our usecase
 
 .section--timeline {
-
     .downloads {
         padding-bottom: 0; 
     }
@@ -227,5 +235,30 @@ html.no-details details > summary::before {
     .document__change {
         border-top: .5rem solid transparent;
         margin: 0;
+    }
+}
+
+.details > fieldset {
+    background-color: $primary-white;
+    padding: 1rem 1rem 1rem 2rem;
+    border: 0;
+    margin-left: 2rem;
+}
+
+.new-moment__add {
+    background-color: $primary-darkblue;
+    display: flex;
+    height: 10px;
+
+    .button {
+        background-color: $primary-darkblue;
+        width: 24px;
+        height: 24px;
+        min-width: auto;
+        top: -7px;
+        left: 17px;
+        position: relative;
+        padding: 0;
+        z-index: 5;
     }
 }

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main %}
+<section class="section section--timeline">
     <h2>Timeline beheer</h2>
 
     <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
@@ -11,37 +12,85 @@
         <div data-moment-container>
             {% for moment in moment_form_set %}
 
+                <!-- visual version --> 
+                <div class="details-wrapper" 
+                    data-id="{{ moment.instance.id }}" 
+                    data-order="{{ moment.instance.order }}" 
+                    data-moment-order="{{ moment.instance.order }}"
+                    data-moment 
+                    data-mode="static">
 
-                <fieldset data-moment data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}" data-order="{{ moment.instance.order }}">
-                    {% if not moment.instance.id %}
-                        <h2>Nieuw tijdslijn moment</h2>
-                    {% else %}
-                        <h2>{{ moment.instance.id }}</h2>
-                        <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
-                        <a href="#" data-handler="delete-moment">Verwijderen</a>
-                    {% endif %}
-                    <div class="form-field">
-                        {{ moment.name.label_tag }}
-                        <p class="help-text">
-                            (Naam)
-                        </p>
-                        {{ moment.name }}
+                    <div class="dot dot--large"></div>
+                    <details class="details">
+                        <summary class="details__header">
+                            <h3 class="details__title">{{ moment.instance.name }}</h3>
+                            <span class="details__toggle-icon">
+                                <svg class="details__header-opened" width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg>
+                                <svg class="details__header-closed" width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg>
+                            </span>
+                            
+                            <div class="change-order">
+                                <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
+                                <a href="#" data-handler="delete-moment">Verwijderen</a>
+                            </div>
+                        </summary>
+
+                        <div class="details__content">
+                            <p>{{ moment.instance.description }}</p>
+
+                            <ul class="downloads">
+                            {% if moment.instance.documents.all %}
+                                {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.instance.documents.all  %}
+                            {% endif %} 
+                            </ul>
+                        </div>
+
+                        <div class="details__headerhoverblock"></div>
+
+                        <fieldset data-decorator="edit-moment">
+                            <!-- {% if not moment.instance.id %}
+                                <h2>Nieuw tijdslijn moment</h2>
+                            {% else %}
+                                <h2>{{ moment.instance.id }}</h2>
+                                <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
+                                <a href="#" data-handler="delete-moment">Verwijderen</a>
+                            {% endif %} -->
+
+                            <div class="form-field">
+                                {{ moment.name.label_tag }}
+                                <p class="help-text">
+                                    (Naam)
+                                </p>
+                                {{ moment.name }}
+                            </div>
+
+                            <div class="form-field">
+                                {{ moment.description.label_tag }}
+                                <p class="help-text">
+                                    (Beschrijving)
+                                </p>
+                                {{ moment.description }}
+                            </div>
+
+                            <div class="form-field">
+                                <a href="#" data-handler="save-moment">Opslaan</a><br>
+                            </div>
+                        </fieldset>
+                    </details>
+
+                    <div class="new-moment__add" data-handler="new-moment">
+                        <button class="button button--icon" data-handler="new-moment">
+                            <svg class="details__header-closed" width="16" height="16">
+                                <title>Voeg stap toe</title>
+                                <use href="#add-document" xlink:href="#add-document" width="16" height="16" />
+                            </svg>
+                        </button>
                     </div>
-
-                    <div class="form-field">
-                        {{ moment.description.label_tag }}
-                        <p class="help-text">
-                            (Beschrijving)
-                        </p>
-                        {{ moment.description }}
-                    </div>
-
-                    <div class="form-field">
-                        <a href="#" data-handler="save-moment">Opslaan</a><br>
-                    </div>
-
-                    <h2 style="text-align: center"><a href="#" data-handler="new-moment">+</a></h2>
-                </fieldset>
+                </div> 
             {% endfor %}
         </div>
             
@@ -63,9 +112,9 @@
                 {{ form.description }}
             </div>
 
-            <div class="form-field">
-                <a href="#" data-handler="save-moment">Opslaan</a>&nbsp;&nbsp;
-                <a href="#" data-handler="exit-new-moment">Annuleer</a>
+            <div class="form-field form-field--buttons">
+                <button class="button button--primary" data-handler="save-moment">Opslaan</button>
+                <button class="button button--secondary" data-handler="exit-new-moment">Annuleer</button>
             </div>
         </fieldset>
 
@@ -75,4 +124,5 @@
 {#        </div>#}
 
     </form>
+</section>
 {% endblock %}

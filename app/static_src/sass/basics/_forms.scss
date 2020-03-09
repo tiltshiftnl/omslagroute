@@ -14,13 +14,8 @@ legend {
 }
 
 fieldset {
-    @media all and (min-width: $desktop) {
-        align-content: flex-start;
-        display: grid;
-        grid-gap: 0 1.687rem;
-        grid-template-columns: repeat(4, 1fr);
-        justify-content: space-between;
-    }
+    margin: 0;
+    box-shadow: none;
 }
 
 .form-field {
