@@ -305,7 +305,20 @@ html.no-details details > summary::before {
         padding-top: 4px;
     }
 
-    &:hover {
+    &:disabled {
+        .new-moment__line,
+        .button {
+            background-color: $neutral-grey3;
+        }
+
+        .button {
+            visibility: visible;
+            opacity: 1;
+            z-index: 5;
+        }
+    }
+
+    &:not(:disabled):hover {
         .new-moment__line {
             background-color: $primary-darkblue;
         }
