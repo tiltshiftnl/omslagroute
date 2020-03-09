@@ -55,24 +55,16 @@
                             {% endif %}  
                         </div>
 
-                        <div class="details__headerhoverblock"></div>
-
                         <fieldset class="details__editform" data-decorator="edit-moment" id="edit--{{ moment.instance.id }}">
                             <h4>Stap aanpassen</h4>
 
                             <div class="form-field">
                                 {{ moment.name.label_tag }}
-                                <p class="help-text">
-                                    (Naam)
-                                </p>
                                 {{ moment.name }}
                             </div>
 
                             <div class="form-field">
                                 {{ moment.description.label_tag }}
-                                <p class="help-text">
-                                    (Beschrijving)
-                                </p>
                                 {{ moment.description }}
                             </div>
 
@@ -80,6 +72,8 @@
                                 <button class="button button--primary" data-handler="save-moment">Opslaan</button>
                             </div>
                         </fieldset>
+
+                        <div class="details__headerhoverblock"></div>
                     </details>
 
                     <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">

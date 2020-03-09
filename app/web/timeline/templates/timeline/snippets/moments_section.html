@@ -3,9 +3,13 @@
     <section class="section section--timeline">
         <h2>De Omslagroute</h2>
 
-        <a href="/timeline/" class="button button--primary">
-            Wijzig processtappen
-        </a>
+        {% if request.user.is_authenticated %}
+            <p class="details-admin">
+                <a href="/timeline/" class="button button--primary">
+                    Wijzig processtappen
+                </a>
+            </p>
+        {% endif %}
 
         {% for moment in moment_list %}
             <div class="details-wrapper">

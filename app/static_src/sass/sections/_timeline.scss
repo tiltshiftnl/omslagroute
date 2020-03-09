@@ -3,6 +3,10 @@ $sublevel-moment: 1rem;
 $timeline-width: 3px;
 $padding-left: 30px;
 
+.details-admin {
+    text-align: right;
+}
+
 .details-wrapper {
     position: relative;
 
@@ -146,8 +150,6 @@ $padding-left: 30px;
     -webkit-appearance:none;
     list-style-image: none;
 
-    display: flex;
-
     &::-webkit-details-marker {
         display: none;
     }
@@ -201,6 +203,10 @@ $padding-left: 30px;
 
 .details__content {
     background-color: $neutral-grey1;
+
+    p {
+        max-width: 650px;
+    }
 }
 
 html.no-details details > summary::before {
@@ -242,7 +248,7 @@ html.no-details details > summary::before {
 
 .change-order {
     margin-left: auto;
-    display: inline-flex;
+    float: right;
 
     button {
         color: $primary-darkblue; 
@@ -302,6 +308,7 @@ html.no-details details > summary::before {
         height: 24px;
         min-width: auto;
         left: 17px;
+        top: 17px;
         position: absolute;
         padding: 0;
         display: flex;
