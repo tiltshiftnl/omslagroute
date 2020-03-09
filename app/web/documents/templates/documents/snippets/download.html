@@ -1,4 +1,5 @@
 {% load staticfiles auth_tags %}
+{% load i18n %}
 
 {% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
@@ -10,13 +11,20 @@
 
             {% if object %}
                 <div class="document__header">
-                    <h3 class="document__name">{{ object.document_type_value }} {{ object.name }}</h3>
+                    {% if class == 'timeline' %}
+                        <h4 class="document__name">{{ object.document_type_value }} {{ object.name }}</h4>
+                    {% else %}
+                        <h3 class="document__name">{{ object.document_type_value }} {{ object.name }}</h3>
+                    {% endif %}
                 </div> 
 
                 {% if document_version.uploaded %}
-                    <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
-                        Laatst gewijzigd: {{ document_version.uploaded|date:"j b" }}.
-                    </time>
+                    
+                        {% language 'nl' %}
+                        <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
+                            Gewijzigd: {{ document_version.uploaded|date:"j b" }}.
+                        </time>
+                        {% endlanguage %}
                     {% else %}
                     <span class="document__date">&nbsp;</span>
                 {% endif %}
