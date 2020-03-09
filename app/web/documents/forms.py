@@ -1,7 +1,11 @@
 from django import forms
 from django.forms.widgets import RadioSelect
+from django.forms import ValidationError
 from .models import *
+from django.utils.translation import ugettext_lazy as _
 from django.forms.models import inlineformset_factory
+from django.urls import reverse_lazy
+from django.utils.html import mark_safe
 
 
 class DocumentVersionForm(forms.ModelForm):
@@ -21,7 +25,6 @@ class DocumentVersionForm(forms.ModelForm):
 
 
 class DocumentForm(forms.ModelForm):
-    # moment_id = forms.IntegerField(label='Moment id', required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,18 +33,22 @@ class DocumentForm(forms.ModelForm):
         self.fields['name'].label = "Titel van het document:"
         self.fields['document_type'].label = "Om wat voor soort document gaat het?"
 
-        # Removes the first choice (meant to clean up select)
-
-        # for field_name in self.fields:
-        #     field = self.fields.get(field_name)
-        #     if field and isinstance(field , forms.TypedChoiceField):
-        #         field.choices = field.choices[1:]
+    def clean_name(self):
+        data = self.cleaned_data['name']
+        existing_names = Document.objects.get_by_name(name=data)
+        if existing_names:
+            url = reverse_lazy('add_document_version_to_document', kwargs={'document': existing_names[0].id})
+            raise ValidationError(
+                _(mark_safe('Deze naam wordt al gebruikt in een ander document. '
+                            'Je kan <a href="%s">hier</a> een versie toe te voegen aan het bestaande document' % url)),
+                code='invalid',
+            )
+        return data
 
     class Meta:
         model = Document
         exclude = ()
         widgets = {
-            # 'name': forms.TextInput(attrs={'placeholder': 'Bestandsnaam'}),
             'document_type': forms.RadioSelect(attrs={'class': 'form-field__radio'})
         }
 

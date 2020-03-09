@@ -11,6 +11,7 @@ from django.http.response import HttpResponse, HttpResponseForbidden, FileRespon
 from django.forms.models import inlineformset_factory
 from web.timeline.models import Moment
 from django.core.files.storage import default_storage
+from django.utils.html import mark_safe
 from django.conf import settings
 import urllib
 import requests
@@ -120,6 +121,12 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
         else:
             data['documentversionformset'] = DocumentVersionFormSet()
         return data
+
+    def form_invalid(self, form):
+        respond = super().form_invalid(form)
+        for k, v in form.errors.items():
+            messages.add_message(self.request, messages.ERROR, mark_safe(v))
+        return respond
 
     def form_valid(self, form):
         context = self.get_context_data()
