@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(DocumentVersion)
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ('uploaded', 'document',)
+    list_display = ('uploaded', 'uploaded_file', 'document',)
 
 
 @admin.register(Document)

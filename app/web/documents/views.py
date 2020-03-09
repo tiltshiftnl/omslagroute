@@ -160,9 +160,14 @@ class CreateDocumentAddToMoment(DocumentVersionFormSetCreate):
 
 def download_documentversion(request, id):
     documentversion = get_object_or_404(DocumentVersion, id=id)
-    if not default_storage.exists(default_storage.url(default_storage.generate_filename(documentversion.uploaded_file.name))):
+    if not default_storage.exists(default_storage.generate_filename(documentversion.uploaded_file.name)):
         raise Http404()
     openfile = default_storage.open(default_storage.generate_filename(documentversion.uploaded_file.name))
     response = FileResponse(openfile)
     response['Content-Disposition'] = 'attachment; filename=%s' % documentversion.uploaded_file.name
     return response
+
+
+
+
+

@@ -56,16 +56,16 @@ class ObjectStoreView(UserPassesTestMixin, TemplateView):
             print(default_storage.url(o))
             print(default_storage.exists('uploads/%s' % default_storage.get_valid_name(o)))
 
-        document_list = [{
-            'name': d.document_to_document_version.all()[0].uploaded_file.name,
-            'generate_filename': default_storage.generate_filename(d.document_to_document_version.all()[0].uploaded_file.name),
-            'url': default_storage.url(default_storage.generate_filename(d.document_to_document_version.all()[0].uploaded_file.name)),
-            'exists': default_storage.exists(default_storage.url(default_storage.generate_filename(d.document_to_document_version.all()[0].uploaded_file.name))),
-            'id': d.document_to_document_version.all()[0].id
-        } for d in Document.objects.all()]
+        documentversion_list = [{
+            'name': d.uploaded_file.name,
+            'generate_filename': default_storage.generate_filename(d.uploaded_file.name),
+            'url': default_storage.url(default_storage.generate_filename(d.uploaded_file.name)),
+            'exists': default_storage.exists(default_storage.generate_filename(d.uploaded_file.name)),
+            'id': d.id
+        } for d in DocumentVersion.objects.all()]
 
         kwargs.update({
             'objectstore_container_list': ['uploads/%s' % default_storage.get_valid_name(o) for o in default_storage.listdir('uploads')[1]],
-            'document_list': document_list,
+            'documentversion_list': documentversion_list,
         })
         return super().get_context_data(**kwargs)
