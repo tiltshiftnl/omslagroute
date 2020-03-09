@@ -58,6 +58,7 @@ $padding-left: 30px;
 .details {
     border-top: 0;
     border-bottom: 0;
+    display: block;
     position: relative;
     left: $padding-left;
 
@@ -91,7 +92,7 @@ $padding-left: 30px;
         }
 
         .details__header:focus::before {
-            background-color: $neutral-grey2;
+            background-color: $neutral-grey1;
         }
     }
     
@@ -119,7 +120,7 @@ $padding-left: 30px;
     }
 
     .details__header-opened {
-        display: block;
+        display: inline-block;
     }
  
     .details__headerhoverblock {
@@ -136,13 +137,12 @@ $padding-left: 30px;
 
 .details__header {
     font-weight: bold;
+    display: block;
     border: 0;
     width: 100%;
     position: relative;
     -webkit-appearance:none;
     list-style-image: none;
-    display: flex;
-    align-items: center;
 
     &::-webkit-details-marker {
         display: none;
@@ -159,24 +159,10 @@ $padding-left: 30px;
     &:focus,
     &:active {
         outline: none;
-        background-color: $neutral-grey2;
+        background-color: $neutral-grey1;
 
         &::before {
-            background-color: $neutral-grey2;
-            height: 100%;
-            width: $padding-left;
-            content: ' ';
-            position: absolute;
-            left: -#{$padding-left};
-            top: 0;
-            border-left: 0;
-            z-index: 1;
-        }
-    }
-    
-    &:focus-within {
-        &::before {
-            background-color: $neutral-grey2;
+            background-color: $neutral-grey1;
             height: 100%;
             width: $padding-left;
             content: ' ';
@@ -227,7 +213,8 @@ html.no-details details > summary::before {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .document__version {
+    .document__version,
+    .document__new {
         border-color: $neutral-grey3;
         background-color: $primary-white;
     }

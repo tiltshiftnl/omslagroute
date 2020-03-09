@@ -14,13 +14,14 @@
                 U kunt hier een nieuwe versie uploaden van het {{ document.document_type_value|lower }} {{ document|striptags }}.
             </legend>
 
-            <p class="help-text">
-                Kies een PDF of Word bestand om te uploaden.
-            </p>
-
             {{ form.uploaded_file }}
-            {{ form.uploaded_file.label_tag }}
-
+            <label for="file-upload">
+                {{ form.uploaded_file.label }}
+                <svg class="file-upload__icon" width="24" height="24" > 
+                    <use href="#upload" xlink:href="#upload" width="24" height="24" />
+                </svg>
+            </label>
+            <p class="error-text">Het veld hierboven is verplicht</p>
             <div id="file-upload-filename" class="form-field__uploaded"></div>
             
             {{ form.document }}

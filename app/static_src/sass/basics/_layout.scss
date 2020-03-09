@@ -72,11 +72,17 @@ body {
     background: $primary-white;
     width: 100%;
     margin: 0px auto;
+    padding: 0 15px;
 
     @media screen and (min-width: $large) {
         max-width: 1400px;
         margin: 0px auto;
     }
+}
+
+.site-navigation,
+.site-footer {
+    margin: 0 -15px;
 }
 
 .site-header,
