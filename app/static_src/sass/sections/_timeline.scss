@@ -204,23 +204,19 @@ html.no-details details > summary::before {
 
 // specific to our usecase
 
-.downloads--timeline {
-    padding-bottom: 0; 
+.section--timeline {
 
-    @media all and (min-width: $desktop) {
-        -ms-grid-columns: 1fr 1fr 1fr;
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media all and (min-width: $large) {
-        -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        grid-template-columns: repeat(4, 1fr);
+    .downloads {
+        padding-bottom: 0; 
     }
 
     .document__version,
     .document__new {
-        border-color: $neutral-grey3;
-        background-color: $primary-white;
+        &,
+        &:visited {
+            border-color: $neutral-grey3;
+            background-color: $primary-white;
+        }
     }
 
     .document:only-child,

@@ -265,17 +265,3 @@
     margin-top: .5rem;
     margin-bottom: 0;
 }
-
-.section--timeline {
-    .downloads {
-        padding-bottom: 0;
-    }
-    
-    .document__version,
-    .document__new {
-        &,
-        &:visited {
-            background-color: white;
-        }
-    }
-}
