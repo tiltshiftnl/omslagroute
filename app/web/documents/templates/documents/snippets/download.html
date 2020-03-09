@@ -37,6 +37,7 @@
                 <title> {{ object.description }}</title>
                 <use href="#info" xlink:href="#info" width="32" height="32" />
             </svg>
+            <span class="document__description__tooltip"></span>
         </p>    
         
         {% if request.user|has_group:"wonen" and object %}
