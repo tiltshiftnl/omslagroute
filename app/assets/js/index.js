@@ -56,7 +56,9 @@ Array.prototype.sortOnData = function(key){
       'exit-new-moment': function (e) {
           e.preventDefault();
           const self = _closest(e.target, '[data-handler="exit-new-moment"]'),
-              container = _closest(self, '[data-moment-proto]');
+              container = _closest(self, '[data-moment-proto]'),
+              new_moment_button = container.previousSibling.querySelector('[data-handler="new-moment"]');
+          new_moment_button.disabled = false;
           container.parentElement.removeChild(container);
       },
       'delete-moment': function(e){
@@ -70,18 +72,11 @@ Array.prototype.sortOnData = function(key){
       'save-moment': function(e){
           e.preventDefault();
           const self = _closest(e.target, '[data-handler="save-moment"]'),
-            container = _closest(self, '[data-moment]');
-         container.submit();
-          container.parentElement.removeChild(container);
-          location.reload();
-      },
-      'save-and-exit-new-moment': function(e){
-        e.preventDefault();
-        const self = _closest(e.target, '[data-handler="save-and-exit-new-moment"]'),
-          container = _closest(self, '[data-moment-proto]');
-        container.submit();
-          container.parentElement.removeChild(container);
-          location.reload();
+            container = _closest(self, '[data-moment]'),
+            new_moment_button = container.previousSibling.querySelector('[data-handler="new-moment"]');
+          new_moment_button.disabled = false;
+          container.submit();
+          container.parentElement.removeChild(container); 
     }
   };
     const decorators = {
