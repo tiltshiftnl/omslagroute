@@ -172,6 +172,20 @@
         .document__name {
             text-decoration: underline;
         }
+
+        &[data-tooltip]::before {
+            position: absolute;
+            top: 0;
+            left: calc(100% + 1rem);
+            padding: 10px;
+            width: 160px;
+            border: 1px solid $primary-black;
+            background-color: $primary-white;
+            color: $primary-black;
+            content: attr(data-tooltip);
+            text-align: left; 
+            z-index: 10;
+        }
     }
 
     > :last-child {
@@ -181,36 +195,6 @@
 
 .document:focus-within + .document {
     z-index: 1;
-}
-
-.document__description {
-    background: $primary-white;
-    border-radius: 50%;
-    color: $primary-darkblue;
-    position: absolute;
-    // bottom: 0;
-    // transform: translate(50%,-50%);
-    right: 0;
-    content: ' ';
-    width: 32px;
-    height: 32px;
-    top: 0;
-    transform: translate(50%,-25%); 
-    z-index: 5;
-
-    &:hover::before {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        background-color: $primary-white;
-        color: $primary-black;
-        z-index: 6;
-        border: 1px solid $primary-black;
-        padding: 10px;
-        // transform: translate(50%, 50%);
-        display: inline-block;
-    }
 }
 
 .document--add {
@@ -225,18 +209,4 @@
 .document__change {
     margin-top: .5rem;
     margin-bottom: 0;
-}
-
-.section--timeline {
-    .downloads {
-        padding-bottom: 0;
-    }
-    
-    .document__version,
-    .document__new {
-        &,
-        &:visited {
-            background-color: white;
-        }
-    }
 }
