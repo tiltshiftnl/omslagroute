@@ -12,7 +12,6 @@
         <div data-moment-container>
             {% for moment in moment_form_set %}
 
-                <!-- visual version --> 
                 <div class="details-wrapper" 
                     data-id="{{ moment.instance.id }}" 
                     data-order="{{ moment.instance.order }}" 
@@ -42,6 +41,8 @@
                         <div class="details__content">
                             <p>{{ moment.instance.description }}</p>
 
+                            <a href="#edit--{{ moment.instance.id }}">Pas deze stap aan</a>
+
                             <ul class="downloads">
                             {% if moment.instance.documents.all %}
                                 {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.instance.documents.all  %}
@@ -51,7 +52,7 @@
 
                         <div class="details__headerhoverblock"></div>
 
-                        <fieldset data-decorator="edit-moment">
+                        <fieldset data-decorator="edit-moment" id="edit--{{ moment.instance.id }}">
                             <!-- {% if not moment.instance.id %}
                                 <h2>Nieuw tijdslijn moment</h2>
                             {% else %}
@@ -77,7 +78,7 @@
                             </div>
 
                             <div class="form-field">
-                                <a href="#" data-handler="save-moment">Opslaan</a><br>
+                                <a href="#" class="button button--primary" data-handler="save-moment">Opslaan</a><br>
                             </div>
                         </fieldset>
                     </details>

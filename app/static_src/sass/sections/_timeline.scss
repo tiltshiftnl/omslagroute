@@ -263,3 +263,10 @@ html.no-details details > summary::before {
         z-index: 5;
     }
 }
+
+[id^="edit--"] {
+    display: none;
+}
+[id^="edit--"]:target {
+    display: block;
+}
