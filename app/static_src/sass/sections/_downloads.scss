@@ -11,94 +11,20 @@
             grid-gap: 1.687rem;
             -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr;
             grid-template-columns: repeat(3, 1fr);
-            -ms-grid-rows: auto;
+            -ms-grid-columns: 1fr (1.687rem 1fr)[auto];
             grid-template-rows: auto;
             -webkit-box-pack: justify;
                 -ms-flex-pack: justify;
                     justify-content: space-between;
-
-        .no-details { 
-            .document {
-                -ms-grid-column-span: 1;
-                -ms-grid-row-span: 1;
-                padding-bottom: 10px;
-            }
-
-            .document:nth-child(3n + 1) {
-                -ms-grid-column: 1;
-            }
-
-            .document:nth-child(3n + 2) {
-                -ms-grid-column: 3;
-            }
-
-            .document:nth-child(3n + 3) {
-                -ms-grid-column: 5;
-            }
-
-            .document:nth-child(n+4):nth-child(-n+6) {
-                -ms-grid-row: 3;
-            }
-
-            .document:nth-child(n+7):nth-child(-n+9) {
-                -ms-grid-row: 5;
-            }
-
-            .document:nth-child(n+10):nth-child(-n+12) {
-                -ms-grid-row: 6;
-            }
-        }
     }
 
     @media all and (min-width: $large) {
-        -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr;
         grid-template-columns: repeat(5, 1fr);
-
-        .no-details { 
-            .document {
-                -ms-grid-column-span: 1;
-                -ms-grid-row-span: 1;
-                padding-bottom: 10px;
-            }
-
-            .document:nth-child(5n + 1) {
-                -ms-grid-column: 1;
-            }
-
-            .document:nth-child(5n + 2) {
-                -ms-grid-column: 3;
-            }
-
-            .document:nth-child(5n + 3) {
-                -ms-grid-column: 5;
-            }
-
-            .document:nth-child(5n + 4) {
-                -ms-grid-column: 7;
-            }
-
-            .document:nth-child(5n + 5) {
-                -ms-grid-column: 9;
-            }
-
-            .document:nth-child(n+6):nth-child(-n+10) {
-                -ms-grid-row: 3;
-            }
-
-            .document:nth-child(n+11):nth-child(-n+15) {
-                -ms-grid-row: 5;
-            }
-
-            .document:nth-child(n+16):nth-child(-n+20) {
-                -ms-grid-row: 6;
-            }
-        }
     }
 }
 
 .document {
-    height: 100%;
-    -ms-grid-column-span: 1;
+    height: 100%; 
     position: relative;
     list-style-type: none;
     margin-bottom: 1.5rem;
@@ -108,6 +34,122 @@
         justify-content: space-between;
         display: flex;
         flex-direction: column;
+    }
+}
+
+// fallbacks for IE11
+.no-details { 
+
+    .document {
+        -ms-grid-column-span: 1;
+        -ms-grid-row-span: 1;
+        padding-bottom: 10px;
+    }
+
+    @media all and (min-width: $desktop) and (max-width: $large) {
+        .downloads {
+            -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr;
+        }
+
+        .document:nth-child(3n + 1) {
+            -ms-grid-column: 1;
+        }
+
+        .document:nth-child(3n + 2) {
+            -ms-grid-column: 3;
+        }
+
+        .document:nth-child(3n + 3) {
+            -ms-grid-column: 5;
+        }
+
+        .document:nth-child(n+4):nth-child(-n+6) {
+            -ms-grid-row: 3;
+        }
+
+        .document:nth-child(n+7):nth-child(-n+9) {
+            -ms-grid-row: 5;
+        }
+
+        .document:nth-child(n+10):nth-child(-n+12) {
+            -ms-grid-row: 7;
+        }
+
+        .document:nth-child(n+13):nth-child(-n+15) {
+            -ms-grid-row: 9;
+        }
+
+        .document:nth-child(n+16):nth-child(-n+18) {
+            -ms-grid-row: 11;
+        }
+
+        .document:nth-child(n+19):nth-child(-n+21) {
+            -ms-grid-row: 13;
+        }
+
+        .document:nth-child(n+22):nth-child(-n+24) {
+            -ms-grid-row: 15;
+        }
+    }
+
+    @media all and (min-width: $large) {
+        .downloads {
+            -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr;
+        }
+
+        .document {
+            -ms-grid-column-span: 1;
+            -ms-grid-row-span: 1;
+            padding-bottom: 10px;
+        }
+
+        .document:nth-child(5n + 1) {
+            -ms-grid-column: 1;
+        }
+
+        .document:nth-child(5n + 2) {
+            -ms-grid-column: 3;
+        }
+
+        .document:nth-child(5n + 3) {
+            -ms-grid-column: 5;
+        }
+
+        .document:nth-child(5n + 4) {
+            -ms-grid-column: 7;
+        }
+
+        .document:nth-child(5n + 5) {
+            -ms-grid-column: 9;
+        }
+
+        .document:nth-child(n+6):nth-child(-n+10) {
+            -ms-grid-row: 3;
+        }
+
+        .document:nth-child(n+11):nth-child(-n+15) {
+            -ms-grid-row: 5;
+        }
+
+        .document:nth-child(n+16):nth-child(-n+20) {
+            -ms-grid-row: 7;
+        }
+
+        .document:nth-child(n+21):nth-child(-n+25) {
+            -ms-grid-row: 9;
+        }
+
+        .document:nth-child(n+26):nth-child(-n+30) {
+            -ms-grid-row: 11;
+        }
+
+        .document:nth-child(n+31):nth-child(-n+35) {
+            -ms-grid-row: 13;
+        }
+
+        .document:nth-child(n+36):nth-child(-n+40) {
+            -ms-grid-row: 15;
+        }
     }
 }
 
