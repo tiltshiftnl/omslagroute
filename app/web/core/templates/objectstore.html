@@ -10,9 +10,14 @@
 <h2>Document list</h2>
 <ul>
 {% for document in document_list %}
-    {% if document.document_to_document_version.all.0 %}
-    <li>{{ document.document_to_document_version.all.0 }} <a href="{% url 'download_documentversion' document.document_to_document_version.all.0.id %}">download</a></li>
-    {% endif %}
+    <li>
+        {{ document.name }} <a href="{% url 'download_documentversion' document.id %}">download</a><br>
+        <ul>
+            {% for k, v in document.items %}
+                <span>{{ k }}: {{ v }}</span><br>
+            {% endfor %}
+        </ul>
+    </li>
 {% endfor %}
 </ul>
 
