@@ -46,11 +46,11 @@ Array.prototype.sortOnData = function(key){
           e.preventDefault();
           const self = _closest(e.target, '[data-handler="new-moment"]');
           const moment = _closest(e.target, '[data-id]'),
-              proto = d.querySelector('[data-new-moment-proto]').cloneNode(true);
+              proto = d.querySelector('[data-moment-proto]').cloneNode(true);
           _insertAfter(proto, moment);
           self.style.display = 'none';
           proto.style.display = 'block';
-          proto.dataset.decorator = 'new-moment';
+          proto.dataset.decorator = 'edit-moment';
           _decorate();
       },
       'exit-new-moment': function (e) {
@@ -60,66 +60,26 @@ Array.prototype.sortOnData = function(key){
           container.parentElement.removeChild(container);
 
       },
-    'save-new-moment': function(e){
-        e.preventDefault();
-          const self = _closest(e.target, '[data-handler="save-new-moment"]'),
-            container = _closest(self, '[data-new-moment-proto]');
-          container.save();
-
+      'delete-moment': function(e){
+          e.preventDefault();
+          const self = _closest(e.target, '[data-handler="delete-moment"]'),
+              container = _closest(self, '[data-edit-moment]');
+          if (confirm("Weet je zeker dat je het timeline item met naam '"+container.querySelector('[name$="name"]').value+"' wil verwijderen")) {
+            container.delete();
+          }
       },
       'save-moment': function(e){
-         e.preventDefault();
-         _closest(e.target, '[data-edit-moment]').submit();
+          e.preventDefault();
+          const self = _closest(e.target, '[data-handler="save-moment"]'),
+            container = _closest(self, '[data-moment]');
+         container.submit();
       }
   };
     const decorators = {
-        'new-moment': function () {
-            const self = this,
-                _getFormData = function () {
-                    var data = {},
-                        i,
-                        fields = self.querySelectorAll('input[type="text"], input[type="hidden"], textarea');
-                    for (i = 0; i < fields.length; i++){
-                        data[fields[i].getAttribute('name')] = fields[i].value;
-                    }
-                    return data;
-                },
-                _save = function(data){
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/timeline/create-moment', true);
-                    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.setRequestHeader("X-CSRFToken", d.querySelector('input[name="csrfmiddlewaretoken"]').value);
-                    xhr.send(JSON.stringify(_getFormData()));
-                    xhr.onreadystatechange = function() {
-                      if (this.readyState === XMLHttpRequest.DONE) {
-                        const response = JSON.parse(this.response);
-                        if (this.status === 201) {
-                            self.dataset.id = response.message.id;
-                            d.querySelector('[data-edit-timeline]').save();
-                        }
-                        else if (this.status === 200){
-                            for (var k in response.message){
-                                if (response.message.hasOwnProperty(k)){
-                                self.querySelector('[name="'+ k +'"]').dataset.errorMessage = response.message[k]
-                                }
-                            }
-                        } else {
-                          alert('Er ging iets mis.');
-                        }
-                      }
-                    }
-                },
-                _init = function(){
-
-                };
-            _init();
-            self.save = _save;
-        },
         'edit-moment': function () {
+            var savedTimeout;
             const self = this,
                 id = this.dataset.id,
-                csrfToken = d.querySelector('input[name="csrfmiddlewaretoken"]').value,
                 _getFormData = function () {
                     var data = {},
                         i,
@@ -128,101 +88,97 @@ Array.prototype.sortOnData = function(key){
                         const nameSplit = fields[i].getAttribute('name').split('-');
                         data[nameSplit[nameSplit.length-1]] = fields[i].value;
                     }
-                    data['csrfmiddlewaretoken'] = csrfToken;
+                    if (self.dataset.id){
+                        data['id'] = self.dataset.id;
+                    }
                     return data;
                 },
+
                 _init = function(){
                     const data = _getFormData();
                 },
+                _delete = function() {
+                    helpers.ajax({
+                        'type': 'POST',
+                        'url': '/timeline/delete-moment',
+                        'data': JSON.stringify({"id": self.dataset.id}),
+                        'callback': function(){
+                            if (this.status === 200){
+                                self.parentNode.removeChild(self);
+                                d.querySelector('[data-edit-timeline]').save();
+                            }
+                        }
+                    });
+                },
                 _submit = function () {
                     const data = _getFormData();
-                    console.log(data);
-                     var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/timeline/update-moment/' + id, true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.send(_formDataToQueryString(data));
-                    xhr.onreadystatechange = function() {
-                        console.log(this);
-                      if (this.readyState === XMLHttpRequest.DONE) {
-                        if (this.status === 200) {
+                    helpers.ajax({
+                        'type': 'POST',
+                        'url': '/timeline/update-moment',
+                        'data': JSON.stringify(data),
+                        'callback': function(responseText){
+                            const response = JSON.parse(responseText);
+                            if (this.status === 201){
+                                self.dataset.id = response.message.id;
+                                d.querySelector('[data-edit-timeline]').save();
+                            }
+                            self.dataset.saved = 'saved';
+                            clearTimeout(savedTimeout);
+                            savedTimeout = setTimeout(function(){
+                                delete self.dataset.saved;
+                            }, 2000);
+                        },
+                        'error': function (responseText) {
+                            const response = JSON.parse(responseText);
+                            if (this.status === 422){
+                                for (var k in response.message){
+                                    if (response.message.hasOwnProperty(k)){
+                                    self.querySelector('[name$="'+ k +'"]').dataset.errorMessage = response.message[k]
+                                    }
+                                }
+                            }
 
-                        } else {
-                          alert('Er ging iets mis.');
                         }
-                      }
-                    }
-                }
+                    });
+                };
             _init();
             self.dataset.editMoment = self;
             self.submit = _submit;
+            self.delete = _delete;
 
         },
         'edit-timeline': function () {
             const self = this,
                 momentContainer = self.querySelector('[data-moment-container]'),
                 savedMomentQ = '[data-id]',
-                _getFormData = function(){
-                  return _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e){return {"id": e.dataset.id, "order": e.dataset.order}});
-                },
-                _getFormInitialData = function(){
-                  return _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, index){return {"id": e.dataset.id, "order": index}});
+                momentQ = '[data-moment]',
+                _submit = function (data) {
+                    helpers.ajax({
+                        'type': 'POST',
+                        'url': '/timeline/order',
+                        'data': JSON.stringify(data)
+                    })
                 },
                 _save = function(){
-                    const data = _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, index){return {"id": e.dataset.id, "order": index}});
+                    const data = _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, i){return {'id': e.dataset.id, 'order': i}});
                     _submit(data);
-                },
-                _submit = function (data) {
-                     var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '/timeline/order', true);
-                    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.setRequestHeader("X-CSRFToken", d.querySelector('input[name="csrfmiddlewaretoken"]').value);
-                    xhr.send(JSON.stringify(data));
-                    xhr.onreadystatechange = function() {
-                      if (this.readyState === XMLHttpRequest.DONE) {
-                        if (this.status === 200) {
-
-                        } else {
-                          alert('Er ging iets mis.');
-                        }
-                      }
-                    }
                 },
                 _order = function(direction, momentElem){
-                    const items = _toArray(momentContainer.querySelectorAll(savedMomentQ));
-                    var i;
-                    items.sortOnData('order');
-                    const index = items.indexOf(momentElem),
-                        currentOrder = momentElem.dataset.order,
+                    const items = _toArray(momentContainer.querySelectorAll(momentQ)),
+                        index = items.indexOf(momentElem),
                         nextElem = items[index + direction];
                     if (nextElem){
-                        momentElem.dataset.order = nextElem.dataset.order;
-                        nextElem.dataset.order = currentOrder;
-                        items.sortOnData('order');
-                        for (i = 0; i < items.length; ++i) {
-                          momentContainer.appendChild(items[i]);
+                        if (direction < 0){
+                            _insertAfter(nextElem, momentElem);
+                        }else {
+                            _insertAfter(momentElem, nextElem);
                         }
-                        console.log(items.map(function(e){return {'id': e.dataset.id, 'order': e.dataset.order}}));
-                        _submit(items.map(function(e){return {'id': e.dataset.id, 'order': e.dataset.order}}));
+                        _save();
                     }
-                    // const data = _getFormData();
-                },
-                _init = function () {
-                    const items = momentContainer.querySelectorAll(savedMomentQ),
-                        data = _getFormInitialData();
-                    var i;
-                    for (i = 0; i < items.length; i++) {
-                        items[i].dataset.order = i;
-                    }
-                    console.log(_toArray(items).map(function(e){return {'id': e.dataset.id, 'order': e.dataset.order}}));
-
-                    _submit(data);
                 };
-
             self.dataset.editTimeline = self;
-            self.save = _save;
             self.order = _order;
-            _init();
+            self.save = _save;
         },
         'timeline-sort': function () {
             const self = this,
@@ -251,7 +207,6 @@ Array.prototype.sortOnData = function(key){
                     }
                 },
                 _submit = function(e){
-                    console.log('submit');
                     for (var i = 0; i < momentFormList.length; i++){
                         if (!momentFormList[i].hasAttribute('data-new-moment')){
                             momentFormList[i].querySelector('input[name$="-order"]').value = momentFormList[i].dataset.order;
@@ -285,32 +240,52 @@ Array.prototype.sortOnData = function(key){
 var helpers = {
     'ajax': function (options) {
       var request = new XMLHttpRequest(),
-        headers = options.headers || [],
-        i;
-      request.open(options.type, options.url, true);
-      for (i = 0; i < headers.length; i++){
-        request.setRequestHeader(headers[i][0], headers[i][1]);
+        defaultHeaders = {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': d.querySelector('input[name="csrfmiddlewaretoken"]').value
+        },
+        headers = helpers.merge_options(defaultHeaders, options.headers || {});
+      request.open(options.type || 'GET', options.url, true);
+      for (const k in  headers){
+          if (headers.hasOwnProperty(k)){
+            request.setRequestHeader(k, headers[k]);
+          }
       }
       request.onreadystatechange = function () {
-        if (request.readyState == 4) {
+        if (request.readyState === XMLHttpRequest.DONE) {
           if (request.status >= 200 && request.status < 400) {
-            if (options.callback && typeof (options.callback) == 'function') {
+            if (options.callback && typeof (options.callback) === 'function') {
               options.callback.call(request, request.responseText);
             }
+
+          } else if (request.status === 400) {
+                alert('Er ging iets mis.');
           } else {
-            if (options.error && typeof (options.error) == 'function') {
+            if (options.error && typeof (options.error) === 'function') {
               options.error.call(request, request.responseText);
             }
           }
-          _decorate();
         }
       };
-
       request.send(options.data);
-
       return request;
+    },
+    'merge_options': function(obj1,obj2){
+        var obj3 = {};
+        for (const attrname1 in obj1) {
+            if(obj1.hasOwnProperty(attrname1)){
+                obj3[attrname1] = obj1[attrname1];
+            }
+        }
+        for (const attrname2 in obj2) {
+            if(obj1.hasOwnProperty(attrname1)) {
+                obj3[attrname2] = obj2[attrname2];
+            }
+        }
+        return obj3;
     }
-    }
+    };
 
    _decorate();
 

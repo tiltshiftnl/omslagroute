@@ -12,9 +12,13 @@
         {% for moment in moment_form_set %}
 
 
-            <fieldset data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}" data-order="{{ moment.instance.order }}">
+            <fieldset data-moment data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}" data-order="{{ moment.instance.order }}">
                 {% if not moment.instance.id %}
                     <h2>Nieuw tijdslijn moment</h2>
+                {% else %}
+                    <h2>{{ moment.instance.id }}</h2>
+                    <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
+                    <a href="#" data-handler="delete-moment">Verwijderen</a>
                 {% endif %}
                 <div class="form-field">
                     {{ moment.name.label_tag }}
@@ -34,15 +38,13 @@
 
                 <div class="form-field">
                     <a href="#" data-handler="save-moment">Opslaan</a><br>
-                    <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
-                    <a href="#" data-handler="moment-down">Naar beneden</a>
                 </div>
 
                 <h2 style="text-align: center"><a href="#" data-handler="new-moment">+</a></h2>
             </fieldset>
         {% endfor %}
         </div>
-        <fieldset data-new-moment-proto style="display: none">
+        <fieldset data-moment data-moment-proto style="display: none">
             <h2>Nieuw timeline moment</h2>
             <div class="form-field">
                 {{ form.name.label_tag }}
@@ -61,7 +63,7 @@
             </div>
 
             <div class="form-field">
-                <a href="#" data-handler="save-new-moment">Aanmaken</a>&nbsp;&nbsp;
+                <a href="#" data-handler="save-moment">Opslaan</a>&nbsp;&nbsp;
                 <a href="#" data-handler="exit-new-moment">Annuleer</a>
             </div>
 
