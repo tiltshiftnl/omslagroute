@@ -7,9 +7,9 @@
 {% endfor %}
 </ul>
 
-<h2>Document list</h2>
+<h2>DocumentVersion list</h2>
 <ul>
-{% for document in document_list %}
+{% for document in documentversion_list %}
     <li>
         {{ document.name }} <a href="{% url 'download_documentversion' document.id %}">download</a><br>
         <ul>
