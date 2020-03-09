@@ -179,11 +179,6 @@ $padding-left: 30px;
     }
 }
 
-.change-order {
-    margin-left: auto;
-    display: inline;
-}
-
 .details__header:hover,
 .details__title:hover,
 .details__toggle-icon:hover {
@@ -239,6 +234,30 @@ html.no-details details > summary::before {
     }
 }
 
+// timeline-management scherm 
+.section--timeline-management {
+    .dot--large {
+        top: calc(#{$toplevel-moment * 1.25});
+    }
+
+    .dot--small {
+        top: calc(
+            #{$toplevel-moment / 2} +
+            #{$sublevel-moment / 4}
+            );
+    }
+
+    .details__header,
+    .details__content {
+        padding: 2rem 1rem 2rem 2rem;
+    }
+}
+
+.change-order {
+    margin-left: auto;
+    display: inline;
+}
+
 .details > fieldset {
     background-color: $primary-white;
     padding: 1rem 1rem 1rem 2rem;
@@ -247,20 +266,31 @@ html.no-details details > summary::before {
 }
 
 .new-moment__add {
-    background-color: $primary-darkblue;
+    background-color: $neutral-grey2;
     display: flex;
     height: 10px;
 
     .button {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    &:hover {
         background-color: $primary-darkblue;
-        width: 24px;
-        height: 24px;
-        min-width: auto;
-        top: -7px;
-        left: 17px;
-        position: relative;
-        padding: 0;
-        z-index: 5;
+
+        .button {
+            background-color: $primary-darkblue;
+            width: 24px;
+            height: 24px;
+            min-width: auto;
+            top: -7px;
+            left: 17px;
+            position: relative;
+            padding: 0;
+            z-index: 5;
+            visibility: visible;
+            opacity: 1;
+        }
     }
 }
 
