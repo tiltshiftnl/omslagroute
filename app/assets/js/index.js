@@ -73,14 +73,16 @@ Array.prototype.sortOnData = function(key){
           const self = _closest(e.target, '[data-handler="save-moment"]'),
             container = _closest(self, '[data-moment]');
          container.submit();
-         container.parentElement.removeChild(container);
+          container.parentElement.removeChild(container);
+          location.reload();
       },
       'save-and-exit-new-moment': function(e){
         e.preventDefault();
         const self = _closest(e.target, '[data-handler="save-and-exit-new-moment"]'),
           container = _closest(self, '[data-moment-proto]');
         container.submit();
-        container.parentElement.removeChild(container);
+          container.parentElement.removeChild(container);
+          location.reload();
     }
   };
     const decorators = {
