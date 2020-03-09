@@ -52,13 +52,13 @@ Array.prototype.sortOnData = function(key){
           proto.style.display = 'block';
           proto.dataset.decorator = 'edit-moment';
           _decorate();
+          self.style.display = 'block';
       },
       'exit-new-moment': function (e) {
           e.preventDefault();
           const self = _closest(e.target, '[data-handler="exit-new-moment"]'),
-              container = _closest(self, '[data-new-moment-proto]');
+              container = _closest(self, '[data-moment-proto]');
           container.parentElement.removeChild(container);
-
       },
       'delete-moment': function(e){
           e.preventDefault();
@@ -73,7 +73,15 @@ Array.prototype.sortOnData = function(key){
           const self = _closest(e.target, '[data-handler="save-moment"]'),
             container = _closest(self, '[data-moment]');
          container.submit();
-      }
+         container.parentElement.removeChild(container);
+      },
+      'save-and-exit-new-moment': function(e){
+        e.preventDefault();
+        const self = _closest(e.target, '[data-handler="save-and-exit-new-moment"]'),
+          container = _closest(self, '[data-moment-proto]');
+        container.submit();
+        container.parentElement.removeChild(container);
+    }
   };
     const decorators = {
         'edit-moment': function () {
