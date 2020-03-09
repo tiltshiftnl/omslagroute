@@ -4,7 +4,7 @@
 {% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
     <li class="document">
-        <a href="{{ document_version.uploaded_file.url }}" class="document__version" download target="_blank" rel="noopener">
+        <a href="{{ document_version.uploaded_file.url }}" class="document__version" download target="_blank" rel="noopener" {% if object.description %}data-tooltip="{{ object.description }}"{% endif %}>
             <svg class="document__icon"  width="40" height="40" >
                 <use href="#{{ object.document_type_value|lower }}" xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40" />
             </svg>
@@ -31,14 +31,6 @@
 
             {% endif %}
         </a>
-
-        <p class="document__description" data-tooltip="{{ object.description }}">
-            <svg class="document__description-icon" width="32" height="32" >
-                <title> {{ object.description }}</title>
-                <use href="#info" xlink:href="#info" width="32" height="32" />
-            </svg>
-            <span class="document__description__tooltip"></span>
-        </p>    
         
         {% if request.user|has_group:"wonen" and object %}
             <p class="document__change">
