@@ -40,6 +40,11 @@ class DocumentVersion(models.Model):
         ordering = ('-uploaded', )
 
 
+class DocumentManager(models.Manager):
+    def get_by_name(self, name):
+        return self.filter(name__iexact=name)
+
+
 class Document(models.Model):
     name = models.CharField(
         verbose_name=_('Titel van het document'),
@@ -57,6 +62,8 @@ class Document(models.Model):
         blank=True,
         null=True,
     )
+
+    objects = DocumentManager()
 
     class Meta:
         verbose_name = _('Document')
