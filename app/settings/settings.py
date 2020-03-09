@@ -182,8 +182,8 @@ AUTH_GROUPNAME_PROCESS = 'proces'
 LOGIN_URL = '/'
 
 SWAGGER_SETTINGS = {
-    'LOGIN_URL': '/looplijsten/admin/login/',
-    'LOGOUT_URL': '/looplijsten/admin/logout/'
+    'LOGIN_URL': '/admin/login/',
+    'LOGOUT_URL': '/admin/logout/'
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
