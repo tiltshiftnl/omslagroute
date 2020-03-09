@@ -66,6 +66,10 @@
     }
 }
 
+.button--icon {
+    min-width: inherit;
+}
+
 .button--primary,
 [type="submit"] {
     background-color: $primary-darkblue;

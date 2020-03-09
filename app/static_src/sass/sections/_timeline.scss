@@ -242,7 +242,19 @@ html.no-details details > summary::before {
 
 .change-order {
     margin-left: auto;
-    display: inline;
+    display: inline-flex;
+
+    button {
+        color: $primary-darkblue; 
+        margin-right: .5rem;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        &:hover {
+            color: $primary-red;
+            box-shadow: none;
+        }
+    }
 }
 
 .details-wrapper > fieldset {
