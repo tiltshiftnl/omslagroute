@@ -9,41 +9,42 @@
         {{ moment_form_set.management_form }}
         <!-- {{ moment_form_set.errors }} -->
         <div data-moment-container>
-        {% for moment in moment_form_set %}
+            {% for moment in moment_form_set %}
 
 
-            <fieldset data-moment data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}" data-order="{{ moment.instance.order }}">
-                {% if not moment.instance.id %}
-                    <h2>Nieuw tijdslijn moment</h2>
-                {% else %}
-                    <h2>{{ moment.instance.id }}</h2>
-                    <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
-                    <a href="#" data-handler="delete-moment">Verwijderen</a>
-                {% endif %}
-                <div class="form-field">
-                    {{ moment.name.label_tag }}
-                    <p class="help-text">
-                        (Naam)
-                    </p>
-                    {{ moment.name }}
-                </div>
+                <fieldset data-moment data-mode="static" data-decorator="edit-moment" data-id="{{ moment.instance.id }}" data-order="{{ moment.instance.order }}">
+                    {% if not moment.instance.id %}
+                        <h2>Nieuw tijdslijn moment</h2>
+                    {% else %}
+                        <h2>{{ moment.instance.id }}</h2>
+                        <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;<a href="#" data-handler="moment-down">Naar beneden</a>
+                        <a href="#" data-handler="delete-moment">Verwijderen</a>
+                    {% endif %}
+                    <div class="form-field">
+                        {{ moment.name.label_tag }}
+                        <p class="help-text">
+                            (Naam)
+                        </p>
+                        {{ moment.name }}
+                    </div>
 
-                <div class="form-field">
-                    {{ moment.description.label_tag }}
-                    <p class="help-text">
-                        (Beschrijving)
-                    </p>
-                    {{ moment.description }}
-                </div>
+                    <div class="form-field">
+                        {{ moment.description.label_tag }}
+                        <p class="help-text">
+                            (Beschrijving)
+                        </p>
+                        {{ moment.description }}
+                    </div>
 
-                <div class="form-field">
-                    <a href="#" data-handler="save-moment">Opslaan</a><br>
-                </div>
+                    <div class="form-field">
+                        <a href="#" data-handler="save-moment">Opslaan</a><br>
+                    </div>
 
-                <h2 style="text-align: center"><a href="#" data-handler="new-moment">+</a></h2>
-            </fieldset>
-        {% endfor %}
+                    <h2 style="text-align: center"><a href="#" data-handler="new-moment">+</a></h2>
+                </fieldset>
+            {% endfor %}
         </div>
+            
         <fieldset data-moment data-moment-proto style="display: none">
             <h2>Nieuw timeline moment</h2>
             <div class="form-field">
@@ -66,11 +67,12 @@
                 <a href="#" data-handler="save-moment">Opslaan</a>&nbsp;&nbsp;
                 <a href="#" data-handler="exit-new-moment">Annuleer</a>
             </div>
-
         </fieldset>
+
 {#        <div class="form-field form-field--buttons">#}
 {#            <input type="submit" value="Opslaan" class="button button--primary">#}
 {#            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>#}
 {#        </div>#}
+
     </form>
 {% endblock %}
