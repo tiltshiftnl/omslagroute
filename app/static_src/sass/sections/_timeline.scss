@@ -236,21 +236,21 @@ html.no-details details > summary::before {
 
 // timeline-management scherm 
 .section--timeline-management {
-    .dot--large {
-        top: calc(#{$toplevel-moment * 1.25});
-    }
+    // .dot--large {
+    //     top: calc(#{$toplevel-moment * 1.25});
+    // }
 
-    .dot--small {
-        top: calc(
-            #{$toplevel-moment / 2} +
-            #{$sublevel-moment / 4}
-            );
-    }
+    // .dot--small {
+    //     top: calc(
+    //         #{$toplevel-moment / 2} +
+    //         #{$sublevel-moment / 4}
+    //         );
+    // }
 
-    .details__header,
-    .details__content {
-        padding: 2rem 1rem 2rem 2rem;
-    }
+    // .details__header,
+    // .details__content {
+    //     padding: 2rem 1rem 2rem 2rem;
+    // }
 }
 
 .change-order {
@@ -266,27 +266,51 @@ html.no-details details > summary::before {
 }
 
 .new-moment__add {
-    background-color: $neutral-grey2;
     display: flex;
-    height: 10px;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0;
+    box-sizing: content-box;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+    padding: 12px 0;
+    text-decoration: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    position: relative;
+
+    .new-moment__line {
+        background-color: $neutral-grey2;
+        height: 10px;
+        width: 100%;
+    }
 
     .button {
         visibility: hidden;
         opacity: 0;
+        background-color: $primary-darkblue;
+        width: 24px;
+        height: 24px;
+        min-width: auto;
+        left: 17px;
+        position: absolute;
+        padding: 0;
+        padding-top: 4px;
     }
 
     &:hover {
-        background-color: $primary-darkblue;
+        .new-moment__line {
+            background-color: $primary-darkblue;
+        }
 
         .button {
-            background-color: $primary-darkblue;
-            width: 24px;
-            height: 24px;
-            min-width: auto;
-            top: -7px;
-            left: 17px;
-            position: relative;
-            padding: 0;
             z-index: 5;
             visibility: visible;
             opacity: 1;

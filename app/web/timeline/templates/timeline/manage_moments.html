@@ -83,14 +83,15 @@
                         </fieldset>
                     </details>
 
-                    <div class="new-moment__add" data-handler="new-moment">
-                        <button class="button button--icon" data-handler="new-moment">
+                    <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">
+                        <div class="new-moment__line"></div>
+                        <div class="button button--icon" data-handler="new-moment">
                             <svg class="details__header-closed" width="16" height="16">
                                 <title>Voeg stap toe</title>
                                 <use href="#add-document" xlink:href="#add-document" width="16" height="16" />
                             </svg>
-                        </button>
-                    </div>
+                        </div>
+                    </button>
                 </div> 
             {% endfor %}
         </div>

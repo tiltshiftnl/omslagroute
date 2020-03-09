@@ -48,11 +48,10 @@ Array.prototype.sortOnData = function(key){
           const moment = _closest(e.target, '[data-id]'),
               proto = d.querySelector('[data-moment-proto]').cloneNode(true);
           _insertAfter(proto, moment);
-          self.style.display = 'none';
+          self.style.visibility = 'hidden';
           proto.style.display = 'block';
           proto.dataset.decorator = 'edit-moment';
           _decorate();
-          self.style.display = 'block';
       },
       'exit-new-moment': function (e) {
           e.preventDefault();
