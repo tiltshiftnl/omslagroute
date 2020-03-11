@@ -48,7 +48,6 @@ Array.prototype.sortOnData = function(key){
           const moment = _closest(e.target, '[data-id]'),
               proto = d.querySelector('[data-moment-proto]').cloneNode(true);
           _insertAfter(proto, moment);
-          self.disabled = true;
           proto.style.display = 'block';
           proto.dataset.decorator = 'edit-moment';
           _decorate();
@@ -69,19 +68,37 @@ Array.prototype.sortOnData = function(key){
             container.delete();
           }
       },
+      'open-moment': function(e){
+          const self = _closest(e.target, '[data-handler="open-moment"]'),
+            moment = _closest(self, '[data-moment]'),
+            details = moment.querySelector('details'),
+            momentListContainer = moment.parentNode,
+            buttons = momentListContainer.querySelectorAll('.change-order button, .new-moment__add');
+          momentListContainer.classList[details.hasAttribute('open') ? 'remove' : 'add']('edit-mode');
+          // if (details.hasAttribute('open')){
+          //     for (var i = 0; i < buttons.length; i++){
+          //         buttons[i].removeAttribute('disabled');
+          //     }
+          // }
+          // else {
+          //     for (var i = 0; i < buttons.length; i++){
+          //         buttons[i].setAttribute('disabled', 'disabled');
+          //     }
+          //
+          // }
+
+      },
       'save-moment': function(e){
           e.preventDefault();
           const self = _closest(e.target, '[data-handler="save-moment"]'),
-            container = _closest(self, '[data-moment]'),
-            new_moment_button = container.previousSibling.querySelector('[data-handler="new-moment"]');
-          new_moment_button.disabled = false;
+            container = _closest(self, '[data-moment]');
           container.submit();
-          container.parentElement.removeChild(container); 
     }
   };
     const decorators = {
         'edit-moment': function () {
             var savedTimeout;
+            var savingTimeout;
             const self = this,
                 id = this.dataset.id,
                 _getFormData = function () {
@@ -97,10 +114,18 @@ Array.prototype.sortOnData = function(key){
                     }
                     return data;
                 },
+                _updateView = function(data){
+                    for (var k in data){
+                        if (data.hasOwnProperty(k)) {
+                            const elem = self.querySelectorAll('[data-moment-'+k+']');
+                            for (var i = 0; i < elem.length; i++){
+                                elem[i].textContent = data[k];
+                            }
 
-                _init = function(){
-                    const data = _getFormData();
+                        }
+                    }
                 },
+                _init = function(){},
                 _delete = function() {
                     helpers.ajax({
                         'type': 'POST',
@@ -116,6 +141,11 @@ Array.prototype.sortOnData = function(key){
                 },
                 _submit = function () {
                     const data = _getFormData();
+                    self.dataset.saving = 'saving';
+                    clearTimeout(savingTimeout);
+                    savingTimeout = setTimeout(function(){
+                        delete self.dataset.saving;
+                    }, 2000);
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/timeline/update-moment',
@@ -124,9 +154,11 @@ Array.prototype.sortOnData = function(key){
                             const response = JSON.parse(responseText);
                             if (this.status === 201){
                                 self.dataset.id = response.message.id;
+                                self.classList.remove('details-wrapper--new-moment');
                                 d.querySelector('[data-edit-timeline]').save();
                             }
                             self.dataset.saved = 'saved';
+                            _updateView(response.message);
                             clearTimeout(savedTimeout);
                             savedTimeout = setTimeout(function(){
                                 delete self.dataset.saved;
@@ -134,10 +166,10 @@ Array.prototype.sortOnData = function(key){
                         },
                         'error': function (responseText) {
                             const response = JSON.parse(responseText);
-                            if (this.status === 422){
-                                for (var k in response.message){
-                                    if (response.message.hasOwnProperty(k)){
-                                    self.querySelector('[name$="'+ k +'"]').dataset.errorMessage = response.message[k]
+                            if (this.status === 422) {
+                                for (var k in response.message) {
+                                    if (response.message.hasOwnProperty(k)) {
+                                        self.querySelector('[name$="' + k + '"]').dataset.errorMessage = response.message[k]
                                     }
                                 }
                             }
@@ -171,14 +203,49 @@ Array.prototype.sortOnData = function(key){
                     const items = _toArray(momentContainer.querySelectorAll(momentQ)),
                         index = items.indexOf(momentElem),
                         nextElem = items[index + direction];
-                    if (nextElem){
-                        if (direction < 0){
-                            _insertAfter(nextElem, momentElem);
-                        }else {
-                            _insertAfter(momentElem, nextElem);
+
+                    var currentClone = momentElem.cloneNode(true);
+                    var nextClone = nextElem.cloneNode(true);
+                    var currentRect = momentElem.getBoundingClientRect();
+                    var nextRect = nextElem.getBoundingClientRect();
+                    var parentRect = nextElem.parentNode.getBoundingClientRect();
+                    nextElem.style.opacity = 0;
+                    momentElem.style.opacity = 0;
+                    currentClone.style.position = 'absolute';
+                    currentClone.style.width = momentElem.offsetWidth + 'px';
+                    currentClone.style.height = momentElem.offsetHeight + 'px';
+                    currentClone.style.top = (currentRect.top - parentRect.top) + 'px';
+                    currentClone.style.transition = 'all .5s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                    currentClone.style.zIndex = 1001;
+
+                    nextClone.style.position = 'absolute';
+                    nextClone.style.width = momentElem.offsetWidth + 'px';
+                    nextClone.style.height = momentElem.offsetHeight + 'px';
+                    nextClone.style.top = (nextRect.top - parentRect.top) + 'px';
+                    nextClone.style.transition = 'all .5s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                    nextClone.style.zIndex = 1000;
+
+                    momentElem.parentNode.appendChild(currentClone);
+                    momentElem.parentNode.appendChild(nextClone);
+
+                    setTimeout(function(){
+                        currentClone.style.transform = 'translate(0, '+(direction * nextElem.offsetHeight)+'px)';
+                        nextClone.style.transform = 'translate(0, '+(-direction * momentElem.offsetHeight)+'px)';
+                    }, 1);
+                    setTimeout(function(){
+                        currentClone.parentNode.removeChild(currentClone);
+                        nextClone.parentNode.removeChild(nextClone);
+                        nextElem.style.opacity = 1;
+                        momentElem.style.opacity = 1;
+                        if (nextElem){
+                            if (direction < 0){
+                                _insertAfter(nextElem, momentElem);
+                            }else {
+                                _insertAfter(momentElem, nextElem);
+                            }
+                            _save();
                         }
-                        _save();
-                    }
+                    }, 500);
                 };
             self.dataset.editTimeline = self;
             self.order = _order;
@@ -210,7 +277,7 @@ Array.prototype.sortOnData = function(key){
                         nextElem.style.order = nextElem.dataset.order;
                     }
                 },
-                _submit = function(e){
+                _submit = function(){
                     for (var i = 0; i < momentFormList.length; i++){
                         if (!momentFormList[i].hasAttribute('data-new-moment')){
                             momentFormList[i].querySelector('input[name$="-order"]').value = momentFormList[i].dataset.order;
@@ -223,7 +290,6 @@ Array.prototype.sortOnData = function(key){
             this.addEventListener('submit', _submit);
         }
     };
-    var decoratorsElements = {};
 
   d.addEventListener('click',function(t){var k,e,a=t&&t.target;if(a=_closest(a,'[data-handler]')){var r=a.getAttribute('data-handler').split(/\s+/);if('A'==a.tagName&&(t.metaKey||t.shiftKey||t.ctrlKey||t.altKey))return;for(e=0;e<r.length;e++){k=r[e].split(/[\(\)]/);handlers[k[0]]&&handlers[k[0]].call(a,t,k[1])}}});
   var _decorate = function(){var k,i,j,decoratorString,el,els=d.querySelectorAll('[data-decorator]');for(i=0;i<els.length;i++){for(decoratorString=(el=els[i]).getAttribute('data-decorator').split(/\s+/),j=0;j<decoratorString.length;j++){k=decoratorString[j].split(/[\(\)]/);decorators[k[0]]&&decorators[k[0]].call(el,k[1]);el.removeAttribute('data-decorator')}}};

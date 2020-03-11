@@ -3,6 +3,21 @@ $sublevel-moment: 1rem;
 $timeline-width: 3px;
 $padding-left: 30px;
 
+.details-list-wrapper {
+  position: relative;
+  &:after {
+    //content: '';
+    position: absolute;
+    top: 1rem;
+    left: 27px;
+    width: 3px;
+    height: calc(100% - 50px - 65px);
+    background-color: $neutral-grey4;
+    z-index: 1000;
+
+  }
+}
+
 .details-admin {
     text-align: right;
 }
@@ -18,7 +33,7 @@ $padding-left: 30px;
     }
 
     .dot--large {
-        background-color: $primary-darkblue;
+        background-color: $neutral-grey4;
         width: $toplevel-moment;
         height:  $toplevel-moment;
         left: calc(
@@ -42,10 +57,13 @@ $padding-left: 30px;
             #{$sublevel-moment  / 4}
             );
     }
+    [data-handler="exit-new-moment"] {
+        display: none;
+    }
 
     // blue line
     &:not(:last-of-type)::before {
-        border-left: 3px solid $primary-darkblue;
+        border-left: 3px solid $neutral-grey4;
         top: 1rem;
         position: absolute;
         content: ' ';
@@ -56,7 +74,17 @@ $padding-left: 30px;
             #{$timeline-width}
             );
         z-index: 2;
-    } 
+    }
+    &:first-child {
+        .change-order [data-handler="moment-up"] {
+            display: none;
+        }
+    }
+    &:last-child {
+        .change-order [data-handler="moment-down"] {
+            display: none;
+        }
+    }
 }
 
 .details {
@@ -77,10 +105,10 @@ $padding-left: 30px;
         width: 0px;
         left: calc(-1rem + 12px);
         z-index: 2;
-    } 
+    }
 
-    &:hover,
-    &:focus {
+    //&:focus,
+    &:hover {
         background-color: $neutral-grey1;
         position: relative;
 
@@ -97,10 +125,10 @@ $padding-left: 30px;
         }
 
         .details__header:focus::before {
-            background-color: $neutral-grey1;
+            //background-color: $neutral-grey1;
         }
     }
-    
+
     &:focus {
         summary::before,
         .details__headerhoverblock {
@@ -112,7 +140,7 @@ $padding-left: 30px;
 .details__header-opened {
     display: none;
 }
- 
+
 .details[open] {
     background-color: $neutral-grey1;
 
@@ -127,7 +155,7 @@ $padding-left: 30px;
     .details__header-opened {
         display: inline-block;
     }
- 
+
     .details__headerhoverblock {
         height: 100%;
         width: $padding-left;
@@ -138,7 +166,7 @@ $padding-left: 30px;
         top: 0;
         border-left: 0;
     }
- 
+
 }
 
 .details__header {
@@ -162,10 +190,12 @@ $padding-left: 30px;
         }
     }
 
-    &:focus,
-    &:active {
+    &:focus {
         outline: none;
+    }
+    &:active {
         background-color: $neutral-grey1;
+        outline: none;
 
         &::before {
             background-color: $neutral-grey1;
@@ -190,6 +220,30 @@ $padding-left: 30px;
 .details__title {
     display: inline;
     margin: 0;
+    position: relative;
+    &:after {
+        content: '';
+        min-width: 100px;
+        height: 19px;
+        position: absolute;
+        background-color: $primary-darkblue;
+        color: $primary-white;
+        left: calc(100% + 35px);
+        top: -3px;
+        font-size: .8rem;
+        white-space: nowrap;
+        padding: 3px 7px;
+        opacity: 0;
+        transition: all .4s linear;
+    }
+    [data-saving] &:after {
+        content: 'Bezig met opslaan';
+        opacity: 1;
+    }
+    [data-saved] &:after {
+        content: 'Opgeslagen';
+        //color: $primary-darkblue;
+    }
 }
 
 .details__toggle-icon {
@@ -217,7 +271,7 @@ html.no-details details > summary::before {
 
 .section--timeline {
     .downloads {
-        padding-bottom: 0; 
+        padding-bottom: 0;
     }
 
     .document__version,
@@ -240,10 +294,39 @@ html.no-details details > summary::before {
     }
 }
 
-// timeline-management scherm 
+// timeline-management scherm
 .details-wrapper--new-moment {
-    background-color: $neutral-grey1;
-    padding: 0 0 2rem 3.5rem;
+    //padding: 0 0 2rem 3.5rem;
+    fieldset {
+        display: block;
+    }
+    .dot--large {
+        background-color: $primary-darkblue;
+    }
+    .details__content,
+    .details__toggle-icon {
+        display: none;
+    }
+    [data-handler="delete-moment"] {
+        display: none;
+    }
+    [data-handler="exit-new-moment"] {
+        display: block;
+    }
+    // blue line
+    &:not(:last-of-type)::before {
+        border-left: 3px solid $neutral-grey4;
+        top: 1rem;
+        position: absolute;
+        //content: ' ';
+        height: 100%;
+        width: 0px;
+        left: calc(
+            #{$padding-left} -
+            #{$timeline-width}
+            );
+        //z-index: 2;
+    }
 }
 
 .change-order {
@@ -251,7 +334,7 @@ html.no-details details > summary::before {
     float: right;
 
     button {
-        color: $primary-darkblue; 
+        color: $primary-darkblue;
         margin-right: .5rem;
         padding-top: 0;
         padding-bottom: 0;
@@ -271,6 +354,8 @@ html.no-details details > summary::before {
 .details__editform {
     border: 0;
     padding: 0 0 2rem 2rem;
+    margin: 0 2rem 2rem 2rem;
+    background-color: $neutral-grey2;
 }
 
 .new-moment__add {
@@ -293,6 +378,7 @@ html.no-details details > summary::before {
     -moz-appearance: none;
     background: none;
     position: relative;
+    outline: none;
 
     .new-moment__line {
         background-color: $neutral-grey2;
@@ -316,6 +402,8 @@ html.no-details details > summary::before {
     }
 
     &:disabled {
+        opacity: 0;
+        pointer-events: none;
         .new-moment__line,
         .button {
             background-color: $neutral-grey3;
@@ -346,9 +434,9 @@ html.no-details details > summary::before {
     }
 }
 
-[id^="edit--"] {
-    display: none;
-}
-[id^="edit--"]:target {
-    display: block;
-}
+//[id^="edit--"] {
+//    display: none;
+//}
+//[id^="edit--"]:target {
+//    display: block;
+//}
