@@ -28,7 +28,7 @@ class DocumentList(UserPassesTestMixin, ListView):
 
 class DocumentDelete(UserPassesTestMixin, DeleteView):
     model = Document
-    template_name_suffix = '_delete_form_page'
+    template_name_suffix = '_delete_form'
     success_url = reverse_lazy('home')
 
     def test_func(self):
