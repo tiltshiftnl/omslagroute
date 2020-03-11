@@ -1,12 +1,14 @@
-@import 
-    "basics/variables", 
-    "basics/mediaqueries", 
+@import
+    "basics/variables",
+    "basics/mediaqueries",
     "basics/typography",
-    "basics/layout", 
-    "basics/forms", 
+    "basics/layout",
+    "basics/forms",
     "sections/downloads",
     "sections/timeline",
-    "components/buttons";
+    "components/buttons",
+    "components/alert",
+    "components/alert_line";
 
 /* Regular */
 @font-face {
@@ -17,7 +19,7 @@
     src: url(/static/fonts/AvenirAll/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix);
     src: url(/static/fonts/AvenirAll/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix) format("eot"),url(/static/fonts/AvenirAll/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2) format("woff2"),url(/static/fonts/AvenirAll/1e9892c0-6927-4412-9874-1b82801ba47a.woff) format("woff"),url(/static/fonts/AvenirAll/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf) format("truetype")
 }
-    
+
 /* Regular Italic */
 @font-face {
 font-family: "Avenir Next";
@@ -47,4 +49,3 @@ font-display: swap;
 src: url(/static/fonts/AvenirAll/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?#iefix);
 src: url(/static/fonts/AvenirAll/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?#iefix) format("eot"),url(/static/fonts/AvenirAll/aad99a1f-7917-4dd6-bbb5-b07cedbff64f.woff2) format("woff2"),url(/static/fonts/AvenirAll/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff) format("woff"),url(/static/fonts/AvenirAll/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf) format("truetype")
 }
-    
