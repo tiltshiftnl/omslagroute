@@ -38,7 +38,7 @@
 }
 
 // fallbacks for IE11
-.no-details { 
+@media all and (-ms-high-contrast:none) {
 
     .document {
         -ms-grid-column-span: 1;

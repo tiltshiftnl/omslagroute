@@ -122,8 +122,10 @@ body {
     margin-right: auto;
 }
 
-.no-details .site-title {
-    margin-left: 40px;
+@media all and (-ms-high-contrast:none) {
+    .site-title {
+        margin-left: 40px;
+    }
 }
 
 .site-navigation {
