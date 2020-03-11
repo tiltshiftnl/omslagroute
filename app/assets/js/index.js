@@ -1,13 +1,13 @@
-const fileUpload = document.getElementById('file-upload');
-const filesUploaded = document.getElementById( 'file-upload-filename' );
+var fileUpload = document.getElementById('file-upload');
+var filesUploaded = document.getElementById( 'file-upload-filename' );
 
 if (fileUpload && fileUpload.addEventListener) {
     fileUpload.addEventListener('change', showFileName);
 }
 
 function showFileName( event ) {
-    const input = event.srcElement;
-    const fileName = input.files[0].name;
+    var input = event.srcElement;
+    var fileName = input.files[0].name;
     filesUploaded.textContent = 'Geselecteerd bestand: ' + fileName;
 }
 
@@ -30,22 +30,22 @@ Array.prototype.sortOnData = function(key){
 
 
 !function (w, d) {
-  const handlers = {
+  var handlers = {
       'moment-up': function (e) {
           e.preventDefault();
-          const moment = _closest(e.target, '[data-id]');
+          var moment = _closest(e.target, '[data-id]');
          _closest(e.target, '[data-edit-timeline]').order(-1, moment);
       },
       'moment-down': function (e) {
           e.preventDefault();
-          const moment = _closest(e.target, '[data-id]');
+          var moment = _closest(e.target, '[data-id]');
          _closest(e.target, '[data-edit-timeline]').order(1, moment);
 
       },
       'new-moment': function (e) {
           e.preventDefault();
-          const self = _closest(e.target, '[data-handler="new-moment"]');
-          const moment = _closest(e.target, '[data-id]'),
+          var self = _closest(e.target, '[data-handler="new-moment"]');
+          var moment = _closest(e.target, '[data-id]'),
               proto = d.querySelector('[data-moment-proto]').cloneNode(true);
           _insertAfter(proto, moment);
           proto.style.display = 'block';
@@ -54,7 +54,7 @@ Array.prototype.sortOnData = function(key){
       },
       'exit-new-moment': function (e) {
           e.preventDefault();
-          const self = _closest(e.target, '[data-handler="exit-new-moment"]'),
+          var self = _closest(e.target, '[data-handler="exit-new-moment"]'),
               container = _closest(self, '[data-moment-proto]'),
               new_moment_button = container.previousSibling.querySelector('[data-handler="new-moment"]');
           new_moment_button.disabled = false;
@@ -62,14 +62,14 @@ Array.prototype.sortOnData = function(key){
       },
       'delete-moment': function(e){
           e.preventDefault();
-          const self = _closest(e.target, '[data-handler="delete-moment"]'),
+          var self = _closest(e.target, '[data-handler="delete-moment"]'),
               container = _closest(self, '[data-edit-moment]');
           if (confirm("Weet je zeker dat je het timeline item met naam '"+container.querySelector('[name$="name"]').value+"' wil verwijderen")) {
             container.delete();
           }
       },
       'open-moment': function(e){
-          const self = _closest(e.target, '[data-handler="open-moment"]'),
+          var self = _closest(e.target, '[data-handler="open-moment"]'),
             moment = _closest(self, '[data-moment]'),
             details = moment.querySelector('details'),
             momentListContainer = moment.parentNode,
@@ -90,23 +90,23 @@ Array.prototype.sortOnData = function(key){
       },
       'save-moment': function(e){
           e.preventDefault();
-          const self = _closest(e.target, '[data-handler="save-moment"]'),
+          var self = _closest(e.target, '[data-handler="save-moment"]'),
             container = _closest(self, '[data-moment]');
           container.submit();
     }
   };
-    const decorators = {
+    var decorators = {
         'edit-moment': function () {
             var savedTimeout;
             var savingTimeout;
-            const self = this,
+            var self = this,
                 id = this.dataset.id,
                 _getFormData = function () {
                     var data = {},
                         i,
                         fields = self.querySelectorAll('input[type="text"], input[type="hidden"], textarea');
                     for (i = 0; i < fields.length; i++){
-                        const nameSplit = fields[i].getAttribute('name').split('-');
+                        var nameSplit = fields[i].getAttribute('name').split('-');
                         data[nameSplit[nameSplit.length-1]] = fields[i].value;
                     }
                     if (self.dataset.id){
@@ -117,7 +117,7 @@ Array.prototype.sortOnData = function(key){
                 _updateView = function(data){
                     for (var k in data){
                         if (data.hasOwnProperty(k)) {
-                            const elem = self.querySelectorAll('[data-moment-'+k+']');
+                            var elem = self.querySelectorAll('[data-moment-'+k+']');
                             for (var i = 0; i < elem.length; i++){
                                 elem[i].textContent = data[k];
                             }
@@ -140,7 +140,7 @@ Array.prototype.sortOnData = function(key){
                     });
                 },
                 _submit = function () {
-                    const data = _getFormData();
+                    var data = _getFormData();
                     self.dataset.saving = 'saving';
                     clearTimeout(savingTimeout);
                     savingTimeout = setTimeout(function(){
@@ -151,7 +151,7 @@ Array.prototype.sortOnData = function(key){
                         'url': '/timeline/update-moment',
                         'data': JSON.stringify(data),
                         'callback': function(responseText){
-                            const response = JSON.parse(responseText);
+                            var response = JSON.parse(responseText);
                             if (this.status === 201){
                                 self.dataset.id = response.message.id;
                                 self.classList.remove('details-wrapper--new-moment');
@@ -165,7 +165,7 @@ Array.prototype.sortOnData = function(key){
                             }, 2000);
                         },
                         'error': function (responseText) {
-                            const response = JSON.parse(responseText);
+                            var response = JSON.parse(responseText);
                             if (this.status === 422) {
                                 for (var k in response.message) {
                                     if (response.message.hasOwnProperty(k)) {
@@ -184,7 +184,7 @@ Array.prototype.sortOnData = function(key){
 
         },
         'edit-timeline': function () {
-            const self = this,
+            var self = this,
                 momentContainer = self.querySelector('[data-moment-container]'),
                 savedMomentQ = '[data-id]',
                 momentQ = '[data-moment]',
@@ -196,11 +196,11 @@ Array.prototype.sortOnData = function(key){
                     })
                 },
                 _save = function(){
-                    const data = _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, i){return {'id': e.dataset.id, 'order': i}});
+                    var data = _toArray(momentContainer.querySelectorAll(savedMomentQ)).map(function(e, i){return {'id': e.dataset.id, 'order': i}});
                     _submit(data);
                 },
                 _order = function(direction, momentElem){
-                    const items = _toArray(momentContainer.querySelectorAll(momentQ)),
+                    var items = _toArray(momentContainer.querySelectorAll(momentQ)),
                         index = items.indexOf(momentElem),
                         nextElem = items[index + direction];
 
@@ -252,10 +252,10 @@ Array.prototype.sortOnData = function(key){
             self.save = _save;
         },
         'timeline-sort': function () {
-            const self = this,
+            var self = this,
                 momentFormList = self.querySelectorAll('[data-moment]'),
                 _init = function (items) {
-                    const momentContainer = items[0].parentNode;
+                    var momentContainer = items[0].parentNode;
                     var i;
                     momentContainer.style.display = 'flex';
                     momentContainer.style.flexDirection = 'column';
@@ -267,7 +267,7 @@ Array.prototype.sortOnData = function(key){
                 _moveMoment = function (direction, momentElem) {
                     var items = Array.prototype.slice.call(momentElem.parentNode.children);
                     items.sortOnData('order');
-                    const index = items.indexOf(momentElem),
+                    var index = items.indexOf(momentElem),
                         currentOrder = momentElem.dataset.order,
                         nextElem = items[index + direction];
                     if (nextElem){
@@ -317,7 +317,7 @@ var helpers = {
         },
         headers = helpers.merge_options(defaultHeaders, options.headers || {});
       request.open(options.type || 'GET', options.url, true);
-      for (const k in  headers){
+      for (var k in  headers){
           if (headers.hasOwnProperty(k)){
             request.setRequestHeader(k, headers[k]);
           }
@@ -343,12 +343,12 @@ var helpers = {
     },
     'merge_options': function(obj1,obj2){
         var obj3 = {};
-        for (const attrname1 in obj1) {
+        for (var attrname1 in obj1) {
             if(obj1.hasOwnProperty(attrname1)){
                 obj3[attrname1] = obj1[attrname1];
             }
         }
-        for (const attrname2 in obj2) {
+        for (var attrname2 in obj2) {
             if(obj1.hasOwnProperty(attrname1)) {
                 obj3[attrname2] = obj2[attrname2];
             }
