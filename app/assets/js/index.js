@@ -33,12 +33,12 @@ Array.prototype.sortOnData = function(key){
   var handlers = {
       'moment-up': function (e) {
           e.preventDefault();
-          var moment = _closest(e.target, '[data-id]');
+          var moment = _closest(e.target, '[data-moment]');
          _closest(e.target, '[data-edit-timeline]').order(-1, moment);
       },
       'moment-down': function (e) {
           e.preventDefault();
-          var moment = _closest(e.target, '[data-id]');
+          var moment = _closest(e.target, '[data-moment]');
          _closest(e.target, '[data-edit-timeline]').order(1, moment);
 
       },
@@ -64,8 +64,13 @@ Array.prototype.sortOnData = function(key){
           e.preventDefault();
           var self = _closest(e.target, '[data-handler="delete-moment"]'),
               container = _closest(self, '[data-edit-moment]');
+
           if (confirm("Weet je zeker dat je het timeline item met naam '"+container.querySelector('[name$="name"]').value+"' wil verwijderen")) {
-            container.delete();
+              if (!container.dataset.id) {
+                  container.parentNode.removeChild(container);
+              } else {
+                  container.delete();
+              }
           }
       },
       'open-moment': function(e){

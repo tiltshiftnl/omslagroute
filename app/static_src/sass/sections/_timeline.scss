@@ -307,7 +307,7 @@ $padding-left: 30px;
         display: none;
     }
     [data-handler="delete-moment"] {
-        display: none;
+        //display: none;
     }
     [data-handler="exit-new-moment"] {
         display: block;
@@ -430,11 +430,5 @@ $padding-left: 30px;
             opacity: 1;
             box-shadow: none;
         }
-    }
-}
-
-.details-wrapper--new-moment {
-    .change-order {
-        display: none;
     }
 }
