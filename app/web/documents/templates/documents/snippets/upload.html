@@ -4,7 +4,7 @@
     <li class="document document--add">
         <a href="{% if moment_id %}{% url 'add_document_to_moment' moment_id %}{% else %}{% url 'document_create' %}{% endif %}" class="document__new">
             <div class="document__icon-wrapper">
-                <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="">
+                <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="" width="40" height="40">
             </div>
             <h3 class="document__name">Nieuw document</h3>
         </a>

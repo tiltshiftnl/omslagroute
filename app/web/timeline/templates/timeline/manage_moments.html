@@ -1,63 +1,162 @@
 {% extends 'base.html' %}
 
 {% block main %}
+<section class="section section--timeline section--timeline-management">
     <h2>Timeline beheer</h2>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
         {% csrf_token %}
+
         {{ moment_form_set.management_form }}
         <!-- {{ moment_form_set.errors }} -->
+        <div data-moment-container class="details-list-wrapper">
+            {% for moment in moment_form_set %}
 
-        {% for moment in moment_form_set %}
-            {% if not moment.instance.id %}
-                <h2>Nieuw tijdslijn moment</h2>
-            {% endif %}
+                <div class="details-wrapper"
+                    data-id="{{ moment.instance.id }}"
+                    data-order="{{ moment.instance.order }}"
+                    data-moment-order="{{ moment.instance.order }}"
+                    data-moment
+                    data-decorator="edit-moment"
+                    data-mode="static">
 
-            <fieldset>
+                    <div class="dot dot--large"></div>
+                    <details class="details">
+                        <summary class="details__header" data-handler="open-moment">
+                            <h3 data-moment-name class="details__title">{{ moment.instance.name }}</h3>
+                            <span class="details__toggle-icon">
+                                <svg class="details__header-opened" width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg>
+                                <svg class="details__header-closed" width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg>
+                            </span>
 
-                {# {{ moment.as_p }} #}
+                            <div class="change-order">
+                                <button class="button button--icon" data-handler="moment-up"><svg width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg></button>
+                                <button class="button button--icon" data-handler="moment-down"><svg  width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg></button>
+                                <button class="button button--icon" data-handler="delete-moment"><svg width="12" height="14">
+                                    <use href="#trash" xlink:href="#chevron-up" width="12" height="14" />
+                                </svg></button>
+                            </div>
+                        </summary>
 
-                <div class="form-field">
-                    {{ moment.name.label_tag }}
-                    <p class="help-text">
-                        (Naam)
-                    </p>
-                    {{ moment.name }}
+                        <div class="details__content">
+                            <p data-moment-description>{{ moment.instance.description }}</p>
+
+{#                            <p><a href="#edit--{{ moment.instance.id }}" class="button button--primary">Wijzigen</a></p>#}
+
+                            {% if moment.instance.documents.all %}
+                                <p>{{ moment.instance.documents.all|length }} document(en)</p>
+                            {% endif %}
+                        </div>
+
+                        <fieldset class="details__editform" id="edit--{{ moment.instance.id }}">
+                            <h4>Stap aanpassen</h4>
+
+                            <div class="form-field">
+                                {{ moment.name.label_tag }}
+                                {{ moment.name }}
+                            </div>
+
+                            <div class="form-field">
+                                {{ moment.description.label_tag }}
+                                {{ moment.description }}
+                            </div>
+
+                            <div class="form-field">
+                                <button class="button button--primary" data-handler="save-moment">Opslaan</button>
+                            </div>
+                        </fieldset>
+
+                        <div class="details__headerhoverblock"></div>
+                    </details>
+
+                    <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">
+                        <div class="new-moment__line"></div>
+                        <div class="button button--icon">
+                            <svg class="details__header-closed" width="16" height="16">
+                                <title>Voeg stap toe</title>
+                                <use href="#add-document" xlink:href="#add-document" width="16" height="16" />
+                            </svg>
+                        </div>
+                    </button>
                 </div>
-
-                <div class="form-field">
-                    {{ moment.description.label_tag }}
-                    <p class="help-text">
-                        (Beschrijving)
-                    </p>
-                    {{ moment.description }}
-                </div>
-
-                <div class="form-field">
-                    <label for="id_document_type">{{ moment.documents.label_tag }}</label>
-                    <p class="help-text">
-                        (Welke documenten komen voor in deze fase?)
-                    </p>
-                    <ul class="form-field__checkboxgroup">
-                        {% for checkbox in moment.documents %}
-                            <li>
-                                {{ checkbox.tag }}
-                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabels">
-                                    {{ checkbox.choice_label }}
-                                </label>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="#" data-handler="moment-up">Naar boven</a>&nbsp;&nbsp;
-                    <a href="#" data-handler="moment-down">Naar beneden</a>
-                </div>
-
-            </fieldset>
-        {% endfor %}
-
-        <div class="form-field form-field--buttons">
-            <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
+            {% endfor %}
         </div>
+
+        <div class="details-wrapper details-wrapper--new-moment" data-moment data-moment-proto style="display: none">
+            <div class="dot dot--large"></div>
+                     <details class="details" open>
+                        <summary class="details__header" data-handler="open-moment">
+                            <h3 data-moment-name class="details__title">Nieuwe stap</h3>
+                            <span class="details__toggle-icon">
+                                <svg class="details__header-opened" width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg>
+                                <svg class="details__header-closed" width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg>
+                            </span>
+
+                            <div class="change-order">
+                                <button class="button button--icon" data-handler="moment-up"><svg width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg></button>
+                                <button class="button button--icon" data-handler="moment-down"><svg  width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />
+                                </svg></button>
+                                <button class="button button--icon" data-handler="delete-moment"><svg width="12" height="14">
+                                    <use href="#trash" xlink:href="#chevron-up" width="12" height="14" />
+                                </svg></button>
+                            </div>
+                        </summary>
+
+                        <div class="details__content">
+                            <p data-moment-description>{{ form.instance.description }}</p>
+                        </div>
+
+                        <div class="details__headerhoverblock"></div>
+
+            <fieldset class="details__editform">
+                <h4>Stap aanmaken</h4>
+                <div class="form-field">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+
+                <div class="form-field">
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                </div>
+
+                <div class="form-field form-field--buttons">
+                    <button class="button button--primary" data-handler="save-moment">Opslaan</button>
+                    <button class="button button--secondary" data-handler="exit-new-moment">Annuleer</button>
+                </div>
+            </fieldset>
+                     </details>
+                    <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">
+                        <div class="new-moment__line"></div>
+                        <div class="button button--icon">
+                            <svg class="details__header-closed" width="16" height="16">
+                                <title>Voeg stap toe</title>
+                                <use href="#add-document" xlink:href="#add-document" width="16" height="16" />
+                            </svg>
+                        </div>
+                    </button>
+        </div>
+
+{#        <div class="form-field form-field--buttons">#}
+{#            <input type="submit" value="Opslaan" class="button button--primary">#}
+{#            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>#}
+{#        </div>#}
+
     </form>
+</section>
 {% endblock %}

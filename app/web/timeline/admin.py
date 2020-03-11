@@ -4,4 +4,5 @@ from .models import *
 
 @admin.register(Moment)
 class MomentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'order',)
+    list_display = ('name', 'id', 'order',)
+    list_editable = ('order', )

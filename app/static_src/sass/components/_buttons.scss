@@ -41,7 +41,6 @@
     box-sizing: content-box;
     color: $primary-white;
     cursor: pointer;
-    display: flex;
     justify-content: center;
     align-content: center;
     font-weight: bold;
@@ -52,6 +51,7 @@
     text-decoration: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    background: none;
 
     &:hover,
     &:focus {
@@ -63,6 +63,10 @@
         background-color: $neutral-grey2;
         color: $neutral-grey3;
     }
+}
+
+.button--icon {
+    min-width: inherit;
 }
 
 .button--primary,

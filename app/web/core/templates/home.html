@@ -5,7 +5,6 @@
 {% block main %}
         {% if not request.user.is_authenticated %}
             {% include 'users/login.html' %}
-            <hr />
         {% endif %}
 
         {% include 'timeline/snippets/moments_section.html' %}
