@@ -259,17 +259,14 @@ $padding-left: 30px;
 
 .details__content {
     background-color: $neutral-grey1;
-
-    p {
-        max-width: 650px;
-    }
 }
 
-html.no-details details > summary::before {
-    content: " " !important;
-}
 
 // specific to our usecase
+
+.details__content p {
+    max-width: 650px;
+}
 
 .section--timeline {
     .downloads {
