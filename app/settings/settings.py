@@ -179,7 +179,7 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 AUTH_GROUPNAME_PROCESS = 'proces'
 
-LOGIN_URL = '/'
+LOGIN_URL = '/#login'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login/',
