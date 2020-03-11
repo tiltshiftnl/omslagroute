@@ -18,8 +18,12 @@ $padding-left: 30px;
   }
 }
 
-.details-admin {
+.details-admin  {
     text-align: right;
+    
+    .button {
+        display: inline-block;
+    }
 }
 
 .details-wrapper {

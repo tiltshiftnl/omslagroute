@@ -53,6 +53,8 @@
     -moz-appearance: none;
     background: none;
 
+    display: flex;
+
     &:hover,
     &:focus {
         text-decoration: none;
