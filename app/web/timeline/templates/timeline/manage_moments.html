@@ -52,7 +52,11 @@
 {#                            <p><a href="#edit--{{ moment.instance.id }}" class="button button--primary">Wijzigen</a></p>#}
 
                             {% if moment.instance.documents.all %}
-                                <p>{{ moment.instance.documents.all|length }} document(en)</p>
+                                <p>
+                                    <strong>
+                                        {{ moment.instance.documents.all|length }} document(en)
+                                    </strong>
+                                </p>
                             {% endif %}
                         </div>
 
@@ -69,7 +73,7 @@
                                 {{ moment.description }}
                             </div>
 
-                            <div class="form-field">
+                            <div class="form-field form-field--buttons">
                                 <button class="button button--primary" data-handler="save-moment">Opslaan</button>
                             </div>
                         </fieldset>

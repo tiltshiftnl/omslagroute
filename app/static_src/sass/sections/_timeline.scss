@@ -18,6 +18,7 @@ $padding-left: 30px;
   }
 }
 
+.change-order,
 .details-admin  {
     text-align: right;
     
@@ -127,10 +128,6 @@ $padding-left: 30px;
             border-left: 0;
             z-index: 1;
         }
-
-        .details__header:focus::before {
-            //background-color: $neutral-grey1;
-        }
     }
 
     &:focus {
@@ -147,6 +144,7 @@ $padding-left: 30px;
 
 .details[open] {
     background-color: $neutral-grey1;
+    padding-bottom: 2rem;
 
     .details__header {
         background-color: $neutral-grey1;
@@ -357,8 +355,8 @@ html.no-details details > summary::before {
 
 .details__editform {
     border: 0;
-    padding: 0 0 2rem 2rem;
-    margin: 0 2rem 2rem 2rem;
+    padding: 0 2rem 2rem 2rem;
+    margin: 0 2rem;
     background-color: $neutral-grey2;
 }
 
@@ -438,9 +436,8 @@ html.no-details details > summary::before {
     }
 }
 
-//[id^="edit--"] {
-//    display: none;
-//}
-//[id^="edit--"]:target {
-//    display: block;
-//}
+.details-wrapper--new-moment {
+    .change-order {
+        display: none;
+    }
+}
