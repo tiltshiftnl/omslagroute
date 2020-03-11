@@ -185,6 +185,40 @@
     flex: 0 0 40px;
 }
 
+.document__info-wrapper {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    z-index: 5;
+
+    &:hover,
+    &:focus {
+        display: block;
+    }
+}
+
+.document__info {
+    border: 1px solid $neutral-grey4;
+    box-shadow: 0 0 5px 2px $neutral-grey3;
+    background-color: $primary-white;
+    color: $primary-black; 
+    text-align: left; 
+    padding: 10px;
+    width: 500px;
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        display: inline-block;
+        margin-right: 5px;
+    }
+}
+
 .document__version,
 .document__new {
     color: $primary-black;
@@ -214,21 +248,6 @@
         .document__name {
             text-decoration: underline;
         }
-
-        &[data-tooltip]::before {
-            position: absolute;
-            top: 0;
-            left: calc(100% + 1rem);
-            padding: 10px;
-            width: 225px;
-            border: 1px solid $neutral-grey4;
-            box-shadow: 0 0 5px 2px $neutral-grey3;
-            background-color: $primary-white;
-            color: $primary-black;
-            content: attr(data-tooltip);
-            text-align: left; 
-            z-index: 10;
-        }
     }
 
     > :last-child {
@@ -236,8 +255,17 @@
     }
 }
 
-.document:focus-within + .document {
-    z-index: 1;
+//IE check!
+.document:hover,
+.document:focus,
+.document:focus-within {
+    .document {
+        z-index: 1;
+    }
+
+    .document__info-wrapper {
+        display: block;
+    }
 }
 
 .document--add {
