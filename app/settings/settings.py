@@ -275,10 +275,15 @@ BAG_API_SEARCH_URL = 'https://api.data.amsterdam.nl/atlas/search/adres/'
 
 # swift storage
 if os.environ.get("SWIFT_AUTH_URL"):
+    SWIFT_BASE_URL = 'https://%s.%s' % (os.environ.get("SWIFT_PROJECT_ID"), os.environ.get("SWIFT_EXTERNAL_DOMAIN"))
     SWIFT_AUTH_URL = os.environ.get("SWIFT_AUTH_URL")
     SWIFT_USERNAME = os.environ.get("SWIFT_USER")
     SWIFT_PASSWORD = os.environ.get("SWIFT_PASSWORD")
     SWIFT_TENANT_ID = os.environ.get("SWIFT_TENANT")
-    SWIFT_CONTAINER_NAME = 'media'
-    DEFAULT_FILE_STORAGE = 'swift.storage.SwiftStorage'
-    THUMBNAIL_DEFAULT_STORAGE = 'swift.storage.SwiftStorage'
+    SWIFT_TEMP_URL_KEY = os.environ.get("SWIFT_TEMP_URL_KEY")
+    SWIFT_TEMP_URL_DURATION = os.environ.get("SWIFT_TEMP_URL_DURATION", 30)
+
+    SWIFT_USE_TEMP_URLS = os.environ.get("SWIFT_USE_TEMP_URLS", 'True') == 'True'
+    SWIFT_CONTAINER_NAME = os.environ.get("SWIFT_CONTAINER_NAME", 'media_private')
+    DEFAULT_FILE_STORAGE = 'web.core.storage.SwiftStorage'
+    THUMBNAIL_DEFAULT_STORAGE = 'web.core.storage.SwiftStorage'

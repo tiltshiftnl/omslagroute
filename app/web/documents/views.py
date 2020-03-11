@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.db import transaction
-from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse, Http404
+from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse, Http404, HttpResponseRedirect
 from django.forms.models import inlineformset_factory
 from web.timeline.models import Moment
 from django.core.files.storage import default_storage
@@ -169,7 +169,5 @@ def download_documentversion(request, id):
     documentversion = get_object_or_404(DocumentVersion, id=id)
     if not default_storage.exists(default_storage.generate_filename(documentversion.uploaded_file.name)):
         raise Http404()
-    openfile = default_storage.open(default_storage.generate_filename(documentversion.uploaded_file.name))
-    response = FileResponse(openfile)
-    response['Content-Disposition'] = 'attachment; filename=%s' % default_storage.generate_filename(documentversion.uploaded_file.name)
-    return response
+
+    return HttpResponseRedirect(documentversion.uploaded_file.url)
