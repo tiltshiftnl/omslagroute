@@ -24,11 +24,26 @@ fieldset {
 }
 
 .form-field--buttons {
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: 200px 10px 200px;
     grid-gap: 10px;
     grid-template-columns: auto auto;
     justify-content: flex-start;
     margin-bottom: 0;
+
+    > .button:first-child {
+        -ms-grid-column-span: 1;
+        -ms-grid-row-span: 1;
+
+        -ms-grid-column: 1;
+    }
+
+    > .button:last-child {
+        -ms-grid-column-span: 1;
+        -ms-grid-row-span: 1;
+        -ms-grid-column: 3;
+    }
 }
 
 label {
