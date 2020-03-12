@@ -185,6 +185,10 @@
     flex: 0 0 40px;
 }
 
+.document__icon--hover {
+    display: none;
+}
+
 .document__info-wrapper {
     display: none;
     position: absolute;
@@ -247,6 +251,14 @@
 
         .document__name {
             text-decoration: underline;
+        }
+
+        .document__icon--default {
+            display: none;
+        }
+
+        .document__icon--hover {
+            display: flex;
         }
     }
 
