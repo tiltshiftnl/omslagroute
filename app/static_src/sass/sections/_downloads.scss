@@ -43,12 +43,12 @@
     .document {
         -ms-grid-column-span: 1;
         -ms-grid-row-span: 1;
-        padding-bottom: 10px;
+        padding-bottom: 30px;
     }
 
     @media all and (min-width: $desktop) and (max-width: $large) {
         .downloads {
-            -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr;
+            -ms-grid-columns: 1fr 2rem 1fr 2rem 1fr;
         }
 
         .document:nth-child(3n + 1) {
@@ -94,13 +94,13 @@
 
     @media all and (min-width: $large) {
         .downloads {
-            -ms-grid-columns: 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr 1.687rem 1fr;
+            -ms-grid-columns: 1fr 2rem 1fr 2rem 1fr 2rem 1fr 2rem 1fr;
         }
 
         .document {
             -ms-grid-column-span: 1;
             -ms-grid-row-span: 1;
-            padding-bottom: 10px;
+            padding-bottom: 2rem;
         }
 
         .document:nth-child(5n + 1) {
