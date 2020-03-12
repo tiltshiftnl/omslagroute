@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<!-- <div class="breadcrumb">
-    <a href="/">Home</a>
-</div> -->
-
 <section class="section section--timeline section--timeline-management">
     <h2>Timeline beheer</h2>
+
+    {% if request.user.is_authenticated %}
+        <p class="details-admin">
+            <a href="{% url 'home' %}" class="button button--primary">
+                Toon documenten
+            </a>
+        </p>
+    {% endif %}
 
     <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
         {% csrf_token %}
@@ -39,10 +43,10 @@
 
                             <div class="change-order">
                                 <button class="button button--icon" data-handler="moment-up"><svg width="14" height="9">
-                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />
+                                    <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9" />
                                 </svg></button>
                                 <button class="button button--icon" data-handler="moment-down"><svg  width="14" height="9">
-                                    <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9" />
+                                    <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9" />
                                 </svg></button>
                                 <button class="button button--icon" data-handler="delete-moment"><svg width="12" height="14">
                                     <use href="#trash" xlink:href="#trash" width="12" height="14" />
