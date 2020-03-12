@@ -4,7 +4,7 @@
 {% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
     <li class="document">
-        <a href="{{ document_version.uploaded_file.url }}" class="document__version" download target="_blank" rel="noopener" {% if object.description %}data-tooltip="{{ object.description }}"{% endif %}>
+        <a href="{{ document_version.uploaded_file.url }}" class="document__version" download target="_blank" rel="noopener">
             <svg class="document__icon"  width="40" height="40" >
                 <use href="#{{ object.document_type_value|lower }}" xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40" />
             </svg>
@@ -19,30 +19,61 @@
                 </div>
 
                 {% if document_version.uploaded %}
-
-                        {% language 'nl' %}
-                        <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
-                            Gewijzigd: {{ document_version.uploaded|date:"j b" }}.
-                        </time>
-                        {% endlanguage %}
-                    {% else %}
+                    {% language 'nl' %}
+                    <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
+                        Gewijzigd: {{ document_version.uploaded|date:"j b" }}.
+                    </time>
+                    {% endlanguage %}
+                {% else %}
                     <span class="document__date">&nbsp;</span>
                 {% endif %}
+
 
             {% endif %}
         </a>
 
-        {% if request.user|has_group:"wonen" and object %}
-            <p class="document__change">
-                <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--secondary">
-                    <svg class="button__icon"  width="20" height="20" >
-                        <use href="#upload" xlink:href="#upload"  width="20" height="20" />
-                    </svg>
+        <div class="document__info-wrapper">
+            <div class="document__info">
+                <p><strong>{{ object.document_type_value }} {{ object.name }}</strong></p>
+                {% if object.description %}
+                    <p>
+                        {{ object.description|linebreaks }}
+                    </p>
+                {% endif %}
 
-                    <span class="button__label">Vervangen</span>
-                </a>
-            </p>
-        {% endif %}
+                {% if request.user|has_group:"wonen" and object %}
+                    <ul>
+                        <li>
+                            <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary">
+                                <svg class="button__icon"  width="20" height="20" >
+                                    <use href="#upload" xlink:href="#upload"  width="20" height="20" />
+                                </svg>
+
+                                <span class="button__label">Vervangen</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'document_update' object.id %}" class="document__version-update button button--secondary">
+                                <svg class="button__icon"  width="20" height="20" >
+                                    <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20" />
+                                </svg>
+
+                                <span class="button__label">Wijzigen</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'document_delete' object.id %}" class="document__version-update button button--secondary">
+                                <svg class="button__icon"  width="20" height="20" >
+                                    <use href="#trash" xlink:href="#trash"  width="20" height="20" />
+                                </svg>
+
+                                <span class="button__label">Verwijderen</span>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
     </li>
     {% endwith %}
 {% endif %}

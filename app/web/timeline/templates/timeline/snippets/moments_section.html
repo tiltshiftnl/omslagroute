@@ -28,7 +28,7 @@
                     </summary>
 
                     <div class="details__content">
-                        <p>{{ moment.description }}</p>
+                        <p>{{ moment.description|linebreaks }}</p>
 
                         <ul class="downloads {% if request.user|has_group:"wonen" %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
                         {% if moment.documents.all %}

@@ -2,27 +2,43 @@
 
 {% block main %}
     <h2>Document wijzigen</h2>
-    
+
     <form method="post">
         {% csrf_token %}
 
         <legend>
             U kunt hier hier het document <strong>"{{ form.instance.name|striptags }}"</strong> wijzigen.
         </legend>
-        
+
         <div class="form-field">
-            <p>Naam</p>
-            <p>{{ form.name }}</p>
+            <label for="id_name">{{ form.name.label }}</label>
+            {{ form.name }}
+            <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
-        
+
         <div class="form-field">
-            <p>Documenttype</p>
-            <p>{{ form.document_type }}</p>
+            <label for="id_description">{{ form.description.label }}</label>
+            {{ form.description }}
+            <p class="error-text">Het veld hierboven is verplicht</p>
+        </div>
+
+        <div class="form-field">
+            <label for="id_document_type">{{ form.document_type.label }}</label>
+            <ul class="form-field__radiogroup">
+                {% for radio in form.document_type %}
+                    <li>
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}" class="form-field__radiolabel">
+                            {{ radio.choice_label }}
+                        </label>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
 
         <div class="form-field form-field--buttons">
             <input type="submit" value="Wijzigingen opslaan" class="button button--primary">
-            <a href="{% url 'document_list' %}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
 {% endblock %}

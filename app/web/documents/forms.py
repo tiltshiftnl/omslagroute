@@ -36,7 +36,7 @@ class DocumentForm(forms.ModelForm):
     def clean_name(self):
         data = self.cleaned_data['name']
         existing_names = Document.objects.get_by_name(name=data)
-        if existing_names:
+        if existing_names and existing_names[0].id != self.instance.id:
             url = reverse_lazy('add_document_version_to_document', kwargs={'document': existing_names[0].id})
             raise ValidationError(
                 _(mark_safe('Deze naam wordt al gebruikt in een ander document. '
