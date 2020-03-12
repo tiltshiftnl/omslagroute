@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<!-- <div class="breadcrumb">
-    <a href="/">Home</a>
-</div> -->
-
 <section class="section section--timeline section--timeline-management">
     <h2>Timeline beheer</h2>
+
+    {% if request.user.is_authenticated %}
+        <p class="details-admin">
+            <a href="{% url 'home' %}" class="button button--primary">
+                Toon documenten
+            </a>
+        </p>
+    {% endif %}
 
     <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
         {% csrf_token %}
