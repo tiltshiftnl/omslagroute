@@ -57,7 +57,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
 
 class DocumentUpdate(UserPassesTestMixin, UpdateView):
     model = Document
-    fields = ('name', 'document_type')
+    form_class = DocumentForm
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('home')
 
@@ -67,6 +67,12 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, "Het document '%s' is aangepast." % self.object.name)
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        for k, v in form.errors.items():
+            for e in v:
+                messages.add_message(self.request, messages.ERROR, e)
+        return super().form_invalid(form)
 
 
 class DocumentVersionCreate(UserPassesTestMixin, CreateView):
@@ -125,7 +131,8 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
     def form_invalid(self, form):
         respond = super().form_invalid(form)
         for k, v in form.errors.items():
-            messages.add_message(self.request, messages.ERROR, mark_safe(v))
+            for e in v:
+                messages.add_message(self.request, messages.ERROR, e)
         return respond
 
     def form_valid(self, form):
