@@ -74,18 +74,6 @@
                 {% endif %}
             </div>
         </div>
-
-        {% if request.user|has_group:"wonen" and object %}
-            <p class="document__change">
-                <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--secondary">
-                    <svg class="button__icon"  width="20" height="20" >
-                        <use href="#upload" xlink:href="#upload"  width="20" height="20" />
-                    </svg>
-
-                    <span class="button__label">Vervangen</span>
-                </a>
-            </p>
-        {% endif %}
     </li>
     {% endwith %}
 {% endif %}
