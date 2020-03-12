@@ -73,6 +73,22 @@ Array.prototype.sortOnData = function(key){
               }
           }
       },
+      'to-edit-moment': function(e){
+          e.preventDefault();
+          var self = _closest(e.target, '[data-handler="to-edit-moment"]'),
+              moment = _closest(e.target, '[data-moment]'),
+              editModeElems = moment.querySelectorAll('[data-edit-mode]'),
+              staticModeElems = moment.querySelectorAll('[data-static-mode]'),
+              i;
+          for (i = 0; i < editModeElems.length; i++){
+              editModeElems[i].display = 'block';
+          }
+          for (i = 0; i < staticModeElems.length; i++){
+              staticModeElems[i].display = 'none';
+          }
+
+
+      },
       'open-moment': function(e){
           var self = _closest(e.target, '[data-handler="open-moment"]'),
             moment = _closest(self, '[data-moment]'),

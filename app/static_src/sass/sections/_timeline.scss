@@ -21,7 +21,7 @@ $padding-left: 30px;
 .change-order,
 .details-admin  {
     text-align: right;
-    
+
     .button {
         display: inline-block;
     }
@@ -431,4 +431,11 @@ $padding-left: 30px;
             box-shadow: none;
         }
     }
+}
+
+[data-edit-mode] {
+    display: none;
+}
+[data-static-mode] {
+    display: initial;
 }
