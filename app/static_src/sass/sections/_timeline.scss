@@ -96,20 +96,90 @@ $padding-left: 30px;
     [data-edit-mode] {
         display: none;
     }
+
     &.edit-mode {
         z-index: 1000;
+        
         [data-edit-mode] {
             display: grid;
         }
+
         [data-static-mode] {
             display: none;
         }
-        & .details__toggle-icon {
+
+        .details__toggle-icon {
             display: none;
         }
-        & .details__header {
+        
+        .details__header {
             padding-top: 4px;
             padding-bottom: 4px;
+        }
+    }
+
+    .alert-container {
+        position: absolute;
+        top: -44px;
+        height: 44px;
+        display: none;
+        z-index: 100;
+        width: 100%;
+        left: 0;
+    }
+
+    .alert {
+        background-color: $primary-darkblue;
+        color: $primary-white;
+        padding: 3px 7px;
+        opacity: 0;
+        transition: opacity .4s linear;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        padding-left: 30px;
+
+        .alert__icon {
+            transform: translateX(-50%);
+        }
+    }
+
+    .alert--saving,
+    .alert--saved {
+        opacity: 0;
+    }
+
+    &[data-saving] {
+        .alert-container {
+            display: block;
+        }
+
+        .alert--saving {
+            opacity: 1;
+            transition: opacity .4s linear;
+        }
+    }
+
+    &[data-saved] {
+        .alert-container {
+            display: block;
+        }
+
+        .alert--saved {
+            background-color: $supplement-darkgreen;
+            opacity: 1;
+            transition: opacity .4s linear;
+        }
+    }
+
+    &[data-error] {
+        .alert-container {
+            display: block;
+        }
+
+        .alert--error {
+            background-color: $primary-red;
+            opacity: 1;
         }
     }
 
@@ -216,7 +286,7 @@ $padding-left: 30px;
 
 .details[open] {
     background-color: $neutral-grey1;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 
     .details__header {
         background-color: $neutral-grey1;
@@ -299,29 +369,6 @@ $padding-left: 30px;
     display: inline;
     margin: 0;
     position: relative;
-    &:after {
-        content: '';
-        min-width: 100px;
-        height: 19px;
-        position: absolute;
-        background-color: $primary-darkblue;
-        color: $primary-white;
-        left: calc(100% + 35px);
-        top: -3px;
-        font-size: .8rem;
-        white-space: nowrap;
-        padding: 3px 7px;
-        opacity: 0;
-        transition: all .4s linear;
-    }
-    [data-saving] &:after {
-        content: 'Bezig met opslaan';
-        opacity: 1;
-    }
-    [data-saved] &:after {
-        content: 'Opgeslagen';
-        //color: $primary-darkblue;
-    }
 }
 
 .details__toggle-icon {
