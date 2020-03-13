@@ -52,7 +52,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     background: none;
-
     display: flex;
 
     &:hover,
@@ -69,6 +68,11 @@
 
 .button--icon {
     min-width: inherit;
+
+    &:hover,
+    &:focus {
+        box-shadow: none;
+    }
 }
 
 .button--primary,
