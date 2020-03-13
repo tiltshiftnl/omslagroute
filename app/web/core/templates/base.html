@@ -41,17 +41,37 @@
             </div>
         </header>
         <div class="site-navigation">
+            {% block messages %}
+                {% if messages %}
+                    <ul class="alert-container">
+                        {% for message in messages %}
+                            <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">
+                                {% if message.tags == 'success' %}
+                                    <svg class="alert__icon" width="20" height="20">
+                                        <use href="#check" xlink:href="#check" width="20" height="20"></use>
+                                    </svg>
+                                {% elif message.tags == 'info' %}
+                                    <svg class="alert__icon" width="20" height="20">
+                                        <use href="#check" xlink:href="#check" width="20" height="20"></use>
+                                    </svg>
+                                {% elif message.tags == 'warning' or 'error' %}
+                                <svg class="alert__icon" width="20" height="20">
+                                    <use href="#alert" xlink:href="#alert" width="20" height="20"></use>
+                                </svg>
+                                {% endif %}
+                               
+                                <p class="alert__message">{{ message|safe }}</p>
+                                <button class="button button--icon">
+                                    <svg class="alert__close" width="20" height="20"></svg>>
+                                        <use href="#close" xlink:href="#close" width="20" height="20"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endblock %}
         </div>
-    {% endblock %}
-
-    {% block messages %}
-        {% if messages %}
-            <ul class="alert-container">
-                {% for message in messages %}
-                    <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">{{ message|safe }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
     {% endblock %}
 
     <main role="main" class="site-main">

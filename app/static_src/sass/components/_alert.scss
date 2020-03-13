@@ -1,4 +1,4 @@
-@keyframes slideInFromLeft {
+@keyframes fadeInAndOut {
     0% {
         opacity: 0;
     }
@@ -20,27 +20,30 @@
 }
 
 .alert {
-    border: 2px solid $neutral-grey3;
-    padding: 16px 20px 16px 60px;
-    min-height: 30px;
-    background-color: $primary-white;
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    animation: 4s ease-out 0s 1 slideInFromLeft forwards;
-    top: 80px;
-    min-width: 210px;
-    z-index: 100;
-}
+    padding: 0 0 0 20px;
+    background-color: $supplement-darkgreen;
+    // opacity: 0;
+    // animation: 4s ease-out 0s 1 fadeInAndOut forwards;
+    width: 100%;
+    height: 44px;
+    color: $primary-white;
+    margin: 0px auto;
+    max-width: 960px;
+    display: flex;
+    align-items: center;
 
-.alert__icon:before {
-    position: absolute;
-    left: 20px;
-    top: 16px;
-    width: 20px;
-    height: 20px;
-    font-size: 22px; 
+    > svg {
+        margin-right: 1rem;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    button {
+        color: $primary-white;
+        margin-left: auto;
+    }
 }
 
 .alert__title { 
@@ -52,32 +55,19 @@
 }
 
 .alert--info {
-    border-color: $primary-darkblue;
+    background-color: $supplement-darkgreen;
 }
 
 .alert--error {
-    border-color: $primary-red;
-
-    .alert__icon:before { 
-        color: $primary-red;
-        top: 20px;
-        font-size: 20px;
-    }
+    background-color: $primary-red;
 }
 
 .alert--warning {
-    border-color: $supplement-orange;
-    .alert__icon:before {
-        color: $supplement-orange;
-    }
+    background-color: $supplement-orange;
 }
 
 .alert--success {
-    border-color: $supplement-lightgreen;
-    .alert__icon:before {
-        //@include icon($icon-Check-Mark);
-        color: $supplement-lightgreen;
-    }
+    background-color: $supplement-darkgreen;
 }
 
 @for $i from 1 through 10 {
