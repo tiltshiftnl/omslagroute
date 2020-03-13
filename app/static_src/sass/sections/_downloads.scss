@@ -331,10 +331,8 @@
     }
 }
 
-//IE check!
 .document:hover,
-.document:focus,
-.document:focus-within {
+.document:focus {
     .document {
         z-index: 1;
     }
@@ -344,9 +342,30 @@
     }
 
     @media all and (min-width: $desktop) {
-        &:hover,
-        &:focus {
-            
+        &:nth-child(3n + 3) {
+            .document__info-wrapper {
+                left: auto;
+                right: 100%;
+            }
+        }
+    }
+
+    @media all and (min-width: $large) {
+        &:nth-child(5n + 4),
+        &:nth-child(5n) {
+            .document__info-wrapper {
+                left: auto;
+                right: 100%;
+            }
+        }
+    }
+}
+
+.document:focus-within {
+    .document__info-wrapper {
+        display: block;
+
+        @media all and (min-width: $desktop) {
             &:nth-child(3n + 3) {
                 .document__info-wrapper {
                     left: auto;
@@ -354,12 +373,8 @@
                 }
             }
         }
-    }
 
-    @media all and (min-width: $large) {
-        &:hover,
-        &:focus {
-            
+        @media all and (min-width: $large) {
             &:nth-child(5n + 4),
             &:nth-child(5n) {
                 .document__info-wrapper {
