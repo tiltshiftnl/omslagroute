@@ -19,6 +19,7 @@ class MomentForm(forms.ModelForm):
     class Meta:
         model = Moment
         fields = ('name',
+                  'order',
                   'description',
                   'roles',
         )

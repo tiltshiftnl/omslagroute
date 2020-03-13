@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}"   id="login">
+<html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}" id="login" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -59,10 +59,10 @@
                                     <use href="#alert" xlink:href="#alert" width="20" height="20"></use>
                                 </svg>
                                 {% endif %}
-                               
+
                                 <p class="alert__message">{{ message|safe }}</p>
-                                
-                                <!-- 
+
+                                <!--
                                 <button class="button button--icon">
                                     <svg class="alert__close" width="20" height="20"></svg>
                                         <use href="#close" xlink:href="#close" width="20" height="20"></use>

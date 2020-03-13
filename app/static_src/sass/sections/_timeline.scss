@@ -476,8 +476,8 @@ $padding-left: 30px;
         height: 0;
     }
 }
- 
-.details-wrapper--new-moment { 
+
+.details-wrapper--new-moment {
     margin: 1rem 0;
 
     fieldset {
@@ -598,6 +598,9 @@ $padding-left: 30px;
             box-shadow: none;
         }
     }
+}
+.no-js [disabled="disabled"] {
+    display: none;
 }
 
 // seems to be obsolete

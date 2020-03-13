@@ -18,12 +18,21 @@
         <!-- {{ moment_form_set.errors }} -->
         <div data-moment-container class="details-list-wrapper">
             {% for moment in moment_form_set %}
-                {% if moment.instance %}
+                {% if moment.instance.id %}
                 {% include 'timeline/snippets/moment_section_edit.html' %}
                 {% endif %}
             {% endfor %}
         </div>
-        {% include 'timeline/snippets/moment_section_new.html' %}
+        {% for moment in moment_form_set %}
+            {% if not moment.instance.id %}
+                {% include 'timeline/snippets/moment_section_new.html' %}
+            {% endif %}
+        {% endfor %}
+
+        <div data-submit-container class="form-field form-field--buttons">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
+        </div>
     </form>
 </section>
 {% endblock %}

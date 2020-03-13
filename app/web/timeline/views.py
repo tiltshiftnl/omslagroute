@@ -18,7 +18,7 @@ from django.core.exceptions import *
 
 @user_passes_test(auth_test, group_name='wonen')
 def manage_timeline(request):
-    Moment_FormSet = modelformset_factory(Moment, form=MomentForm, extra=0, can_delete=True)
+    Moment_FormSet = modelformset_factory(Moment, form=MomentForm, extra=1, can_delete=True)
     if request.method == 'POST':
         formset = Moment_FormSet(request.POST, request.FILES)
         if formset.is_valid():

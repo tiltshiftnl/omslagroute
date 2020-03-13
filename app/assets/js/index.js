@@ -186,7 +186,12 @@ Array.prototype.sortOnData = function(key){
                 _init = function(){
                     var isNewElement = self.classList.contains('details-wrapper--new-moment'),
                         firstElement = self.querySelector('input[name$="name"]'),
-                        lastElement = isNewElement ? self.querySelector('button[data-handler="exit-new-moment"]') : self.querySelector('button[data-handler="exit-edit-moment"]');
+                        lastElement = isNewElement ? self.querySelector('button[data-handler="exit-new-moment"]') : self.querySelector('button[data-handler="exit-edit-moment"]'),
+                        enableElements = self.querySelectorAll('[disabled="disabled"]'),
+                        addEditmode = self.querySelectorAll('.data-edit-mode'),
+                        deleteElements = self.querySelectorAll('input[name$="id"], input[name$="order"]'),
+                        details = self.querySelector('details'),
+                        i;
 
                     lastElement.addEventListener('keydown', function(e){
                         if( e.keyCode === 9 ) {
@@ -194,6 +199,22 @@ Array.prototype.sortOnData = function(key){
                             e.preventDefault();
                         }
                     });
+                    if (!self.classList.contains('details-wrapper--new-moment')){
+                    self.classList.remove('edit-mode');
+                        details.removeAttribute('open');
+                    }
+
+                    if (details) {
+                    }
+                    for (i = 0; i < deleteElements.length; i++){
+                        deleteElements[i].parentNode.removeChild(deleteElements[i]);
+                    }
+                    for (i = 0; i < enableElements.length; i++){
+                        enableElements[i].removeAttribute('disabled');
+                    }
+                    for (i = 0; i < addEditmode.length; i++){
+                        addEditmode[i].dataset.editMode = "";
+                    }
                 },
                 _delete = function() {
                     helpers.ajax({
@@ -322,7 +343,18 @@ Array.prototype.sortOnData = function(key){
                             _save();
                         }, 500);
                     }
+                },
+                _init = function(){
+                    var deleteElements = document.querySelectorAll('[data-submit-container]'),
+                        i;
+                    for(i = 0; i < deleteElements.length; i++){
+                        deleteElements[i].parentNode.removeChild(deleteElements[i]);
+                    }
+                    if (self.classList.contains('details-wrapper--new-moment')){
+                        self.style.display = 'none';
+                    }
                 };
+            _init();
             self.dataset.editTimeline = self;
             self.order = _order;
             self.save = _save;
@@ -432,7 +464,7 @@ var helpers = {
         return obj3;
     }
     };
-
+   document.querySelector('html').classList.remove('no-js');
    _decorate();
 
 }(window, document.documentElement);
