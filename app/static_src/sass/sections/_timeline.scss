@@ -182,9 +182,15 @@ $padding-left: 30px;
         + .new-moment__add {
             .dot {
                 display: block;
+                background-color: $primary-white;
+                border: 2px $neutral-grey4 solid;
+            }
+            .details__header-closed {
+                color: $neutral-grey4;
+                fill: currentColor;
             }
             .new-moment__line {
-                background-color: $primary-darkblue;
+                background-color: $neutral-grey4;
             }
 
             .button {
@@ -462,7 +468,7 @@ $padding-left: 30px;
     .details__header-closed {
         color: $primary-white;
         fill: currentColor;
-        margin-top: 4px;
+        margin-top: 2px;
     }
     .new-moment__line {
         background-color: $neutral-grey2;
@@ -507,9 +513,16 @@ $padding-left: 30px;
     &:not(:disabled):hover {
         .dot {
             display: block;
+            background-color: $primary-darkblue;
+          border: none;
         }
         .new-moment__line {
             background-color: $primary-darkblue;
+        }
+        .details__header-closed {
+            color: $primary-white;
+            fill: currentColor;
+            margin-top: 4px;
         }
 
         .button {
