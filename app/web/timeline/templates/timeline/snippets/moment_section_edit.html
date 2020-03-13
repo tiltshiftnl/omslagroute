@@ -13,28 +13,28 @@
             <h3 data-static-mode data-moment-name class="details__title">{{ moment.instance.name }}</h3>
             <p data-edit-mode>{{ moment.name }}</p>
             <span class="details__toggle-icon">
-                                <svg class="details__header-opened" width="14" height="9">
-                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                                </svg>
-                                <svg class="details__header-closed" width="14" height="9">
-                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9"></use>
-                                </svg>
-                            </span>
+                <svg class="details__header-opened" width="14" height="9">
+                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                </svg>
+                <svg class="details__header-closed" width="14" height="9">
+                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9"></use>
+                </svg>
+            </span>
 
             <div class="change-order">
-                <button class="button button--icon" data-handler="moment-up">
+                <button class="button button--icon" data-handler="moment-up" title="Verplaats deze processtap naar boven">
                     <svg width="14" height="9">
-                        <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9"></use>
+                        <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9" />
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="moment-down">
-                    <svg width="14" height="9">
-                        <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9"></use>
+                <button class="button button--icon" data-handler="moment-down" title="Verplaats deze processtap naar beneden">
+                    <svg  width="14" height="9">
+                        <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9" />
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="delete-moment">
+                <button class="button button--icon" data-handler="delete-moment" title="Verwijder deze processtap">
                     <svg width="12" height="14">
-                        <use href="#trash" xlink:href="#trash" width="12" height="14"></use>
+                        <use href="#trash" xlink:href="#trash" width="12" height="14" />
                     </svg>
                 </button>
             </div>

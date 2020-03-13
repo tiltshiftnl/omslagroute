@@ -2,7 +2,7 @@
 
 {% if request.user|has_group:"wonen" %}
     <li class="document document--add">
-        <a href="{% if moment_id %}{% url 'add_document_to_moment' moment_id %}{% else %}{% url 'document_create' %}{% endif %}" class="document__new">
+        <a href="{% if moment_id %}{% url 'add_document_to_moment' moment_id %}{% else %}{% url 'document_create' %}{% endif %}" class="document__new" title="Voeg een nieuw document toe">
             <div class="document__icon-wrapper">
                 <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="" width="40" height="40">
             </div>
