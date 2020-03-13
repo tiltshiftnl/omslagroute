@@ -166,12 +166,15 @@
     color: $primary-black;
     margin-bottom: 0;
     white-space:normal;
+    font-size: 1rem;
 
     @media screen and (min-width: $desktop) {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;  
         overflow: hidden;
+        -ms-text-overflow: ellipsis;
+        text-overflow:ellipsis;
 
         word-break: break-word;
         -webkit-hyphens: auto;
