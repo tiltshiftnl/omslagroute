@@ -46,19 +46,26 @@ Array.prototype.sortOnData = function(key){
           e.preventDefault();
           var self = _closest(e.target, '[data-handler="new-moment"]');
           var moment = _closest(e.target, '[data-id]'),
+              momentListContainer = moment.parentNode,
               proto = d.querySelector('[data-moment-proto]').cloneNode(true);
           _insertAfter(proto, moment);
+          momentListContainer.classList.add('edit-mode');
+          self.style.display = 'none';
           proto.style.display = 'block';
           proto.dataset.decorator = 'edit-moment';
+          proto.querySelector('input').focus();
           _decorate();
       },
       'exit-new-moment': function (e) {
           e.preventDefault();
           var self = _closest(e.target, '[data-handler="exit-new-moment"]'),
-              container = _closest(self, '[data-moment-proto]'),
-              new_moment_button = container.previousSibling.querySelector('[data-handler="new-moment"]');
-          new_moment_button.disabled = false;
-          container.parentElement.removeChild(container);
+              moment = _closest(self, '[data-moment]'),
+              prevMoment  = moment.previousSibling,
+              momentListContainer = moment.parentNode,
+              new_moment_button = moment.previousSibling.querySelector('[data-handler="new-moment"]');
+          prevMoment.querySelector('[data-handler="new-moment"]').style.display = 'block';
+          moment.parentElement.removeChild(moment);
+          momentListContainer.classList.remove('edit-mode');
       },
       'delete-moment': function(e){
           e.preventDefault();
@@ -73,31 +80,45 @@ Array.prototype.sortOnData = function(key){
               }
           }
       },
+      'exit-edit-moment': function(e){
+          e.preventDefault();
+          var self = _closest(e.target, '[data-handler="exit-edit-moment"]'),
+              moment = _closest(e.target, '[data-moment]'),
+              momentListContainer = moment.parentNode;
+          momentListContainer.classList.remove('edit-mode');
+          moment.classList.remove('edit-mode');
+
+      },
+      'enter-edit-moment': function(e){
+          e.preventDefault();
+          var self = _closest(e.target, '[data-handler="enter-edit-moment"]'),
+              moment = _closest(e.target, '[data-moment]'),
+              momentListContainer = moment.parentNode;
+          momentListContainer.classList.add('edit-mode');
+          moment.classList.add('edit-mode');
+          moment.querySelector('input').focus();
+      },
       'open-moment': function(e){
           var self = _closest(e.target, '[data-handler="open-moment"]'),
             moment = _closest(self, '[data-moment]'),
             details = moment.querySelector('details'),
             momentListContainer = moment.parentNode,
             buttons = momentListContainer.querySelectorAll('.change-order button, .new-moment__add');
-          momentListContainer.classList[details.hasAttribute('open') ? 'remove' : 'add']('edit-mode');
-          // if (details.hasAttribute('open')){
-          //     for (var i = 0; i < buttons.length; i++){
-          //         buttons[i].removeAttribute('disabled');
-          //     }
-          // }
-          // else {
-          //     for (var i = 0; i < buttons.length; i++){
-          //         buttons[i].setAttribute('disabled', 'disabled');
-          //     }
-          //
-          // }
+          //momentListContainer.classList[details.hasAttribute('open') ? 'remove' : 'add']('edit-mode');
+          if (momentListContainer.classList.contains('edit-mode')){
+              e.preventDefault();
+          }
 
       },
       'save-moment': function(e){
           e.preventDefault();
           var self = _closest(e.target, '[data-handler="save-moment"]'),
-            container = _closest(self, '[data-moment]');
-          container.submit();
+            moment = _closest(self, '[data-moment]'),
+            exitEditElem = moment.querySelector('[data-handler="exit-edit-moment"]');
+          moment.submit(function(){
+              exitEditElem.click();
+          });
+
     }
   };
     var decorators = {
@@ -124,13 +145,29 @@ Array.prototype.sortOnData = function(key){
                         if (data.hasOwnProperty(k)) {
                             var elem = self.querySelectorAll('[data-moment-'+k+']');
                             for (var i = 0; i < elem.length; i++){
-                                elem[i].textContent = data[k];
+                                elem[i].innerHTML = data[k].replace(/(?:\r\n|\r|\n)/g, '<br>');
                             }
-
                         }
                     }
                 },
-                _init = function(){},
+                _clearErrorMessages = function(){
+                    var elems = self.querySelectorAll('[data-error-message]');
+                    for (var i = 0; i < elems.length; i++){
+                        delete elems[i].dataset.errorMessage;
+                    }
+                },
+                _init = function(){
+                    var isNewElement = self.classList.contains('details-wrapper--new-moment'),
+                        firstElement = self.querySelector('input[name$="name"]'),
+                        lastElement = isNewElement ? self.querySelector('button[data-handler="exit-new-moment"]') : self.querySelector('button[data-handler="exit-edit-moment"]');
+
+                    lastElement.addEventListener('keydown', function(e){
+                        if( e.keyCode === 9 ) {
+                            firstElement.focus();
+                            e.preventDefault();
+                        }
+                    });
+                },
                 _delete = function() {
                     helpers.ajax({
                         'type': 'POST',
@@ -144,7 +181,7 @@ Array.prototype.sortOnData = function(key){
                         }
                     });
                 },
-                _submit = function () {
+                _submit = function (_callback) {
                     var data = _getFormData();
                     self.dataset.saving = 'saving';
                     clearTimeout(savingTimeout);
@@ -160,11 +197,19 @@ Array.prototype.sortOnData = function(key){
                             if (this.status === 201){
                                 self.dataset.id = response.message.id;
                                 self.classList.remove('details-wrapper--new-moment');
+                                delete self.dataset.momentProto;
                                 d.querySelector('[data-edit-timeline]').save();
+                            }
+                            if (self.previousSibling.classList) {
+                                self.previousSibling.querySelector('[data-handler="new-moment"]').style.display = 'block';
                             }
                             self.dataset.saved = 'saved';
                             _updateView(response.message);
+                            _clearErrorMessages();
                             clearTimeout(savedTimeout);
+                            if (_callback && typeof (_callback) === 'function'){
+                              _callback();
+                            }
                             savedTimeout = setTimeout(function(){
                                 delete self.dataset.saved;
                             }, 2000);
@@ -208,49 +253,48 @@ Array.prototype.sortOnData = function(key){
                     var items = _toArray(momentContainer.querySelectorAll(momentQ)),
                         index = items.indexOf(momentElem),
                         nextElem = items[index + direction];
+                    if (nextElem) {
+                        var currentClone = momentElem.cloneNode(true);
+                        var nextClone = nextElem.cloneNode(true);
+                        var currentRect = momentElem.getBoundingClientRect();
+                        var nextRect = nextElem.getBoundingClientRect();
+                        var parentRect = nextElem.parentNode.getBoundingClientRect();
+                        nextElem.style.opacity = 0;
+                        momentElem.style.opacity = 0;
+                        currentClone.style.position = 'absolute';
+                        currentClone.style.width = momentElem.offsetWidth + 'px';
+                        currentClone.style.height = momentElem.offsetHeight + 'px';
+                        currentClone.style.top = (currentRect.top - parentRect.top) + 'px';
+                        currentClone.style.transition = 'all .5s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                        currentClone.style.zIndex = 1001;
 
-                    var currentClone = momentElem.cloneNode(true);
-                    var nextClone = nextElem.cloneNode(true);
-                    var currentRect = momentElem.getBoundingClientRect();
-                    var nextRect = nextElem.getBoundingClientRect();
-                    var parentRect = nextElem.parentNode.getBoundingClientRect();
-                    nextElem.style.opacity = 0;
-                    momentElem.style.opacity = 0;
-                    currentClone.style.position = 'absolute';
-                    currentClone.style.width = momentElem.offsetWidth + 'px';
-                    currentClone.style.height = momentElem.offsetHeight + 'px';
-                    currentClone.style.top = (currentRect.top - parentRect.top) + 'px';
-                    currentClone.style.transition = 'all .5s cubic-bezier(0.165, 0.84, 0.44, 1)';
-                    currentClone.style.zIndex = 1001;
+                        nextClone.style.position = 'absolute';
+                        nextClone.style.width = momentElem.offsetWidth + 'px';
+                        nextClone.style.height = momentElem.offsetHeight + 'px';
+                        nextClone.style.top = (nextRect.top - parentRect.top) + 'px';
+                        nextClone.style.transition = 'all .5s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                        nextClone.style.zIndex = 1000;
 
-                    nextClone.style.position = 'absolute';
-                    nextClone.style.width = momentElem.offsetWidth + 'px';
-                    nextClone.style.height = momentElem.offsetHeight + 'px';
-                    nextClone.style.top = (nextRect.top - parentRect.top) + 'px';
-                    nextClone.style.transition = 'all .5s cubic-bezier(0.165, 0.84, 0.44, 1)';
-                    nextClone.style.zIndex = 1000;
+                        momentElem.parentNode.appendChild(currentClone);
+                        momentElem.parentNode.appendChild(nextClone);
 
-                    momentElem.parentNode.appendChild(currentClone);
-                    momentElem.parentNode.appendChild(nextClone);
-
-                    setTimeout(function(){
-                        currentClone.style.transform = 'translate(0, '+(direction * nextElem.offsetHeight)+'px)';
-                        nextClone.style.transform = 'translate(0, '+(-direction * momentElem.offsetHeight)+'px)';
-                    }, 1);
-                    setTimeout(function(){
-                        currentClone.parentNode.removeChild(currentClone);
-                        nextClone.parentNode.removeChild(nextClone);
-                        nextElem.style.opacity = 1;
-                        momentElem.style.opacity = 1;
-                        if (nextElem){
-                            if (direction < 0){
+                        setTimeout(function () {
+                            currentClone.style.transform = 'translate(0, ' + (direction * nextElem.offsetHeight) + 'px)';
+                            nextClone.style.transform = 'translate(0, ' + (-direction * momentElem.offsetHeight) + 'px)';
+                        }, 1);
+                        setTimeout(function () {
+                            currentClone.parentNode.removeChild(currentClone);
+                            nextClone.parentNode.removeChild(nextClone);
+                            nextElem.style.opacity = 1;
+                            momentElem.style.opacity = 1;
+                            if (direction < 0) {
                                 _insertAfter(nextElem, momentElem);
-                            }else {
+                            } else {
                                 _insertAfter(momentElem, nextElem);
                             }
                             _save();
-                        }
-                    }, 500);
+                        }, 500);
+                    }
                 };
             self.dataset.editTimeline = self;
             self.order = _order;

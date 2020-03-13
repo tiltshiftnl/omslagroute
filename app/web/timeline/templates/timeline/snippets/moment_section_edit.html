@@ -1,0 +1,74 @@
+{% load html_tags %}
+<div class="details-wrapper"
+     data-id="{{ moment.instance.id }}"
+     data-order="{{ moment.instance.order }}"
+     data-moment-order="{{ moment.instance.order }}"
+     data-moment
+     data-decorator="edit-moment"
+     data-mode="static">
+
+    <div class="dot dot--large"></div>
+    <details class="details">
+        <summary class="details__header" data-handler="open-moment">
+            <h3 data-static-mode data-moment-name class="details__title">{{ moment.instance.name }}</h3>
+            <p data-edit-mode>{{ moment.name }}</p>
+            <span class="details__toggle-icon">
+                                <svg class="details__header-opened" width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                </svg>
+                                <svg class="details__header-closed" width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9"></use>
+                                </svg>
+                            </span>
+
+            <div class="change-order">
+                <button class="button button--icon" data-handler="moment-up">
+                    <svg width="14" height="9">
+                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                    </svg>
+                </button>
+                <button class="button button--icon" data-handler="moment-down">
+                    <svg width="14" height="9">
+                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                    </svg>
+                </button>
+                <button class="button button--icon" data-handler="delete-moment">
+                    <svg width="12" height="14">
+                        <use href="#trash" xlink:href="#trash" width="12" height="14"></use>
+                    </svg>
+                </button>
+            </div>
+        </summary>
+
+        <div class="details__content">
+            <p data-moment-description data-static-mode>{{ moment.instance.description|linebreaks2html|safe }}</p>
+            <p data-edit-mode="">{{ moment.description }}</p>
+
+            {% if moment.instance.documents.all %}
+                <p data-static-mode>
+                    <strong>
+                        {{ moment.instance.documents.all|length }} document(en)
+                    </strong>
+                </p>
+            {% endif %}
+            <div data-static-mode class="form-field form-field--buttons">
+                <a href="#" data-handler="enter-edit-moment" class="button button--primary">Wijzigen</a>
+            </div>
+            <div data-edit-mode class="form-field form-field--buttons">
+                <button class="button button--primary" data-handler="save-moment">Opslaan</button>
+                <button class="button button--secondary" data-handler="exit-edit-moment">Annuleer</button>
+            </div>
+        </div>
+        <div class="details__headerhoverblock"></div>
+    </details>
+
+    <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">
+        <div class="new-moment__line"></div>
+        <div class="dot dot--large dot--blue">
+            <svg class="details__header-closed" width="16" height="16">
+                <title>Voeg stap toe</title>
+                <use href="#add-document" xlink:href="#add-document" fill="red" width="16" height="16"></use>
+            </svg>
+        </div>
+    </button>
+</div>
