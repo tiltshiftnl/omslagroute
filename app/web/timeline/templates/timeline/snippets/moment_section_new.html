@@ -4,32 +4,54 @@
      data-decorator="edit-moment"
      data-moment-proto
      style="display: none">
+
+    <div class="alert-container">
+        <div class="alert alert--saving">
+            <svg class="alert__icon" width="20" height="20">
+                <use href="#check" xlink:href="#check" width="20" height="20"></use>
+            </svg>
+            <p>De nieuwe stap wordt opgeslagen...</p>
+        </div>
+        <div class="alert alert--saved">
+            <svg class="alert__icon" width="20" height="20">
+                <use href="#check" xlink:href="#check" width="20" height="20"></use>
+            </svg>
+            <p>Uw nieuwe stap is opgeslagen.</p>
+        </div>
+        <div class="alert alert--error">
+            <svg class="alert__icon" width="20" height="20">
+                <use href="#check" xlink:href="#check" width="20" height="20"></use>
+            </svg>
+            <p>Er ging iets mis.</p>
+        </div>
+    </div>
+
     <div class="dot dot--large"></div>
     <details class="details" open>
         <summary class="details__header" data-handler="open-moment">
             <h3 data-static-mode data-moment-name class="details__title"></h3>
             <p data-edit-mode>{{ form.name }}</p>
             <span class="details__toggle-icon">
-                                <svg class="details__header-opened" width="14" height="9">
-                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                                </svg>
-                                <svg class="details__header-closed" width="14" height="9">
-                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9"></use>
-                                </svg>
-                            </span>
+                <svg class="details__header-opened" width="14" height="9">
+                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                </svg>
+                <svg class="details__header-closed" width="14" height="9">
+                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9"></use>
+                </svg>
+            </span>
 
             <div class="change-order">
-                <button class="button button--icon" data-handler="moment-up">
+                <button class="button button--icon" data-handler="moment-up" title="Verplaats deze processtap naar boven">
                     <svg width="14" height="9">
                         <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9"></use>
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="moment-down">
-                    <svg width="14" height="9">
+                <button class="button button--icon" data-handler="moment-down" title="Verplaats deze processtap naar beneden">
+                    <svg  width="14" height="9">
                         <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9"></use>
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="delete-moment">
+                <button class="button button--icon" data-handler="delete-moment" title="Verwijder deze processtap">
                     <svg width="12" height="14">
                         <use href="#trash" xlink:href="#trash" width="12" height="14"></use>
                     </svg>

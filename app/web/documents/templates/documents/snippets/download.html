@@ -6,10 +6,10 @@
     <li class="document">
         <a href="{% if document_version %}{% url 'download_documentversion' document_version.id %}{% endif %}" class="document__version" download target="_blank" rel="noopener">
             <svg class="document__icon document__icon--default"  width="40" height="40" >
-                <use href="#{{ object.document_type_value|lower }}" xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40" />
+                <use href="#{{ object.document_type_value|lower }}" xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40"></use>
             </svg>
             <svg class="document__icon document__icon--hover"  width="40" height="40" >
-                <use href="#download" xlink:href="#download"  width="40" height="40" />
+                <use href="#download" xlink:href="#download"  width="40" height="40"></use>
             </svg>
 
             {% if object %}
@@ -37,7 +37,10 @@
 
         <div class="document__info-wrapper">
             <div class="document__info">
-                <p><strong>{{ object.document_type_value }} {{ object.name }}</strong></p>
+                <p class="only-desktop">
+                    <strong>{{ object.document_type_value }} {{ object.name }}</strong>
+                </p>
+
                 {% if object.description %}
                     <p>
                         {{ object.description|linebreaks }}
@@ -47,27 +50,27 @@
                 {% if request.user|has_group:"wonen" and object %}
                     <ul>
                         <li>
-                            <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary">
+                            <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary" title="Vervang dit {{ object.document_type_value }}">
                                 <svg class="button__icon"  width="20" height="20" >
-                                    <use href="#upload" xlink:href="#upload"  width="20" height="20" />
+                                    <use href="#upload" xlink:href="#upload"  width="20" height="20"></use>
                                 </svg>
 
                                 <span class="button__label">Vervangen</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'document_update' object.id %}" class="document__version-update button button--secondary">
+                            <a href="{% url 'document_update' object.id %}" class="document__version-update button button--secondary" title="Pas de informatie over dit {{ object.document_type_value }} aan">
                                 <svg class="button__icon"  width="20" height="20" >
-                                    <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20" />
+                                    <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20"></use>
                                 </svg>
 
                                 <span class="button__label">Wijzigen</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'document_delete' object.id %}" class="document__version-update button button--secondary">
+                            <a href="{% url 'document_delete' object.id %}" class="document__version-update button button--secondary"  title="Verwijder dit {{ object.document_type_value }}">
                                 <svg class="button__icon"  width="20" height="20" >
-                                    <use href="#trash" xlink:href="#trash"  width="20" height="20" />
+                                    <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
                                 </svg>
 
                                 <span class="button__label">Verwijderen</span>
