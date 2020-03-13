@@ -18,6 +18,14 @@
     width: 1px;
 }
 
+.only-desktop {
+    display: none;
+
+    @media screen and (min-width: $desktop) {
+        display: block;
+    }
+}
+
 a.skip-main {
     height: 1px;
     transform: translateY(-100px);

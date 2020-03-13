@@ -37,7 +37,10 @@
 
         <div class="document__info-wrapper">
             <div class="document__info">
-                <p><strong>{{ object.document_type_value }} {{ object.name }}</strong></p>
+                <p class="only-desktop">
+                    <strong>{{ object.document_type_value }} {{ object.name }}</strong>
+                </p>
+
                 {% if object.description %}
                     <p>
                         {{ object.description|linebreaks }}

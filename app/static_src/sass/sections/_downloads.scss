@@ -28,18 +28,36 @@
     position: relative;
     list-style-type: none;
     margin-bottom: 1.5rem;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
 
     @media all and (min-width: $desktop) {
         margin-bottom: 0;
         justify-content: space-between;
         display: flex;
         flex-direction: column;
+        border-right: 0;
+        border-bottom: 0;
+    }
+
+    
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: $primary-black;
+        border-right: 2px solid $primary-red;
+        border-bottom: 2px solid $primary-red;
+        
+        @media all and (min-width: $desktop) {
+            border-right: 0;
+            border-bottom: 0;
+        }
     }
 }
 
 // fallbacks for IE11
 @media all and (-ms-high-contrast:none) {
-
     .document {
         -ms-grid-column-span: 1;
         -ms-grid-row-span: 1;
@@ -155,11 +173,22 @@
 
 .document__header {
     text-decoration: none;
-    flex: 0 0 100px;
+    flex: 1 1 auto;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     display: flex;
-    align-content: center;
+    align-content: flex-start;
+    padding-left: 1rem;
+
+    @media screen and (min-width: $desktop) {
+        flex: 1 1 100px;
+        padding-left: 0;
+        text-align: center;
+    }
+
+    + time {
+        flex: 1 0 auto;
+    }
 }
 
 .document__name {
@@ -167,8 +196,10 @@
     margin-bottom: 0;
     white-space:normal;
     font-size: 1rem;
+    margin-top: 0;
 
     @media screen and (min-width: $desktop) {
+        margin-top: 1rem; 
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;  
@@ -184,8 +215,11 @@
 }
 
 .document__icon {
-    align-self: center;
     flex: 0 0 40px;
+
+    @media all and (min-width: $desktop) { 
+        align-self: center;
+    }
 }
 
 .document__icon--hover {
@@ -193,26 +227,26 @@
 }
 
 .document__info-wrapper {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 0;
-    z-index: 5;
+    @media all and (min-width: $desktop) { 
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        z-index: 5;
 
-    &:hover,
-    &:focus {
-        display: block;
+        &:hover,
+        &:focus {
+            display: block;
+        }
     }
 }
 
 .document__info {
-    border: 1px solid $neutral-grey4;
-    box-shadow: 0 0 5px 2px $neutral-grey3;
-    background-color: $primary-white;
+    background-color: $neutral-grey1; 
     color: $primary-black; 
     text-align: left; 
-    padding: 10px;
-    width: 500px;
+    padding: 1rem;
+    width: 100%;
 
     ul {
         list-style-type: none;
@@ -221,8 +255,29 @@
     }
 
     li {
-        display: inline-block;
-        margin-right: 5px;
+        display: block;
+        margin-bottom: 1rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    @media all and (min-width: $desktop) {
+        width: 300px;
+        border: 1px solid $neutral-grey4;
+        background-color: $primary-white;
+        box-shadow: 0 0 5px 2px $neutral-grey3;
+
+        li {
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 0;
+        }
+    }
+
+    @media all and (min-width: $desktop) {
+        width: 500px;
     }
 }
 
@@ -231,12 +286,16 @@
     color: $primary-black;
     background-color: $neutral-grey1; 
     display: flex;
-    flex-direction: column;
     text-align: center;
     justify-content: flex-start;
-    padding: 1.5rem 1rem 1rem 1rem;
+    padding: 1.5rem 1rem 0rem 1rem;
     position: relative;
     height: 100%;
+
+    @media all and (min-width: $desktop) {
+        flex-direction: column;
+        padding: 1.5rem 1rem 1rem 1rem;
+    }
     
     &,
     &:visited {
@@ -248,9 +307,12 @@
     &:hover,
     &:focus {
         text-decoration: none;
-        border-right: 2px solid $primary-red;
-        border-bottom: 2px solid $primary-red;
         color: $primary-black;
+        
+        @media all and (min-width: $desktop) {
+            border-right: 2px solid $primary-red;
+            border-bottom: 2px solid $primary-red;
+        }
 
         .document__name {
             text-decoration: underline;
@@ -280,6 +342,33 @@
 
     .document__info-wrapper {
         display: block;
+    }
+
+    @media all and (min-width: $desktop) {
+        &:hover,
+        &:focus {
+            
+            &:nth-child(3n + 3) {
+                .document__info-wrapper {
+                    left: auto;
+                    right: 100%;
+                }
+            }
+        }
+    }
+
+    @media all and (min-width: $large) {
+        &:hover,
+        &:focus {
+            
+            &:nth-child(5n + 4),
+            &:nth-child(5n) {
+                .document__info-wrapper {
+                    left: auto;
+                    right: 100%;
+                }
+            }
+        }
     }
 }
 
