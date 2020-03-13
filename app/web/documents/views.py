@@ -144,6 +144,7 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
                 documentversionformset.instance = self.object
                 documentversionformset.save()
 
+        messages.add_message(self.request, messages.INFO, "Het document '%s' is aangemaakt" % self.object.name)
         return super().form_valid(form)
 
 
@@ -162,6 +163,7 @@ class CreateDocumentAddToMoment(DocumentVersionFormSetCreate):
         if moment:
             with transaction.atomic():
                 moment.documents.add(self.object)
+        messages.add_message(self.request, messages.INFO, "Het aangemaakte document is toegevoegd aan de processtap '%s'" % moment.name)
         return valid
 
 
