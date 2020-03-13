@@ -400,8 +400,13 @@ $padding-left: 30px;
     .document__new {
         &,
         &:visited {
-            border-color: $neutral-grey3;
+            // border-color: $neutral-grey3;
             background-color: $primary-white;
+        }
+
+        &:hover,
+        &:focus {
+            // border-color
         }
     }
 
