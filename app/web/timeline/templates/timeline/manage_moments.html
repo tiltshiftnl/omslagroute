@@ -6,7 +6,7 @@
 
     {% if request.user.is_authenticated %}
         <p class="details-admin">
-            <a href="{% url 'home' %}" class="button button--secondary">
+            <a href="{% url 'home' %}" class="button button--primary">
                 Toon documenten
             </a>
         </p>
@@ -24,74 +24,6 @@
             {% endfor %}
         </div>
         {% include 'timeline/snippets/moment_section_new.html' %}
-
-{#        <div class="details-wrapper details-wrapper--new-moment" data-moment data-moment-proto style="display: none">#}
-{#            <div class="dot dot--large"></div>#}
-{#                     <details class="details" open>#}
-{#                        <summary class="details__header" data-handler="open-moment">#}
-{#                            <h3 data-moment-name class="details__title">Nieuwe stap</h3>#}
-{#                            <span class="details__toggle-icon">#}
-{#                                <svg class="details__header-opened" width="14" height="9">#}
-{#                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />#}
-{#                                </svg>#}
-{#                                <svg class="details__header-closed" width="14" height="9">#}
-{#                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />#}
-{#                                </svg>#}
-{#                            </span>#}
-{##}
-{#                            <div class="change-order">#}
-{#                                <button class="button button--icon" data-handler="moment-up"><svg width="14" height="9">#}
-{#                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9" />#}
-{#                                </svg></button>#}
-{#                                <button class="button button--icon" data-handler="moment-down"><svg  width="14" height="9">#}
-{#                                    <use href="#chevron-down" xlink:href="#chevron-up" width="14" height="9" />#}
-{#                                </svg></button>#}
-{#                                <button class="button button--icon" data-handler="delete-moment"><svg width="12" height="14">#}
-{#                                    <use href="#trash" xlink:href="#chevron-up" width="12" height="14" />#}
-{#                                </svg></button>#}
-{#                            </div>#}
-{#                        </summary>#}
-{##}
-{#                        <div class="details__content">#}
-{#                            <p data-moment-description>{{ form.instance.description }}</p>#}
-{#                        </div>#}
-{##}
-{#                        <div class="details__headerhoverblock"></div>#}
-{##}
-{#            <fieldset class="details__editform">#}
-{#                <h4>Stap aanmaken</h4>#}
-{#                <div class="form-field">#}
-{#                    {{ form.name.label_tag }}#}
-{#                    {{ form.name }}#}
-{#                </div>#}
-{##}
-{#                <div class="form-field">#}
-{#                    {{ form.description.label_tag }}#}
-{#                    {{ form.description }}#}
-{#                </div>#}
-{##}
-{#                <div class="form-field form-field--buttons">#}
-{#                    <button class="button button--primary" data-handler="save-moment">Opslaan</button>#}
-{#                    <button class="button button--secondary" data-handler="exit-new-moment">Annuleer</button>#}
-{#                </div>#}
-{#            </fieldset>#}
-{#                     </details>#}
-{#                    <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">#}
-{#                        <div class="new-moment__line"></div>#}
-{#                        <div class="button button--icon">#}
-{#                            <svg class="details__header-closed" width="16" height="16">#}
-{#                                <title>Voeg stap toe</title>#}
-{#                                <use href="#add-document" xlink:href="#add-document" width="16" height="16" />#}
-{#                            </svg>#}
-{#                        </div>#}
-{#                    </button>#}
-{#        </div>#}
-
-{#        <div class="form-field form-field--buttons">#}
-{#            <input type="submit" value="Opslaan" class="button button--primary">#}
-{#            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>#}
-{#        </div>#}
-
     </form>
 </section>
 {% endblock %}
