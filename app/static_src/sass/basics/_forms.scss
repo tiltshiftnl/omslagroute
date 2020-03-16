@@ -32,17 +32,21 @@ fieldset {
     justify-content: flex-start;
     margin-bottom: 0;
 
-    > .button:first-child {
+    > .button {
         -ms-grid-column-span: 1;
         -ms-grid-row-span: 1;
+    }
 
+    > .button:first-child {
         -ms-grid-column: 1;
     }
 
     > .button:last-child {
-        -ms-grid-column-span: 1;
-        -ms-grid-row-span: 1;
         -ms-grid-column: 3;
+    }
+
+    > .button:only-child {
+        -ms-grid-column: 1;
     }
 }
 
