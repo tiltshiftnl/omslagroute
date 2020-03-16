@@ -24,6 +24,9 @@ class Moment(models.Model):
         blank=True,
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = _('Moment')
         verbose_name_plural = _('Momenten')

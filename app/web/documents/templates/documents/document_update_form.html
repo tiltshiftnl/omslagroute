@@ -36,6 +36,11 @@
             </ul>
         </div>
 
+        <div class="form-field">
+            <label for="id_moment_list">{{ form.moment_list.label }}</label>
+            {{ form.moment_list }}
+        </div>
+
         <div class="form-field form-field--buttons">
             <input type="submit" value="Wijzigingen opslaan" class="button button--primary">
             <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
