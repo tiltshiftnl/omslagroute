@@ -140,8 +140,6 @@ Array.prototype.sortOnData = function(key){
                     for (i = 0; i < roleFields.length; i++){
                         data['roles'].push(roleFields[i].value);
                     }
-
-                    console.log(data);
                     if (self.dataset.id){
                         data['id'] = self.dataset.id;
                     }
@@ -189,7 +187,7 @@ Array.prototype.sortOnData = function(key){
                         lastElement = isNewElement ? self.querySelector('button[data-handler="exit-new-moment"]') : self.querySelector('button[data-handler="exit-edit-moment"]'),
                         enableElements = self.querySelectorAll('[disabled="disabled"]'),
                         addEditmode = self.querySelectorAll('.data-edit-mode'),
-                        deleteElements = self.querySelectorAll('input[name$="id"], input[name$="order"]'),
+                        deleteElements = self.querySelectorAll('[data-js-delete]'),
                         details = self.querySelector('details'),
                         i;
 

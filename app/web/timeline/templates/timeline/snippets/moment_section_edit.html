@@ -62,8 +62,14 @@
         </summary>
 
         <div class="details__content">
-            {{ moment.id }}
-            {{ moment.order }}
+
+            <div data-js-delete class="form-field form-field--buttons">
+                {{ moment.DELETE.label }}
+                {{ moment.DELETE }}
+                {{ moment.order.label }}
+                {{ moment.order }}
+                {{ moment.id }}
+            </div>
             <p data-moment-description data-static-mode>{{ moment.instance.description|linebreaks2html|safe }}</p>
             <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
                 <h4>Betrokken rollen</h4>
@@ -80,7 +86,7 @@
                 {% endif %}
             </div>
             <p class="data-edit-mode">{{ moment.description }}</p>
-            <div data-edit-mode>{{ moment.roles }}</div>
+            <div class="data-edit-mode">{{ moment.roles }}</div>
 
             {% if moment.instance and moment.instance.documents.all %}
                 <h4>Betrokken documenten</h4>

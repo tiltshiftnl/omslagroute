@@ -602,6 +602,16 @@ $padding-left: 30px;
 .no-js [disabled="disabled"] {
     display: none;
 }
+.no-js {
+    .details__title,
+    .change-order,
+    .details__toggle-icon {
+        display: none;
+    }
+    .details-wrapper--new-moment {
+        display: block !important;
+    }
+}
 
 // seems to be obsolete
 // .details-wrapper > fieldset {

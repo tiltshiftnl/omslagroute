@@ -2,7 +2,8 @@
 <div class="details-wrapper details-wrapper--edit details-wrapper--new-moment"
      data-moment
      data-decorator="edit-moment"
-     data-moment-proto>
+     data-moment-proto
+     style="display: none;">
 
     <div class="alert-container  alert-container--inline">
         <div class="alert alert--saving">
@@ -58,7 +59,10 @@
         </summary>
 
         <div class="details__content">
+            <div data-js-delete class="form-field form-field--buttons">
+                {{ moment.order.label }}
                 {{ moment.order }}
+            </div>
             <p data-moment-description data-static-mode></p>
             <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
                 <h4>Betrokken rollen</h4>
@@ -66,8 +70,8 @@
                 <li>Er zijn nog rollen toegewezen</li>
                 </ul>
             </div>
-            <p data-edit-mode="">{{ moment.description }}</p>
-<div data-edit-mode>{{ form.roles }}</div>
+            <p class="data-edit-mode">{{ moment.description }}</p>
+            <div class="data-edit-mode">{{ moment.roles }}</div>
             <div data-static-mode class="form-field form-field--buttons">
                 <button href="#" data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>
