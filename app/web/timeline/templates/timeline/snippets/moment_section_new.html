@@ -61,7 +61,14 @@
 
         <div class="details__content">
             <p data-moment-description data-static-mode></p>
+            <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
+                <h4>Betrokken rollen</h4>
+                <ul>
+                <li>Er zijn nog rollen toegewezen</li>
+                </ul>
+            </div>
             <p data-edit-mode="">{{ form.description }}</p>
+            <div data-edit-mode>{{ form.roles }}</div>
 
             <div data-static-mode class="form-field form-field--buttons">
                 <button href="#" data-handler="enter-edit-moment" class="button button--primary">Wijzigen</button>

@@ -50,7 +50,7 @@ def update_moment(request):
         if form.is_valid():
             instance = form.save()
             status_code = 200 if m.get('id') else 201
-            message = model_to_dict(instance, ['id', 'name', 'description'])
+            message = instance.to_dict()
         else:
             status_code = 422
             message = form.errors

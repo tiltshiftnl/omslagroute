@@ -130,22 +130,49 @@ Array.prototype.sortOnData = function(key){
                 _getFormData = function () {
                     var data = {},
                         i,
-                        fields = self.querySelectorAll('input[type="text"], input[type="hidden"], textarea');
+                        fields = self.querySelectorAll('input[type="text"], input[type="hidden"], textarea'),
+                        roleFields = self.querySelectorAll('input[name$="roles"]:checked');
                     for (i = 0; i < fields.length; i++){
                         var nameSplit = fields[i].getAttribute('name').split('-');
                         data[nameSplit[nameSplit.length-1]] = fields[i].value;
                     }
+                    data['roles'] = [];
+                    for (i = 0; i < roleFields.length; i++){
+                        data['roles'].push(roleFields[i].value);
+                    }
+
+                    console.log(data);
                     if (self.dataset.id){
                         data['id'] = self.dataset.id;
                     }
                     return data;
                 },
                 _updateView = function(data){
+                    var i,  j;
                     for (var k in data){
                         if (data.hasOwnProperty(k)) {
                             var elem = self.querySelectorAll('[data-moment-'+k+']');
-                            for (var i = 0; i < elem.length; i++){
-                                elem[i].innerHTML = data[k].replace(/(?:\r\n|\r|\n)/g, '<br>');
+
+                            for (i = 0; i < elem.length; i++){
+                                if (data[k] instanceof Array){
+                                    var ul = elem[i].querySelector('ul');
+                                    while (ul.firstChild) {
+                                        ul.removeChild(ul.firstChild);
+                                    }
+                                    for (j = 0; j < data[k].length; j++){
+                                        var li = document.createElement('li');
+                                        li.textContent = data[k][j];
+                                        ul.appendChild(li);
+                                    }
+                                    if (!data[k].length) {
+                                        var li = document.createElement('li');
+                                        li.textContent = elem[i].dataset.noRolesText;
+                                        ul.appendChild(li);
+
+                                    }
+                                }else {
+                                    elem[i].innerHTML = data[k].replace(/(?:\r\n|\r|\n)/g, '<br>');
+                                }
                             }
                         }
                     }
