@@ -49,7 +49,7 @@ Array.prototype.sortOnData = function(key){
               momentListContainer = moment.parentNode,
               proto = d.querySelector('[data-moment-proto]').cloneNode(true);
           _insertAfter(proto, moment);
-          momentListContainer.classList.add('edit-mode');
+          momentListContainer.classList.add('details-list-wrapper--edit');
           self.style.display = 'none';
           proto.style.display = 'block';
           proto.dataset.decorator = 'edit-moment';
@@ -65,7 +65,7 @@ Array.prototype.sortOnData = function(key){
               new_moment_button = moment.previousSibling.querySelector('[data-handler="new-moment"]');
           prevMoment.querySelector('[data-handler="new-moment"]').style.display = 'block';
           moment.parentElement.removeChild(moment);
-          momentListContainer.classList.remove('edit-mode');
+          momentListContainer.classList.remove('details-list-wrapper--edit');
       },
       'delete-moment': function(e){
           e.preventDefault();
@@ -85,8 +85,8 @@ Array.prototype.sortOnData = function(key){
           var self = _closest(e.target, '[data-handler="exit-edit-moment"]'),
               moment = _closest(e.target, '[data-moment]'),
               momentListContainer = moment.parentNode;
-          momentListContainer.classList.remove('edit-mode');
-          moment.classList.remove('edit-mode');
+          momentListContainer.classList.remove('details-list-wrapper--edit');
+          moment.classList.remove('details-wrapper--edit');
 
       },
       'enter-edit-moment': function(e){
@@ -94,8 +94,8 @@ Array.prototype.sortOnData = function(key){
           var self = _closest(e.target, '[data-handler="enter-edit-moment"]'),
               moment = _closest(e.target, '[data-moment]'),
               momentListContainer = moment.parentNode;
-          momentListContainer.classList.add('edit-mode');
-          moment.classList.add('edit-mode');
+          momentListContainer.classList.add('details-list-wrapper--edit');
+          moment.classList.add('details-wrapper--edit');
           moment.querySelector('input').focus();
       },
       'open-moment': function(e){
@@ -105,7 +105,7 @@ Array.prototype.sortOnData = function(key){
             momentListContainer = moment.parentNode,
             buttons = momentListContainer.querySelectorAll('.change-order button, .new-moment__add');
           //momentListContainer.classList[details.hasAttribute('open') ? 'remove' : 'add']('edit-mode');
-          if (momentListContainer.classList.contains('edit-mode')){
+          if (momentListContainer.classList.contains('details-list-wrapper--edit')){
               e.preventDefault();
           }
 

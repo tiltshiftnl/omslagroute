@@ -95,6 +95,11 @@ textarea {
     }
 }
 
+input[data-error-message] {
+    outline: 1px $primary-red solid;
+    border: 1px $primary-red solid;
+}
+
 // ********************
 // FILE UPLOAD FIELD
 //  
