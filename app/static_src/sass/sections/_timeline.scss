@@ -234,22 +234,27 @@ $padding-left: 30px;
         z-index: 2;
     }
 
+    .details__header::before {
+        height: 100%;
+        width: $padding-left;
+        content: ' ';
+        background-color: transparent;
+        position: absolute;
+        left: -#{$padding-left};
+        top: 0;
+        border-left: 0;
+        z-index: 1;
+    }
+
     //&:focus,
     &:hover {
         background-color: $neutral-grey1;
         position: relative;
 
         .details__header::before {
-            height: 100%;
-            width: $padding-left;
-            content: ' ';
             background-color: $neutral-grey1;
-            position: absolute;
-            left: -#{$padding-left};
-            top: 0;
-            border-left: 0;
-            z-index: 1;
         }
+
         + .new-moment__add {
             .dot {
                 display: block;
