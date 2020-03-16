@@ -85,6 +85,7 @@ $padding-left: 30px;
             #{$sublevel-moment  / 4}
             );
     }
+
     .dot--blue {
         background-color: $primary-darkblue;
 
@@ -99,6 +100,10 @@ $padding-left: 30px;
 
     &.edit-mode {
         z-index: 1000;
+
+        &:not(:last-of-type)::before {
+            top: 0rem;
+        }
         
         [data-edit-mode] {
             display: -ms-grid;
@@ -113,9 +118,12 @@ $padding-left: 30px;
             display: none;
         }
         
-        .details__header {
-            padding-top: 4px;
-            padding-bottom: 4px;
+        .dot--large {
+            transform: translateY(1rem);
+        }
+
+        + .details-wrapper {
+            border: 1px solid red;
         }
     }
 
@@ -184,7 +192,7 @@ $padding-left: 30px;
         }
     }
 
-    // blue line
+    // timeline line
     &:not(:last-of-type)::before {
         border-left: 3px solid $neutral-grey4;
         top: 1rem;
@@ -292,7 +300,7 @@ $padding-left: 30px;
 
 .details[open] {
     background-color: $neutral-grey1;
-    padding-bottom: 1rem;
+    // padding-bottom: 1rem;
 
     .details__header {
         background-color: $neutral-grey1;
@@ -428,8 +436,9 @@ $padding-left: 30px;
 }
 
 // timeline-management scherm
-.details-wrapper--new-moment {
-    //padding: 0 0 2rem 3.5rem;
+.details-wrapper--new-moment { 
+    margin-bottom: -2rem;
+    
     fieldset {
         display: block;
     }
