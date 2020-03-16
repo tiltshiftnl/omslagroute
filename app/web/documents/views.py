@@ -20,7 +20,7 @@ from urllib.request import urlopen
 
 class DocumentList(UserPassesTestMixin, ListView):
     model = Document
-    template_name_suffix = '_list'
+    template_name_suffix = '_list_page'
 
     def test_func(self):
         return auth_test(self.request.user, 'wonen')

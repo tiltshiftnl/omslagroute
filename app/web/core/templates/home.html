@@ -10,6 +10,7 @@
         {% include 'timeline/snippets/moments_section.html' %}
 
         <hr />
-
-        {% include 'documents/snippets/document_section.html' %}
+        <div class="form-field form-field--buttons">
+            <a href="{% url 'document_list' %}" class="button button--primary">Alle documenten</a>
+        </div>
 {% endblock %}
