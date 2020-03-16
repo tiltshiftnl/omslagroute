@@ -110,3 +110,24 @@
         top: 2px;
     }
 }
+
+.button--tag {
+    background-color: $neutral-grey4;
+    align-items: center;
+
+    &:hover {
+        border-color: $neutral-grey4;
+        color: $primary-black;
+        background-color: $primary-white;
+    }
+}
+
+.button--selected {
+    background-color: $primary-red;
+
+    &:hover {
+        border-color: $primary-red;
+        color: $primary-black;
+        background-color: $primary-white;
+    }
+}
