@@ -89,22 +89,6 @@ def create_moment(request):
     return JsonResponse({'message': message}, status=status_code)
 
 
-class MomentUpdateView(UserPassesTestMixin, UpdateView):
-    model = Moment
-    form_class = MomentForm
-    http_method_names = ['post', ]
-
-    def test_func(self):
-        return auth_test(self.request.user, 'wonen')
-
-    def form_valid(self, form):
-        self.object = form.save()
-        return JsonResponse({'message' : 'Data is saved'}, status=200)
-
-    def form_invalid(self, form):
-        return JsonResponse(form.errors, status=400)
-
-
 @require_http_methods(["POST"])
 @user_passes_test(auth_test, group_name='wonen')
 def order_timeline(request):

@@ -65,8 +65,14 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
         return auth_test(self.request.user, 'wonen')
 
     def form_valid(self, form):
+        response = super().form_valid(form)
+        for moment in self.object.moment_set.all():
+            moment.documents.remove(self.object)
+        if form.cleaned_data.get("moment_list"):
+            form.cleaned_data.get("moment_list").documents.add(self.object)
         messages.add_message(self.request, messages.INFO, "Het document '%s' is aangepast." % self.object.name)
-        return super().form_valid(form)
+
+        return response
 
     def form_invalid(self, form):
         for k, v in form.errors.items():

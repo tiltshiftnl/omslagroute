@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms.models import inlineformset_factory
 from django.urls import reverse_lazy
 from django.utils.html import mark_safe
+from web.timeline.models import Moment
 
 
 class DocumentVersionForm(forms.ModelForm):
@@ -25,6 +26,11 @@ class DocumentVersionForm(forms.ModelForm):
 
 
 class DocumentForm(forms.ModelForm):
+    moment_list = forms.ModelChoiceField(
+        label=_('Selecteer een processtap'),
+        queryset=Moment.objects.all(),
+        required=False
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -32,6 +38,9 @@ class DocumentForm(forms.ModelForm):
         self.empty_label=None
         self.fields['name'].label = "Titel van het document:"
         self.fields['document_type'].label = "Om wat voor soort document gaat het?"
+        moments = self.instance.moment_set.all()
+        if moments:
+            self.fields['moment_list'].initial = moments[0]
 
     def clean_name(self):
         data = self.cleaned_data['name']
