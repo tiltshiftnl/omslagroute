@@ -38,9 +38,9 @@ class DocumentForm(forms.ModelForm):
         self.empty_label=None
         self.fields['name'].label = "Titel van het document:"
         self.fields['document_type'].label = "Om wat voor soort document gaat het?"
-        moments = self.instance.moment_set.all()
-        if moments:
-            self.fields['moment_list'].initial = moments[0]
+
+        if self.instance.id and self.instance.moment_set.all():
+            self.fields['moment_list'].initial = self.instance.moment_set.all()[0]
 
     def clean_name(self):
         data = self.cleaned_data['name']
