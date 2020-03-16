@@ -3,7 +3,7 @@
      data-moment
      data-decorator="edit-moment"
      data-moment-proto
-     style="display: none">
+     style="display: none;">
 
     <div class="alert-container  alert-container--inline">
         <div class="alert alert--saving">
@@ -25,12 +25,11 @@
             <p>Er ging iets mis.</p>
         </div>
     </div>
-
     <div class="dot dot--large"></div>
     <details class="details" open>
         <summary class="details__header" data-handler="open-moment">
             <h3 data-static-mode data-moment-name class="details__title"></h3>
-            <p data-edit-mode>{{ form.name }}</p>
+            <p data-edit-mode>{{ moment.name }}</p>
             <span class="details__toggle-icon">
                 <svg class="details__header-opened" width="14" height="9">
                     <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
@@ -41,17 +40,17 @@
             </span>
 
             <div class="change-order">
-                <button class="button button--icon" data-handler="moment-up" title="Verplaats deze processtap naar boven">
+                <button class="button button--icon" data-handler="moment-up" disabled="disabled" title="Verplaats deze processtap naar boven">
                     <svg width="14" height="9">
                         <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9"></use>
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="moment-down" title="Verplaats deze processtap naar beneden">
-                    <svg  width="14" height="9">
+                <button class="button button--icon" data-handler="moment-down" disabled="disabled" title="Verplaats deze processtap naar beneden">
+                    <svg width="14" height="9">
                         <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9"></use>
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="delete-moment" title="Verwijder deze processtap">
+                <button class="button button--icon" data-handler="delete-moment" disabled="disabled" title="Verwijder deze processtap">
                     <svg width="12" height="14">
                         <use href="#trash" xlink:href="#trash" width="12" height="14"></use>
                     </svg>
@@ -60,6 +59,10 @@
         </summary>
 
         <div class="details__content">
+            <div data-js-delete class="form-field form-field--buttons">
+                {{ moment.order.label }}
+                {{ moment.order }}
+            </div>
             <p data-moment-description data-static-mode></p>
             <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
                 <h4>Betrokken rollen</h4>
@@ -67,21 +70,20 @@
                 <li>Er zijn nog rollen toegewezen</li>
                 </ul>
             </div>
-            <p data-edit-mode="">{{ form.description }}</p>
-            <div data-edit-mode>{{ form.roles }}</div>
-
+            <p class="data-edit-mode">{{ moment.description }}</p>
+            <div class="data-edit-mode">{{ moment.roles }}</div>
             <div data-static-mode class="form-field form-field--buttons">
-                <button href="#" data-handler="enter-edit-moment" class="button button--primary">Wijzigen</button>
+                <button href="#" data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>
             <div data-edit-mode class="form-field form-field--buttons">
-                <button class="button button--primary" data-handler="save-moment">Opslaan</button>
-                <button class="button button--secondary" data-handler="exit-edit-moment">Annuleer</button>
-                <button class="button button--secondary" data-handler="exit-new-moment">Annuleer</button>
+                <button class="button button--primary" data-handler="save-moment" disabled="disabled">Opslaan</button>
+                <button class="button button--secondary" data-handler="exit-edit-moment" disabled="disabled">Annuleer</button>
+                <button class="button button--secondary" data-handler="exit-new-moment" disabled="disabled">Annuleer</button>
             </div>
         </div>
         <div class="details__headerhoverblock"></div>
     </details>
-    <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">
+    <button class="new-moment__add" data-handler="new-moment" disabled="disabled" title="Voeg hier een processtap toe">
         <div class="new-moment__line"></div>
         <div class="dot dot--large">
             <svg class="details__header-closed" width="16" height="16">

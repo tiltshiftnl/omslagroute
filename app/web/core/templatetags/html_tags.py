@@ -6,4 +6,6 @@ register = template.Library()
 
 @register.filter(name='linebreaks2html')
 def linebreaks2html(txt):
-    return txt.replace("\n", "<br>")
+    if txt:
+        return txt.replace("\n", "<br>")
+    return ''

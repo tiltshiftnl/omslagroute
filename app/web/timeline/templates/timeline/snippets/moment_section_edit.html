@@ -1,12 +1,12 @@
 {% load html_tags %}
-<div class="details-wrapper"
+<div class="details-wrapper edit-mode"
      data-id="{{ moment.instance.id }}"
      data-order="{{ moment.instance.order }}"
      data-moment-order="{{ moment.instance.order }}"
      data-moment
      data-decorator="edit-moment"
      data-mode="static">
-    
+
     <div class="alert-container alert-container--inline">
         <div class="alert alert--saving">
             <svg class="alert__icon" width="20" height="20">
@@ -29,10 +29,10 @@
     </div>
 
     <div class="dot dot--large"></div>
-    <details class="details">
+    <details class="details" open>
         <summary class="details__header" data-handler="open-moment">
             <h3 data-static-mode data-moment-name class="details__title">{{ moment.instance.name }}</h3>
-            <p data-edit-mode>{{ moment.name }}</p>
+            <p class="data-edit-mode">{{ moment.name }}</p>
             <span class="details__toggle-icon">
                 <svg class="details__header-opened" width="14" height="9">
                     <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
@@ -43,25 +43,33 @@
             </span>
 
             <div class="change-order">
-                <button class="button button--icon" data-handler="moment-up" title="Verplaats deze processtap naar boven">
+                <button class="button button--icon" data-handler="moment-up" disabled="disabled" title="Verplaats deze processtap naar boven">
                     <svg width="14" height="9">
-                        <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9" />
+                        <use href="#arrow-up" xlink:href="#arrow-up" width="14" height="9"></use>
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="moment-down" title="Verplaats deze processtap naar beneden">
-                    <svg  width="14" height="9">
-                        <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9" />
+                <button class="button button--icon" data-handler="moment-down" disabled="disabled" title="Verplaats deze processtap naar beneden">
+                    <svg width="14" height="9">
+                        <use href="#arrow-down" xlink:href="#arrow-down" width="14" height="9"></use>
                     </svg>
                 </button>
-                <button class="button button--icon" data-handler="delete-moment" title="Verwijder deze processtap">
+                <button class="button button--icon" data-handler="delete-moment" disabled="disabled" title="Verwijder deze processtap">
                     <svg width="12" height="14">
-                        <use href="#trash" xlink:href="#trash" width="12" height="14" />
+                        <use href="#trash" xlink:href="#trash" width="12" height="14"></use>
                     </svg>
                 </button>
             </div>
         </summary>
 
         <div class="details__content">
+
+            <div data-js-delete class="form-field form-field--buttons">
+                {{ moment.DELETE.label }}
+                {{ moment.DELETE }}
+                {{ moment.order.label }}
+                {{ moment.order }}
+                {{ moment.id }}
+            </div>
             <p data-moment-description data-static-mode>{{ moment.instance.description|linebreaks2html|safe }}</p>
             <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
                 <h4>Betrokken rollen</h4>
@@ -77,10 +85,10 @@
                     </ul>
                 {% endif %}
             </div>
-            <p data-edit-mode="">{{ moment.description }}</p>
-            <div data-edit-mode>{{ moment.roles }}</div>
+            <p class="data-edit-mode">{{ moment.description }}</p>
+            <div class="data-edit-mode">{{ moment.roles }}</div>
 
-            {% if moment.instance.documents.all %}
+            {% if moment.instance and moment.instance.documents.all %}
                 <h4>Betrokken documenten</h4>
                 <p data-static-mode>
                     <strong>
@@ -89,11 +97,11 @@
                 </p>
             {% endif %}
             <div data-static-mode class="form-field form-field--buttons">
-                <button data-handler="enter-edit-moment" class="button button--primary">Wijzigen</button>
+                <button data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>
             <div data-edit-mode class="form-field form-field--buttons">
-                <button class="button button--primary" data-handler="save-moment">Opslaan</button>
-                <button class="button button--secondary" data-handler="exit-edit-moment">Annuleer</button>
+                <button class="button button--primary" data-handler="save-moment" disabled="disabled">Opslaan</button>
+                <button class="button button--secondary" data-handler="exit-edit-moment" disabled="disabled">Annuleer</button>
             </div>
         </div>
         <div class="details__headerhoverblock"></div>
