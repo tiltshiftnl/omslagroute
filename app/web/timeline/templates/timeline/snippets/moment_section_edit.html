@@ -63,9 +63,25 @@
 
         <div class="details__content">
             <p data-moment-description data-static-mode>{{ moment.instance.description|linebreaks2html|safe }}</p>
+            <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
+                <h4>Betrokken rollen</h4>
+                {% if moment.instance.roles.all %}
+                <ul>
+                    {% for r in moment.instance.roles.all %}
+                    <li>{{ r }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <ul>
+                    <li>Er zijn nog rollen toegewezen</li>
+                    </ul>
+                {% endif %}
+            </div>
             <p data-edit-mode="">{{ moment.description }}</p>
+            <div data-edit-mode>{{ moment.roles }}</div>
 
             {% if moment.instance.documents.all %}
+                <h4>Betrokken documenten</h4>
                 <p data-static-mode>
                     <strong>
                         {{ moment.instance.documents.all|length }} document(en)

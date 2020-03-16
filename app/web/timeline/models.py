@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from web.core.models import PrintableModel
 
 
-class Moment(models.Model):
+class Moment(PrintableModel):
     name = models.CharField(
         verbose_name=_('Naam'),
         max_length=100
@@ -21,6 +22,11 @@ class Moment(models.Model):
     documents = models.ManyToManyField(
         to='documents.Document',
         verbose_name=_('Documenten'),
+        blank=True,
+    )
+    roles = models.ManyToManyField(
+        to='roles.Role',
+        verbose_name=_('Rollen'),
         blank=True,
     )
 

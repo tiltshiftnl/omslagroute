@@ -20,4 +20,8 @@ class MomentForm(forms.ModelForm):
         model = Moment
         fields = ('name',
                   'description',
+                  'roles',
         )
+        widgets = {
+            'roles': forms.CheckboxSelectMultiple()
+        }
