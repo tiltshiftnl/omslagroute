@@ -131,14 +131,14 @@ Array.prototype.sortOnData = function(key){
                     var data = {},
                         i,
                         fields = self.querySelectorAll('input[type="text"], input[type="hidden"], textarea'),
-                        roleFields = self.querySelectorAll('input[name$="roles"]:checked');
+                        organizationFields = self.querySelectorAll('input[name$="organizations"]:checked');
                     for (i = 0; i < fields.length; i++){
                         var nameSplit = fields[i].getAttribute('name').split('-');
                         data[nameSplit[nameSplit.length-1]] = fields[i].value;
                     }
-                    data['roles'] = [];
-                    for (i = 0; i < roleFields.length; i++){
-                        data['roles'].push(roleFields[i].value);
+                    data['organizations'] = [];
+                    for (i = 0; i < organizationFields.length; i++){
+                        data['organizations'].push(organizationFields[i].value);
                     }
                     if (self.dataset.id){
                         data['id'] = self.dataset.id;
@@ -164,7 +164,7 @@ Array.prototype.sortOnData = function(key){
                                     }
                                     if (!data[k].length) {
                                         var li = document.createElement('li');
-                                        li.textContent = elem[i].dataset.noRolesText;
+                                        li.textContent = elem[i].dataset.noOrganizationsText;
                                         ul.appendChild(li);
 
                                     }

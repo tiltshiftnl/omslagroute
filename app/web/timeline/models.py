@@ -24,6 +24,11 @@ class Moment(PrintableModel):
         verbose_name=_('Documenten'),
         blank=True,
     )
+    organizations = models.ManyToManyField(
+        to='organizations.Organization',
+        verbose_name=_('Organisaties'),
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
