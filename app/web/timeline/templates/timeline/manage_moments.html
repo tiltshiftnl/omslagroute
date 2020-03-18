@@ -1,6 +1,26 @@
 {% extends 'base.html' %}
 
 {% block main %}
+
+
+{% if organizations.all %}
+    <section class="section--tags">
+        <ul class="tag-list">
+            {% for organisation in organizations.all %}
+                <li class="tag-list__item">
+                    <button class="button button--tag" data-select-targetgroup="{{ organisation|slugify }}">
+                        <svg class="button__icon" width="14" height="9">
+                            <use href="#check" xlink:href="#check" width="14" height="9"></use>
+                        </svg>
+                        <span>{{ organisation }}</span>
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endif %}
+<hr />
+
 <section class="section section--timeline section--timeline-management">
     <h2>Timeline beheer</h2>
 
@@ -14,6 +34,7 @@
             </a>
         </p>
     {% endif %}
+
 
     <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
         {% csrf_token %}
