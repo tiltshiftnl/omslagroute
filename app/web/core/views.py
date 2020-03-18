@@ -1,17 +1,10 @@
 from django.views.generic import TemplateView
-from web.documents.models import *
 import os
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.files.storage import default_storage
-from django.conf import settings
-import logging
-from swift.storage import SwiftStorage
-
-from swiftclient.service import SwiftService, SwiftError
-from sys import argv
 from web.timeline.models import *
-from web.users.auth import auth_test
-
+from web.documents.models import *
+from web.organizations.models import *
 
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -19,10 +12,12 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         document_list = Document.objects.all()
         moment_list = Moment.objects.all()
+        organization_list = Organization.objects.all()
 
         kwargs.update({
             'document_list': document_list,
             'moment_list': moment_list,
+            'organization_list': organization_list,
         })
         return super().get_context_data(**kwargs)
 
