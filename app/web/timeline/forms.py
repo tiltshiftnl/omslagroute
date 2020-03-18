@@ -21,8 +21,4 @@ class MomentForm(forms.ModelForm):
         fields = ('name',
                   'order',
                   'description',
-                  'roles',
         )
-        widgets = {
-            'roles': forms.CheckboxSelectMultiple()
-        }
