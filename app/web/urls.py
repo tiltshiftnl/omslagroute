@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('document/', include('web.documents.urls')),
     path('timeline/', include('web.timeline.urls')),
+    path('organisaties/', include('web.organizations.urls')),
 
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
