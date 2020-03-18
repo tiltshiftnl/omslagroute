@@ -71,22 +71,22 @@
                 {{ moment.id }}
             </div>
             <p data-moment-description data-static-mode>{{ moment.instance.description|linebreaks2html|safe }}</p>
-            <div data-moment-roles data-static-mode data-no-roles-text="Er zijn nog rollen toegewezen">
-                <h4>Betrokken rollen</h4>
-                {% if moment.instance.roles.all %}
+            <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn nog organisaties toegewezen">
+                <h4>Betrokken organisaties</h4>
+                {% if moment.instance.organizations.all %}
                 <ul>
-                    {% for r in moment.instance.roles.all %}
+                    {% for r in moment.instance.organizations.all %}
                     <li>{{ r }}</li>
                     {% endfor %}
                 </ul>
                 {% else %}
                     <ul>
-                    <li>Er zijn nog rollen toegewezen</li>
+                    <li>Er zijn nog organisaties toegewezen</li>
                     </ul>
                 {% endif %}
             </div>
             <p class="data-edit-mode">{{ moment.description }}</p>
-            <div class="data-edit-mode">{{ moment.roles }}</div>
+            <div class="data-edit-mode">{{ moment.organizations }}</div>
 
             {% if moment.instance and moment.instance.documents.all %}
                 <h4>Betrokken documenten</h4>
