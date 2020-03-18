@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<section class="section">
+    <h2>Organisatie beheer</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <div data-moment-container class="details-list-wrapper">
+            {% for form in formset %}
+                <div>
+                {% if not form.instance.id %}
+                    <h2>Nieuwe organisaties</h2>
+                {% endif %}
+                {{ form.as_p }}
+                </div>
+
+            {% endfor %}
+        </div>
+
+        <div data-submit-container class="form-field form-field--buttons">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'manage_timeline' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
