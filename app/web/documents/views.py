@@ -18,12 +18,9 @@ import requests
 from urllib.request import urlopen
 
 
-class DocumentList(UserPassesTestMixin, ListView):
+class DocumentList(ListView):
     model = Document
     template_name_suffix = '_list_page'
-
-    def test_func(self):
-        return auth_test(self.request.user, 'wonen')
 
 
 class DocumentDelete(UserPassesTestMixin, DeleteView):
