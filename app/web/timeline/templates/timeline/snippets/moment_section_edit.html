@@ -62,8 +62,7 @@
         </summary>
 
         <div class="details__content">
-
-            <div data-js-delete class="form-field form-field--buttons">
+            <div data-js-delete class="form-field">
                 {{ moment.DELETE.label }}
                 {{ moment.DELETE }}
                 {{ moment.order.label }}
@@ -74,19 +73,35 @@
             <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn nog organisaties toegewezen">
                 <h4>Betrokken organisaties</h4>
                 {% if moment.instance.organizations.all %}
-                <ul>
+                <ul class="tag-list">
                     {% for r in moment.instance.organizations.all %}
-                    <li>{{ r }}</li>
+                    <li class="tag-list__item">
+                        <button class="button button--tag" data-select-targetgroup="{{ r }}">
+                            <span>{{ r }}</span>
+                        </button>
+                    </li>
                     {% endfor %}
                 </ul>
                 {% else %}
-                    <ul>
-                    <li>Er zijn nog organisaties toegewezen</li>
-                    </ul>
+                    <p>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</p>
                 {% endif %}
             </div>
             <p class="data-edit-mode">{{ moment.description }}</p>
-            <div class="data-edit-mode">{{ moment.organizations }}</div>
+            <div class="data-edit-mode">
+                <div class="form-field">
+                    <label for="id_document_type">{{ moment.organizations.label }}</label>
+                    <ul class="form-field__checkboxgroup">
+                        {% for checkbox in moment.organizations %}
+                            <li>
+                                {{ checkbox.tag }}
+                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabel">
+                                    {{ checkbox.choice_label }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
 
             {% if moment.instance and moment.instance.documents.all %}
                 <h4>Betrokken documenten</h4>
