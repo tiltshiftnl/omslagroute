@@ -1,12 +1,19 @@
-.section--tags {
-    margin-bottom: 2rem;
-}
-
 .tag-list {
     margin: 0;
     padding: 0;
+    margin-bottom: 2rem;
 }
 
 .tag-list__item {
     display: inline-block;
+}
+
+.button--tag__hidden {
+    display: none;
+}
+
+.detail-wrapper--highlighted {
+    .dot {
+        background-color: $primary-darkblue;
+    }
 }
