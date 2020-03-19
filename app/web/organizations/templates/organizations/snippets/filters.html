@@ -2,7 +2,10 @@
     <ul class="tag-list">
     {% for object in object_list %}
         <li class="tag-list__item">
-            <button class="button button--tag" data-select-targetgroup="{{ object.name }}">
+            <button class="button button--tag" data-highlight-org="{{ object.name|slugify }}">
+                <svg class="button__icon button--tag__hidden" width="14" height="9">
+                    <use href="#check" xlink:href="#check" width="14" height="9"></use>
+                </svg>
                 <span>{{ object.name }}</span>
             </button>
         </li>
