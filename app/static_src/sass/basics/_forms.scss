@@ -171,7 +171,7 @@ input[data-error-message] {
 }
 
 // ********************
-// RADIO BUTTONS 
+// RADIO BUTTONS & CHECKBOXES
 // ********************
 
 ul.form-field__checkboxgroup,
@@ -247,6 +247,10 @@ ul.form-field__radiogroup {
         margin-right: 0.75rem;
         content: '';
         transform: translateY(.25rem);
+    }
+
+    &.form-field__checkboxlabel::before {
+        border-radius: 0;
     }
 
     &:hover::before {

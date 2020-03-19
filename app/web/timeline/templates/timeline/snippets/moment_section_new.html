@@ -20,9 +20,9 @@
         </div>
         <div class="alert alert--error">
             <svg class="alert__icon" width="20" height="20">
-                <use href="#check" xlink:href="#check" width="20" height="20"></use>
+                <use href="#alert" xlink:href="#alert" width="20" height="20"></use>
             </svg>
-            <p>Er ging iets mis.</p>
+            <p>Er ging iets mis bij het opslaan. Probeer het opnieuw.</p>
         </div>
     </div>
     <div class="dot dot--large"></div>
@@ -64,14 +64,26 @@
                 {{ moment.order }}
             </div>
             <p data-moment-description data-static-mode></p>
-            <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn nog organisaties toegewezen">
+            <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn (nog) geen organisaties toegewezen aan deze processtap.">
                 <h4>Betrokken organisaties</h4>
-                <ul>
-                <li>Er zijn nog organisaties toegewezen</li>
-                </ul>
+                <p>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</p>
             </div>
-            <p class="data-edit-mode">{{ moment.description }}</p>
-            <div class="data-edit-mode">{{ moment.organizations }}</div>
+            <p class="data-edit-mode">{{ moment.description }}</p> 
+            <div class="data-edit-mode">
+                <div class="form-field">
+                    <label for="id_document_type">{{ moment.organizations.label }}</label>
+                    <ul class="form-field__checkboxgroup">
+                        {% for checkbox in moment.organizations %}
+                            <li>
+                                {{ checkbox.tag }}
+                                <label for="{{ checkbox.id_for_label }}" class="form-field__checkboxlabel">
+                                    {{ checkbox.choice_label }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
             <div data-static-mode class="form-field form-field--buttons">
                 <button href="#" data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>

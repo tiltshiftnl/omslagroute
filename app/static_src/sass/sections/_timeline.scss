@@ -332,7 +332,6 @@ $padding-left: 30px;
     }
 
     .alert {
-        background-color: $primary-darkblue;
         color: $primary-white;
         padding: 3px 7px;
         opacity: 0;
@@ -348,7 +347,8 @@ $padding-left: 30px;
     }
 
     .alert--saving,
-    .alert--saved {
+    .alert--saved,
+    .alert--error {
         opacity: 0;
     }
 
@@ -358,6 +358,7 @@ $padding-left: 30px;
         }
 
         .alert--saving {
+            background-color: $primary-darkblue;
             opacity: 1;
             transition: opacity .4s linear;
         }
@@ -383,6 +384,7 @@ $padding-left: 30px;
         .alert--error {
             background-color: $primary-red;
             opacity: 1;
+            transition: opacity .4s linear;
         }
     }
 }

@@ -1,4 +1,5 @@
 {% load auth_tags %}
+
 {% if moment_list %}
     <section class="section section--timeline">
         <h2>De Omslagroute</h2>
@@ -11,43 +12,9 @@
             </p>
         {% endif %}
         {% include 'organizations/snippets/filters.html' with object_list=organization_list %}
-        <!--
-        <section class="section--tags">
-            <ul class="tag-list">
-                {# for tag in tag_list #}
-                    <li class="tag-list__item">
-                        <button class="button button--tag 
-                        {# if tag == selected #}button--selected{# endif #}" data-select-targetgroup="GGD">
-                            {# if tag == selected #}
-                            <svg class="button__icon" width="14" height="9">
-                                <use href="#check" xlink:href="#check" width="14" height="9"></use>
-                            </svg>
-                            {# endif #}
-                            <span>GGD</span>
-                        </button>
-                    </li>
-                {# endfor #}
-
-                <li class="tag-list__item">
-                    <button class="button button--tag" data-select-targetgroup="GGD">
-                        <span>Zorgaanbieder</span>
-                    </button>
-                </li>
-                <li class="tag-list__item">
-                    <button class="button button--tag" data-select-targetgroup="GGD">
-                        <span>Woningcorporatie</span>
-                    </button>
-                </li>
-                <li class="tag-list__item">
-                    <button class="button button--tag" data-select-targetgroup="GGD">
-                        <span>Gemeente Amsterdam</span>
-                    </button>
-                </li>
-            </ul>
-        </section> -->
 
         {% for moment in moment_list %}
-            <div class="details-wrapper">
+            <div class="details-wrapper" data-tags="{% for organisation in moment.organizations.all %}{{ organisation|slugify }} {% endfor %}">
                 <div class="dot dot--large"></div>
                 <details class="details" data-moment-order="{{ moment.order }}">
                     <summary class="details__header">
@@ -65,13 +32,28 @@
                     <div class="details__content">
                         <p>{{ moment.description|linebreaks }}</p>
 
+                        <h4>Betrokken organisaties</h4>
+                        {% if moment.organizations %}
+                        <ul class="tag-list">
+                            {% for organisation in moment.organizations.all %}
+                            <li class="tag-list__item">
+                                <button class="button button--tag" data-select-targetgroup="{{ organisation|slugify }}">
+                                    <span>{{ organisation }}</span>
+                                </button>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            <p>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</p>
+                        {% endif %}
+
                         <ul class="downloads {% if request.user|has_group:"wonen" %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
-                        {% if moment.documents.all %}
-                            {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.documents.all  %}
-                        {% endif %}
-                        {% if request.user|has_group:"wonen" %}
-                            {% include 'documents/snippets/upload.html' with moment_id=moment.id %}
-                        {% endif %}
+                            {% if moment.documents.all %}
+                                {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.documents.all  %}
+                            {% endif %}
+                            {% if request.user|has_group:"wonen" %}
+                                {% include 'documents/snippets/upload.html' with moment_id=moment.id %}
+                            {% endif %}
                         </ul>
                     </div>
 
