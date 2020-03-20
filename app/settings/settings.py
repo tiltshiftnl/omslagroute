@@ -28,7 +28,7 @@ INSTALLED_APPS = (
     'web.core',
     'web.documents',
     'web.timeline',
-    'web.users',
+    #'web.users',
     'web.organizations',
     'web.roles',
     'web.cases',
@@ -62,6 +62,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 ADMINS = (
     ('admin', 'p.curet@mail.amsterdam.nl'),
 )
+
+#AUTH_USER_MODEL = 'users.User'
 
 
 # Database

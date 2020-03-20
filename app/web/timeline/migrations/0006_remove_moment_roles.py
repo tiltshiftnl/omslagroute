@@ -9,9 +9,4 @@ class Migration(migrations.Migration):
         ('timeline', '0005_moment_roles'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='moment',
-            name='roles',
-        ),
-    ]
+    operations = []
