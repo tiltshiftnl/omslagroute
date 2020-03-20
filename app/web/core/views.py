@@ -11,11 +11,13 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         document_list = Document.objects.all()
+        floating_document_list = Document.objects.filter(moment__documents__isnull=True)
         moment_list = Moment.objects.all()
         organization_list = Organization.objects.all()
 
         kwargs.update({
             'document_list': document_list,
+            'floating_document_list': floating_document_list,
             'moment_list': moment_list,
             'organization_list': organization_list,
         })
