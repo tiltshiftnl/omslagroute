@@ -6,14 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('roles', '0001_initial'),
         ('timeline', '0004_auto_20200305_1722'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='moment',
-            name='roles',
-            field=models.ManyToManyField(blank=True, to='roles.Role', verbose_name='Rollen'),
-        ),
-    ]
+    operations = []
