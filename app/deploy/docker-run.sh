@@ -9,6 +9,8 @@ rm /etc/nginx/sites-enabled/default
 
 python manage.py collectstatic --settings settings.settings --no-input
 python manage.py migrate --settings settings.settings --no-input
+python manage.py migrate admin zero --settings settings.settings --noinput &&
+python manage.py migrate authtoken zero --settings settings.settings --noinput &&
 
 if [ -n "${ADMIN_USERNAME}" ] && [ -n "${ADMIN_PASSWORD}" ]; then
   python manage.py initadmin --settings settings.settings --username $ADMIN_USERNAME --password $ADMIN_PASSWORD
