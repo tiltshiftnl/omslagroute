@@ -28,7 +28,7 @@ INSTALLED_APPS = (
     'web.core',
     'web.documents',
     'web.timeline',
-    #'web.users',
+    'web.users',
     'web.organizations',
     'web.roles',
     'web.cases',
@@ -63,7 +63,7 @@ ADMINS = (
     ('admin', 'p.curet@mail.amsterdam.nl'),
 )
 
-#AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'
 
 
 # Database
