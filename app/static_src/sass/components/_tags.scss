@@ -17,3 +17,34 @@
         background-color: $primary-darkblue;
     }
 }
+
+.button--tag {
+    background-color: $neutral-grey4;
+    align-items: center;
+
+    span {
+        pointer-events: none;
+    }
+
+    &:hover,
+    &:focus {
+        border-color: $neutral-grey4;
+        color: $primary-black;
+        background-color: $primary-white;
+    }
+}
+
+.button--tag--selected {
+    background-color: $primary-red;
+
+    .button--tag__hidden {
+        display: block;
+    }
+
+    &:hover,
+    &:focus {
+        border-color: $primary-red;
+        color: $primary-black;
+        background-color: $primary-white;
+    }
+}
