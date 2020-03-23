@@ -1,4 +1,4 @@
-{% load auth_tags %}
+{% load auth_tags timeline_tags %}
 
 {% if moment_list %}
     <section class="section section--timeline">
@@ -16,7 +16,7 @@
         {% for moment in moment_list %}
             <div class="details-wrapper" data-tags="{% for organisation in moment.organizations.all %}{{ organisation|slugify }} {% endfor %}">
                 <div class="dot dot--large"></div>
-                <details class="details" data-moment-order="{{ moment.order }}">
+                <details class="details" data-moment-order="{{ moment.order }}" {% doc_added moment.id %}>
                     <summary class="details__header">
                         <h3 class="details__title">{{ moment.name }}</h3>
                         <span class="details__toggle-icon">
