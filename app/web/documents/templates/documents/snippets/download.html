@@ -42,9 +42,7 @@
                 </p>
 
                 {% if object.description %}
-                    <p>
-                        {{ object.description|linebreaks }}
-                    </p>
+                    {{ object.description|linebreaks }}
                 {% endif %}
 
                 {% if request.user|has_group:"wonen" and object %}

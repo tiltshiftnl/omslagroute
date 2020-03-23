@@ -69,7 +69,9 @@
                 {{ moment.order }}
                 {{ moment.id }}
             </div>
-            <p data-moment-description data-static-mode>{{ moment.instance.description|linebreaks2html|safe }}</p>
+            <div data-moment-description data-static-mode>
+                {{ moment.instance.description|linebreaks2html|safe }}
+            </div>
             <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn (nog) geen organisaties toegewezen">
                 <h4>Betrokken organisaties</h4>
                 {% if moment.instance.organizations %}
