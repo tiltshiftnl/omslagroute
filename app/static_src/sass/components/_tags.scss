@@ -28,9 +28,9 @@
 
     &:hover,
     &:focus {
-        border-color: $neutral-grey4;
-        color: $primary-black;
-        background-color: $primary-white;
+        border-color: $primary-darkblue;
+        color: $primary-white;
+        background-color: $primary-darkblue;
     }
 
     .button__icon {
@@ -54,9 +54,9 @@
 
     &:hover,
     &:focus {
-        border-color: $primary-red;
-        color: $primary-black;
-        background-color: $primary-white;
+        border-color: $primary-darkblue;
+        color: $primary-white;
+        background-color: $primary-darkblue;
     }
 
     .button__icon {
