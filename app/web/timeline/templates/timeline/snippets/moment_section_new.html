@@ -29,10 +29,7 @@
     <details class="details" open>
         <summary class="details__header" data-handler="open-moment">
             <h3 data-static-mode data-moment-name class="details__title"></h3>
-            <p data-edit-mode>{{ moment.name }}</p>
-
-
-            <div class="form-field data-edit-mode">
+            <div class="form-field data-edit-mode" data-edit-mode>
                 <label for="id_description" class="sr-only">{{ moment.name.label }}</label>
                 {{ moment.name }}
                 <p class="error-text">Het veld hierboven is verplicht</p>
@@ -80,7 +77,7 @@
             </div>
 
             <div data-static-mode class="form-field form-field--buttons">
-                <button href="#" data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
+                <button data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>
 
             <div class="form-field data-edit-mode">
