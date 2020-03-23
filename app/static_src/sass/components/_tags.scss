@@ -8,6 +8,12 @@
     display: inline-block;
 }
 
+.detail-wrapper--passive {
+    .dot {
+        background-color: $neutral-grey2;
+    }
+}
+
 .detail-wrapper--highlighted {
     .dot {
         background-color: $primary-darkblue;
