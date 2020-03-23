@@ -36,7 +36,8 @@ class DocumentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
         self.empty_label=None
-        self.fields['name'].label = "Titel van het document:"
+        self.fields['name'].label = "Wat is de titel van het document?"
+        self.fields['description'].label = "Waar wordt dit document voor gebruikt?"
         self.fields['document_type'].label = "Om wat voor soort document gaat het?"
 
         if self.instance.id and self.instance.moment_set.all():
