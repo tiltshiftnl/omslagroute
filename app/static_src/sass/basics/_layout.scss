@@ -81,8 +81,9 @@ body {
     width: 100%;
     margin: 0px auto;
     padding: 0 15px;
+    min-height: 100%;
 
-    @media screen and (min-width: $large) {
+    @media screen and (min-width: $desktop) {
         max-width: 1400px;
         margin: 0px auto;
     }
