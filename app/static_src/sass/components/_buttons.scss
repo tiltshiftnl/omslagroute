@@ -52,7 +52,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     background: none;
-    display: flex;
+    display: inline-block;
 
     &:hover,
     &:focus {
@@ -71,12 +71,16 @@
 }
 
 .button__icon {
+    display: inline-block;
+
     &:not(:only-child) {
         margin-right: 10px;
     }
 }
 
 .button__label {
+    display: inline-block;
+
     &:not(:only-child) {
         position: relative;
         top: 2px;

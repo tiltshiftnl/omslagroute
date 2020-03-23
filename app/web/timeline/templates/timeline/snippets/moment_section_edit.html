@@ -83,7 +83,7 @@
                     <ul class="tag-list">
                         {% for organisation in moment.instance.organizations.all %}
                         <li class="tag-list__item">
-                            <button class="button button--tag" data-select-targetgroup="{{ organisation|slugify }}">
+                            <button class="button button--tinytag" data-select-targetgroup="{{ organisation|slugify }}">
                                 <span>{{ organisation }}</span>
                             </button>
                         </li>

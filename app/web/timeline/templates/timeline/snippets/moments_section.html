@@ -27,17 +27,12 @@
                                 <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
                             </svg>
                         </span>
-                    </summary>
 
-                    <div class="details__content">
-                        <div>{{ moment.description|linebreaks }}</div>
-
-                        <h4>Betrokken organisaties</h4>
                         {% if moment.organizations %}
                         <ul class="tag-list">
                             {% for organisation in moment.organizations.all %}
                             <li class="tag-list__item">
-                                <button class="button button--tag" data-select-targetgroup="{{ organisation|slugify }}">
+                                <button class="button button--tinytag" data-select-targetgroup="{{ organisation|slugify }}">
                                     <span>{{ organisation }}</span>
                                 </button>
                             </li>
@@ -46,6 +41,10 @@
                         {% else %}
                             <p>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</p>
                         {% endif %}
+                    </summary>
+
+                    <div class="details__content">
+                        <div>{{ moment.description|linebreaks }}</div>
 
                         <ul class="downloads {% if request.user|has_group:"wonen" %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
                             {% if moment.documents.all %}
