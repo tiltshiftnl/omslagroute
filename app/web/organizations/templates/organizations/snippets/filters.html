@@ -3,8 +3,11 @@
     {% for object in object_list %}
         <li class="tag-list__item">
             <button class="button button--tag" data-highlight-org="{{ object.name|slugify }}">
-                <svg class="button__icon button--tag__hidden" width="14" height="9">
+                <svg class="button__icon" width="14" height="9">
                     <use href="#check" xlink:href="#check" width="14" height="9"></use>
+                </svg>
+                <svg class="button__icon" width="14" height="9">
+                    <use href="#close" xlink:href="#close" width="14" height="9"></use>
                 </svg>
                 <span class="button__label">{{ object.name }}</span>
             </button>

@@ -8,7 +8,7 @@
     display: inline-block;
 }
 
-.detail-wrapper--passive {
+.section--timeline--filtering {
     .dot {
         background-color: $neutral-grey2;
     }
@@ -52,14 +52,23 @@
 .button--tag--selected {
     background-color: $primary-red;
 
-    &:hover,
-    &:focus {
-        border-color: $primary-darkblue;
-        color: $primary-white;
-        background-color: $primary-darkblue;
+    &:hover {
+        &:not(:active) {
+            border-color: $primary-darkblue;
+            color: $primary-white;
+            background-color: $primary-darkblue;
+
+            .button__icon:first-of-type {
+                display: none;
+            }
+
+            .button__icon:last-of-type {
+                display: inline-block;
+            }
+        }
     }
 
-    .button__icon {
+    .button__icon:first-of-type {
         display: inline-block;
     }
 }
