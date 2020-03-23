@@ -191,7 +191,7 @@ $padding-left: 30px;
         display: none;
     }
 
-    p {
+    > p {
         margin: 0;
     }
 
@@ -225,8 +225,7 @@ $padding-left: 30px;
 }
 
 .details {
-    input,
-    textarea {
+    input {
         margin-top: 0;
     }
 }
@@ -476,6 +475,10 @@ $padding-left: 30px;
         pointer-events: none;
         opacity: 0;
         height: 0;
+    }
+
+    .details__header {
+        padding-bottom: 0;
     }
 }
 
