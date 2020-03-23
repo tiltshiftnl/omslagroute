@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'web.organizations',
     'web.roles',
     'web.cases',
+    'web.profiles',
 
 )
 SOURCE_COMMIT = os.environ.get('COMMIT_HASH')
@@ -181,7 +182,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CORS and allowed hosts
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
-CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST').split(',')
+CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST', '').split(',')
 CORS_ORIGIN_ALLOW_ALL = False
 
 AUTH_GROUPNAME_PROCESS = 'proces'
