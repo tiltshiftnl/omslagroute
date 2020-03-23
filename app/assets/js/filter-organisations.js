@@ -10,6 +10,7 @@ document.addEventListener('click', function (e) {
     filterTag(filter);
 
     function filterTag(filter) {
+
         // each step which this organisation is involved in
         var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
         console.table(steps);
@@ -24,6 +25,14 @@ document.addEventListener('click', function (e) {
 
         for (var i = 0; i < tags.length; i++) {
             tags[i].classList.toggle("button--tag--selected");
+        }
+
+        var stepsContainer = document.querySelectorAll(".details-wrapper");
+
+        for (var i = 0; i < stepsContainer.length; i++) {
+            if (!stepsContainer[i].classList.contains("detail-wrapper--highlighted")) {
+                stepsContainer[i].classList.toggle("detail-wrapper--passive");
+            }
         }
     }
 

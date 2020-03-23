@@ -15,5 +15,9 @@
             {% include 'documents/snippets/upload.html' with moment_id=moment.id %}
         {% endif %}
         </ul>
+
+        <p>
+            <a href="{% url 'document_list' %}" class="button button--primary button--readmore">Alle documenten</a>
+        </p>
     </section>
 {% endblock %}

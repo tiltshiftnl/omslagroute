@@ -22,7 +22,9 @@
     {% block header %}
         <header class="site-header">
             <div class="site-header-wrapper">
-                <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}"></a>
+                <a href="{% url 'home' %}" title="Ga terug naar de homepage">
+                    <img src="{% static 'images/logo.svg' %}">
+                </a>
                 <h1 class="site-title">Omslagroute</h1>
                 {% if request.user.is_authenticated %}
                     <div class="site-userinfo">

@@ -52,7 +52,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     background: none;
-    display: flex;
+    display: inline-block;
 
     &:hover,
     &:focus {
@@ -64,17 +64,33 @@
         background-color: $neutral-grey2;
         color: $neutral-grey3;
     }
-}
 
-.button--icon {
-    min-width: inherit;
-
-    &:hover,
-    &:focus {
-        box-shadow: none;
+    .form-field--buttons > & {
+        margin: 0;
     }
 }
 
+.button__icon {
+    display: inline-block;
+
+    &:not(:only-child) {
+        margin-right: 10px;
+    }
+}
+
+.button__label {
+    display: inline-block;
+
+    &:not(:only-child) {
+        position: relative;
+        top: 2px;
+    }
+}
+
+// ********************
+// PRIMARY BUTTON STYLING
+// ********************
+    
 .button--primary,
 [type="submit"] {
     background-color: $primary-darkblue;
@@ -87,6 +103,10 @@
     }
 }
 
+// ********************
+// SECONDARY BUTTON STYLING
+// ********************
+    
 .button--secondary {
     border: 1px solid $primary-darkblue;
     background-color: $primary-white;
@@ -98,46 +118,47 @@
     }
 }
 
-.button__icon {
-    &:not(:only-child) {
-        margin-right: 10px;
+// ********************
+// TERTIARY BUTTON STYLING
+// ********************
+    
+.button--tertiary {
+    border: 1px solid $neutral-grey2;
+    background-color: $neutral-grey2;
+    color: $primary-black;
+    
+    &:hover,
+    &:focus {
+        color: $primary-black;
+        border-color: $neutral-grey3;
+        background-color: $neutral-grey3;
+        box-shadow: none;
+    }
+
+    &:focus {
+        // box-shadow: 0 0 0 0.3125em orange;
+        outline: 1px dotted #212121;
+        outline: 5px auto -webkit-focus-ring-color;
     }
 }
 
-.button__label {
-    &:not(:only-child) {
-        position: relative;
-        top: 2px;
-    }
-}
-
-.button--tag {
-    background-color: $neutral-grey4;
-    align-items: center;
-
-    span {
-        pointer-events: none;
-    }
+// ********************
+// OTHER BUTTON VARIANTS
+// ********************
+    
+// button with only an icon in it, no text
+.button--icon {
+    min-width: inherit;
 
     &:hover,
     &:focus {
-        border-color: $neutral-grey4;
-        color: $primary-black;
-        background-color: $primary-white;
+        box-shadow: none;
     }
 }
 
-.button--tag--selected {
-    background-color: $primary-red;
-
-    .button--tag__hidden {
-        display: block;
-    }
-
-    &:hover,
-    &:focus {
-        border-color: $primary-red;
-        color: $primary-black;
-        background-color: $primary-white;
-    }
+// button that serves as a read more 
+.button--readmore {
+    display: inline-block; 
+    margin-top: 30px;
+    margin-bottom: 20px;
 }

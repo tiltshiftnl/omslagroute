@@ -21,6 +21,11 @@ fieldset {
 .form-field {
     margin-top: 10px;
     margin-bottom: 20px;
+
+    .details__header & {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
 
 .form-field--buttons {
@@ -52,6 +57,7 @@ fieldset {
 
 label {
     display: block;
+    font-weight: bold;
 }
 
 .error-text {
@@ -90,7 +96,8 @@ textarea {
         box-shadow: inset 0 0 0 1px $primary-red;
     }
 
-    &.invalid + .error-text {
+    &.invalid + .error-text,
+    &[data-error-message] + .error-text {
         display: block;
     }
 }
@@ -181,14 +188,18 @@ ul.form-field__radiogroup {
     min-width: 70px;
     max-width: 620px;
 
+    label {
+        font-weight: normal;
+    }
+
     li {
         margin-top: 10px;
     }
 
-    &:focus-within {
-        outline: 1px dotted #212121;
-        outline: 5px auto -webkit-focus-ring-color;
-    }
+    // &:focus-within {
+    //     outline: 1px dotted #212121;
+    //     outline: 5px auto -webkit-focus-ring-color;
+    // }
 }
 
 .form-field__checkbox,
@@ -243,6 +254,7 @@ ul.form-field__radiogroup {
         min-width: 1.25rem;
         height: 1.25rem;
         min-height: 1.25em;
+        background-color: $primary-white;
         border: 1px solid $neutral-grey4;
         margin-right: 0.75rem;
         content: '';
@@ -262,6 +274,8 @@ ul.form-field__radiogroup {
         box-shadow: inset 0 0 1px 1px #000;
         border: 1px solid $primary-black;
         // box-shadow: 0 0 0 0.3125em orange; #Amsterdam.nl style
+        outline: 1px dotted #212121;
+        outline: 5px auto -webkit-focus-ring-color;
     }
 }
 
@@ -269,7 +283,8 @@ li:focus-within .form-field__radiolabel::before,
 li:focus-within .form-field__checkboxlabel::before {
     box-shadow: inset 0 0 1px 1px #000;
     border: 1px solid $primary-black;
-    box-shadow: 0 0 0 0.3125em orange;
+    outline: 1px dotted #212121;
+    outline: 5px auto -webkit-focus-ring-color;
 }
 
 // temp

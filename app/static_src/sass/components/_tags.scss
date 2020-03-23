@@ -1,19 +1,77 @@
 .tag-list {
-    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 20px;
     padding: 0;
-    margin-bottom: 2rem;
 }
 
 .tag-list__item {
     display: inline-block;
 }
 
-.button--tag__hidden {
-    display: none;
+.detail-wrapper--passive {
+    .dot {
+        background-color: $neutral-grey2;
+    }
 }
 
 .detail-wrapper--highlighted {
     .dot {
         background-color: $primary-darkblue;
+    }
+}
+
+.button--tag,
+.button--tinytag {
+    background-color: $neutral-grey4;
+    align-items: center;
+    border: 1px solid transparent;
+
+    &:hover,
+    &:focus {
+        border-color: $primary-darkblue;
+        color: $primary-white;
+        background-color: $primary-darkblue;
+    }
+
+    .button__icon {
+        display: none;
+    }
+
+    .button__label {
+        pointer-events: none;
+    }
+}
+
+.button--tinytag {
+    padding: 3px 15px;
+    border-radius: 12px;
+    height: 24px;
+    text-transform: uppercase;
+} 
+
+.button--tag--selected {
+    background-color: $primary-red;
+
+    &:hover,
+    &:focus {
+        border-color: $primary-darkblue;
+        color: $primary-white;
+        background-color: $primary-darkblue;
+    }
+
+    .button__icon {
+        display: inline-block;
+    }
+}
+
+// should make this element a non-href to do this in a clean way:
+// (hide button interaction in the timeline management screen)
+.section--timeline-management .button--tinytag {
+    &:hover,
+    &:focus {
+        background-color: $neutral-grey4;
+        border: 1px solid transparent;
+        color: $primary-white;
+        cursor: default;
     }
 }
