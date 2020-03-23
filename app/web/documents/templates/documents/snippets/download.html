@@ -4,7 +4,7 @@
 {% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
     <li class="document">
-        <a href="{% if document_version %}{% url 'download_documentversion' document_version.id %}{% endif %}" class="document__version" download target="_blank" rel="noopener">
+        <a href="{% if document_version %}{% url 'download_documentversion' document_version.id %}{% endif %}" class="document__version" target="_blank" rel="noopener">
             <svg class="document__icon document__icon--default"  width="40" height="40" >
                 <use href="#{{ object.document_type_value|lower }}" xlink:href="#{{ object.document_type_value|lower }}"  width="40" height="40"></use>
             </svg>
