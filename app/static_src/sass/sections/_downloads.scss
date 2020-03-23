@@ -340,8 +340,6 @@
 
     @media all and (min-width: $desktop) and (max-width: $large) {
         &:nth-child(3n + 3) {
-            box-shadow: 0 0 10px 5px red;
-
             .document__info-wrapper {
                 left: auto;
                 right: 100%;
@@ -353,8 +351,6 @@
         &:nth-child(5n + 3),
         &:nth-child(5n + 4),
         &:nth-child(5n + 5) {
-            box-shadow: 0 0 10px 5px blue;
-
             .document__info-wrapper {
                 left: auto;
                 right: 100%;
