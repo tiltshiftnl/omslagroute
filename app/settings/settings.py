@@ -181,6 +181,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CORS and allowed hosts
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST').split(',')
+CORS_ORIGIN_ALLOW_ALL = False
 
 AUTH_GROUPNAME_PROCESS = 'proces'
 
@@ -292,3 +294,5 @@ if os.environ.get("SWIFT_AUTH_URL"):
     SWIFT_CONTAINER_NAME = os.environ.get("SWIFT_CONTAINER_NAME", 'media')
     DEFAULT_FILE_STORAGE = 'web.core.storage.SwiftStorage'
     THUMBNAIL_DEFAULT_STORAGE = 'web.core.storage.SwiftStorage'
+
+    CORS_ORIGIN_WHITELIST = [SWIFT_BASE_URL, ]
