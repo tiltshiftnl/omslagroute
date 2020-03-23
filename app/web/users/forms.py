@@ -1,6 +1,11 @@
 from django.contrib.auth.forms import (
     AuthenticationForm as DefaultAuthenticationForm, authenticate
 )
+from django import forms
+from .models import *
+from web.profiles.models import Profile
+from django.forms.models import inlineformset_factory
+from web.organizations.models import Organization
 
 
 class AuthenticationForm(DefaultAuthenticationForm):
@@ -22,5 +27,33 @@ class AuthenticationForm(DefaultAuthenticationForm):
 
         return self.cleaned_data
 
-    # def confirm_login_allowed(self, user):
-    #     pass
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'password',
+        ]
+        widgets = {
+            'password': forms.PasswordInput
+        }
+
+
+class ProfileForm(forms.ModelForm):
+    user = forms.CharField(required=True, widget=forms.HiddenInput())
+    organization = forms.ModelChoiceField(required=True, widget=forms.RadioSelect(), queryset=Organization.objects.all())
+
+    class Meta:
+        model = Profile
+        exclude = ['cases', ]
+
+
+ProfileFormSet = inlineformset_factory(
+    parent_model=User,
+    model=Profile,
+    form=ProfileForm,
+    can_delete=False,
+    extra=1
+)

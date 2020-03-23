@@ -15,6 +15,13 @@ class Profile(models.Model):
         verbose_name=_('Cliënten'),
         blank=True,
     )
+    organization = models.ForeignKey(
+        to='organizations.Organization',
+        verbose_name=_('Organisatie'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         if self.user:

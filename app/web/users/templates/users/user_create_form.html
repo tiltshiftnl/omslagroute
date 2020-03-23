@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>Nieuw gebruiker toevoegen</h2>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ profileformset.management_form }}
+        {{ form.moment_id }}
+        <div class="form-field">
+            <label for="id_name">{{ form.username.label }}</label>
+            {{ form.username }}
+            <p class="error-text">Het veld hierboven is verplicht</p>
+        </div>
+
+        <div class="form-field">
+            <label for="id_description">{{ form.password.label }}</label>
+            {{ form.password }}
+            <p class="error-text">Het veld hierboven is verplicht</p>
+        </div>
+
+        <div class="form-field">
+            {% for form in profileformset.forms %}
+                {{ form.as_p }}
+            {% endfor %}
+        </div>
+
+        <div class="form-field form-field--buttons">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>Alle gebruikers</h2>
+
+    <ul>
+    {% for object in object_list %}
+        <li>{{ object.username }}: {{ object.profile.organization }}</li>
+    {% endfor %}
+    </ul>
+    <div class="form-field form-field--buttons">
+        <a href="{% url 'add_user' %}" class="button button--primary">Nieuwe gebruiker</a>
+    </div>
+{% endblock %}
