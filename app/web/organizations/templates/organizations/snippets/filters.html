@@ -1,13 +1,18 @@
 <section class="section--tags">
+    <p>Bekijk welke stappen voor jouw organisatie relevant zijn:</p>
+
     <ul class="tag-list">
     {% for object in object_list %}
         <li class="tag-list__item">
             <button class="button button--tag" data-highlight-org="{{ object.name|slugify }}">
-                <svg class="button__icon" width="14" height="9">
-                    <use href="#check" xlink:href="#check" width="14" height="9"></use>
+                <svg class="button__icon button__icon-unchecked" width="20" height="20">
+                    <use href="#unchecked" xlink:href="#unchecked" width="20" height="20"></use>
                 </svg>
-                <svg class="button__icon" width="14" height="9">
-                    <use href="#close" xlink:href="#close" width="14" height="9"></use>
+                <svg class="button__icon button__icon-checked" width="20" height="20">
+                    <use href="#check" xlink:href="#check" width="20" height="20"></use>
+                </svg>
+                <svg class="button__icon button__icon-close" width="20" height="20">
+                    <use href="#close" xlink:href="#close" width="20" height="20"></use>
                 </svg>
                 <span class="button__label">{{ object.name }}</span>
             </button>

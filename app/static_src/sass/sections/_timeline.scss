@@ -90,7 +90,7 @@ $padding-left: 30px;
             #{$padding-left} -
             #{$timeline-width}
             );
-        z-index: 2;
+        z-index: 1;
     }
 }
 
@@ -112,7 +112,7 @@ $padding-left: 30px;
         height: 100%;
         width: 0px;
         left: calc(-1rem + 12px);
-        z-index: 2;
+        z-index: 21;
     }
 
     .details__header::before {
@@ -124,7 +124,7 @@ $padding-left: 30px;
         left: -#{$padding-left};
         top: 0;
         border-left: 0;
-        z-index: 1;
+        z-index: 0;
     }
 
     &:hover,
@@ -229,7 +229,7 @@ $padding-left: 30px;
         display: inline-block;
         position: absolute;
         right: 10px;
-        top: 10px;
+        top: 12px;
     }
 }
 

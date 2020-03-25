@@ -1,7 +1,8 @@
 var selectedTags = new Array();
 document.addEventListener('click', function (e) {
-var button = e.target; // if we clicked something that is not a tag button, get out
-
+var button = e.target;
+    
+// if we clicked something that is not a tag button, get out
 if (!button.hasAttribute('data-highlight-org')) return;
 var filter = button.getAttribute('data-highlight-org');
 filterTag(filter);
@@ -21,7 +22,7 @@ button.blur();
                 steps[i].classList.add("details-wrapper--highlighted");
             }
 
-            var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
+            var tags = document.querySelectorAll('[data-highlight-org*="' + filter + '"]');
 
             for (var i = 0; i < tags.length; i++) {
                 tags[i].classList.add("button--tag--selected");
@@ -44,11 +45,10 @@ button.blur();
             }
 
             // remove all the highlights from the organisation tags ('pills')
-            var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
+            var tags = document.querySelectorAll('[data-highlight-org*="' + filter + '"]');
             for (var i = 0; i < tags.length; i++) {
                 tags[i].classList.remove("button--tag--selected");
             }
-
         
             var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
 

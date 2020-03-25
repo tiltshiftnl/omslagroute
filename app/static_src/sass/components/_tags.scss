@@ -6,11 +6,20 @@
 
 .tag-list__item {
     display: inline-block;
+
+    &:not(:first-of-type) {
+        margin-left: 10px;
+    }
 }
 
 .section--timeline--filtering {
     .dot {
         background-color: $neutral-grey2;
+    }
+
+    .details__title,
+    .details__toggle-icon {
+        color: $neutral-grey3;
     }
 }
 
@@ -18,69 +27,113 @@
     .dot {
         background-color: $primary-darkblue;
     }
+
+    .details__title,
+    .details__toggle-icon {
+        color: $primary-black;;
+    }
 }
 
-.button--tag,
-.button--tinytag {
+.button--tag {
     background-color: $neutral-grey4;
-    align-items: center;
+    color: $primary-white;
     border: 1px solid transparent;
+    pointer-events: auto;
 
     &:hover,
     &:focus {
-        border-color: $primary-darkblue;
+        border-color: $button-hover-background;
         color: $primary-white;
-        background-color: $primary-darkblue;
+        background-color: $button-hover-background;
     }
 
-    .button__icon {
+    > * {
+        pointer-events: none;
+    }
+
+    .button__icon-checked,
+    .button__icon-close {
         display: none;
     }
 
-    .button__label {
-        pointer-events: none;
-    }
-}
-
-.button--tinytag {
-    padding: 3px 15px;
-    border-radius: 12px;
-    height: 24px;
-    text-transform: uppercase;
-} 
-
-.button--tag--selected {
-    background-color: $primary-red;
-
-    &:hover {
-        &:not(:active) {
-            border-color: $primary-darkblue;
-            color: $primary-white;
-            background-color: $primary-darkblue;
-
-            .button__icon:first-of-type {
-                display: none;
-            }
-
-            .button__icon:last-of-type {
-                display: inline-block;
-            }
-        }
-    }
-
-    .button__icon:first-of-type {
+    .button__icon-unchecked {
         display: inline-block;
     }
 }
 
-// should make this element a non-href to do this in a clean way:
-// (hide button interaction in the timeline management screen)
-.section--timeline-management .button--tinytag {
-    &:hover,
-    &:focus {
-        background-color: $neutral-grey4;
-        border: 1px solid transparent;
+.button--tag {
+    .button__icon-checked,
+    .button__icon-close {
+        display: none;
+    }
+
+    .button__icon-unchecked {
+        display: inline-block;
         color: $primary-white;
-        cursor: default;
     }
 }
+
+.tinytag,
+.button--tinytag {
+    padding: 2px 9px;
+    border-radius: 12px;
+    font-weight: bold;
+    height: 24px;
+    font-size: .9rem;
+    text-transform: uppercase;
+    min-width: auto;
+    background-color: $neutral-grey4;
+    color: $primary-white;
+    border: 1px solid transparent;
+    pointer-events: auto;
+
+    &:hover {
+        background-color: $button-hover-background;
+        cursor: pointer;
+    }
+} 
+
+.tinytag {
+    pointer-events: none;
+}
+
+.button--tag--selected {
+    background-color: $primary-darkblue;
+
+    .button__icon-checked {
+        display: inline-block;
+    }
+
+    .button__icon-unchecked {
+        display: none;
+    }
+
+    &:hover {
+        &:not(:active) {
+            border-color: $button-hover-background;
+            color: $primary-white;
+            background-color: $button-hover-background;
+
+            .button__icon-checked, 
+            .button__icon-unchecked {
+                display: none;
+            }
+
+            .button__icon-close {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+// // should make this element a non-href to do this in a clean way:
+// // (hide button interaction in the timeline management screen)
+// .section--timeline-management .button--tinytag {
+//     &:hover,
+//     &:focus {
+//         background-color: $neutral-grey4;
+//         border: 1px solid transparent;
+//         color: $primary-white;
+//         cursor: default;
+//     }
+// }
