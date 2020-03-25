@@ -18,7 +18,7 @@ button.blur();
             var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
 
             for (var i = 0; i < steps.length; i++) {
-                steps[i].classList.add("detail-wrapper--highlighted");
+                steps[i].classList.add("details-wrapper--highlighted");
             }
 
             var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
@@ -58,7 +58,7 @@ button.blur();
 
                 if (dataTags.length == 1) {
                     // if this is step has only one organisation
-                    steps[i].classList.remove("detail-wrapper--highlighted");
+                    steps[i].classList.remove("details-wrapper--highlighted");
                 } else {
                     var findOne = function (dataTags, selectedTags) {
                         return selectedTags.some(function (v) {
@@ -69,7 +69,7 @@ button.blur();
                     if (findOne) {
                         // if we find a match between both arrays, keep the highlight, because there are still organisations that should keep the step highlighted
                     } else {
-                        steps[i].classList.remove("detail-wrapper--highlighted");
+                        steps[i].classList.remove("details-wrapper--highlighted");
                     }
                 }
             }
