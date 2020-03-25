@@ -12,7 +12,7 @@ class PrintableModel(models.Model):
                 if self.pk is None:
                     data[f.name] = []
                 else:
-                    data[f.name] = [v.__str__() for v in f.value_from_object(self)]
+                    data[f.name] = [v.pk for v in f.value_from_object(self)]
             elif isinstance(f, models.DateTimeField):
                 if f.value_from_object(self) is not None:
                     data[f.name] = f.value_from_object(self).timestamp()
