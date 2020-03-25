@@ -85,8 +85,8 @@
                 <ul class="tag-list">
                     {% for organisation in organization_list %}
                     <li class="tag-list__item" style="display: {% if not organisation in moment.instance.organizations.all %}none{% else %}initial{% endif %}" data-listitem-id="{{ organisation.id }}">
-                        <span class="button button--tinytag" title="{{ organisation.name }}">
-                            <span>{{ organisation.abbreviation }}</span>
+                        <span class="tinytag" title="{{ organisation.name }}">
+                            {{ organisation.abbreviation }}
                         </span>
                     </li>
                     {% endfor %}
