@@ -27,54 +27,48 @@ button.blur();
                 tags[i].classList.add("button--tag--selected");
             }
         } else {
-            
             // if we click to disable filtering of an organisation...
-            function cleanup(callback) {
-                button.classList.remove("button--tag--selected");
+            button.classList.remove("button--tag--selected");
 
-                // remove the organisation from the array
-                var found = selectedTags.indexOf(filter);
-                while (found !== -1) {
-                    selectedTags.splice(found, 1);
-                    found = selectedTags.indexOf(filter);
-                }
-
-                // if this was the last organisation filter to be toggled off, 
-                // turn off filtering mode
-                if (selectedTags == false) {
-                    stepsContainer.classList.remove("section--timeline--filtering");
-                }
-
-                // remove all the highlights from the organisation tags ('pills')
-                var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
-                for (var i = 0; i < tags.length; i++) {
-                    tags[i].classList.remove("button--tag--selected");
-                }
-
-                callback();
+            // remove the organisation from the array
+            var found = selectedTags.indexOf(filter);
+            while (found !== -1) {
+                selectedTags.splice(found, 1);
+                found = selectedTags.indexOf(filter);
             }
-    
-            cleanup(function () {
-                var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
 
-                for (var i = 0; i < steps.length; i++) {
-                    // loop through every step which has the organisation in the data-attribute
-                    // and create an array out of the organisations linked to the step
-                    var dataTags = steps[i].getAttribute("data-tags").split(" ");
-                    // remove empty strings from the array
-                    dataTags = dataTags.filter(Boolean);
+            // if this was the last organisation filter to be toggled off, 
+            // turn off filtering mode
+            if (selectedTags == false) {
+                stepsContainer.classList.remove("section--timeline--filtering");
+            }
 
-                    var currentStepStillHasActivatedTags = dataTags.some(function (val) {
-                        return selectedTags.indexOf(val) !== -1;
-                    });
+            // remove all the highlights from the organisation tags ('pills')
+            var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
+            for (var i = 0; i < tags.length; i++) {
+                tags[i].classList.remove("button--tag--selected");
+            }
 
-                    if (currentStepStillHasActivatedTags) {
-                        // keep this step highlighted
-                    } else {
-                        steps[i].classList.remove("details-wrapper--highlighted");
-                    }
+        
+            var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
+
+            for (var i = 0; i < steps.length; i++) {
+                // loop through every step which has the organisation in the data-attribute
+                // and create an array out of the organisations linked to the step
+                var dataTags = steps[i].getAttribute("data-tags").split(" ");
+                // remove empty strings from the array
+                dataTags = dataTags.filter(Boolean);
+
+                var currentStepStillHasActivatedTags = dataTags.some(function (val) {
+                    return selectedTags.indexOf(val) !== -1;
+                });
+
+                if (currentStepStillHasActivatedTags) {
+                    // keep this step highlighted
+                } else {
+                    steps[i].classList.remove("details-wrapper--highlighted");
                 }
-            });
+            }
         }
     }
 });
