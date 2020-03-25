@@ -32,9 +32,9 @@
                         <ul class="tag-list">
                             {% for organisation in moment.organizations.all %}
                             <li class="tag-list__item">
-                                <span class="tinytag" data-highlight-org="{{ organisation.name|slugify }}" title="{{ organisation.name }}">
+                                <button class="button--tinytag" data-highlight-org="{{ organisation.name|slugify }}" title="{{ organisation.name }}">
                                     {{ organisation.abbreviation }}
-                                </span>
+                                </button>
                             </li>
                             {% endfor %}
                         </ul>

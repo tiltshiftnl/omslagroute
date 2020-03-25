@@ -82,16 +82,21 @@
                  data-static-mode>
                 <h4>Betrokken organisaties</h4>
 
-                <ul class="tag-list">
-                    {% for organisation in organization_list %}
-                    <li class="tag-list__item" style="display: {% if not organisation in moment.instance.organizations.all %}none{% else %}initial{% endif %}" data-listitem-id="{{ organisation.id }}">
-                        <span class="tinytag" title="{{ organisation.name }}">
-                            {{ organisation.abbreviation }}
-                        </span>
-                    </li>
-                    {% endfor %}
-                    <li class="tag-list__item" {% if moment.instance.organizations.all %}style="display: none" {% endif %}>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</li>
-                </ul>
+                {% if moment.instance.organizations.all %}
+                    <ul class="tag-list">
+                        {% for organisation in organization_list %}
+                        <li class="tag-list__item" {% if not organisation in moment.instance.organizations.all %}hidden{% endif %} data-listitem-id="{{ organisation.id }}">
+                            <span class="tinytag" title="{{ organisation.name }}">
+                                {{ organisation.abbreviation }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                        Er zijn (nog) geen organisaties toegewezen aan deze processtap.
+                    </p>
+                {% endif %}
             </div>
 
             {% if moment.instance and moment.instance.documents.all %}

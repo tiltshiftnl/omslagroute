@@ -99,7 +99,8 @@
 
     &:hover,
     &:focus {
-        border-color: $primary-darkblue;
+        background-color: $button-hover-background;
+        border-color: $button-hover-background;
         color: $primary-white;
     }
 }

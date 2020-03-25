@@ -6,6 +6,10 @@
 
 .tag-list__item {
     display: inline-block;
+
+    &:not(:first-of-type) {
+        margin-left: 10px;
+    }
 }
 
 .section--timeline--filtering {
@@ -38,9 +42,13 @@
 
     &:hover,
     &:focus {
-        border-color: $primary-darkblue;
+        border-color: $button-hover-background;
         color: $primary-white;
-        background-color: $primary-darkblue;
+        background-color: $button-hover-background;
+    }
+
+    > * {
+        pointer-events: none;
     }
 
     .button__icon-checked,
@@ -53,19 +61,6 @@
     }
 }
 
-.tinytag {
-    padding: 2px 9px;
-    border-radius: 12px;
-    height: 24px;
-    font-size: .9rem;
-    text-transform: uppercase;
-    min-width: auto;
-    background-color: $neutral-grey4;
-    color: $primary-white;
-    border: 1px solid transparent;
-    pointer-events: auto;
-} 
-
 .button--tag {
     .button__icon-checked,
     .button__icon-close {
@@ -76,6 +71,30 @@
         display: inline-block;
         color: $primary-white;
     }
+}
+
+.tinytag,
+.button--tinytag {
+    padding: 2px 9px;
+    border-radius: 12px;
+    font-weight: bold;
+    height: 24px;
+    font-size: .9rem;
+    text-transform: uppercase;
+    min-width: auto;
+    background-color: $neutral-grey4;
+    color: $primary-white;
+    border: 1px solid transparent;
+    pointer-events: auto;
+
+    &:hover {
+        background-color: $button-hover-background;
+        cursor: pointer;
+    }
+} 
+
+.tinytag {
+    pointer-events: none;
 }
 
 .button--tag--selected {
@@ -91,9 +110,9 @@
 
     &:hover {
         &:not(:active) {
-            border-color: $primary-darkblue;
+            border-color: $button-hover-background;
             color: $primary-white;
-            background-color: $primary-darkblue;
+            background-color: $button-hover-background;
 
             .button__icon-checked, 
             .button__icon-unchecked {
@@ -107,14 +126,14 @@
     }
 }
 
-// should make this element a non-href to do this in a clean way:
-// (hide button interaction in the timeline management screen)
-.section--timeline-management .button--tinytag {
-    &:hover,
-    &:focus {
-        background-color: $neutral-grey4;
-        border: 1px solid transparent;
-        color: $primary-white;
-        cursor: default;
-    }
-}
+// // should make this element a non-href to do this in a clean way:
+// // (hide button interaction in the timeline management screen)
+// .section--timeline-management .button--tinytag {
+//     &:hover,
+//     &:focus {
+//         background-color: $neutral-grey4;
+//         border: 1px solid transparent;
+//         color: $primary-white;
+//         cursor: default;
+//     }
+// }
