@@ -12,19 +12,29 @@
     .dot {
         background-color: $neutral-grey2;
     }
+
+    .details__title,
+    .details__toggle-icon {
+        color: $neutral-grey3;
+    }
 }
 
 .details-wrapper--highlighted {
     .dot {
         background-color: $primary-darkblue;
     }
+
+    .details__title,
+    .details__toggle-icon {
+        color: $primary-black;;
+    }
 }
 
 .button--tag,
 .button--tinytag {
     background-color: $neutral-grey4;
-    align-items: center;
     border: 1px solid transparent;
+    pointer-events: auto;
 
     &:hover,
     &:focus {
@@ -33,24 +43,47 @@
         background-color: $primary-darkblue;
     }
 
-    .button__icon {
+    .button__icon-checked,
+    .button__icon-close {
         display: none;
     }
 
-    .button__label {
-        pointer-events: none;
+    .button__icon-unchecked {
+        display: inline-block;
     }
 }
 
 .button--tinytag {
-    padding: 3px 15px;
+    padding: 0px 9px;
     border-radius: 12px;
     height: 24px;
+    font-size: .9rem;
     text-transform: uppercase;
+    min-width: auto;
 } 
 
+.button--tag {
+    .button__icon-checked,
+    .button__icon-close {
+        display: none;
+    }
+
+    .button__icon-unchecked {
+        display: inline-block;
+        color: $primary-white;
+    }
+}
+
 .button--tag--selected {
-    background-color: $primary-red;
+    background-color: $primary-darkblue;
+
+    .button__icon-checked {
+        display: inline-block;
+    }
+
+    .button__icon-unchecked {
+        display: none;
+    }
 
     &:hover {
         &:not(:active) {
@@ -58,18 +91,15 @@
             color: $primary-white;
             background-color: $primary-darkblue;
 
-            .button__icon:first-of-type {
+            .button__icon-checked, 
+            .button__icon-unchecked {
                 display: none;
             }
 
-            .button__icon:last-of-type {
+            .button__icon-close {
                 display: inline-block;
             }
         }
-    }
-
-    .button__icon:first-of-type {
-        display: inline-block;
     }
 }
 

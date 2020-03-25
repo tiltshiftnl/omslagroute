@@ -41,8 +41,6 @@
     box-sizing: content-box;
     color: $primary-white;
     cursor: pointer;
-    justify-content: center;
-    align-content: center;
     font-weight: bold;
     margin: 0;
     max-width: 620px;
@@ -53,6 +51,7 @@
     -moz-appearance: none;
     background: none;
     display: inline-block;
+    vertical-align: middle;
 
     &:hover,
     &:focus {
@@ -75,6 +74,8 @@
 
     &:not(:only-child) {
         margin-right: 10px;
+        position: relative;
+        top: 1px;
     }
 }
 
@@ -83,7 +84,7 @@
 
     &:not(:only-child) {
         position: relative;
-        top: 2px;
+        top: -3px;
     }
 }
 
