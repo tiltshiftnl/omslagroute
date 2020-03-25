@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'web.roles',
     'web.cases',
     'web.profiles',
+    'web.forms',
 
 )
 SOURCE_COMMIT = os.environ.get('COMMIT_HASH')

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<section class="section">
+    <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ form.as_sections.errors }}
+        {% for section in form.as_sections.sections %}
+            <div class="section" style="border: 1px solid red; padding: 10px;">
+                <h3>{{ section.title }}</h3>
+                <p>{{ section.description }}</p>
+                {% for sub_section in section.section_list %}
+                    <fieldset class="section sub-section">
+                        <h4>{{ sub_section.title }}</h4>
+                        <p>{{ sub_section.description }}</p>
+                        {% for field in sub_section.fields %}
+                            <div class="field-wrapper">
+
+                                {{ field|safe }}
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {{ form.as_sections.hidden_fields }}
+
+        <div data-submit-container class="form-field form-field--buttons">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'form_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
