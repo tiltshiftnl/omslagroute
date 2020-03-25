@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<section class="section">
+    <h1>Alle formulieren</h1>
+    <ul>
+        <li><a href="{% url 'aanvraag_urgentie' %}">Aanvraag urgentie</a></li>
+        <li><a href="{% url 'aanvraag_verlenging_trajectwijziging_mobw' %}">Aanvraag verlenging trajectwijziging MOBW</a></li>
+    </ul>
+</section>
+{% endblock %}
