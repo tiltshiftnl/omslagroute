@@ -1,7 +1,6 @@
 var selectedTags = new Array();
 document.addEventListener('click', function (e) {
 var button = e.target;
-    console.log(button);
     
 // if we clicked something that is not a tag button, get out
 if (!button.hasAttribute('data-highlight-org')) return;
