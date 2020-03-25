@@ -30,9 +30,9 @@
     }
 }
 
-.button--tag,
-.button--tinytag {
+.button--tag {
     background-color: $neutral-grey4;
+    color: $primary-white;
     border: 1px solid transparent;
     pointer-events: auto;
 
@@ -53,13 +53,17 @@
     }
 }
 
-.button--tinytag {
-    padding: 0px 9px;
+.tinytag {
+    padding: 2px 9px;
     border-radius: 12px;
     height: 24px;
     font-size: .9rem;
     text-transform: uppercase;
     min-width: auto;
+    background-color: $neutral-grey4;
+    color: $primary-white;
+    border: 1px solid transparent;
+    pointer-events: auto;
 } 
 
 .button--tag {
