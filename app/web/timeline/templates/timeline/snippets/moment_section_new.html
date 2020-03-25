@@ -68,12 +68,18 @@
                 {{ moment.order.label }}
                 {{ moment.order }}
             </div>
-            
-            <!-- <p data-moment-description data-static-mode></p> -->
 
-            <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn (nog) geen organisaties toegewezen aan deze processtap.">
+            <div data-moment-description data-static-mode></div>
+
+            <div data-moment-organizations
+                 data-static-mode
+                 data-no-organizations-text="Er zijn (nog) geen organisaties toegewezen aan deze processtap."
+                 data-list-item-tmpl="<li class='tag-list__item'><span class='button button--tinytag'><span>[[content]]</span></span></li>"
+            >
                 <h4>Betrokken organisaties</h4>
-                <p>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</p>
+                <ul class="tag-list">
+                    <li>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</li>
+                </ul>
             </div>
 
             <div data-static-mode class="form-field form-field--buttons">
@@ -99,7 +105,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            
+
             <div data-edit-mode class="form-field form-field--buttons">
                 <button class="button button--primary" data-handler="save-moment" disabled="disabled">Opslaan</button>
                 <button class="button button--secondary" data-handler="exit-edit-moment" disabled="disabled">Annuleer</button>

@@ -123,8 +123,7 @@ Array.prototype.sortOnData = function(key){
   };
     var decorators = {
         'edit-moment': function () {
-            var savedTimeout;
-            var savingTimeout;
+            var saveStateTimeout;
             var self = this,
                 id = this.dataset.id,
                 _getFormData = function () {
@@ -153,21 +152,19 @@ Array.prototype.sortOnData = function(key){
 
                             for (i = 0; i < elem.length; i++){
                                 if (data[k] instanceof Array){
-                                    var ul = elem[i].querySelector('ul');
+                                    var tmpl = elem[i].dataset.listItemTmpl;
+                                    var ul = elem[i].querySelector('ul'),
+                                        newList = '';
                                     while (ul.firstChild) {
                                         ul.removeChild(ul.firstChild);
                                     }
                                     for (j = 0; j < data[k].length; j++){
-                                        var li = document.createElement('li');
-                                        li.textContent = data[k][j];
-                                        ul.appendChild(li);
+                                        newList += tmpl.replace('[[content]]', data[k][j])
                                     }
                                     if (!data[k].length) {
-                                        var li = document.createElement('li');
-                                        li.textContent = elem[i].dataset.noOrganizationsText;
-                                        ul.appendChild(li);
-
+                                        newList += '<li>' +  elem[i].dataset.noOrganizationsText + '</li>';
                                     }
+                                    ul.innerHTML = newList;
                                 }else {
                                     elem[i].innerHTML = data[k].replace(/(?:\r\n|\r|\n)/g, '<br>');
                                 }
@@ -229,11 +226,13 @@ Array.prototype.sortOnData = function(key){
                 },
                 _submit = function (_callback) {
                     var data = _getFormData();
-                    self.dataset.saving = 'saving';
-                    clearTimeout(savingTimeout);
-                    savingTimeout = setTimeout(function(){
-                        delete self.dataset.saving;
-                    }, 2000);
+                    //self.dataset.saving = 'saving';
+                    //self.dataset.saveState = 'saving';
+                    clearTimeout(saveStateTimeout);
+                    // clearTimeout(savingTimeout);
+                    // savingTimeout = setTimeout(function(){
+                    //     delete self.dataset.saving;
+                    // }, 2000);
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/timeline/update-moment',
@@ -249,19 +248,27 @@ Array.prototype.sortOnData = function(key){
                             if (self.previousSibling.classList) {
                                 self.previousSibling.querySelector('[data-handler="new-moment"]').style.display = 'block';
                             }
-                            self.dataset.saved = 'saved';
+                            self.dataset.saveState = 'saved';
                             _updateView(response.message);
                             _clearErrorMessages();
-                            clearTimeout(savedTimeout);
+                            //clearTimeout(savedTimeout);
                             if (_callback && typeof (_callback) === 'function'){
                               _callback();
                             }
-                            savedTimeout = setTimeout(function(){
-                                delete self.dataset.saved;
+                            saveStateTimeout = setTimeout(function(){
+                                delete self.dataset.saveState;
                             }, 2000);
                         },
                         'error': function (responseText) {
                             var response = JSON.parse(responseText);
+                            self.dataset.saveState = 'error';
+                            //clearTimeout(errorTimeout);
+
+                            saveStateTimeout = setTimeout(function(){
+                                delete self.dataset.saveState;
+                            }, 2000);
+
+
                             if (this.status === 422) {
                                 for (var k in response.message) {
                                     if (response.message.hasOwnProperty(k)) {

@@ -360,7 +360,7 @@ $padding-left: 30px;
         opacity: 0;
     }
 
-    &[data-saving] {
+    &[data-save-state="saving"] {
         .alert-container {
             display: block;
         }
@@ -372,7 +372,7 @@ $padding-left: 30px;
         }
     }
 
-    &[data-saved] {
+    &[data-save-state="saved"] {
         .alert-container {
             display: block;
         }
@@ -384,7 +384,7 @@ $padding-left: 30px;
         }
     }
 
-    &[data-error] {
+    &[data-save-state="error"] {
         .alert-container {
             display: block;
         }

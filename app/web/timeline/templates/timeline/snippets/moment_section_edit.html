@@ -32,13 +32,13 @@
     <details class="details" open>
         <summary class="details__header" data-handler="open-moment">
             <h3 data-static-mode data-moment-name class="details__title">{{ moment.instance.name }}</h3>
-            
+
             <div class="form-field data-edit-mode">
                 <label for="id_description" class="sr-only">{{ moment.name.label }}</label>
                 {{ moment.name }}
                 <p class="error-text">Het veld hierboven is verplicht</p>
             </div>
-            
+
             <span class="details__toggle-icon">
                 <svg class="details__header-opened" width="14" height="9">
                     <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
@@ -78,19 +78,27 @@
             <div data-moment-description data-static-mode>
                 {{ moment.instance.description|linebreaks2html|safe }}
             </div>
-            <div data-moment-organizations data-static-mode data-no-roles-text="Er zijn (nog) geen organisaties toegewezen">
-                {% if moment.instance.organizations != null %}
+            <div data-moment-organizations
+                 data-static-mode
+                 data-no-organizations-text="Er zijn (nog) geen organisaties toegewezen"
+                 data-list-item-tmpl="<li class='tag-list__item'><span class='button button--tinytag'><span>[[content]]</span></span></li>"
+            >
+                <h4>Betrokken organisaties</h4>
+
+                {% if moment.instance.organizations.all %}
                     <ul class="tag-list">
                         {% for organisation in moment.instance.organizations.all %}
                         <li class="tag-list__item">
-                            <button class="button button--tinytag" data-select-targetgroup="{{ organisation|slugify }}">
+                            <span class="button button--tinytag" title="{{ organisation.name }}">
                                 <span>{{ organisation }}</span>
-                            </button>
+                            </span>
                         </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</p>
+                    <ul class="tag-list">
+                        <li class="tag-list__item">Er zijn (nog) geen organisaties toegewezen aan deze processtap.</li>
+                    </ul>
                 {% endif %}
             </div>
 
@@ -106,7 +114,7 @@
             <div data-static-mode class="form-field form-field--buttons">
                 <button data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>
-            
+
             <div class="form-field data-edit-mode">
                 <label for="id_description">{{ moment.description.label }}</label>
                 {{ moment.description }}
