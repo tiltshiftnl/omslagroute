@@ -152,19 +152,18 @@ Array.prototype.sortOnData = function(key){
 
                             for (i = 0; i < elem.length; i++){
                                 if (data[k] instanceof Array){
-                                    var tmpl = elem[i].dataset.listItemTmpl;
                                     var ul = elem[i].querySelector('ul'),
-                                        newList = '';
-                                    while (ul.firstChild) {
-                                        ul.removeChild(ul.firstChild);
-                                    }
-                                    for (j = 0; j < data[k].length; j++){
-                                        newList += tmpl.replace('[[content]]', data[k][j])
+                                        items = ul.querySelectorAll('li');
+                                    for (j = 0; j < items.length; j++){
+                                        items[j].style.display = 'none';
                                     }
                                     if (!data[k].length) {
-                                        newList += '<li>' +  elem[i].dataset.noOrganizationsText + '</li>';
+                                        items[items.length - 1].style.display = 'initial';
+                                    } else {
+                                        for (j = 0; j < data[k].length; j++){
+                                            ul.querySelector('[data-listitem-id="'+data[k][j]+'"]').style.display = 'initial';
+                                        }
                                     }
-                                    ul.innerHTML = newList;
                                 }else {
                                     elem[i].innerHTML = data[k].replace(/(?:\r\n|\r|\n)/g, '<br>');
                                 }
@@ -226,13 +225,6 @@ Array.prototype.sortOnData = function(key){
                 },
                 _submit = function (_callback) {
                     var data = _getFormData();
-                    //self.dataset.saving = 'saving';
-                    //self.dataset.saveState = 'saving';
-                    clearTimeout(saveStateTimeout);
-                    // clearTimeout(savingTimeout);
-                    // savingTimeout = setTimeout(function(){
-                    //     delete self.dataset.saving;
-                    // }, 2000);
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/timeline/update-moment',
@@ -251,7 +243,6 @@ Array.prototype.sortOnData = function(key){
                             self.dataset.saveState = 'saved';
                             _updateView(response.message);
                             _clearErrorMessages();
-                            //clearTimeout(savedTimeout);
                             if (_callback && typeof (_callback) === 'function'){
                               _callback();
                             }
@@ -262,8 +253,6 @@ Array.prototype.sortOnData = function(key){
                         'error': function (responseText) {
                             var response = JSON.parse(responseText);
                             self.dataset.saveState = 'error';
-                            //clearTimeout(errorTimeout);
-
                             saveStateTimeout = setTimeout(function(){
                                 delete self.dataset.saveState;
                             }, 2000);

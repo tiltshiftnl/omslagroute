@@ -79,27 +79,19 @@
                 {{ moment.instance.description|linebreaks2html|safe }}
             </div>
             <div data-moment-organizations
-                 data-static-mode
-                 data-no-organizations-text="Er zijn (nog) geen organisaties toegewezen"
-                 data-list-item-tmpl="<li class='tag-list__item'><span class='button button--tinytag'><span>[[content]]</span></span></li>"
-            >
+                 data-static-mode>
                 <h4>Betrokken organisaties</h4>
 
-                {% if moment.instance.organizations.all %}
-                    <ul class="tag-list">
-                        {% for organisation in moment.instance.organizations.all %}
-                        <li class="tag-list__item">
-                            <span class="button button--tinytag" title="{{ organisation.name }}">
-                                <span>{{ organisation }}</span>
-                            </span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <ul class="tag-list">
-                        <li class="tag-list__item">Er zijn (nog) geen organisaties toegewezen aan deze processtap.</li>
-                    </ul>
-                {% endif %}
+                <ul class="tag-list">
+                    {% for organisation in organization_list %}
+                    <li class="tag-list__item" style="display: {% if not organisation in moment.instance.organizations.all %}none{% else %}initial{% endif %}" data-listitem-id="{{ organisation.id }}">
+                        <span class="button button--tinytag" title="{{ organisation.name }}">
+                            <span>{{ organisation.abbreviation }}</span>
+                        </span>
+                    </li>
+                    {% endfor %}
+                    <li class="tag-list__item" {% if moment.instance.organizations.all %}style="display: none" {% endif %}>Er zijn (nog) geen organisaties toegewezen aan deze processtap.</li>
+                </ul>
             </div>
 
             {% if moment.instance and moment.instance.documents.all %}

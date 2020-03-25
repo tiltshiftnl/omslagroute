@@ -8,10 +8,12 @@ class OrganizationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].label = _('Naam organisatie')
+        self.fields['name_abbreviation'].label = _('Afkorting organisatie')
 
     class Meta:
         model = Organization
         fields = (
             'name',
+            'name_abbreviation',
         )
 
