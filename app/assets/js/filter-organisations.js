@@ -27,52 +27,54 @@ button.blur();
                 tags[i].classList.add("button--tag--selected");
             }
         } else {
-            button.classList.remove("button--tag--selected");
-            // remove the search term from the array, and clean up associated classes
+            
+            // if we click to disable filtering of an organisation...
+            function cleanup(callback) {
+                button.classList.remove("button--tag--selected");
 
-            var found = selectedTags.indexOf(filter);
+                // remove the organisation from the array
+                var found = selectedTags.indexOf(filter);
+                while (found !== -1) {
+                    selectedTags.splice(found, 1);
+                    found = selectedTags.indexOf(filter);
+                }
 
-            while (found !== -1) {
-                selectedTags.splice(found, 1);
-                found = selectedTags.indexOf(filter);
-            } // if this was the last filter to be toggled off, stop subdueing the other dots
+                // if this was the last organisation filter to be toggled off, 
+                // turn off filtering mode
+                if (selectedTags == false) {
+                    stepsContainer.classList.remove("section--timeline--filtering");
+                }
 
-            if (selectedTags.length == 0) {
-                stepsContainer.classList.remove("section--timeline--filtering");
-            }
+                // remove all the highlights from the organisation tags ('pills')
+                var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
+                for (var i = 0; i < tags.length; i++) {
+                    tags[i].classList.remove("button--tag--selected");
+                }
 
-            var tags = document.querySelectorAll('[data-select-targetgroup*="' + filter + '"]');
-
-            for (var i = 0; i < tags.length; i++) {
-                tags[i].classList.remove("button--tag--selected");
+                callback();
             }
     
-            var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
+            cleanup(function () {
+                var steps = document.querySelectorAll('[data-tags*="' + filter + '"]');
 
-            for (var i = 0; i < steps.length; i++) {
-                // loop through every step which has the organisation in the data-attribute
-                // and create an array out of the organisations linked to the step
-                var dataTags = steps[i].getAttribute("data-tags").split(" ");
-                // remove empty strings from the array
-                dataTags = dataTags.filter(Boolean);
+                for (var i = 0; i < steps.length; i++) {
+                    // loop through every step which has the organisation in the data-attribute
+                    // and create an array out of the organisations linked to the step
+                    var dataTags = steps[i].getAttribute("data-tags").split(" ");
+                    // remove empty strings from the array
+                    dataTags = dataTags.filter(Boolean);
 
-                if (dataTags.length == 1) {
-                    // if this is step has only one organisation
-                    steps[i].classList.remove("details-wrapper--highlighted");
-                } else {
-                    var findOne = function (dataTags, selectedTags) {
-                        return selectedTags.some(function (v) {
-                            return dataTags.indexOf(v) >= 0;
-                        });
-                    };
+                    var currentStepStillHasActivatedTags = dataTags.some(function (val) {
+                        return selectedTags.indexOf(val) !== -1;
+                    });
 
-                    if (findOne) {
-                        // if we find a match between both arrays, keep the highlight, because there are still organisations that should keep the step highlighted
+                    if (currentStepStillHasActivatedTags) {
+                        // keep this step highlighted
                     } else {
                         steps[i].classList.remove("details-wrapper--highlighted");
                     }
                 }
-            }
+            });
         }
     }
 });
