@@ -333,10 +333,11 @@ $padding-left: 30px;
         position: absolute;
         top: -44px;
         height: 44px;
-        display: none;
+        display: block;
         z-index: 100;
         width: 100%;
         left: 0;
+        opacity: 0;
     }
 
     .alert {
@@ -347,6 +348,7 @@ $padding-left: 30px;
         height: 100%;
         position: absolute;
         top: 0;
+        animation: none;
         padding-left: 30px;
 
         .alert__icon {
@@ -362,9 +364,8 @@ $padding-left: 30px;
 
     &.moment--saving {
         .alert-container {
-            display: block;
+            opacity: 1;
         }
-
         .alert--saving {
             background-color: $primary-darkblue;
             opacity: 1;
@@ -374,7 +375,7 @@ $padding-left: 30px;
 
     &.moment--saved {
         .alert-container {
-            display: block;
+            opacity: 1;
         }
 
         .alert--saved {
@@ -386,7 +387,7 @@ $padding-left: 30px;
 
     &.moment--error {
         .alert-container {
-            display: block;
+            opacity: 1;
         }
 
         .alert--error {
