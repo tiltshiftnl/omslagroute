@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
+
 {% block main %}
 <section class="section">
     <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
