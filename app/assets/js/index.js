@@ -226,6 +226,7 @@ Array.prototype.sortOnData = function(key){
                 _submit = function (_callback) {
                     var data = _getFormData();
                     self.classList.add('moment--saving');
+                    clearTimeout(saveStateTimeout);
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/timeline/update-moment',
@@ -248,14 +249,18 @@ Array.prototype.sortOnData = function(key){
                               _callback();
                             }
                             saveStateTimeout = setTimeout(function(){
-                                self.classList.remove('moment--saved','moment--saving','moment--error');
+                                self.classList.remove('moment--saved');
+                                self.classList.remove('moment--saving');
+                                self.classList.remove('moment--error');
                             }, 2000);
                         },
                         'error': function (responseText) {
                             var response = JSON.parse(responseText);
                             self.classList.add('moment--error');
                             saveStateTimeout = setTimeout(function(){
-                                self.classList.remove('moment--saved','moment--saving','moment--error');
+                                self.classList.remove('moment--saved');
+                                self.classList.remove('moment--saving');
+                                self.classList.remove('moment--error');
                             }, 2000);
 
 
