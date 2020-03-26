@@ -7,8 +7,8 @@
 .tag-list__item {
     display: inline-block;
 
-    &:not(:first-of-type) {
-        margin-left: 10px;
+    &:not(:last-of-type) {
+        margin-right: 10px;
     }
 }
 
