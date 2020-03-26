@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %} - Alle gebruikers{% endblock %}
+
 {% block main %}
     <h2>Alle gebruikers</h2>
 
@@ -8,6 +10,7 @@
         <li>{{ object.username }}: {{ object.user_type_value }}</li>
     {% endfor %}
     </ul>
+    
     <div class="form-field form-field--buttons">
         <a href="{% url 'add_user' %}" class="button button--primary">Nieuwe gebruiker</a>
     </div>
