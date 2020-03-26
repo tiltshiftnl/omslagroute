@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
-{% block main %}
-<h2>Object list</h2>
-<ul>
-{% for container in objectstore_container_list %}
-    <li>{{ container }}</li>
-{% endfor %}
-</ul>
 
-<h2>DocumentVersion list</h2>
-<ul>
-{% for document in documentversion_list %}
-    <li>
-        {{ document.name }} <a href="{% url 'download_documentversion' document.id %}">download</a><br>
+{% block title %} - Objectstore{% endblock %}
+
+{% block main %}
+    <section class="section section--objectstore">
+        <h2>Object list</h2>
         <ul>
-            {% for k, v in document.items %}
-                <span>{{ k }}: {{ v }}</span><br>
+            {% for container in objectstore_container_list %}
+                <li>{{ container }}</li>
             {% endfor %}
         </ul>
-    </li>
-{% endfor %}
-</ul>
 
+        <hr />
+
+        <h2>DocumentVersion list</h2>
+        <ul>
+            {% for document in documentversion_list %}
+                <li>
+                    {{ document.name }} <a href="{% url 'download_documentversion' document.id %}">download</a><br>
+                    <ul>
+                        {% for k, v in document.items %}
+                            <span>{{ k }}: {{ v }}</span><br>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}

@@ -453,8 +453,11 @@ $padding-left: 30px;
     }
 
     [data-edit-mode] {
-        display: -ms-grid;
-        display: grid;
+        display: block;
+
+        @supports (display: grid) { 
+            display: grid;
+        }
     }
 
     [data-static-mode] {

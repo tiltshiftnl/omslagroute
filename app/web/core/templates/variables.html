@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
+
+{% block title %} - Variables{% endblock %}
+
 {% block main %}
-<ul>
-{% for k, v in var_list.items %}
-    <li><span style="display: inline-block; width: 300px;">{{ k }}</span>: {{ v }}</li>
-{% endfor %}
-</ul>
+    <section class="section section--variables">
+        <h2>Variables</h2>
+        
+        <ul>
+            {% for k, v in var_list.items %}
+                <li><span style="display: inline-block; width: 300px;">{{ k }}</span>: {{ v }}</li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}

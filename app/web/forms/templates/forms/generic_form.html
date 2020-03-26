@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
+
 {% block main %}
-<section class="section">
+<section class="section section--form section--form-{{ title|slugify }}">
     <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
 
     <form method="post" enctype="multipart/form-data" novalidate>
