@@ -21,6 +21,17 @@
     .details__toggle-icon {
         color: $neutral-grey3;
     }
+
+    .button--tinytag {
+        background-color: $neutral-grey3;
+    }
+
+    .details__header:hover,
+    .details__header:focus {
+        .button--tinytag {
+            background-color: $neutral-grey4;
+        }
+    }
 }
 
 .details-wrapper--highlighted {
@@ -30,7 +41,15 @@
 
     .details__title,
     .details__toggle-icon {
-        color: $primary-black;;
+        color: $primary-black;
+    }
+
+    .button--tinytag {
+        background-color: $neutral-grey4;
+    }
+
+    .button--tag--selected {
+        background-color: $primary-darkblue;
     }
 }
 
@@ -79,7 +98,7 @@
     border-radius: 12px;
     font-weight: bold;
     height: 24px;
-    font-size: .9rem;
+    font-size: .8rem;
     text-transform: uppercase;
     min-width: auto;
     background-color: $neutral-grey4;
