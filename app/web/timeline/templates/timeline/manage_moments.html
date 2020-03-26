@@ -1,44 +1,45 @@
 {% extends 'base.html' %}
 
+{% block title %} - Beheer processtappen{% endblock %}
+
 {% block main %}
+    <section class="section section--timeline section--timeline-management">
+        <h2>Beheer processtappen</h2>
 
-<section class="section section--timeline section--timeline-management">
-    <h2>Timeline beheer</h2>
-
-    {% if request.user.is_authenticated %}
-        <p class="details-admin">
-            <a href="{% url 'manage_organizations' %}" class="button button--secondary" title="ga naar het beheer van organisaties">
-                Beheer organisaties
-            </a>
-            <a href="{% url 'home' %}" class="button button--primary" title="ga terug naar de vorige weergave">
-                Toon documenten
-            </a>
-        </p>
-    {% endif %}
+        {% if request.user.is_authenticated %}
+            <p class="details-admin">
+                <a href="{% url 'manage_organizations' %}" class="button button--secondary" title="ga naar het beheer van organisaties">
+                    Beheer organisaties
+                </a>
+                <a href="{% url 'home' %}" class="button button--primary" title="ga terug naar de vorige weergave">
+                    Toon documenten
+                </a>
+            </p>
+        {% endif %}
 
 
-    <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
-        {% csrf_token %}
-        {{ moment_form_set.management_form }}
-        <!-- {{ moment_form_set.errors }} -->
-        <div data-moment-container class="details-list-wrapper">
+        <form method="post" enctype="multipart/form-data" data-decorator="edit-timeline">
+            {% csrf_token %}
+            {{ moment_form_set.management_form }}
+            <!-- {{ moment_form_set.errors }} -->
+            <div data-moment-container class="details-list-wrapper">
+                {% for moment in moment_form_set %}
+                    {% if moment.instance.id %}
+                    {% include 'timeline/snippets/moment_section_edit.html' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
             {% for moment in moment_form_set %}
-                {% if moment.instance.id %}
-                {% include 'timeline/snippets/moment_section_edit.html' %}
+                {% if not moment.instance.id %}
+                    {% include 'timeline/snippets/moment_section_new.html' %}
                 {% endif %}
             {% endfor %}
-        </div>
-        {% for moment in moment_form_set %}
-            {% if not moment.instance.id %}
-                {% include 'timeline/snippets/moment_section_new.html' %}
-            {% endif %}
-        {% endfor %}
 
-        <div data-submit-container class="form-field form-field--buttons">
-            <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
-        </div>
-    </form>
-</section>
+            <div data-submit-container class="form-field form-field--buttons">
+                <input type="submit" value="Opslaan" class="button button--primary">
+                <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
+            </div>
+        </form>
+    </section>
 {% endblock %}
 
