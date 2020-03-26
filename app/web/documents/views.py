@@ -16,6 +16,7 @@ from django.conf import settings
 import urllib
 import requests
 from urllib.request import urlopen
+from web.users.statics import BEHEERDER
 
 
 class DocumentList(ListView):
@@ -29,7 +30,7 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, 'wonen')
+        return auth_test(self.request.user, BEHEERDER)
 
     def delete(self, request, *args, **kwargs):
         response = super().delete(self, request, *args, **kwargs)
@@ -44,7 +45,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, 'wonen')
+        return auth_test(self.request.user, BEHEERDER)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -59,7 +60,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, 'wonen')
+        return auth_test(self.request.user, BEHEERDER)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -85,7 +86,7 @@ class DocumentVersionCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, 'wonen')
+        return auth_test(self.request.user, BEHEERDER)
 
     def get_context_data(self, **kwargs):
         kwargs.update({
@@ -111,7 +112,7 @@ class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, 'wonen')
+        return auth_test(self.request.user, BEHEERDER)
 
 
 class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
@@ -121,7 +122,7 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, 'wonen')
+        return auth_test(self.request.user, BEHEERDER)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

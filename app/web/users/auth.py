@@ -8,7 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import resolve_url
 
 
-def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME, group_name=None):
+def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME, user_type=None):
     """
     Decorator for views that checks that the user passes the given test,
     redirecting to the log-in page if necessary. The test should be a callable
@@ -18,7 +18,7 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
-            if test_func(request.user, group_name):
+            if test_func(request.user, user_type):
                 return view_func(request, *args, **kwargs)
             path = request.build_absolute_uri()
             resolved_login_url = resolve_url(login_url or settings.LOGIN_URL)
@@ -36,12 +36,7 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
     return decorator
 
 
-def auth_test(user, group_name):
-    group = []
-    try:
-        group = Group.objects.get(name=group_name)
-    except:
-        pass
-    return (group in user.groups.all()) or user.is_superuser
+def auth_test(user, user_type):
+    return hasattr(user, 'user_type') and user.user_type == user_type
 
 

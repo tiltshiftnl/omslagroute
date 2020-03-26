@@ -16,6 +16,12 @@ class Case(models.Model):
         null=True,
     )
 
+    @property
+    def client_name(self):
+        if self.client_first_name or self.client_last_name:
+            return '%s %s' % (self.client_first_name, self.client_last_name)
+        return str(self.id)
+
     def __str__(self):
         if self.client_first_name:
             return self.client_first_name

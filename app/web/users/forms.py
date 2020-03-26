@@ -3,9 +3,12 @@ from django.contrib.auth.forms import (
 )
 from django import forms
 from .models import *
+from django.http import HttpResponse
 from web.profiles.models import Profile
 from django.forms.models import inlineformset_factory
 from web.organizations.models import Organization
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm as DefaultUserCreationForm
 
 
 class AuthenticationForm(DefaultAuthenticationForm):
@@ -28,26 +31,35 @@ class AuthenticationForm(DefaultAuthenticationForm):
         return self.cleaned_data
 
 
-class UserForm(forms.ModelForm):
+class UserCreationForm(DefaultUserCreationForm):
 
     class Meta:
         model = User
-        fields = [
+        fields = (
             'username',
-            'password',
-        ]
-        widgets = {
-            'password': forms.PasswordInput
-        }
+            'user_type',
+        )
 
 
 class ProfileForm(forms.ModelForm):
-    user = forms.CharField(required=True, widget=forms.HiddenInput())
-    organization = forms.ModelChoiceField(required=True, widget=forms.RadioSelect(), queryset=Organization.objects.all())
+    # organization = forms.ModelChoiceField(
+    #     required=True,
+    #     widget=forms.RadioSelect(),
+    #     queryset=Organization.objects.all(),
+    #     empty_label=None,
+    # )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ''
 
     class Meta:
         model = Profile
-        exclude = ['cases', ]
+        exclude = [
+            'cases',
+            'user',
+            'organization',
+        ]
 
 
 ProfileFormSet = inlineformset_factory(

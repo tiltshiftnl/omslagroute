@@ -6,7 +6,7 @@ class Profile(models.Model):
     user = models.OneToOneField(
         to='users.User',
         verbose_name=_('Gebruiker'),
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
     )
@@ -15,15 +15,8 @@ class Profile(models.Model):
         verbose_name=_('Cliënten'),
         blank=True,
     )
-    organization = models.ForeignKey(
-        to='organizations.Organization',
-        verbose_name=_('Organisatie'),
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-    )
 
     def __str__(self):
         if self.user:
             return self.user.username
-        return self.id
+        return str(self.id)

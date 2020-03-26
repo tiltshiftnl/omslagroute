@@ -8,9 +8,10 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, ListView
 from .models import *
 from .forms import *
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
+from .statics import BEGELEIDER, BEHEERDER
 
 
 def generic_logout(request):
@@ -24,9 +25,10 @@ def generic_login(request):
         form = AuthenticationForm(data=request.POST)
 
         if form.is_valid():
-
-            login(request, form.get_user())
-
+            user = form.get_user()
+            login(request, user)
+            if user.user_type == BEGELEIDER:
+                return HttpResponseRedirect(reverse('cases_by_profile'))
             return HttpResponseRedirect(request.POST.get('next', '/'))
     messages.add_message(request, messages.ERROR, 'Er is iets mis gegaan met het inloggen')
     return HttpResponseRedirect('%s#login' % (request.POST.get('next', '/')))
@@ -38,45 +40,44 @@ class UserList(UserPassesTestMixin, ListView):
     queryset = User.objects.filter(is_staff=False, is_superuser=False)
 
     def test_func(self):
-        return self.request.user.is_superuser
+        return auth_test(self.request.user, BEHEERDER)
 
 
-class UserCreate(UserPassesTestMixin, CreateView):
+class UserCreationView(UserPassesTestMixin, CreateView):
     model = User
-    form_class = UserForm
     template_name_suffix = '_create_form'
+    form_class = UserCreationForm
     success_url = reverse_lazy('user_list')
 
     def test_func(self):
-        return self.request.user.is_superuser
+        return auth_test(self.request.user, BEHEERDER)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data['profileformset'] = ProfileFormSet(self.request.POST, self.request.FILES)
+            data['profile_form'] = ProfileForm(self.request.POST, self.request.FILES)
         else:
-            data['profileformset'] = ProfileFormSet()
+            data['profile_form'] = ProfileForm()
         return data
 
-    def form_invalid(self, form):
-        respond = super().form_invalid(form)
-        for k, v in form.errors.items():
-            for e in v:
-                messages.add_message(self.request, messages.ERROR, e)
-        return respond
-
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        self.object = None
         context = self.get_context_data()
-        profileformset = context['profileformset']
-        with transaction.atomic():
-            self.object = form.save()
-            if profileformset.is_valid():
-                print(profileformset)
-                print(type(profileformset.instance))
-                print(type(self.object))
-                profileformset.instance = self.object
-                profileformset.save()
-                profileformset.instance.save()
+        profile_form = context['profile_form']
+        form = self.get_form()
 
-        messages.add_message(self.request, messages.INFO, "De gebruiker '%s' is aangemaakt" % self.object.username)
+        if form.is_valid() and profile_form.is_valid():
+            return self.form_valid(form, profile_form)
+        else:
+            return self.form_invalid(form, profile_form)
+
+    def form_invalid(self, form, profile_form):
+        return self.render_to_response(self.get_context_data(form=form, profile_form=profile_form))
+
+    def form_valid(self, form, profile_form):
+        user = form.save(commit=True)
+        profile = profile_form.save(commit=False)
+        profile.user = user
+        profile.save()
+        messages.add_message(self.request, messages.INFO, "De gebruiker '%s' is aangemaakt" % user.username)
         return super().form_valid(form)

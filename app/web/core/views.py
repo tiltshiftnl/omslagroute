@@ -6,6 +6,7 @@ from web.timeline.models import *
 from web.documents.models import *
 from web.organizations.models import *
 
+
 class HomePageView(TemplateView):
     template_name = "home.html"
 

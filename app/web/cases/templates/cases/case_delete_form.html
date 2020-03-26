@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block main %}
+    <h2>Verwijder cliënt</h2>
+
+    <form method="post">{% csrf_token %}
+        <p>Weet je zeker dat je de cliënt '{{ object.client_first_name }}' wilt verwijderen?</p>
+
+        <div class="form-field form-field--buttons">
+            <a href="{% url 'cases_by_profile' %}" class="button button--primary">Annuleer</a>
+            <input type="submit" value="Verwijder" class="button button--secondary">
+        </div>
+    </form>
+{% endblock %}
