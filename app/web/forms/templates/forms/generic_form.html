@@ -10,12 +10,12 @@
         {% csrf_token %}
         {{ form.as_sections.errors }}
         {% for section in form.as_sections.sections %}
-            <div class="section" style="border: 1px solid red; padding: 10px;">
+            <section class="section" style="border: 1px solid red; padding: 10px;">
                 <h3>{{ section.title }}</h3>
                 <p>{{ section.description }}</p>
                 {% for sub_section in section.section_list %}
                     <fieldset class="section sub-section">
-                        <h4>{{ sub_section.title }}</h4>
+                        <legend>{{ sub_section.title }}</legend>
                         <p>{{ sub_section.description }}</p>
                         {% for field in sub_section.fields %}
                             <div class="field-wrapper">
@@ -24,7 +24,7 @@
                         {% endfor %}
                     </fieldset>
                 {% endfor %}
-            </div>
+            </section>
         {% endfor %}
         {{ form.as_sections.hidden_fields }}
 
