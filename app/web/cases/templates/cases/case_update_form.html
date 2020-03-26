@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <h2>Nieuwe gebruiker toevoegen</h2>
+    <h2>Cliënt aanpassen</h2>
 
-    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
 
         {{ form.as_p }}
-        {{ profile_form.as_p }}
 
         <div class="form-field form-field--buttons">
             <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
 {% endblock %}

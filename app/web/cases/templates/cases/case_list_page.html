@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block main %}
+
+<section class="section section--timeline section--timeline-management">
+    <h2>Mijn cliënten</h2>
+    <ul>
+        {% for object in object_list %}
+        <li>
+            <a href="{% url 'update_case' object.id %}">
+            {{ object.client_name }}
+            </a>&nbsp;|&nbsp;<a href="{% url 'delete_case' object.id %}">verwijderen</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="form-field form-field--buttons">
+        <a href="{% url 'add_case' %}" class="button button--primary">Nieuwe cliënt aanmaken</a>
+    </div>
+</section>
+{% endblock %}

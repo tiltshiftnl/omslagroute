@@ -21,6 +21,7 @@ urlpatterns = [
     path('organisaties/', include('web.organizations.urls')),
     path('gebruikers/', include('web.users.urls')),
     path('formulieren/', include('web.forms.urls')),
+    path('clienten/', include('web.cases.urls')),
 
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
