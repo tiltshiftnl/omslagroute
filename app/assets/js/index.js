@@ -225,6 +225,7 @@ Array.prototype.sortOnData = function(key){
                 },
                 _submit = function (_callback) {
                     var data = _getFormData();
+                    self.classList.add('moment--saving');
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/timeline/update-moment',
@@ -240,21 +241,21 @@ Array.prototype.sortOnData = function(key){
                             if (self.previousSibling.classList) {
                                 self.previousSibling.querySelector('[data-handler="new-moment"]').style.display = 'block';
                             }
-                            self.dataset.saveState = 'saved';
+                            self.classList.add('moment--saved');
                             _updateView(response.message);
                             _clearErrorMessages();
                             if (_callback && typeof (_callback) === 'function'){
                               _callback();
                             }
                             saveStateTimeout = setTimeout(function(){
-                                delete self.dataset.saveState;
+                                self.classList.remove('moment--saved','moment--saving','moment--error');
                             }, 2000);
                         },
                         'error': function (responseText) {
                             var response = JSON.parse(responseText);
-                            self.dataset.saveState = 'error';
+                            self.classList.add('moment--error');
                             saveStateTimeout = setTimeout(function(){
-                                delete self.dataset.saveState;
+                                self.classList.remove('moment--saved','moment--saving','moment--error');
                             }, 2000);
 
 
