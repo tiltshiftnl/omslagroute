@@ -14,7 +14,14 @@
                 U kunt hier een nieuwe versie uploaden van het {{ document.document_type_value|lower }} {{ document|striptags }}.
             </legend>
 
+            <p class="error-text">
+                {{ form.non_field_errors }}
+            </p>
+
             <strong>Voeg hieronder het document toe</strong>
+            {% if form.uploaded_file.help_text %}
+                <p class="help-text">{{ form.uploaded_file.help_text|safe }}</p>
+            {% endif %}
             {{ form.uploaded_file }}
             <label for="file-upload">
                 {{ form.uploaded_file.label }}
@@ -22,7 +29,13 @@
                     <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
                 </svg>
             </label>
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.uploaded_file.errors %}
+                <ol class="error-text">
+                {% for error in form.uploaded_file.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
             <div id="file-upload-filename" class="form-field__uploaded"></div>
             
             {{ form.document }}

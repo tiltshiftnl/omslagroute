@@ -9,17 +9,14 @@ from web.cases.statics import GESLACHT
 FIELDS = (
     ('naam_client', forms.CharField(
         label=_('Naam cliënt'),
-        help_text=_('Voor- en achternaam'),
         required=True
     )),
     ('client_first_name', forms.CharField(
-        label=_('Naam cliënt'),
-        help_text=_('Voor- en achternaam'),
+        label=_('Voornaam'),
         required=True
     )),
     ('client_last_name', forms.CharField(
-        label=_('Naam cliënt'),
-        help_text=_('Voor- en achternaam'),
+        label=_('Achternaam'),
         required=True
     )),
     ('geslacht', forms.ChoiceField(
@@ -43,7 +40,7 @@ FIELDS = (
         label=_('E-mailadres'),
         required=True,
     )),
-    ('woningnetnummer', forms.IntegerField(
+    ('woningnetnummer', forms.CharField(
         label=_('Woningnetnummer'),
         required=True,
     )),
@@ -60,13 +57,14 @@ FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
 URGENTIE_AANVRAAG = [
     {
         'title': 'Persoonsgegevens',
-        'description': 'Omscrhrijving persoonsgegevens',
+        'description': 'In deze stap vult u eenmalig informatie over uw cliënt in. Deze informatie wordt in uw browser opgeslagen zodat u na invullen op een later moment van deze informatie gebruik kunt maken.',
         'section_list': [
             {
                 'title': 'Basisgegevens',
-                'description': 'Omscrhrijving basisgegevens',
+                'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
                 'fields': [
-                    'naam_client',
+                    'client_first_name',
+                    'client_last_name',
                     'geslacht',
                     'geboortedatum',
                 ],
@@ -83,11 +81,11 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Woonsituatie',
-        'description': 'Wat is de woonsituatie van de cliënt',
+        'description': 'Informatie over de woonsituatie van uw cliënt.',
         'section_list': [
             {
                 'title': 'Woningnet',
-                'description': 'Inschrijfgegevens van woningnet',
+                'description': 'De inschrijfgegevens van de cliënt in woningnet.',
                 'fields': [
                     'woningnetnummer',
                 ],
@@ -107,11 +105,11 @@ URGENTIE_AANVRAAG = [
 AANVRAAG_VERLENGING_TRACJECTWIJZIGING_MOBW = [
     {
         'title': 'Persoonsgegevens',
-        'description': 'Omscrhrijving persoonsgegevens',
+        'description': 'In deze stap vult u eenmalig informatie over uw cliënt in. Deze informatie wordt in uw browser opgeslagen zodat u na invullen op een later moment van deze informatie gebruik kunt maken.',
         'section_list': [
             {
                 'title': 'Basisgegevens',
-                'description': 'Omscrhrijving basisgegevens',
+                'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
                 'fields': [
                     'naam_client',
                     'geslacht',

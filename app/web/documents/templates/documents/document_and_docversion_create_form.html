@@ -11,20 +11,46 @@
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ documentversionformset.management_form }}
         {{ form.moment_id }}
+
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
+
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.name }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.name.errors %}
+                <ol class="error-text">
+                {% for error in form.name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             <label for="id_description">{{ form.description.label }}</label>
+            {% if form.description.help_text %}
+                <p class="help-text">{{ form.description.help_text|safe }}</p>
+            {% endif %}
             {{ form.description }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.description.errors %}
+                <ol class="error-text">
+                {% for error in form.description.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             <label for="id_document_type">{{ form.document_type.label }}</label>
+            {% if form.document_type.help_text %}
+                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+            {% endif %}
             <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
                     <li>
@@ -35,10 +61,20 @@
                     </li>
                 {% endfor %}
             </ul>
+            {% if form.document_type.errors %}
+                <ol class="error-text">
+                {% for error in form.document_type.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             <strong>Voeg hieronder het document toe</strong>
+            {% if form.uploaded_file.help_text %}
+                <p class="help-text">{{ form.uploaded_file.help_text|safe }}</p>
+            {% endif %}
             {% for form in documentversionformset.forms %}
                 {{ form.uploaded_file }}
                 <label for="file-upload">
@@ -47,7 +83,13 @@
                         <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
                     </svg>
                 </label>
-                <p class="error-text">Het veld hierboven is verplicht</p>
+                {% if form.uploaded_file.errors %}
+                    <ol class="error-text">
+                    {% for error in form.uploaded_file.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                    </ol>
+                {% endif %}
                 <div id="file-upload-filename" class="form-field__uploaded"></div>
             {% endfor %}
         </div>

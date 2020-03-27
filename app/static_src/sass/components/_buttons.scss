@@ -99,8 +99,8 @@
 
     &:hover,
     &:focus {
-        background-color: $button-hover-background;
-        border-color: $button-hover-background;
+        background-color: $primary-darkerblue;
+        border-color: $primary-darkerblue;
         color: $primary-white;
     }
 }
@@ -163,4 +163,84 @@
     display: inline-block; 
     margin-top: 30px;
     margin-bottom: 20px;
+}
+
+
+.button--previous {
+    white-space: nowrap;
+    display: inline-flex;
+    -webkit-box-align: center;
+    color: $primary-darkblue;
+    align-items: center;
+    line-height: 20px;
+    position: relative;
+    z-index: 0;
+    text-decoration: none;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding: 12px 15px;
+
+    .button__icon:not(:only-child) {
+        margin-right: 0;
+        top: 0px;
+    }
+
+    &:hover {
+        box-shadow: none;
+        border-color: transparent;
+        color: $primary-darkerblue;
+        text-decoration: underline;
+    }
+}
+
+.button--next {
+    white-space: nowrap;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 20px;
+    background-color: rgb(236, 0, 0);
+    color: rgb(255, 255, 255);
+    position: relative;
+    z-index: 0;
+    text-decoration: none;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding: 12px 15px;
+    transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s;
+    margin-right: 25px;
+
+    .arrow {
+        position: absolute;
+        top: 0px;
+        right: -37px;
+        width: 0px;
+        height: 0px;
+        border-width: 22px 22px 22px 15px;
+        border-style: solid;
+        border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgb(236, 0, 0);
+        border-image: initial;
+        border-left: 15px solid rgb(236, 0, 0);
+        transition: border-color 0s ease 0s, all 0.1s ease-in-out 0s;
+    }
+
+    &:hover {
+        background-color: rgb(185, 0, 0);
+        box-shadow: none;
+    }
+
+    &:focus {
+        outline-color: rgb(254, 200, 19);
+        outline-style: solid;
+        outline-offset: 0px;
+        outline-width: 3px;
+    }
+
+    &:not(:disabled):hover .arrow {
+        border-left-color: rgb(185, 0, 0);
+    }
 }

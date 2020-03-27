@@ -32,7 +32,13 @@
             <div class="form-field data-edit-mode" data-edit-mode>
                 <label for="id_description" class="sr-only">{{ moment.name.label }}</label>
                 {{ moment.name }}
-                <p class="error-text">Het veld hierboven is verplicht</p>
+                {% if moment.name.errors %}
+                    <ol class="error-text">
+                    {% for error in moment.name.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                    </ol>
+                {% endif %}
             </div>
 
             <span class="details__toggle-icon">
@@ -94,7 +100,13 @@
             <div class="form-field data-edit-mode">
                 <label for="id_description">{{ moment.description.label }}</label>
                 {{ moment.description }}
-                <p class="error-text">Het veld hierboven is verplicht</p>
+                {% if moment.description.errors %}
+                    <ol class="error-text">
+                    {% for error in moment.description.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                    </ol>
+                {% endif %}
             </div>
 
             <div class="form-field data-edit-mode">

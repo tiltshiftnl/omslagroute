@@ -10,20 +10,45 @@
             U kunt hier hier het document <strong>"{{ form.instance.name|striptags }}"</strong> wijzigen.
         </legend>
 
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
+
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.name }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.name.errors %}
+                <ol class="error-text">
+                {% for error in form.name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             <label for="id_description">{{ form.description.label }}</label>
+            {% if form.description.help_text %}
+                <p class="help-text">{{ form.description.help_text|safe }}</p>
+            {% endif %}
             {{ form.description }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.description.errors %}
+                <ol class="error-text">
+                {% for error in form.description.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             <label for="id_document_type">{{ form.document_type.label }}</label>
+            {% if form.document_type.help_text %}
+                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+            {% endif %}
             <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
                     <li>
@@ -33,12 +58,29 @@
                         </label>
                     </li>
                 {% endfor %}
-            </ul>
+            </ul> 
+            {% if form.document_type.errors %}
+                <ol class="error-text">
+                {% for error in form.document_type.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             <label for="id_moment_list">{{ form.moment_list.label }}</label>
-            {{ form.moment_list }}
+            {% if form.moment_list.help_text %}
+                <p class="help-text">{{ form.moment_list.help_text|safe }}</p>
+            {% endif %}
+            {{ form.moment_list }} 
+            {% if form.moment_list.errors %}
+                <ol class="error-text">
+                {% for error in form.moment_list.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field form-field--buttons">

@@ -58,15 +58,14 @@ h4 {
     margin-bottom: 1rem;
 }
 
-.page-intro {
-    font-size: 1.0875;
-    line-height: 1.510rem;
-    font-weight: 500;
-}
-
 p, ul, ol {
     margin-top: 0;
     margin-bottom: 1rem;
+}
+
+ul {
+    padding-left: 2px;
+    list-style-position: inside;
 }
 
 b, strong, em, small, code {

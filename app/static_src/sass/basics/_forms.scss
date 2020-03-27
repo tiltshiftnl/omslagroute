@@ -1,22 +1,58 @@
 // ********************
 // GENERAL FORM ELEMENTS
-// Each field and label is grouped in a .form-field container
 // ********************
     
 legend {
-    margin-bottom: 15px;
-}
-
-.help-text {
-    font-size: .9rem;
-    color: $neutral-grey4;
-    margin-top: 5px;
+    padding: 0;
+    display: table;
 }
 
 fieldset {
     margin: 0;
     box-shadow: none;
+    border: 0;
+    padding: 0.01em 0 0 0;
+    min-width: 0;
 }
+
+body:not(:-moz-handler-blocked) fieldset {
+    display: table-cell;
+}
+
+// ********************
+// GENERIC FORMS FIELD GROUP CONTAINERS 
+// ********************
+
+.section--step__title {
+    font-size: 1.25rem;
+}
+
+.sub-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid $neutral-grey3;
+}
+
+.sub-section__title {
+    margin-top: 0;
+}
+
+.section--step__description,
+.sub-section__description {
+    max-width: 650px;
+}
+
+.next-previous {
+    padding: 1rem;
+    background-color: $neutral-grey2;
+    display: flex;
+    justify-content: space-between;
+}
+
+// ********************
+// FIELD CONTAINERS
+// Each field and label is grouped in a .form-field container
+// ********************
 
 .form-field {
     margin-top: 10px;
@@ -24,6 +60,10 @@ fieldset {
 
     .details__header & {
         margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    &:last-child {
         margin-bottom: 0;
     }
 }
@@ -55,9 +95,15 @@ fieldset {
     }
 }
 
-label {
-    display: block;
-    font-weight: bold;
+// ********************
+// HELPFUL INFORMATION
+// ********************
+
+.help-text {
+    font-size: .9rem;
+    color: $neutral-grey4;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .error-text {
@@ -68,8 +114,19 @@ label {
     margin-top: 10px;
 }
 
+// ********************
+// DEFAULT STYLES
+// ********************
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
 [type="password"],
 [type="text"],
+[type="email"],
+[type="number"],
 select,
 textarea {
     font-family: inherit;
@@ -112,7 +169,6 @@ input[data-error-message] {
 //  
 // <input type="file" id="file_upload">
 // <label for="file_upload">
-// 
 // ********************
 
 [type="file"] {
@@ -182,7 +238,9 @@ input[data-error-message] {
 // ********************
 
 ul.form-field__checkboxgroup,
-ul.form-field__radiogroup {
+ul.form-field__radiogroup,
+.form-field--radioselect ul,
+.form-field--checkboxselectmultiple ul {
     list-style-type: none;
     padding: 0;
     min-width: 70px;
@@ -195,11 +253,6 @@ ul.form-field__radiogroup {
     li {
         margin-top: 10px;
     }
-
-    // &:focus-within {
-    //     outline: 1px dotted #212121;
-    //     outline: 5px auto -webkit-focus-ring-color;
-    // }
 }
 
 .form-field__checkbox,
@@ -291,4 +344,51 @@ li:focus-within .form-field__checkboxlabel::before {
 
 .form-field__checkboxgroup li {
     display: flex;
+}
+
+// ********************
+// SELECT/DROPDOWN
+// ********************
+
+select {
+    width: 100%;
+    height: 40px;
+    font-size: 1rem;
+    background-color: rgb(255, 255, 255);
+    background-image: url("/static/images/chevron-down.svg");
+    background-size: 12px;
+    -webkit-appearance: none;
+    cursor: pointer;
+    box-shadow: rgb(118, 118, 118) 0px 0px 0px 1px inset;
+    padding: 0px 12px;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+    background-position: calc(100% - 12px) 50%;
+    background-repeat: no-repeat;
+    text-transform: none;
+
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0px;
+}
+
+// ********************
+// SELECT DATE WIDGET
+// ********************
+
+.form-field--selectdatewidget {
+    label {
+        margin-bottom: 10px;
+    }
+
+    select {
+        display: inline-block;
+        width: auto;
+        padding-right: 40px;
+        margin-right: 10px;
+    }
 }

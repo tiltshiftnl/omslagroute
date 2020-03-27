@@ -6,25 +6,30 @@
 <section class="section section--form section--form-{{ title|slugify }}">
     <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
 
+    <p class="error-text">
+        {{ form.non_field_errors }}
+    </p>
+        
     <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ form.as_sections.errors }}
+
         {% for section in form.as_sections.sections %}
-            <div class="section" style="border: 1px solid red; padding: 10px;">
-                <h3>{{ section.title }}</h3>
-                <p>{{ section.description }}</p>
+            <fieldset class="section section--step">
+                <legend><h3 class="section--step__title">{{ section.title }}</h3></legend>
+                <p class="section--step__description">{{ section.description }}</p>
+
                 {% for sub_section in section.section_list %}
-                    <fieldset class="section sub-section">
-                        <h4>{{ sub_section.title }}</h4>
-                        <p>{{ sub_section.description }}</p>
-                        {% for field in sub_section.fields %}
-                            <div class="field-wrapper">
-                                {{ field|safe }}
-                            </div>
+                    <div class="section sub-section">
+                        <h4 class="sub-section__title">{{ sub_section.title }}</h4>
+                        <p class="sub-section__description">{{ sub_section.description }}</p>
+
+                        {% for field in sub_section.fields %} 
+                            {{ field|safe }}
                         {% endfor %}
-                    </fieldset>
+                    </div>
                 {% endfor %}
-            </div>
+            </fieldset>
         {% endfor %}
         {{ form.as_sections.hidden_fields }}
 
@@ -32,6 +37,28 @@
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{% url 'form_list' %}" class="button button--secondary">Annuleer</a>
         </div>
+
+        <!-- <div class="next-previous">
+            {#  if there is a previous step #}
+                <button class="button button--previous">
+                    <div class="arrow"></div>
+                    Vorige 
+                </button>
+            {# end if #}
+
+            {# if there is a next step #}
+                <button class="button button--next">
+                    Volgende
+                    <div class="arrow"></div>
+                </button>
+            {# else #}
+                <div class="button-group">
+                    <button type="submit" value="Opslaan" class="button button--primary">Opslaan</button>
+                    <button type="submit" value="Printen" class="button button--primary">Print als PDF</button>
+                    <button type="submit" value="Versturen" class="button button--secondary">Versturen</button>
+                </div>
+            {# end if #}
+        </div> -->
     </form>
 </section>
 {% endblock %}

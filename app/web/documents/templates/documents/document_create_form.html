@@ -5,22 +5,40 @@
 
     <form method="post">
         {% csrf_token %}
+
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
         
         <div class="form-field">
             {{ form.name.label_tag }} 
-            <p class="help-text">
-                (Naam document)
-            </p>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.name }}
+            {% if form.name.errors %}
+                <ol class="error-text">
+                {% for error in form.name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
             {{ form.document_type.label_tag }}
-            <div class="help-text">
-                Om wat voor soort document gaat het?
-            </div>
+            {% if form.document_type.help_text %}
+                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+            {% endif %}
             {{ form.document_type.tag }}
             {{ form.document_type }}
+            {% if form.document_type.errors %}
+                <ol class="error-text">
+                {% for error in form.document_type.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field form-field--buttons">

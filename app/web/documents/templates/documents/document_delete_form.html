@@ -12,6 +12,10 @@
             wilt verwijderen?
         </p>
 
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
+
         {% if object.document_to_document_version.all|length %}
             <h3>Versies:</h3>
             <ul>
