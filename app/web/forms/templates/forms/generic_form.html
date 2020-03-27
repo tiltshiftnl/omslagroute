@@ -10,13 +10,14 @@
         {% csrf_token %}
         {{ form.as_sections.errors }}
         {% for section in form.as_sections.sections %}
-            <fieldset class="section section--form-step">
-                <legend><h3>{{ section.title }}</h3></legend>
-                <p>{{ section.description }}</p>
+            <fieldset class="section section--step">
+                <legend><h3 class="section--step__title">{{ section.title }}</h3></legend>
+                <p class="section--step__description">{{ section.description }}</p>
+
                 {% for sub_section in section.section_list %}
                     <div class="section sub-section">
-                        <h4>{{ sub_section.title }}</h4>
-                        <p>{{ sub_section.description }}</p>
+                        <h4 class="sub-section__title">{{ sub_section.title }}</h4>
+                        <p class="sub-section__description">{{ sub_section.description }}</p>
 
                         {% for field in sub_section.fields %} 
                             {{ field|safe }}

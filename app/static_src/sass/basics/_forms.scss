@@ -4,23 +4,46 @@
 // ********************
     
 legend {
-    // margin-bottom: 15px;
+    padding: 0;
+    display: table;
+}
+
+fieldset {
+    margin: 0;
+    box-shadow: none;
+    border: 0;
+    padding: 0.01em 0 0 0;
+    min-width: 0;
+}
+
+body:not(:-moz-handler-blocked) fieldset {
+    display: table-cell;
 }
 
 .help-text {
     font-size: .9rem;
     color: $neutral-grey4;
     margin-top: 5px;
+    margin-bottom: 0;
 }
 
-fieldset {
-    margin: 0;
-    margin-bottom: 2rem;
-    box-shadow: none;
+.section--step__title {
+    font-size: 1.25rem;
 }
 
 .sub-section {
-    padding-left: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid $neutral-grey3;
+}
+
+.sub-section__title {
+    margin-top: 0;
+}
+
+.section--step__description,
+.sub-section__description {
+    max-width: 650px;
 }
 
 .form-field {
@@ -29,6 +52,10 @@ fieldset {
 
     .details__header & {
         margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    &:last-child {
         margin-bottom: 0;
     }
 }
@@ -325,4 +352,21 @@ select {
     font-size: 100%;
     line-height: 1.15;
     margin: 0px;
+}
+
+// ********************
+// SELECT DATE WIDGET
+// ********************
+
+.form-field--selectdatewidget {
+    label {
+        margin-bottom: 10px;
+    }
+
+    select {
+        display: inline-block;
+        width: auto;
+        padding-right: 40px;
+        margin-right: 10px;
+    }
 }

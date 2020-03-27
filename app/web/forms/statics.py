@@ -60,11 +60,11 @@ FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
 URGENTIE_AANVRAAG = [
     {
         'title': 'Persoonsgegevens',
-        'description': 'Omscrhrijving persoonsgegevens',
+        'description': 'In deze stap vult u eenmalig informatie over uw cliënt in. Deze informatie wordt in uw browser opgeslagen zodat u na invullen op een later moment van deze informatie gebruik kunt maken.',
         'section_list': [
             {
                 'title': 'Basisgegevens',
-                'description': 'Omscrhrijving basisgegevens',
+                'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
                 'fields': [
                     'naam_client',
                     'geslacht',
@@ -83,7 +83,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Woonsituatie',
-        'description': 'Wat is de woonsituatie van de cliënt',
+        'description': 'Informatie over de woonsituatie van uw cliënt.',
         'section_list': [
             {
                 'title': 'Woningnet',
