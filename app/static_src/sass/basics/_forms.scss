@@ -390,7 +390,6 @@ select {
     /* Firefox (hide native focus state) */
     &:-moz-focusring {
         color: transparent;
-        text-shadow: 0 0 0 ${themeColor('tint', 'level7')};
     }
 
     &:hover {
@@ -401,6 +400,12 @@ select {
         pointer-events: none;
         opacity: 0.5;
         box-shadow: rgb(180, 180, 180) 0px 0px 0px 1px inset;
+    }
+}
+
+@media all and (-ms-high-contrast:none) {
+    select {
+        background-size: 14px 20px;
     }
 }
 
