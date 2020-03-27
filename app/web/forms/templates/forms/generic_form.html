@@ -32,6 +32,64 @@
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{% url 'form_list' %}" class="button button--secondary">Annuleer</a>
         </div>
+
+        <!-- <div class="next-previous">
+            {#  if there is a previous step #}
+                <button class="button button--previous">
+                    <div class="arrow"></div>
+                    Vorige 
+                </button>
+            {# end if #}
+
+            {# if there is a next step #}
+                <button class="button button--next">
+                    Volgende
+                    <div class="arrow"></div>
+                </button>
+            {# else #}
+                <div class="button-group">
+                    <button type="submit" value="Opslaan" class="button button--primary">Opslaan</button>
+                    <button type="submit" value="Printen" class="button button--primary">Print als PDF</button>
+                    <button type="submit" value="Versturen" class="button button--secondary">Versturen</button>
+                </div>
+            {# end if #}
+        </div> -->
+
+
+
+        <br />
+
+        <div class="next-previous">
+            <!-- if there is a previous step -->
+                <button class="button button--previous">
+                    <div class="arrow"></div>
+                    Vorige 
+                </button>
+            <!-- end if -->
+
+            <!-- if there is a next step -->
+                <button class="button button--next">
+                    Volgende
+                    <div class="arrow"></div>
+                </button>
+        </div>
+
+        <br />
+
+        <div class="next-previous">
+            <!-- if there is a previous step -->
+                <button class="button button--previous">
+                    <div class="arrow"></div>
+                    Vorige 
+                </button>
+            <!-- end if -->
+                <div class="button-group">
+                    <button type="submit" value="Opslaan" class="button button--primary">Opslaan</button>
+                    <button type="submit" value="Printen" class="button button--primary">Print als PDF</button>
+                    <button type="submit" value="Versturen" class="button button--secondary">Versturen</button>
+                </div>
+            <!-- endif -->
+        </div>
     </form>
 </section>
 {% endblock %}

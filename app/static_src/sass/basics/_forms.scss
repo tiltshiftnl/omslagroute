@@ -42,6 +42,13 @@ body:not(:-moz-handler-blocked) fieldset {
     max-width: 650px;
 }
 
+.next-previous {
+    padding: 1rem;
+    background-color: $neutral-grey2;
+    display: flex;
+    justify-content: space-between;
+}
+
 // ********************
 // FIELD CONTAINERS
 // Each field and label is grouped in a .form-field container
