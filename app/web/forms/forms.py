@@ -55,7 +55,7 @@ class GenericForm(forms.Form):
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
                 css_classes = bf.css_classes()
-                css_classes += ' form-field--%s' % bf.field.widget.__class__.__name__.lower()
+                css_classes += 'form-field form-field--%s' % bf.field.widget.__class__.__name__.lower()
                 if css_classes:
                     html_class_attr = ' class="%s"' % css_classes
                 if bf.label:
@@ -105,10 +105,10 @@ class GenericModelForm(forms.ModelForm):
 
     def as_sections(self):
         return self._html_section_output(
-            normal_row='<div %(html_class_attr)s> %(errors)s %(label)s %(field)s%(help_text)s</div>',
+            normal_row='<div %(html_class_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
             error_row='%s',
             row_ender='</div>',
-            help_text_html=' <span class="helptext">%s</span>',
+            help_text_html=' <span class="help-text">%s</span>',
             errors_on_separate_row=True)
 
     def _html_section_output(self, normal_row, error_row, row_ender, help_text_html, errors_on_separate_row):
@@ -132,9 +132,9 @@ class GenericModelForm(forms.ModelForm):
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
                 css_classes = bf.css_classes()
-                css_classes += ' form-field--%s' % bf.field.widget.__class__.__name__.lower()
+                css_classes += ' form-field form-field--%s' % bf.field.widget.__class__.__name__.lower()
                 if css_classes:
-                    html_class_attr = ' class="form-field %s"' % css_classes
+                    html_class_attr = ' class="%s"' % css_classes
                 if bf.label:
                     label = conditional_escape(bf.label)
                     label = bf.label_tag(label) or ''

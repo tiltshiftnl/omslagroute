@@ -63,6 +63,12 @@ p, ul, ol {
     margin-bottom: 1rem;
 }
 
+.list-vertical {
+    li {
+        padding-bottom: .5rem;
+    }
+}
+
 ul {
     padding-left: 2px;
     list-style-position: inside;

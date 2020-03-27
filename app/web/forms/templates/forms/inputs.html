@@ -1,7 +1,6 @@
 {% include "django/forms/widgets/input.html" %}
 {% if widget.wrap_label %}
-    <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %} class="radio-inline">
-{% endif %}
-{% if widget.wrap_label %} {{ widget.label }}
+    <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %} class="form-field__radiolabel">
+        {{ widget.label }}
     </label>
 {% endif %}

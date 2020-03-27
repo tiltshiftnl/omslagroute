@@ -256,7 +256,9 @@ ul.form-field__radiogroup,
 }
 
 .form-field__checkbox,
-.form-field__radio {
+.form-field__radio,
+[type="radio"],
+[type="checkbox"] {
     opacity: 0;
     height: 0;
     float: left;
@@ -374,6 +376,32 @@ select {
     font-size: 100%;
     line-height: 1.15;
     margin: 0px;
+ 
+    /* IE11 (hide native arrow button) */
+    &::-ms-expand {
+        display: none;
+    }
+    /* IE11 (hide native focus state) */
+    &::-ms-value {
+        color: black; 
+        background: transparent;
+    }  
+
+    /* Firefox (hide native focus state) */
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 ${themeColor('tint', 'level7')};
+    }
+
+    &:hover {
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 1px inset;
+    }
+
+    &:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+        box-shadow: rgb(180, 180, 180) 0px 0px 0px 1px inset;
+    }
 }
 
 // ********************
