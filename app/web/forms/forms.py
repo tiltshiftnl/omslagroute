@@ -104,7 +104,7 @@ class GenericModelForm(forms.ModelForm):
 
     def as_sections(self):
         return self._html_section_output(
-            normal_row='<div%(html_class_attr)s> %(errors)s %(label)s %(field)s%(help_text)s</div>',
+            normal_row='<div %(html_class_attr)s> %(errors)s %(label)s %(field)s%(help_text)s</div>',
             error_row='%s',
             row_ender='</div>',
             help_text_html=' <span class="helptext">%s</span>',
