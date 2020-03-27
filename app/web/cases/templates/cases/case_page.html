@@ -4,20 +4,20 @@
 {% block main %}
 <section class="section section--timeline section--timeline-management">
     <h2>Cliënt details: {{ object.client_name }}</h2>
-    <dl>
+    <table>
         {% for k, v in object.to_dict.items %}
         {% if not forloop.first %}
-        <dt>{{ v.label }}: </dt>
-        <dd><strong>
+        <tr><th style="text-align: left">{{ v.label }}: </th>
+        <td>
             {% if v.value|is_date %}
                 {{ v.value|str_date_to_date|date:"j b Y" }}
             {% else %}
                 {{ v.value }}
             {% endif %}
-        </strong></dd>
+        </td></tr>
         {% endif %}
         {% endfor %}
-    </dl>
+    </table>
     <div class="form-field form-field--buttons">
         <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie' object.id %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
     </div>
