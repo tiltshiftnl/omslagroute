@@ -31,7 +31,7 @@ class GenericForm(forms.Form):
             normal_row='<div class="form-field" %(html_class_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
             error_row='%s',
             row_ender='</div>',
-            help_text_html=' <div class="help-text">%s</div>',
+            help_text_html=' <p class="help-text">%s</p>',
             errors_on_separate_row=True)
 
     def _html_section_output(self, normal_row, error_row, row_ender, help_text_html, errors_on_separate_row):
