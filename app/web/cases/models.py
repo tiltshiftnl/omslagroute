@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .statics import GESLACHT, GESLACHT_DICT
+from web.core.models import PrintableModel
 
-EMPTY_VALUE = _('- leeg -')
 
-class Case(models.Model):
+class Case(PrintableModel):
+    EMPTY_VALUE = '- leeg -'
+
     client_first_name = models.CharField(
         verbose_name=_('Client voornaam'),
         max_length=100,
@@ -34,24 +36,23 @@ class Case(models.Model):
         null=True,
     )
 
-
     @property
     def geslacht_value(self):
         if self.geslacht:
             return GESLACHT_DICT[self.geslacht]
-        return EMPTY_VALUE
+        return self.EMPTY_VALUE
 
     @property
     def geboortedatum_value(self):
         if self.geboortedatum:
             return self.geboortedatum
-        return EMPTY_VALUE
+        return self.EMPTY_VALUE
 
     @property
     def emailadres_value(self):
         if self.emailadres:
             return self.emailadres
-        return EMPTY_VALUE
+        return self.EMPTY_VALUE
 
     @property
     def client_name(self):

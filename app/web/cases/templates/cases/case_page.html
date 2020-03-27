@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load i18n %}
-{% block main %}
+{% load static i18n html_tags %}
 
+{% block main %}
 <section class="section section--timeline section--timeline-management">
     <h2>Cliënt details: {{ object.client_name }}</h2>
     <dl>
-        <dt>Voornaam: </dt>
-        <dd><strong>{{ object.client_first_name }}</strong></dd>
-        <dt>Achternaam: </dt>
-        <dd><strong>{{ object.client_last_name }}</strong></dd>
-        <dt>Geslacht: </dt>
-        <dd><strong>{{ object.geslacht_value }}</strong></dd>
-        <dt>Geboortedatum: </dt>
-        <dd><strong>{{ object.geboortedatum_value }}</strong></dd>
-        <dt>E-mailadres: </dt>
-        <dd><strong>{{ object.emailadres_value }}</strong></dd>
+        {% for k, v in object.to_dict.items %}
+        {% if not forloop.first %}
+        <dt>{{ v.label }}: </dt>
+        <dd><strong>
+            {% if v.value|is_date %}
+                {{ v.value|str_date_to_date|date:"j b Y" }}
+            {% else %}
+                {{ v.value }}
+            {% endif %}
+        </strong></dd>
+        {% endif %}
+        {% endfor %}
     </dl>
     <div class="form-field form-field--buttons">
         <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie' object.id %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>

@@ -9,7 +9,7 @@
     <p class="error-text">
         {{ form.non_field_errors }}
     </p>
-        
+
     <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ form.as_sections.errors }}
@@ -24,7 +24,7 @@
                         <h4 class="sub-section__title">{{ sub_section.title }}</h4>
                         <p class="sub-section__description">{{ sub_section.description }}</p>
 
-                        {% for field in sub_section.fields %} 
+                        {% for field in sub_section.fields %}
                             {{ field|safe }}
                         {% endfor %}
                     </div>
@@ -35,14 +35,14 @@
 
         <div data-submit-container class="form-field form-field--buttons">
             <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'form_list' %}" class="button button--secondary">Annuleer</a>
+            <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
         </div>
 
         <!-- <div class="next-previous">
             {#  if there is a previous step #}
                 <button class="button button--previous">
                     <div class="arrow"></div>
-                    Vorige 
+                    Vorige
                 </button>
             {# end if #}
 
