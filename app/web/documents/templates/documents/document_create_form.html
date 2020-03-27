@@ -8,17 +8,17 @@
         
         <div class="form-field">
             {{ form.name.label_tag }} 
-            <p class="help-text">
-                (Naam document)
-            </p>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.name }}
         </div>
 
         <div class="form-field">
             {{ form.document_type.label_tag }}
-            <div class="help-text">
-                Om wat voor soort document gaat het?
-            </div>
+            {% if form.document_type.help_text %}
+                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+            {% endif %}
             {{ form.document_type.tag }}
             {{ form.document_type }}
         </div>

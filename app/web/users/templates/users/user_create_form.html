@@ -11,33 +11,36 @@
 
         <div class="form-field">
             <label for="id_name">{{ form.username.label }}</label>
-            <div class="help-text">
-                {{ form.username.help_text }}
-            </div>
+            {% if form.username.help_text %}
+                <p class="help-text">{{ form.username.help_text|safe }}</p>
+            {% endif %}
             {{ form.username }}
             <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
  
         <div class="form-field">
             <label for="id_description">{{ form.user_type.label }}</label>
-            <div class="help-text">
-                {{ form.user_type.help_text }}
-            </div>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.user_type }}
             <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
 
         <div class="form-field">
             <label for="id_description">{{ form.password1.label }}</label>
-            <div class="help-text">
-                {{ form.password1.help_text }}
-            </div>
+            {% if form.password1.help_text %}
+                <p class="help-text">{{ form.password1.help_text|safe }}</p>
+            {% endif %}
             {{ form.password1 }}
             <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
 
         <div class="form-field">
             <label for="id_description">{{ form.password2.label }}</label>
+            {% if form.password2.help_text %}
+                <p class="help-text">{{ form.password2.help_text|safe }}</p>
+            {% endif %}
             {{ form.password2 }}
             <p class="error-text">Het veld hierboven is verplicht</p>
         </div>

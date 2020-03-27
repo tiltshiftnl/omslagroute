@@ -12,18 +12,27 @@
 
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.name }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            <p class="error-text">{{ form.name.error_messages }}</p>
         </div>
 
         <div class="form-field">
             <label for="id_description">{{ form.description.label }}</label>
+            {% if form.description.help_text %}
+                <p class="help-text">{{ form.description.help_text|safe }}</p>
+            {% endif %}
             {{ form.description }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            <p class="error-text">{{ form.description.error_messages }}</p>
         </div>
 
         <div class="form-field">
             <label for="id_document_type">{{ form.document_type.label }}</label>
+            {% if form.document_type.help_text %}
+                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+            {% endif %}
             <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
                     <li>
@@ -34,11 +43,16 @@
                     </li>
                 {% endfor %}
             </ul>
+            <p class="error-text">{{ form.document_type.error_messages }}</p>
         </div>
 
         <div class="form-field">
             <label for="id_moment_list">{{ form.moment_list.label }}</label>
+            {% if form.moment_list.help_text %}
+                <p class="help-text">{{ form.moment_list.help_text|safe }}</p>
+            {% endif %}
             {{ form.moment_list }}
+            <p class="error-text">{{ form.moment_list.error_messages }}</p>
         </div>
 
         <div class="form-field form-field--buttons">

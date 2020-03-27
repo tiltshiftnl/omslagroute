@@ -13,18 +13,27 @@
         {{ form.moment_id }}
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.help_text %}
+                <p class="help-text">{{ form.name.help_text|safe }}</p>
+            {% endif %}
             {{ form.name }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            <p class="error-text">{{ form.name.error_messages }}</p>
         </div>
 
         <div class="form-field">
             <label for="id_description">{{ form.description.label }}</label>
+            {% if form.description.help_text %}
+                <p class="help-text">{{ form.description.help_text|safe }}</p>
+            {% endif %}
             {{ form.description }}
             <p class="error-text">Het veld hierboven is verplicht</p>
         </div>
 
         <div class="form-field">
             <label for="id_document_type">{{ form.document_type.label }}</label>
+            {% if form.document_type.help_text %}
+                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+            {% endif %}
             <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
                     <li>
@@ -35,10 +44,14 @@
                     </li>
                 {% endfor %}
             </ul>
+            <p class="error-text">{{ form.document_type.error_messages }}</p>
         </div>
 
         <div class="form-field">
             <strong>Voeg hieronder het document toe</strong>
+            {% if form.uploaded_file.help_text %}
+                <p class="help-text">{{ form.uploaded_file.help_text|safe }}</p>
+            {% endif %}
             {% for form in documentversionformset.forms %}
                 {{ form.uploaded_file }}
                 <label for="file-upload">
@@ -47,7 +60,7 @@
                         <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
                     </svg>
                 </label>
-                <p class="error-text">Het veld hierboven is verplicht</p>
+                <p class="error-text">{{ form.uploaded_file.error_messages }}</p>
                 <div id="file-upload-filename" class="form-field__uploaded"></div>
             {% endfor %}
         </div>

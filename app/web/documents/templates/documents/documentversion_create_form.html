@@ -15,6 +15,9 @@
             </legend>
 
             <strong>Voeg hieronder het document toe</strong>
+            {% if form.uploaded_file.help_text %}
+                <p class="help-text">{{ form.uploaded_file.help_text|safe }}</p>
+            {% endif %}
             {{ form.uploaded_file }}
             <label for="file-upload">
                 {{ form.uploaded_file.label }}
@@ -22,7 +25,7 @@
                     <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
                 </svg>
             </label>
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            <p class="error-text">{{ form.uploaded_file.error_messages }}</p>
             <div id="file-upload-filename" class="form-field__uploaded"></div>
             
             {{ form.document }}
