@@ -9,6 +9,7 @@
     <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ form.as_sections.errors }}
+
         {% for section in form.as_sections.sections %}
             <fieldset class="section section--step">
                 <legend><h3 class="section--step__title">{{ section.title }}</h3></legend>

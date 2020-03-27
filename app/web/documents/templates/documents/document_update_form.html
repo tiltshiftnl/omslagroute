@@ -16,7 +16,13 @@
                 <p class="help-text">{{ form.name.help_text|safe }}</p>
             {% endif %}
             {{ form.name }}
-            <p class="error-text">{{ form.name.error_messages }}</p>
+            {% if form.name.errors %}
+                <ol class="error-text">
+                {% for error in form.name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
@@ -25,7 +31,13 @@
                 <p class="help-text">{{ form.description.help_text|safe }}</p>
             {% endif %}
             {{ form.description }}
-            <p class="error-text">{{ form.description.error_messages }}</p>
+            {% if form.description.errors %}
+                <ol class="error-text">
+                {% for error in form.description.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
@@ -42,8 +54,14 @@
                         </label>
                     </li>
                 {% endfor %}
-            </ul>
-            <p class="error-text">{{ form.document_type.error_messages }}</p>
+            </ul> 
+            {% if form.document_type.errors %}
+                <ol class="error-text">
+                {% for error in form.document_type.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
@@ -51,8 +69,14 @@
             {% if form.moment_list.help_text %}
                 <p class="help-text">{{ form.moment_list.help_text|safe }}</p>
             {% endif %}
-            {{ form.moment_list }}
-            <p class="error-text">{{ form.moment_list.error_messages }}</p>
+            {{ form.moment_list }} 
+            {% if form.moment_list.errors %}
+                <ol class="error-text">
+                {% for error in form.moment_list.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field form-field--buttons">

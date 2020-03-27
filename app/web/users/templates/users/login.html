@@ -11,15 +11,27 @@
             <div class="form-field">
                 <!-- {{ login_form.username.label_tag }} -->
                 <label for="id_username">Wat is uw gebruikersnaam?</label>
-                {{ login_form.username }}
-                <p class="error-text">Het veld hierboven is verplicht</p>
+                {{ login_form.username }} 
+                {% if login_form.username.errors %}
+                    <ol class="error-text">
+                    {% for error in login_form.username.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                    </ol>
+                {% endif %}
             </div>
 
             <div class="form-field">
                 <!-- {{ login_form.password.label_tag }} -->
                 <label for="id_password">Wat is uw wachtwoord?</label>
                 {{ login_form.password }}
-                <p class="error-text">Het veld hierboven is verplicht</p>
+                {% if login_form.password.errors %}
+                    <ol class="error-text">
+                    {% for error in login_form.password.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                    </ol>
+                {% endif %}
             </div>
 
             <div class="form-field form-field--buttons">

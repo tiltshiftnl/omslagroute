@@ -25,7 +25,13 @@
                     <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
                 </svg>
             </label>
-            <p class="error-text">{{ form.uploaded_file.error_messages }}</p>
+            {% if form.uploaded_file.errors %}
+                <ol class="error-text">
+                {% for error in form.uploaded_file.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
             <div id="file-upload-filename" class="form-field__uploaded"></div>
             
             {{ form.document }}

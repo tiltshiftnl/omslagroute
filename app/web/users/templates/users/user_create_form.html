@@ -15,16 +15,28 @@
                 <p class="help-text">{{ form.username.help_text|safe }}</p>
             {% endif %}
             {{ form.username }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.username.errors %}
+                <ol class="error-text">
+                {% for error in form.username.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
  
         <div class="form-field">
             <label for="id_description">{{ form.user_type.label }}</label>
             {% if form.name.help_text %}
-                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                <p class="help-text">{{ form.user_type.help_text|safe }}</p>
             {% endif %}
             {{ form.user_type }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.user_type.errors %}
+                <ol class="error-text">
+                {% for error in form.user_type.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
@@ -33,7 +45,13 @@
                 <p class="help-text">{{ form.password1.help_text|safe }}</p>
             {% endif %}
             {{ form.password1 }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.password1.errors %}
+                <ol class="error-text">
+                {% for error in form.password1.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <div class="form-field">
@@ -42,7 +60,13 @@
                 <p class="help-text">{{ form.password2.help_text|safe }}</p>
             {% endif %}
             {{ form.password2 }}
-            <p class="error-text">Het veld hierboven is verplicht</p>
+            {% if form.password2.errors %}
+                <ol class="error-text">
+                {% for error in form.password2.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
 
         <!-- 
