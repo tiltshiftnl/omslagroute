@@ -18,12 +18,9 @@
                         <h4>{{ sub_section.title }}</h4>
                         <p>{{ sub_section.description }}</p>
 
-                        {% for field in sub_section.fields %}
-                            <div class="form-field form-field--{{ field.widget.input_type }}">
-                                {{ field|safe }}
-                            </div>
+                        {% for field in sub_section.fields %} 
+                            {{ field|safe }}
                         {% endfor %}
-
                     </div>
                 {% endfor %}
             </fieldset>
