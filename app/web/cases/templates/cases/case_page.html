@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block main %}
+
+<section class="section section--timeline section--timeline-management">
+    <h2>Cliënt details: {{ object.client_name }}</h2>
+    <dl>
+        <dt>Voornaam: </dt>
+        <dd><strong>{{ object.client_first_name }}</strong></dd>
+        <dt>Achternaam: </dt>
+        <dd><strong>{{ object.client_last_name }}</strong></dd>
+        <dt>Geslacht: </dt>
+        <dd><strong>{{ object.geslacht_value }}</strong></dd>
+        <dt>Geboortedatum: </dt>
+        <dd><strong>{{ object.geboortedatum_value }}</strong></dd>
+        <dt>E-mailadres: </dt>
+        <dd><strong>{{ object.emailadres_value }}</strong></dd>
+    </dl>
+    <div class="form-field form-field--buttons">
+        <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie' object.id %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
+    </div>
+</section>
+{% endblock %}

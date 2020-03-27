@@ -8,9 +8,9 @@
     <ul>
         {% for object in object_list %}
         <li>
-            <a href="{% url 'update_case' object.id %}">
+            <a href="{% url 'case' object.id %}">
             {{ object.client_name }}
-            </a>&nbsp;|&nbsp;<a href="{% url 'delete_case' object.id %}">verwijderen</a>
+            </a>&nbsp;|&nbsp;<a href="{% url 'update_case' object.id %}">wijzigen</a> | <a href="{% url 'delete_case' object.id %}">verwijderen</a>
         </li>
         {% endfor %}
     </ul>
