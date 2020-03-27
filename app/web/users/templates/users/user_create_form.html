@@ -9,6 +9,10 @@
         <!-- {{ form.as_p }}
         {{ profile_form.as_p }} -->
 
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
+
         <div class="form-field">
             <label for="id_name">{{ form.username.label }}</label>
             {% if form.username.help_text %}

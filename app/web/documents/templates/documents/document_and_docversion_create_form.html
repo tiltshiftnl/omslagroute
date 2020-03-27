@@ -12,6 +12,10 @@
         {{ documentversionformset.management_form }}
         {{ form.moment_id }}
 
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
+
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
             {% if form.name.help_text %}

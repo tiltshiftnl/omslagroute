@@ -10,6 +10,10 @@
             U kunt hier hier het document <strong>"{{ form.instance.name|striptags }}"</strong> wijzigen.
         </legend>
 
+        <p class="error-text">
+            {{ form.non_field_errors }}
+        </p>
+
         <div class="form-field">
             <label for="id_name">{{ form.name.label }}</label>
             {% if form.name.help_text %}
