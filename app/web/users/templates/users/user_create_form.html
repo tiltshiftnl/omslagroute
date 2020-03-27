@@ -3,7 +3,7 @@
 {% block main %}
     <h2>Nieuwe gebruiker toevoegen</h2>
 
-    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+    <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
 
         {{ form.as_p }}
         {{ profile_form.as_p }}

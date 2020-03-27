@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from .statics import GESLACHT, GESLACHT_DICT
 
+EMPTY_VALUE = _('- leeg -')
 
 class Case(models.Model):
     client_first_name = models.CharField(
@@ -15,6 +17,41 @@ class Case(models.Model):
         blank=True,
         null=True,
     )
+    geslacht = models.PositiveSmallIntegerField(
+        verbose_name=_('Geslacht'),
+        choices=GESLACHT,
+        blank=True,
+        null=True,
+    )
+    geboortedatum = models.DateField(
+        verbose_name=_('Geboortedatum'),
+        blank=True,
+        null=True,
+    )
+    emailadres = models.EmailField(
+        verbose_name=_('E-mailadres'),
+        blank=True,
+        null=True,
+    )
+
+
+    @property
+    def geslacht_value(self):
+        if self.geslacht:
+            return GESLACHT_DICT[self.geslacht]
+        return EMPTY_VALUE
+
+    @property
+    def geboortedatum_value(self):
+        if self.geboortedatum:
+            return self.geboortedatum
+        return EMPTY_VALUE
+
+    @property
+    def emailadres_value(self):
+        if self.emailadres:
+            return self.emailadres
+        return EMPTY_VALUE
 
     @property
     def client_name(self):

@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.forms import widgets
 from .utils import birth_dates_years
+from web.cases.statics import GESLACHT
 
 
 FIELDS = (
@@ -10,14 +11,21 @@ FIELDS = (
         help_text=_('Voor- en achternaam'),
         required=True
     )),
+    ('client_first_name', forms.CharField(
+        label=_('Naam cliënt'),
+        help_text=_('Voor- en achternaam'),
+        required=True
+    )),
+    ('client_last_name', forms.CharField(
+        label=_('Naam cliënt'),
+        help_text=_('Voor- en achternaam'),
+        required=True
+    )),
     ('geslacht', forms.ChoiceField(
         label=_('Geslacht'),
         required=True,
         widget=forms.RadioSelect(),
-        choices=(
-            ('vrouw', 'Vrouw'),
-            ('man', 'Man'),
-        ),
+        choices=GESLACHT,
     )),
     ('geboortedatum', forms.DateField(
         label=_('Geboortedatum'),
@@ -25,6 +33,10 @@ FIELDS = (
         widget=widgets.SelectDateWidget(
             years=birth_dates_years(),
         ),
+    )),
+    ('emailadres', forms.EmailField(
+        label=_('E-mailadres'),
+        required=True,
     )),
     ('email', forms.EmailField(
         label=_('E-mailadres'),
