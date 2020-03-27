@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView, FormView
 from .models import *
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -19,6 +19,7 @@ from urllib.request import urlopen
 from web.users.statics import BEGELEIDER
 from web.profiles.models import Profile
 from web.forms.forms import GenericModelForm
+from web.forms.views import GenericModelFormView
 import json
 
 
@@ -92,18 +93,17 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         return response
 
 
-class GenericFormView(UpdateView):
+class GenericFormView(GenericModelFormView):
     model = Case
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('cases_by_profile')
     form_class = CaseGenericModeForm
 
     def get_success_url(self):
-        return reverse_lazy('cases_by_profile')
+        return reverse('case', kwargs={'pk': self.object.id})
 
-    # def get_initial(self):
-    #     #self.initial.update(json.loads(self.request.session.get('client_data', '{}')))
-    #     return super().get_initial()
+    def get_discard_url(self):
+        return reverse('case', kwargs={'pk': self.object.id})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -113,13 +113,10 @@ class GenericFormView(UpdateView):
         return kwargs
 
     def form_invalid(self, form):
-        print(form.errors)
         return super().form_invalid(form)
 
     def form_valid(self, form):
         response = super().form_valid(form)
-
-        #self.request.session['client_data'] = json.dumps(form.cleaned_data, cls=DateTimeEncoder)
         messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
         return response
 

@@ -10,6 +10,7 @@ urlpatterns = [
     path('wijzig/<int:pk>', CaseUpdateView.as_view(), name='update_case'),
     path('verwijder/<int:pk>', CaseDeleteView.as_view(), name='delete_case'),
     path('<int:pk>/nieuwe-aanvraag-omslag-en-urgentie', GenericFormView.as_view(), {
+        'title': 'Aanvraag urgentie',
         'sections': URGENTIE_AANVRAAG
     }, name='nieuwe_aanvraag_omslag_en_urgentie'),
 ]
