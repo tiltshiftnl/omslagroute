@@ -43,7 +43,7 @@ FIELDS = (
         label=_('E-mailadres'),
         required=True,
     )),
-    ('woningnetnummer', forms.IntegerField(
+    ('woningnetnummer', forms.CharField(
         label=_('Woningnetnummer'),
         required=True,
     )),
