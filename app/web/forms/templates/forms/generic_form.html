@@ -10,21 +10,23 @@
         {% csrf_token %}
         {{ form.as_sections.errors }}
         {% for section in form.as_sections.sections %}
-            <section class="section" style="border: 1px solid red; padding: 10px;">
-                <h3>{{ section.title }}</h3>
+            <fieldset class="section section--form-step">
+                <legend><h3>{{ section.title }}</h3></legend>
                 <p>{{ section.description }}</p>
                 {% for sub_section in section.section_list %}
-                    <fieldset class="section sub-section">
-                        <legend>{{ sub_section.title }}</legend>
+                    <div class="section sub-section">
+                        <h4>{{ sub_section.title }}</h4>
                         <p>{{ sub_section.description }}</p>
+
                         {% for field in sub_section.fields %}
-                            <div class="field-wrapper">
+                            <div class="form-field form-field--{{ field.widget.input_type }}">
                                 {{ field|safe }}
                             </div>
                         {% endfor %}
-                    </fieldset>
+
+                    </div>
                 {% endfor %}
-            </section>
+            </fieldset>
         {% endfor %}
         {{ form.as_sections.hidden_fields }}
 

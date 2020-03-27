@@ -4,7 +4,7 @@
 // ********************
     
 legend {
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
 }
 
 .help-text {
@@ -15,7 +15,12 @@ legend {
 
 fieldset {
     margin: 0;
+    margin-bottom: 2rem;
     box-shadow: none;
+}
+
+.sub-section {
+    padding-left: 2rem;
 }
 
 .form-field {
@@ -70,6 +75,8 @@ label {
 
 [type="password"],
 [type="text"],
+[type="email"],
+[type="number"],
 select,
 textarea {
     font-family: inherit;
