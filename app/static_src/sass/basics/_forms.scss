@@ -1,6 +1,5 @@
 // ********************
 // GENERAL FORM ELEMENTS
-// Each field and label is grouped in a .form-field container
 // ********************
     
 legend {
@@ -20,12 +19,9 @@ body:not(:-moz-handler-blocked) fieldset {
     display: table-cell;
 }
 
-.help-text {
-    font-size: .9rem;
-    color: $neutral-grey4;
-    margin-top: 5px;
-    margin-bottom: 0;
-}
+// ********************
+// GENERIC FORMS FIELD GROUP CONTAINERS 
+// ********************
 
 .section--step__title {
     font-size: 1.25rem;
@@ -45,6 +41,11 @@ body:not(:-moz-handler-blocked) fieldset {
 .sub-section__description {
     max-width: 650px;
 }
+
+// ********************
+// FIELD CONTAINERS
+// Each field and label is grouped in a .form-field container
+// ********************
 
 .form-field {
     margin-top: 10px;
@@ -87,9 +88,15 @@ body:not(:-moz-handler-blocked) fieldset {
     }
 }
 
-label {
-    display: block;
-    font-weight: bold;
+// ********************
+// HELPFUL INFORMATION
+// ********************
+
+.help-text {
+    font-size: .9rem;
+    color: $neutral-grey4;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .error-text {
@@ -98,6 +105,15 @@ label {
     display: none;
     margin-bottom: 0;
     margin-top: 10px;
+}
+
+// ********************
+// DEFAULT STYLES
+// ********************
+
+label {
+    display: block;
+    font-weight: bold;
 }
 
 [type="password"],
@@ -146,7 +162,6 @@ input[data-error-message] {
 //  
 // <input type="file" id="file_upload">
 // <label for="file_upload">
-// 
 // ********************
 
 [type="file"] {
