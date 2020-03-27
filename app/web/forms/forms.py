@@ -131,6 +131,7 @@ class GenericModelForm(forms.ModelForm):
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
                 css_classes = bf.css_classes()
+                css_classes += ' field-%s' % bf.field.widget.__class__.__name__.lower()
                 if css_classes:
                     html_class_attr = ' class="%s"' % css_classes
                 if bf.label:
