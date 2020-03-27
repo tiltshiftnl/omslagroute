@@ -256,7 +256,9 @@ ul.form-field__radiogroup,
 }
 
 .form-field__checkbox,
-.form-field__radio {
+.form-field__radio,
+[type="radio"],
+[type="checkbox"] {
     opacity: 0;
     height: 0;
     float: left;
