@@ -9,17 +9,14 @@ from web.cases.statics import GESLACHT
 FIELDS = (
     ('naam_client', forms.CharField(
         label=_('Naam cliënt'),
-        help_text=_('Voor- en achternaam'),
         required=True
     )),
     ('client_first_name', forms.CharField(
-        label=_('Naam cliënt'),
-        help_text=_('Voor- en achternaam'),
+        label=_('Voornaam'),
         required=True
     )),
     ('client_last_name', forms.CharField(
-        label=_('Naam cliënt'),
-        help_text=_('Voor- en achternaam'),
+        label=_('Achternaam'),
         required=True
     )),
     ('geslacht', forms.ChoiceField(
@@ -66,7 +63,8 @@ URGENTIE_AANVRAAG = [
                 'title': 'Basisgegevens',
                 'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
                 'fields': [
-                    'naam_client',
+                    'client_first_name',
+                    'client_last_name',
                     'geslacht',
                     'geboortedatum',
                 ],

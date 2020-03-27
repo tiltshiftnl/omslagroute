@@ -1,6 +1,6 @@
 from .views import *
 from django.urls import path
-from .statics import URGENTIE_AANVRAAG
+from web.forms.statics import URGENTIE_AANVRAAG
 
 
 urlpatterns = [
