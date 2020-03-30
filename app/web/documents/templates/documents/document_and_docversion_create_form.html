@@ -17,7 +17,7 @@
         </p>
 
         <div class="form-field">
-            <label for="id_name">{{ form.name.label }}</label>
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
             {% if form.name.help_text %}
                 <p class="help-text">{{ form.name.help_text|safe }}</p>
             {% endif %}
@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-field">
-            <label for="id_description">{{ form.description.label }}</label>
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
             {% if form.description.help_text %}
                 <p class="help-text">{{ form.description.help_text|safe }}</p>
             {% endif %}
@@ -47,7 +47,7 @@
         </div>
 
         <div class="form-field">
-            <label for="id_document_type">{{ form.document_type.label }}</label>
+            <label for="{{ form.document_type.id_for_label }}">{{ form.document_type.label }}</label>
             {% if form.document_type.help_text %}
                 <p class="help-text">{{ form.document_type.help_text|safe }}</p>
             {% endif %}
@@ -77,7 +77,7 @@
             {% endif %}
             {% for form in documentversionformset.forms %}
                 {{ form.uploaded_file }}
-                <label for="file-upload">
+                <label for="{{ form.uploaded_file.id_for_label }}">
                     {{ form.uploaded_file.label }}
                     <svg class="file-upload__icon" width="24" height="24" > 
                         <use href="#upload" xlink:href="#upload" width="24" height="24"></use>

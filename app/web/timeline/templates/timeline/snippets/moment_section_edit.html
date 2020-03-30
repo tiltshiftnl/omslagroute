@@ -34,7 +34,7 @@
             <h3 data-static-mode data-moment-name class="details__title">{{ moment.instance.name }}</h3>
 
             <div class="form-field data-edit-mode">
-                <label for="id_description" class="sr-only">{{ moment.name.label }}</label>
+                <label for="{{ moment.name.id_for_label }}" class="sr-only">{{ moment.name.label }}</label>
                 {{ moment.name }}
                 {% if moment.name.errors %}
                     <ol class="error-text">
@@ -119,7 +119,7 @@
             </div>
 
             <div class="form-field data-edit-mode">
-                <label for="id_description">{{ moment.description.label }}</label>
+                <label for="{{ moment.description.id_for_label }}">{{ moment.description.label }}</label>
                 {{ moment.description }}
                 {% if moment.description.errors %}
                     <ol class="error-text">
@@ -131,7 +131,7 @@
             </div>
 
             <div class="form-field data-edit-mode">
-                <label for="id_document_type">{{ moment.organizations.label }}</label>
+                <label for="{{ mome.organizations.id_for_label }}">{{ moment.organizations.label }}</label>
                 <ul class="form-field__checkboxgroup">
                     {% for checkbox in moment.organizations %}
                         <li>
