@@ -7,17 +7,13 @@
 {% block main %}
     <section class="section section-downloads">
         {% if title %}<h2>{{ title }}</h2>{% endif %}
-        <ul class="downloads {% if request.user|has_group:"wonen" %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
+        <ul class="downloads {% if request.user|is_beheerder %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
         {% if document_list %}
             {% include 'documents/snippets/document_list.html' %}
         {% endif %}
-        {% if request.user|has_group:"wonen" %}
+        {% if request.user|is_beheerder %}
             {% include 'documents/snippets/upload.html' with moment_id=moment.id %}
         {% endif %}
         </ul>
-
-        <p>
-            <a href="{% url 'document_list' %}" class="button button--primary button--readmore">Alle documenten</a>
-        </p>
     </section>
 {% endblock %}

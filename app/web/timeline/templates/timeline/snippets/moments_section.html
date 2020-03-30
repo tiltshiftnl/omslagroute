@@ -4,7 +4,7 @@
     <section class="section section--timeline">
         <h2>De Omslagroute</h2>
 
-        {% if request.user.is_authenticated %}
+        {% if request.user|is_beheerder %}
             <p class="details-admin">
                 <a href="/timeline/" class="button button--primary" title="Pas de processtappen aan">
                     Wijzig processtappen
@@ -46,11 +46,11 @@
                     <div class="details__content">
                         <div>{{ moment.description|linebreaks }}</div>
 
-                        <ul class="downloads {% if request.user|has_group:"wonen" %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
+                        <ul class="downloads {% if request.user|is_beheerder %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
                             {% if moment.documents.all %}
                                 {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.documents.all  %}
                             {% endif %}
-                            {% if request.user|has_group:"wonen" %}
+                            {% if request.user|is_beheerder %}
                                 {% include 'documents/snippets/upload.html' with moment_id=moment.id %}
                             {% endif %}
                         </ul>
