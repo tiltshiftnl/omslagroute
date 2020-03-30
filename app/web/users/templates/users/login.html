@@ -10,7 +10,7 @@
 
             <div class="form-field">
                 <!-- {{ login_form.username.label_tag }} -->
-                <label for="id_username">Wat is uw gebruikersnaam?</label>
+                <label for="{{ login_form.username.id_for_label }}">Wat is uw gebruikersnaam?</label>
                 {{ login_form.username }} 
                 {% if login_form.username.errors %}
                     <ol class="error-text">
@@ -23,7 +23,7 @@
 
             <div class="form-field">
                 <!-- {{ login_form.password.label_tag }} -->
-                <label for="id_password">Wat is uw wachtwoord?</label>
+                <label for="{{ login_form.password.id_for_label }}">Wat is uw wachtwoord?</label>
                 {{ login_form.password }}
                 {% if login_form.password.errors %}
                     <ol class="error-text">

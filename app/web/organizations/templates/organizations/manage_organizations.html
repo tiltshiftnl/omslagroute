@@ -12,7 +12,6 @@
             {% csrf_token %}
             {{ formset.management_form }}
 
-
             <p class="error-text">
                 {{ form.non_field_errors }}
             </p>
@@ -21,15 +20,14 @@
                 <thead>
                     <th>Naam organisatie:</th>
                     <th>Afkorting (Max. 4 karakters):</th>
-                    <th>Actie</th>
+                    <th>Verwijderen</th>
                 </thead>
 
                 {% for form in formset %}
                     <tr class="organisation">
-                    <!-- {{ form.as_p }} -->
 
                         <td class="form-field">
-                            <label for="id_name" class="sr-only">{{ form.name.label }}</label>
+                            <label for="{{ form.name.id_for_label }}" class="sr-only">{{ form.name.label }}</label>
                             {% if form.name.help_text %}
                                 <p class="help-text">{{ form.name.help_text|safe }}</p>
                             {% endif %}
@@ -44,7 +42,7 @@
                         </td>
 
                         <td class="form-field">
-                            <label for="id_name" class="sr-only">{{ form.name_abbreviation.label }}</label>
+                            <label for="{{ form.name_abbreviation.id_for_label }}" class="sr-only">{{ form.name_abbreviation.label }}</label>
                             {% if form.name_abbreviation.help_text %}
                                 <p class="help-text">{{ form.name_abbreviation.help_text|safe }}</p>
                             {% endif %}
@@ -58,22 +56,26 @@
                             {% endif %}
                         </td>
 
-                        <td class="form-field form-field--delete">
-                            {{ form.DELETE }}
-                            <label for="{{ form.DELETE.id_for_label }}" class="form-field__checkboxlabel"><span class="sr-only">{{ form.DELETE.label_tag }}</span></label>
+                        {% if form.instance.id %}
+                            <td class="form-field form-field--delete">
+                                {{ form.DELETE }}
+                                <label for="{{ form.DELETE.id_for_label }}" class="form-field__checkboxlabel"><span class="sr-only">{{ form.DELETE.label_tag }}</span></label>
 
-                            <!-- <input type="hidden" name="item_id" value="{{ form.DELETE.id_for_label }}" /> -->
-                            {% for hidden in form.hidden_fields %}
-                                {{ hidden }}
-                            {% endfor %}
-                        </td>
+                                <!-- <input type="hidden" name="item_id" value="{{ form.DELETE.id_for_label }}" /> -->
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                            </td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </table>
 
             <div data-submit-container class="form-field form-field--buttons screen-only">
                 <input type="submit" value="Opslaan" class="button button--primary">
-                <a href="{% url 'manage_timeline' %}" class="button button--secondary">Annuleer</a>
+                <a href="{% url 'manage_timeline' %}" class="button button--secondary">Terug</a>
             </div>
         </form>
     </section>

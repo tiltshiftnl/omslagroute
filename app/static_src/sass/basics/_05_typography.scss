@@ -38,6 +38,16 @@ h1 {
     line-height: 1.37931rem;
     margin-top: 0;
     margin-bottom: 0;
+
+    a {
+        color: $default-text-color;
+        text-decoration: none;
+
+        &:hover {
+            color: $default-text-color;
+            text-decoration: none;
+        }
+    }
 }
 
 h2 {
