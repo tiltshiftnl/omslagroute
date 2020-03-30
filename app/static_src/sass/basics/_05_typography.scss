@@ -1,3 +1,8 @@
+// ********************
+// TYPOGRAPHY
+// And margins of default html elements
+// ********************   
+
 html {
     font-size: 16px;
 }
@@ -9,12 +14,6 @@ body {
     font-weight: 400;
     color: $default-text-color;
     -webkit-text-size-adjust: auto;
-}
-
-@supports (font-display: swap) {
-    body {
-        font-display: swap;
-    }
 }
 
 a {
@@ -98,4 +97,15 @@ a {
 
 a:active,a:hover {
     color: $primary-red;
+}
+
+hr {
+    min-height: 1px;
+    height: 1px;
+    background-color: $neutral-grey2;
+    color: $neutral-grey2;
+    border-style: solid;
+    border: 0;
+    margin-bottom: 2rem;
+    margin-top: 2.5rem;
 }

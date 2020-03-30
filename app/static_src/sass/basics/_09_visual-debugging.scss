@@ -1,0 +1,32 @@
+// ********************
+// HELPFUL FOR QUICK DEBUGGING 
+// ********************    
+
+// SHOW MEDIAQUERY BEING APPLIED
+
+    // html::after {
+    //     content: 'default';
+    //     position: fixed;
+    //     top: 0;
+    //     left: 0;
+    //     background: black;
+    //     padding: 10px;
+    //     color: white;
+    //     z-index: 10;
+
+    //     @media screen and (min-width: $tablets) {
+    //         content: 'desktop'
+    //     }
+
+    //     @media screen and (min-width: $large) {
+    //         content: 'large'
+    //     }
+    // }
+
+// SHOW CLASSNAME OF ELEMENT IN PRINT
+
+    // @media print {
+    //     *::after {
+    //         content: " (" attr(class) ")";
+    //     } 
+    // }

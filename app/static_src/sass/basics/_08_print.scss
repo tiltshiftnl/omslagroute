@@ -1,0 +1,44 @@
+// ********************
+// PRINT STYLESHEET
+// ********************    
+
+@media print {
+    body {
+        font: 12pt Georgia, "Times New Roman", Times, serif;
+        line-height: 1.3;
+    }
+
+    img {
+        max-width: 500px;
+    }
+
+    p a {
+        word-wrap: break-word;
+    }
+
+    p a[href^="http://"]:after, a[href^="https://"]::after {
+        content: " (" attr(href) ")";
+    }
+
+    p a[href^="#"]::after {
+        display: none;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    // describes the styling of the first page 
+    @page :first {
+        margin: 1cm 2cm;
+    }
+
+    // The following code sets the left page (1, 3, 5, etc.) and right page (2, 4, 6, etc.) margins independently
+    @page :left {
+        margin: 0.5cm;
+    }
+    
+    @page :right {
+        margin: 0.8cm;
+    }
+}

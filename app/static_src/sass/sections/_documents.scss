@@ -1,9 +1,13 @@
+// ********************
+// DOCUMENT LISTS FOR DOWNLOADING (and adding new)
+// ********************
+
 .downloads {
     // padding-bottom: calc(1.687rem * 4);
     margin: 0;
     padding-left: 0;
 
-    @media all and (min-width: $desktop) {
+    @media all and (min-width: $tablets) {
         -ms-flex-line-pack: start;
         align-content: flex-start;
             display: -ms-grid;
@@ -31,7 +35,7 @@
     border-right: 2px solid transparent;
     border-bottom: 2px solid transparent;
 
-    @media all and (min-width: $desktop) {
+    @media all and (min-width: $tablets) {
         margin-bottom: 0;
         justify-content: space-between;
         display: flex;
@@ -47,7 +51,7 @@
         border-right: 2px solid $primary-red;
         border-bottom: 2px solid $primary-red;
         
-        @media all and (min-width: $desktop) {
+        @media all and (min-width: $tablets) {
             border-right: 0;
             border-bottom: 0;
         }
@@ -62,7 +66,7 @@
         padding-bottom: 30px;
     }
 
-    @media all and (min-width: $desktop) and (max-width: $large) {
+    @media all and (min-width: $tablets) and (max-width: $large) {
         .downloads {
             -ms-grid-columns: 1fr 2rem 1fr 2rem 1fr;
         }
@@ -178,7 +182,7 @@
     align-content: flex-start;
     padding-left: 1rem;
 
-    @media screen and (min-width: $desktop) {
+    @media screen and (min-width: $tablets) {
         flex: 1 1 100px;
         padding-left: 0;
         text-align: center;
@@ -197,7 +201,7 @@
     font-size: 1rem;
     margin-top: 0;
 
-    @media screen and (min-width: $desktop) {
+    @media screen and (min-width: $tablets) {
         margin-top: 1rem; 
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -216,7 +220,7 @@
 .document__icon {
     flex: 0 0 40px;
 
-    @media all and (min-width: $desktop) { 
+    @media all and (min-width: $tablets) { 
         align-self: center;
     }
 }
@@ -226,7 +230,7 @@
 }
 
 .document__info-wrapper {
-    @media all and (min-width: $desktop) { 
+    @media all and (min-width: $tablets) { 
         display: none;
         position: absolute;
         left: 100%;
@@ -263,7 +267,7 @@
         }
     }
 
-    @media all and (min-width: $desktop) {
+    @media all and (min-width: $tablets) {
         width: 300px;
         background-color: $primary-white;
         box-shadow: 0 0 5px 2px $neutral-grey3;
@@ -275,7 +279,7 @@
         }
     }
 
-    @media all and (min-width: $desktop) {
+    @media all and (min-width: $tablets) {
         width: 500px;
     }
 }
@@ -291,7 +295,7 @@
     position: relative;
     height: 100%;
 
-    @media all and (min-width: $desktop) {
+    @media all and (min-width: $tablets) {
         flex-direction: column;
         padding: 1.5rem 1rem 1rem 1rem;
     }
@@ -308,7 +312,7 @@
         text-decoration: none;
         color: $primary-black;
         
-        @media all and (min-width: $desktop) {
+        @media all and (min-width: $tablets) {
             border-right: 2px solid $primary-red;
             border-bottom: 2px solid $primary-red;
         }
@@ -339,7 +343,7 @@
         display: block;
     }
 
-    @media all and (min-width: $desktop) and (max-width: $large) {
+    @media all and (min-width: $tablets) and (max-width: $large) {
         &:nth-child(3n + 3) {
             .document__info-wrapper {
                 left: auto;
@@ -365,7 +369,7 @@
         display: block;
     }
 
-    @media all and (min-width: $desktop) and (max-width: $large) {
+    @media all and (min-width: $tablets) and (max-width: $large) {
         &:nth-child(3n + 3) {
             .document__info-wrapper {
                 left: auto;
