@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .statics import *
 from web.core.models import PrintableModel
+from web.forms.forms import BaseGenericForm
+from web.forms.statics import FIELDS_DICT
 
 
 class Case(PrintableModel):
@@ -192,6 +194,12 @@ class Case(PrintableModel):
         if self.client_first_name or self.client_last_name:
             return '%s %s' % (self.client_first_name, self.client_last_name)
         return str(self.id)
+
+    def status(self, sections):
+        section_fields = BaseGenericForm._get_fields(sections)
+        required_fields = [f for f in section_fields if FIELDS_DICT.get(f) and FIELDS_DICT.get(f).required]
+        filled_fields = [f for f in required_fields if hasattr(self, f) and getattr(self, f)]
+        return int(float(float(len(filled_fields) / len(required_fields))) * 100)
 
     def __str__(self):
         if self.client_first_name:

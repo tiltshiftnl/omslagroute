@@ -55,6 +55,8 @@ class BaseGenericForm:
                     html_class_attr = ' class="%s"' % css_classes
                 if bf.label:
                     label = conditional_escape(bf.label)
+                    if bf.field.required:
+                        label = '%s*' % label
                     label = bf.label_tag(label) or ''
                 else:
                     label = ''
@@ -107,3 +109,6 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         super().__init__(*args, **kwargs)
         for f in self._get_fields(self.sections):
             self.fields[f] = FIELDS_DICT.get(f)
+
+    def completed(self):
+        print(self.instance)

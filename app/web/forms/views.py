@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, FormView, UpdateView
+from django.views.generic import TemplateView, FormView, UpdateView, CreateView
 from django.urls import reverse_lazy
 from .forms import *
 from django.contrib import messages
@@ -54,6 +54,37 @@ class GenericFormView(FormView):
 
 
 class GenericModelFormView(UpdateView):
+    template_name = 'forms/generic_form.html'
+    success_url = reverse_lazy('form_list')
+    form_class = GenericModelForm
+
+    def get_discard_url(self):
+        return reverse_lazy('form_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({
+            'sections': self.kwargs.get('sections'),
+        })
+        return kwargs
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
+        return response
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            self.kwargs
+        )
+        kwargs.update({
+            'discard_url': self.get_discard_url(),
+        })
+        return kwargs
+
+
+class GenericModelCreateFormView(CreateView):
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('form_list')
     form_class = GenericModelForm

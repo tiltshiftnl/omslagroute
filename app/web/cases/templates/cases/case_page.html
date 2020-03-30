@@ -3,7 +3,20 @@
 
 {% block main %}
 <section class="section section--timeline section--timeline-management">
+    <a href="{% url 'cases_by_profile' %}" class="button button--secondary" title="Verwijder cliënt gegevens">
+            Terug naar `Mijn cliënten`
+    </a>
     <h2>Cliënt details: {{ object.client_name }}</h2>
+
+    <p class="details-admin">
+        <a href="{% url 'update_case' object.id %}" class="button button--primary" title="Wijzig basis gegevens">
+            Wijzig cliënt gegevens
+        </a>
+        <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="Verwijder cliënt gegevens">
+            Verwijder cliënt gegevens
+        </a>
+    </p>
+
     <table>
         {% for k, v in object.to_dict.items %}
         {% if not forloop.first %}
