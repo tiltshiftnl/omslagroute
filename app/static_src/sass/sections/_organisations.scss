@@ -1,0 +1,36 @@
+.organisation-list {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-top: 3rem;
+
+    th {
+        text-align: left;
+    }
+
+    th:nth-of-type(2),
+    td:nth-of-type(2) {
+        padding: 0 1rem;
+    }
+}
+
+.organisation {
+    width: 100%;
+
+    .form-field {
+        label { 
+            display: none;
+        }
+    }
+
+    &:last-of-type td {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .form-field--delete {
+        label {
+            display: block;
+        }
+    }
+}

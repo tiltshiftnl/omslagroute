@@ -16,4 +16,7 @@ class OrganizationForm(forms.ModelForm):
             'name',
             'name_abbreviation',
         )
-
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Naam organisatie'}),
+            'name_abbreviation': forms.TextInput(attrs={'placeholder': 'NIEUW'}),
+        }

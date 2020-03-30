@@ -6,22 +6,72 @@
     <section class="section section--manage-organisations">
         <h2>Organisatiebeheer</h2>
 
+        <p>Voeg hier organisaties toe die onderdeel uitmaken van de omslagroute of bewerk deze.</p>
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ formset.management_form }}
-            <div data-moment-container class="details-list-wrapper">
+
+
+            <p class="error-text">
+                {{ form.non_field_errors }}
+            </p>
+
+            <table data-moment-container class="organisation-list">
+                <thead>
+                    <th>Naam organisatie:</th>
+                    <th>Afkorting (Max. 4 karakters):</th>
+                    <th>Actie</th>
+                </thead>
+
                 {% for form in formset %}
-                    <div>
-                    {% if not form.instance.id %}
-                        <h2>Nieuwe organisaties</h2>
-                    {% endif %}
-                    {{ form.as_p }}
-                    </div>
+                    <tr class="organisation">
+                    <!-- {{ form.as_p }} -->
 
+                        <td class="form-field">
+                            <label for="id_name" class="sr-only">{{ form.name.label }}</label>
+                            {% if form.name.help_text %}
+                                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                            {% endif %}
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <ol class="error-text">
+                                {% for error in form.name.errors %}
+                                    <li><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </td>
+
+                        <td class="form-field">
+                            <label for="id_name" class="sr-only">{{ form.name_abbreviation.label }}</label>
+                            {% if form.name_abbreviation.help_text %}
+                                <p class="help-text">{{ form.name_abbreviation.help_text|safe }}</p>
+                            {% endif %}
+                            {{ form.name_abbreviation }}
+                            {% if form.name_abbreviation.errors %}
+                                <ol class="error-text">
+                                {% for error in form.name_abbreviation.errors %}
+                                    <li><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </td>
+
+                        <td class="form-field form-field--delete">
+                            {{ form.DELETE }}
+                            <label for="{{ form.DELETE.id_for_label }}" class="form-field__checkboxlabel"><span class="sr-only">{{ form.DELETE.label_tag }}</span></label>
+
+                            <!-- <input type="hidden" name="item_id" value="{{ form.DELETE.id_for_label }}" /> -->
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        </td>
+                    </tr>
                 {% endfor %}
-            </div>
+                </table>
 
-            <div data-submit-container class="form-field form-field--buttons">
+            <div data-submit-container class="form-field form-field--buttons screen-only">
                 <input type="submit" value="Opslaan" class="button button--primary">
                 <a href="{% url 'manage_timeline' %}" class="button button--secondary">Annuleer</a>
             </div>

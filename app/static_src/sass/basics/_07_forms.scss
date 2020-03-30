@@ -240,7 +240,8 @@ input[data-error-message] {
 ul.form-field__checkboxgroup,
 ul.form-field__radiogroup,
 .form-field--radioselect ul,
-.form-field--checkboxselectmultiple ul {
+.form-field--checkboxselectmultiple ul,
+.form-field--delete {
     list-style-type: none;
     padding: 0;
     min-width: 70px;
