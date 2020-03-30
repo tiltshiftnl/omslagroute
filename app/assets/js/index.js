@@ -151,21 +151,21 @@ Array.prototype.sortOnData = function(key){
                             var elem = self.querySelectorAll('[data-moment-'+k+']');
 
                             for (i = 0; i < elem.length; i++){
-                                if (data[k] instanceof Array){
+                                if (data[k].value instanceof Array){
                                     var ul = elem[i].querySelector('ul'),
                                         items = ul.querySelectorAll('li');
                                     for (j = 0; j < items.length; j++){
                                         items[j].style.display = 'none';
                                     }
-                                    if (!data[k].length) {
+                                    if (!data[k].value.length) {
                                         items[items.length - 1].style.display = 'initial';
                                     } else {
-                                        for (j = 0; j < data[k].length; j++){
-                                            ul.querySelector('[data-listitem-id="'+data[k][j]+'"]').style.display = 'initial';
+                                        for (j = 0; j < data[k].value.length; j++){
+                                            ul.querySelector('[data-listitem-id="'+data[k].value[j]+'"]').style.display = 'initial';
                                         }
                                     }
                                 }else {
-                                    elem[i].innerHTML = data[k].replace(/(?:\r\n|\r|\n)/g, '<br>');
+                                    elem[i].innerHTML = data[k].value.replace(/(?:\r\n|\r|\n)/g, '<br>');
                                 }
                             }
                         }
@@ -234,7 +234,7 @@ Array.prototype.sortOnData = function(key){
                         'callback': function(responseText){
                             var response = JSON.parse(responseText);
                             if (this.status === 201){
-                                self.dataset.id = response.message.id;
+                                self.dataset.id = response.message.id.value;
                                 self.classList.remove('details-wrapper--new-moment');
                                 delete self.dataset.momentProto;
                                 d.querySelector('[data-edit-timeline]').save();
