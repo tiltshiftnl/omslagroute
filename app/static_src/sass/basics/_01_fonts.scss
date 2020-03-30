@@ -1,3 +1,6 @@
+// ********************
+// AMSTERDAM FONTS
+// ********************    
 
 /* Regular */
 @font-face {
@@ -39,104 +42,11 @@
     src: url(/static/fonts/AvenirAll/12d643f2-3899-49d5-a85b-ff430f5fad15.eot?#iefix) format("eot"),url(/static/fonts/AvenirAll/aad99a1f-7917-4dd6-bbb5-b07cedbff64f.woff2) format("woff2"),url(/static/fonts/AvenirAll/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff) format("woff"),url(/static/fonts/AvenirAll/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf) format("truetype")
 }
 
-html {
-    font-size: 16px;
-}
-
-body {
-    font-family: $default-font, Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 400;
-    color: $default-text-color;
-    -webkit-text-size-adjust: auto;
-}
+$default-font: 'avenir next';
+$default-text-color: $primary-black;
 
 @supports (font-display: swap) {
     body {
         font-display: swap;
     }
-}
-
-a {
-    color: red;
-    text-decoration-skip: ink;
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
-    }
-}
-
-h1, h2, h3, h4, h5 {
-    font-family: inherit;
-    font-style: inherit;
-    font-weight: 500;
-}
-
-h1 {
-    font-size: 1.4125rem;
-    font-weight: bold;
-    line-height: 1.37931rem;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-h2 {
-    font-size: 1.5rem;
-    line-height: 1.25rem;
-    font-weight: bold;
-}
-
-h3 {
-    font-size: 1rem;
-    line-height: 1.15rem
-}
-
-h4 {
-    font-size: 1.125rem;
-    line-height: 1.55556rem;
-    margin-bottom: 1rem;
-}
-
-p, ul, ol {
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
-.list-vertical {
-    li {
-        padding-bottom: .5rem;
-    }
-}
-
-ul {
-    padding-left: 2px;
-    list-style-position: inside;
-}
-
-b, strong, em, small, code {
-    line-height: 1rem;
-}
-
-time {
-    color: $neutral-grey4;
-    font-size: .8rem;
-} 
-
-p { 
-    margin-top: 0;
-    margin-bottom: 1rem;  
-
-    &:empty {
-        margin-bottom: 0;
-    }
-}
-
-a {
-    color: $primary-darkblue;
-}
-
-a:active,a:hover {
-    color: $primary-red;
 }

@@ -1,10 +1,20 @@
-@import
-    "basics/typography",
-    "basics/variables",
-    "basics/mediaqueries",
-    "basics/layout",
-    "basics/forms",
+// ********************
+// IMPORT SCSS
+// * I added numbering to the files where the import order of it matters
+// ********************    
 
+@import
+    "basics/01_fonts",
+    "basics/02_colors",
+    "basics/03_mediaqueries",
+    "basics/04_helper-classes",
+    "basics/05_typography",
+    "basics/06_site-layout",
+    "basics/07_forms",
+    "basics/08_print",
+    // "basics/09_visual-debugging", 
+
+    "sections/login",
     "sections/documents",
     "sections/timeline",
     "sections/organisations",

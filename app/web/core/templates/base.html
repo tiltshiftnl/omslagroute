@@ -12,8 +12,8 @@
     <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/t/1.css?apiType=css&amp;projectid=3680cf49-2b05-4b8a-af28-fa9e27d2bed0">
 </head>
 <body>
-<div class="container">
-
+    
+<div class="site-container">
     {% include 'svg-sprite.html' %}
 
     {% block skiplinks %}
@@ -25,9 +25,9 @@
                 <a href="{% url 'home' %}" title="Ga terug naar de homepage">
                     <img src="{% static 'images/logo.svg' %}">
                 </a>
-                <h1 class="site-title">Omslagroute</h1>
+                <h1 class="site-title screen-only">Omslagroute</h1>
                 {% if request.user.is_authenticated %}
-                    <div class="site-userinfo">
+                    <div class="site-userinfo screen-only">
                         Ingelogd als:
                             {% if request.user.is_superuser %}
                                 <a href="/admin" class="site-userinfo__username">admin</a>
@@ -36,7 +36,7 @@
                             | <a href="{% url 'uitloggen' %}">Uitloggen</a>
                     </div>
                 {% else %}
-                    <div class="site-userinfo">
+                    <div class="site-userinfo screen-only">
                         <a href="#login">Log in</a>
                     </div>
                 {% endif %}
