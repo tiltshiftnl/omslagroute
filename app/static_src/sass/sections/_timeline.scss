@@ -342,6 +342,7 @@ $padding-left: 30px;
         width: 100%;
         left: 0;
         opacity: 0;
+        pointer-events: none;
     }
 
     .alert {
@@ -364,15 +365,18 @@ $padding-left: 30px;
     .alert--saved,
     .alert--error {
         opacity: 0;
+        pointer-events: none;
     }
 
     &.moment--saving {
         .alert-container {
             opacity: 1;
+            pointer-events: all;
         }
         .alert--saving {
             background-color: $primary-darkblue;
             opacity: 1;
+            pointer-events: all;
             transition: opacity .4s linear;
         }
     }
@@ -380,6 +384,7 @@ $padding-left: 30px;
     &.moment--saved {
         .alert-container {
             opacity: 1;
+            pointer-events: all;
         }
 
         .alert--saved {
@@ -392,11 +397,13 @@ $padding-left: 30px;
     &.moment--error {
         .alert-container {
             opacity: 1;
+            pointer-events: all;
         }
 
         .alert--error {
             background-color: $primary-red;
             opacity: 1;
+            pointer-events: all;
             transition: opacity .4s linear;
         }
     }
