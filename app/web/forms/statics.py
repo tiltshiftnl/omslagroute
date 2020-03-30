@@ -34,7 +34,7 @@ FIELDS = (
     )),
     ('emailadres', forms.EmailField(
         label=_('E-mailadres'),
-        required=True,
+        required=False,
     )),
     ('email', forms.EmailField(
         label=_('E-mailadres'),
@@ -165,6 +165,25 @@ FIELDS = (
 
 FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
 
+BASIS_GEGEVENS = [
+    {
+        'title': '',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'client_first_name',
+                    'client_last_name',
+                    'geboortedatum',
+                    'emailadres',
+                ],
+            },
+        ]
+    },
+]
+
 URGENTIE_AANVRAAG = [
     {
         'title': 'Persoonsgegevens',
@@ -269,4 +288,10 @@ AANVRAAG_VERLENGING_TRACJECTWIJZIGING_MOBW = [
         ]
     },
 ]
+
+SECTIONS = (
+    ('basis_gegevens', BASIS_GEGEVENS),
+    ('urgentie_aanvraag', URGENTIE_AANVRAAG),
+)
+SECTIONS_DICT = dict((s[0], s[1]) for s in SECTIONS)
 

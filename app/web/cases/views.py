@@ -5,22 +5,20 @@ from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
-from django.db import transaction
-from django.http.response import HttpResponse, HttpResponseForbidden, FileResponse, Http404, HttpResponseRedirect
-from django.forms.models import inlineformset_factory
-from web.timeline.models import Moment
-from django.core.files.storage import default_storage
-from django.utils.html import mark_safe
-from django.conf import settings
-import urllib
-import requests
-from urllib.request import urlopen
 from web.users.statics import BEGELEIDER
 from web.profiles.models import Profile
-from web.forms.forms import GenericModelForm
-from web.forms.views import GenericModelFormView
+from web.forms.statics import URGENTIE_AANVRAAG, FIELDS_DICT
+from web.forms.views import GenericModelFormView, GenericModelCreateFormView
+from web.forms.forms import BaseGenericForm
 import json
+
+
+def form_completed(instance, sections):
+    section_fields = BaseGenericForm._get_fields(sections)
+    required_fields = [f for f in section_fields if FIELDS_DICT.get(f) and FIELDS_DICT.get(f).required]
+    filled_fields = [f for f in required_fields if hasattr(instance, f) and getattr(instance, f)]
+    print(len(required_fields))
+    print(len(filled_fields))
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -46,6 +44,10 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_context_data(self, **kwargs):
+        completed = form_completed(self.object, URGENTIE_AANVRAAG)
+        return super().get_context_data(**kwargs)
 
 
 class CaseCreateView(UserPassesTestMixin, CreateView):
@@ -118,6 +120,40 @@ class GenericFormView(GenericModelFormView):
     def form_valid(self, form):
         response = super().form_valid(form)
         messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
+        return response
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update(
+            self.kwargs
+        )
+        return kwargs
+
+
+class GenericCaseCreateFormView(GenericModelCreateFormView):
+    model = Case
+    template_name = 'forms/generic_form.html'
+    success_url = reverse_lazy('cases_by_profile')
+    form_class = CaseGenericModeForm
+
+    def get_success_url(self):
+        return reverse('cases_by_profile')
+
+    def get_discard_url(self):
+        return reverse('cases_by_profile')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({
+            'sections': self.kwargs.get('sections'),
+        })
+        return kwargs
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        case = form.save(commit=True)
+        self.request.user.profile.cases.add(case)
+        messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangemaakt." % case.client_name)
         return response
 
     def get_context_data(self, **kwargs):
