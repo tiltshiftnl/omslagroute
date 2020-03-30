@@ -65,11 +65,13 @@
                                 <p class="alert__message">{{ message|safe }}</p>
 
                                 <!--
-                                <button class="button button--icon">
-                                    <svg class="alert__close" width="20" height="20"></svg>
-                                        <use href="#close" xlink:href="#close" width="20" height="20"></use>
-                                    </svg>
-                                </button> -->
+                                    We're not using a close button on alerts just yet, but we have styling for it:
+                                    <button class="button button--icon alert__close">
+                                        <svg width="20" height="20"></svg>
+                                            <use href="#close" xlink:href="#close" width="20" height="20"></use>
+                                        </svg>
+                                    </button> 
+                                -->
                             </li>
                         {% endfor %}
                     </ul>
