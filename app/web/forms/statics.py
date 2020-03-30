@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.forms import widgets
 from .utils import birth_dates_years
-from .widgets import RadioSelect
+from .widgets import *
 from web.cases.statics import *
 
 
