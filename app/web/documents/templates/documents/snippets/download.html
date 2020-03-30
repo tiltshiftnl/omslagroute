@@ -1,7 +1,7 @@
 {% load staticfiles auth_tags %}
 {% load i18n %}
 
-{% if request.user|has_group:"wonen" or object.document_to_document_version.all|length %}
+{% if request.user|is_beheerder or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
     <li class="document">
         <a href="{% if document_version %}{% url 'download_documentversion' document_version.id %}{% endif %}" class="document__version" target="_blank" rel="noopener">
@@ -45,7 +45,7 @@
                     {{ object.description|linebreaks }}
                 {% endif %}
 
-                {% if request.user|has_group:"wonen" and object %}
+                {% if request.user|is_beheerder and object %}
                     <ul>
                         <li>
                             <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary" title="Vervang dit {{ object.document_type_value }}">
