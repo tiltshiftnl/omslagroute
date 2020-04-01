@@ -21,3 +21,4 @@ app/assets/bundles/*
 webpack-stats.json
 *.env
 /.history
+*db.sqlite3
