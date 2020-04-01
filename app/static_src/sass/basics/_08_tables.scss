@@ -1,0 +1,73 @@
+// ********************
+// TABLES
+// See https://designsystem.amsterdam.nl/7awj1hc9f/p/1408ad-tables
+// ********************
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-top: .6;
+    margin-bottom: 1rem;
+
+    border-top: 2px solid $neutral-grey2;
+    border-bottom: 2px solid $neutral-grey2;
+}
+
+thead th {
+    font-weight: bold;
+}
+
+th,
+td {
+    padding: .6rem 1rem;
+    text-align: left;
+}
+
+tr {
+    position: relative;
+}
+
+tr:not(:last-of-type) {
+    th, 
+    td {
+        border-bottom: 1px solid $neutral-grey2;
+    }
+}
+
+tr:nth-of-type(even) {
+    background-color: $neutral-grey2;
+
+}
+
+.table--interactive {
+    thead {
+        th, 
+        td {
+            border-bottom: 1px solid $neutral-grey2;
+        }
+    }
+
+    tbody {
+        tr:hover { 
+            background-color: $neutral-grey2;
+        }
+
+        th,
+        td {
+            padding: 0; 
+            
+            a { 
+                color: $primary-black;
+                display: block; 
+                text-decoration: none;
+                padding: .6rem 1rem; 
+
+                &:hover,
+                &:focus {
+                    color: $primary-black;
+                }
+            }
+        }
+    }
+}
