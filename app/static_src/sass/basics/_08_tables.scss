@@ -22,6 +22,12 @@ th,
 td {
     padding: .6rem 1rem;
     text-align: left;
+    vertical-align: top;
+}
+
+td:first-child,
+th:first-child {
+    width: 40%;
 }
 
 tr {

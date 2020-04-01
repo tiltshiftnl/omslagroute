@@ -258,6 +258,7 @@ ul.form-field__radiogroup,
 
 .form-field__checkbox,
 .form-field__radio,
+.form-field--checkboxinput,
 [type="radio"],
 [type="checkbox"] {
     opacity: 0;
@@ -299,6 +300,7 @@ ul.form-field__radiogroup,
     }
 }
 
+.form-field--checkboxinput label,
 .form-field__radiolabel,
 .form-field__checkboxlabel {
     position: relative;
