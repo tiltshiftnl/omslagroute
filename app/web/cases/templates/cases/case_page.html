@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% load static i18n html_tags %}
 
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cliënten</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current">{{ object.client_name }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
 <section class="section section--timeline section--timeline-management">
     <a href="{% url 'cases_by_profile' %}" class="button button--secondary" title="Verwijder cliënt gegevens">
