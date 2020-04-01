@@ -60,9 +60,10 @@ WSGI_APPLICATION = 'wsgi.application'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SENDGRID_KEY = os.environ.get("SENDGRID_KEY")
 
 ADMINS = (
-    ('admin', 'p.curet@mail.amsterdam.nl'),
+    ('admin', 'maurice@mgui.nl'),
 )
 
 AUTH_USER_MODEL = 'users.User'
