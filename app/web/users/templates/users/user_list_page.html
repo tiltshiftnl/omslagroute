@@ -5,7 +5,7 @@
 {% block main %}
     <h2>Alle gebruikers</h2>
 
-    <ul class="list-vertical">
+    <ul role="list" class="list-vertical">
     {% for object in object_list %}
         <li>{{ object.username }}: {{ object.user_type_value }}</li>
     {% endfor %}

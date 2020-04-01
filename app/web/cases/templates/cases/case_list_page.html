@@ -15,7 +15,6 @@
         </thead>
         <tbody>
             {% for object in object_list %}
-            
                 <tr>
                     <td><a href="{% url 'case' object.id %}">
                         {{ object.client_name }}</a>
