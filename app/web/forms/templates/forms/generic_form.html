@@ -14,6 +14,24 @@
         {% csrf_token %}
         {{ form.as_sections.errors }}
 
+        {% if form.errors %}
+            <div class="generic-form-errors" aria-live="polite">
+                <ul class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         {% for section in form.as_sections.sections %}
             <fieldset class="section section--step">
                 <legend><h3 class="section--step__title">{{ section.title }}</h3></legend>

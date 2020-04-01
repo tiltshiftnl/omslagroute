@@ -106,10 +106,10 @@ body:not(:-moz-handler-blocked) fieldset {
     margin-bottom: 0;
 }
 
-.error-text {
+.error-text,
+.errorlist {
     color: $primary-red;
     font-weight: bold;
-    display: none;
     margin-bottom: 0;
     margin-top: 10px;
 }
@@ -148,12 +148,12 @@ textarea {
         color: $neutral-grey3;
     }
 
-    &[required].invalid {
+    &[required]:invalid {
         border: 1px solid $primary-red;
         box-shadow: inset 0 0 0 1px $primary-red;
     }
 
-    &.invalid + .error-text,
+    &:invalid + .error-text,
     &[data-error-message] + .error-text {
         display: block;
     }
