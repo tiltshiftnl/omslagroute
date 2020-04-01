@@ -20,18 +20,18 @@
     {% endblock %}
 
     {% block header %}
-        <header class="site-header">
+        <header class="site-header screen-only">
             <div class="site-header-wrapper">
                 <a href="{% url 'home' %}" title="Ga terug naar de homepage">
                     <img src="{% static 'images/logo.svg' %}">
                 </a>
-                <h1 class="site-title screen-only">
+                <h1 class="site-title">
                     <a href="{% url 'home' %}" title="Ga terug naar de homepage"> 
                         Omslagroute
                     </a>
                 </h1>
                 {% if request.user.is_authenticated %}
-                    <div class="site-userinfo screen-only">
+                    <div class="site-userinfo">
                         Ingelogd als:
                             {% if request.user.is_superuser %}
                                 <a href="/admin" class="site-userinfo__username">admin</a>
@@ -40,16 +40,16 @@
                             | <a href="{% url 'uitloggen' %}">Uitloggen</a>
                     </div>
                 {% else %}
-                    <div class="site-userinfo screen-only">
+                    <div class="site-userinfo">
                         <a href="#login">Log in</a>
                     </div>
                 {% endif %}
             </div>
         </header>
-        <div class="site-navigation">
+        <div class="site-navigation screen-only">
             {% block messages %}
                 {% if messages %}
-                    <ul class="alert-container">
+                    <ul role="list" class="alert-container">
                         {% for message in messages %}
                             <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">
                                 {% if message.tags == 'success' %}
@@ -91,6 +91,12 @@
         {% block main %}
         {% endblock %}
     </main>
+
+    {% block print-header %}
+        <div class="print-only print-header" aria-hidden="true">
+            <img src="{% static 'images/logo.svg' %}" class="print-logo">
+        </div>
+    {% endblock %}
 </div>
 
 <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>
