@@ -7,7 +7,7 @@
 {% block main %}
     <section class="section section-downloads">
         {% if title %}<h2>{{ title }}</h2>{% endif %}
-        <ul class="downloads {% if request.user|is_beheerder %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
+        <ul role="list" class="downloads {% if request.user|is_beheerder %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
         {% if document_list %}
             {% include 'documents/snippets/document_list.html' %}
         {% endif %}

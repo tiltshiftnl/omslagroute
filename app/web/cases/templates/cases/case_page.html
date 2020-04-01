@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 {% load static i18n html_tags %}
 
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cliënten</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current">{{ object.client_name }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
 <section class="section section--timeline section--timeline-management">
-    <a href="{% url 'cases_by_profile' %}" class="button button--secondary" title="Verwijder cliënt gegevens">
-            Terug naar `Mijn cliënten`
-    </a>
-    <h2>Cliënt details: {{ object.client_name }}</h2>
+    <h2>Cliënt: {{ object.client_name }}</h2>
+    <p class="print-only">
+        {% language 'nl' %}
+            Printdatum: {% now "j F Y H:i" %}
+        {% endlanguage %}
+    </p>
 
-    <p class="details-admin">
+    <p class="details-admin screen-only">
         <a href="{% url 'update_case' object.id %}" class="button button--primary" title="Wijzig basis gegevens">
             Wijzig cliënt gegevens
         </a>
@@ -17,17 +29,19 @@
         </a>
     </p>
 
-    <table>
-        {% for k, v in object.to_dict.items %}
+    <table cellspacing="0" cellpadding="0">
+        {% for k, client_info in object.to_dict.items %}
         {% if not forloop.first %}
-        <tr><th style="text-align: left">{{ v.label }}: </th>
-        <td>
-            {% if v.value|is_date %}
-                {{ v.value|str_date_to_date|date:"j b Y" }}
-            {% else %}
-                {{ v.value }}
-            {% endif %}
-        </td></tr>
+        <tr>
+            <th>{{ client_info.label }}: </th>
+            <td>
+                {% if client_info.value|is_date %}
+                    {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                {% else %}
+                    {{ client_info.value }}
+                {% endif %}
+            </td>
+        </tr>
         {% endif %}
         {% endfor %}
     </table>
@@ -36,3 +50,4 @@
     </div>
 </section>
 {% endblock %}
+

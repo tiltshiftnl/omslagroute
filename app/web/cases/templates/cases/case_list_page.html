@@ -5,19 +5,35 @@
 <section class="section section--timeline section--timeline-management">
     <h2>Mijn cliënten</h2>
 
-    <table>
-        <tr>
-            <th style="text-align: left">Naam</th>
-            <th style="text-align: center">Voortgang<br>basis gegevens</th>
-            <th style="text-align: center">Voortgang<br>aanvraag omslag en urgentie</th>
-        </tr>
-        {% for object in object_list %}
-        <tr>
-            <th style="text-align: left"><a href="{% url 'case' object.id %}">{{ object.client_name }}</a></th>
-            <td style="text-align: center">{% client_status object 'basis_gegevens' %}% </td>
-            <td style="text-align: center">{% client_status object 'urgentie_aanvraag' %}% </td>
-        </tr>
-        {% endfor %}
+    <table class="table--interactive">
+        <thead>
+            <tr>
+                <th width="20%">Naam</th>
+                <th width="40%">Voortgang basis gegevens</th>
+                <th width="40%">Voortgang aanvraag omslag en urgentie</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td><a href="{% url 'case' object.id %}">
+                        {{ object.client_name }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'case' object.id %}" aria-hidden="true">
+                            {% client_status object 'basis_gegevens' %}%
+                        </a>
+                        <span class="sr-only">{% client_status object 'basis_gegevens' %}%</span>
+                    </td>
+                    <td>
+                        <a href="{% url 'case' object.id %}" aria-hidden="true">
+                            {% client_status object 'urgentie_aanvraag' %}%
+                        </a>
+                        <span class="sr-only">{% client_status object 'urgentie_aanvraag' %}%</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <div class="form-field form-field--buttons screen-only">
         <a href="{% url 'add_case' %}" class="button button--primary">Nieuwe cliënt aanmaken</a>

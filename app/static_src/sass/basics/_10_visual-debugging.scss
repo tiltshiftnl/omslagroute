@@ -30,3 +30,21 @@
     //         content: " (" attr(class) ")";
     //     } 
     // }
+
+// SHOW CLASSNAME WHEN TABBING AROUND ELEMENTS
+
+    // * {
+    //     position: relative;
+    // }
+
+    // *:focus::after {
+    //     content: " (" attr(class) ")";
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     width: auto;
+    //     height: auto; 
+    //     color: white;
+    //     background: black;
+    //     padding: 3px;
+    // }

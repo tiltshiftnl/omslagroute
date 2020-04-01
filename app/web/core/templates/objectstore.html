@@ -5,7 +5,7 @@
 {% block main %}
     <section class="section section--objectstore">
         <h2>Object list</h2>
-        <ul>
+        <ul role="list">
             {% for container in objectstore_container_list %}
                 <li>{{ container }}</li>
             {% endfor %}
@@ -14,11 +14,11 @@
         <hr />
 
         <h2>DocumentVersion list</h2>
-        <ul>
+        <ul role="list">
             {% for document in documentversion_list %}
                 <li>
                     {{ document.name }} <a href="{% url 'download_documentversion' document.id %}">download</a><br>
-                    <ul>
+                    <ul role="list">
                         {% for k, v in document.items %}
                             <span>{{ k }}: {{ v }}</span><br>
                         {% endfor %}

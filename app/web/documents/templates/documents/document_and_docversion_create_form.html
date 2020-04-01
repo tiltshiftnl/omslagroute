@@ -51,7 +51,7 @@
             {% if form.document_type.help_text %}
                 <p class="help-text">{{ form.document_type.help_text|safe }}</p>
             {% endif %}
-            <ul class="form-field__radiogroup">
+            <ul role="list" class="form-field__radiogroup">
                 {% for radio in form.document_type %}
                     <li>
                         {{ radio.tag }}

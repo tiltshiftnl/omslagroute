@@ -18,7 +18,7 @@
 
         {% if object.document_to_document_version.all|length %}
             <h3>Versies:</h3>
-            <ul>
+            <ul role="list">
                 {% for document_version in object.document_to_document_version.all %}
                     {% language 'nl' %}
                     <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>

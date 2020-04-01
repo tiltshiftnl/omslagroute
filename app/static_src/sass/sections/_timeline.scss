@@ -98,7 +98,6 @@ $padding-left: 30px;
     }
 }
 
-
 .details {
     border-top: 0;
     border-bottom: 0;
@@ -107,7 +106,7 @@ $padding-left: 30px;
     left: $padding-left;
     width: calc(100% - 30px);
 
-    // blue line
+    // timeline line
     &:not(:last-of-type)::before {
         border-left: 3px solid $primary-darkblue;
         top: 1rem;
@@ -145,6 +144,15 @@ $padding-left: 30px;
         .details__header::before,
         .details__headerhoverblock {
             outline: 0;
+        }
+    }
+
+    // Specified seperately, otherwise IE11 bugs out
+    &:focus-within {
+        background-color: $neutral-grey1;
+
+        .details__header::before {
+            background-color: $neutral-grey1;
         }
     }
 }

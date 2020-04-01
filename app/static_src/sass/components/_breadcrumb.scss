@@ -1,0 +1,33 @@
+.breadcrumb {
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.breadcrumb-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-step {
+    color: $primary-black;
+    display: inline-block;
+
+    &:not(:last-child)::after {
+        content: ' \00BB ';
+        display: inline;
+    }
+
+    a { 
+        color: $neutral-grey4;
+
+        &:hover,
+        &:focus {
+            color: $primary-darkblue;
+        }
+
+    }
+}
+
+.breadcrumb-step--current {
+}
