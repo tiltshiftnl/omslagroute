@@ -5,8 +5,12 @@ from django.db import migrations
 
 def old_users():
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM auth_user")
-        row = cursor.fetchall()
+        cursor.execute("SELECT * FROM information_schema.tables where table_name=%s", ('auth_user',))
+        if not cursor.rowcount:
+            row = []
+        else:
+            cursor.execute("SELECT * FROM auth_user")
+            row = cursor.fetchall()
 
     return row
 
