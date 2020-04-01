@@ -1,0 +1,3 @@
+{% for k, v in case.items %}
+{{ v.label }}: {{ v.value }}
+{% endfor %}

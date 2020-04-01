@@ -9,8 +9,13 @@ from web.users.statics import BEGELEIDER
 from web.profiles.models import Profile
 from web.forms.statics import URGENTIE_AANVRAAG, FIELDS_DICT
 from web.forms.views import GenericModelFormView, GenericModelCreateFormView
-from web.forms.forms import BaseGenericForm
+from web.forms.forms import BaseGenericForm, GenericForm
 import json
+import sendgrid
+from sendgrid.helpers.mail import Mail
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
+from django.template.loader import render_to_string
 
 
 def form_completed(instance, sections):
@@ -162,4 +167,50 @@ class GenericCaseCreateFormView(GenericModelCreateFormView):
             self.kwargs
         )
         return kwargs
+
+
+class SendCaseView(UpdateView):
+    model = Case
+    template_name = 'cases/send.html'
+    form_class = SendCaseForm
+
+    def get_success_url(self):
+        return reverse('case', kwargs={'pk': self.object.id})
+
+    def get_context_data(self, **kwargs):
+        kwargs.update(self.kwargs)
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        body = render_to_string('cases/mail/case.txt', {'case': self.object.to_dict()})
+        to_email = form.cleaned_data['to_email']
+        current_site = get_current_site(self.request)
+        sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+        email = Mail(
+            from_email='noreply@%s' % current_site.domain,
+            to_emails=to_email,
+            subject='Omslagroute - %s' % self.kwargs.get('title'),
+            plain_text_content=body
+        )
+        sg.send(email)
+        messages.add_message(
+            self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
+                self.object.client_name,
+                to_email
+            )
+        )
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+
+        return super().form_invalid(form)
+
+
+
+
+
+
+
+
+
 
