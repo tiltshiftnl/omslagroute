@@ -1,10 +1,15 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 import os
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.files.storage import default_storage
 from web.timeline.models import *
 from web.documents.models import *
 from web.organizations.models import *
+from django.urls import reverse_lazy
+import sendgrid
+from sendgrid.helpers.mail import *
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 
 
 class HomePageView(TemplateView):
@@ -67,3 +72,26 @@ class ObjectStoreView(UserPassesTestMixin, TemplateView):
             'documentversion_list': documentversion_list,
         })
         return super().get_context_data(**kwargs)
+
+
+class SendMailView(UserPassesTestMixin, RedirectView):
+    url = reverse_lazy('home')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get(self, request, *args, **kwargs):
+        mailadres = request.GET.get('mailadres')
+        if mailadres:
+            current_site = get_current_site(self.request)
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=mailadres,
+                subject='Omslagroute - mail',
+                plain_text_content='Het werkt!'
+            )
+
+            sg.send(email)
+
+        return super().get(request, *args, **kwargs)
