@@ -23,3 +23,16 @@ class CaseGenericModeForm(GenericModelForm):
     class Meta:
         model = Case
         exclude = []
+
+
+class SendCaseForm(forms.ModelForm):
+    to_email = forms.EmailField(
+        label=_('E-mailadres van de afdeling wonen van de gemeente Amsterdam'),
+        required=True,
+    )
+
+    class Meta:
+        model = Case
+        fields = []
+
+

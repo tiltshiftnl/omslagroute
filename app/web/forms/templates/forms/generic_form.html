@@ -36,6 +36,7 @@
         <div data-submit-container class="form-field form-field--buttons screen-only">
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Vestuur aanvraag</a>
         </div>
     </form>
 </section>

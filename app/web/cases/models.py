@@ -197,7 +197,9 @@ class Case(PrintableModel):
 
     def status(self, sections):
         section_fields = BaseGenericForm._get_fields(sections)
+        print(section_fields)
         required_fields = [f for f in section_fields if FIELDS_DICT.get(f) and FIELDS_DICT.get(f).required]
+        print(required_fields)
         filled_fields = [f for f in required_fields if hasattr(self, f) and getattr(self, f)]
         return int(float(float(len(filled_fields) / len(required_fields))) * 100)
 
