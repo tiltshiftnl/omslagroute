@@ -23,7 +23,7 @@
             {{ form.non_field_errors }}
         </p>
 
-        <div class="form-field">
+        <div class="form-field" data-decorator="document-name-exists">
             <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
             {% if form.name.help_text %}
                 <p class="help-text">{{ form.name.help_text|safe }}</p>
@@ -86,7 +86,7 @@
                 {{ form.uploaded_file }}
                 <label for="{{ form.uploaded_file.id_for_label }}">
                     {{ form.uploaded_file.label }}
-                    <svg class="file-upload__icon" width="24" height="24" > 
+                    <svg class="file-upload__icon" width="24" height="24" >
                         <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
                     </svg>
                 </label>

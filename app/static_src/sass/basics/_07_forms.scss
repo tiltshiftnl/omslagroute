@@ -1,7 +1,7 @@
 // ********************
 // GENERAL FORM ELEMENTS
 // ********************
-    
+
 legend {
     padding: 0;
     display: table;
@@ -21,7 +21,7 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 // ********************
-// GENERIC FORMS FIELD GROUP CONTAINERS 
+// GENERIC FORMS FIELD GROUP CONTAINERS
 // ********************
 
 .section--step__title {
@@ -114,6 +114,20 @@ body:not(:-moz-handler-blocked) fieldset {
     margin-bottom: 0;
     margin-top: 10px;
 }
+[data-error-message] {
+    position: relative;
+}
+[data-error-message]:before {
+    content: attr(data-error-message);
+    background-color: $primary-red;
+    color: $primary-white;
+    padding: 4px 8px;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    white-space: nowrap;
+    z-index: 20;
+}
 
 // ********************
 // DEFAULT STYLES
@@ -167,7 +181,7 @@ input[data-error-message] {
 
 // ********************
 // FILE UPLOAD FIELD
-//  
+//
 // <input type="file" id="file_upload">
 // <label for="file_upload">
 // ********************
@@ -185,7 +199,7 @@ input[data-error-message] {
     &::-webkit-file-upload-button {
         visibility: hidden;
     }
-    
+
     &:hover + label,
     &:focus + label {
         border: 1px solid $primary-red;
@@ -276,8 +290,8 @@ ul.form-field__radiogroup,
         background-color: $primary-black;
     }
 
-    &:checked + .form-field__checkboxlabel::before { 
-        border-radius: 0; 
+    &:checked + .form-field__checkboxlabel::before {
+        border-radius: 0;
     }
 
     &:checked:focus + .form-field__radiolabel::before,
@@ -306,7 +320,7 @@ ul.form-field__radiogroup,
 .form-field__checkboxlabel {
     position: relative;
 
-    &::before { 
+    &::before {
         border-radius: 50%;
         display: inline-block;
         width: 1.25rem;
@@ -377,16 +391,16 @@ select {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
- 
+
     /* IE11 (hide native arrow button) */
     &::-ms-expand {
         display: none;
     }
     /* IE11 (hide native focus state) */
     &::-ms-value {
-        color: black; 
+        color: black;
         background: transparent;
-    }  
+    }
 
     /* Firefox (hide native focus state) */
     &:-moz-focusring {

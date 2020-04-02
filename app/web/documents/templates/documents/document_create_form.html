@@ -4,7 +4,7 @@
     This view is not currently in use!
 {% endcomment %}
 
-{% block title %}- Document toevoegen{% endblock %} 
+{% block title %}- Document toevoegen{% endblock %}
 
 {% block breadcrumb %}
 <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
@@ -16,7 +16,7 @@
 </nav>
 {% endblock %}
 
-{% block main %} 
+{% block main %}
     <h2>Document toevoegen</h2>
 
     <form method="post">
@@ -25,9 +25,9 @@
         <p class="error-text">
             {{ form.non_field_errors }}
         </p>
-        
-        <div class="form-field">
-            {{ form.name.label_tag }} 
+
+        <div class="form-field" data-decorator="document-name-exists">
+            {{ form.name.label_tag }}
             {% if form.name.help_text %}
                 <p class="help-text">{{ form.name.help_text|safe }}</p>
             {% endif %}
@@ -61,5 +61,5 @@
             <input type="submit" value="Uploaden" class="button button--primary">
             <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
         </div>
-    </form> 
+    </form>
 {% endblock %}
