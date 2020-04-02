@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
+{% block title %} - Cliënt aanpassen{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Cli&euml;nt gegevens aanpassen</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
-    <h2>Cliënt gegevens aanpassen</h2>
+    <h2>Cli&euml;nt gegevens aanpassen</h2>
 
     <form method="post">
         {% csrf_token %}

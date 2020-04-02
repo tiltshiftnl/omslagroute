@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %} - Verwijder cli&euml;ntinformatie{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Verwijder cli&euml;ntinformatie {{ object.client_name }} </li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
-    <h2>Verwijder cliënt</h2>
+    <h2>Verwijder cli&euml;ntinformatie</h2>
 
     <form method="post">{% csrf_token %}
-        <p>Weet je zeker dat je de cliënt '{{ object.client_first_name }}' wilt verwijderen?</p>
+        <p>Weet u zeker dat u de informatie van cliënt '{{ object.client_name }}' wil verwijderen?</p>
 
         <div class="form-field form-field--buttons screen-only">
             <a href="{% url 'cases_by_profile' %}" class="button button--primary">Annuleer</a>

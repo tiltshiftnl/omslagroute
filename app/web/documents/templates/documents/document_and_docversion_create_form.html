@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
-{% comment %}
-    Create a new document and upload a first version
-    URL: /document/nieuw
-{% endcomment %}
+{% block title %}- Nieuw document toevoegen{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'document_list' %}">Actuele informatie en formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Nieuw document toevoegen</li>
+    </ol>
+</nav>
+{% endblock %}
 
 {% block main %}
     <h2>Nieuw document toevoegen</h2>

@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load static i18n html_tags %}
 
+{% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
+
 {% block breadcrumb %}
-    <nav class="breadcrumb screen-only">
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cliënten</a></li>
-            <li class="breadcrumb-step breadcrumb-step--current">{{ object.client_name }}</li>
+            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">{{ object.client_name }}</li>
         </ol>
     </nav>
 {% endblock %}

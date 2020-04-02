@@ -2,6 +2,17 @@
 {% load static %}
 {% load i18n %}
 
+{% block title %}- Actuele informatie en formulieren{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Actuele informatie en formulieren</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %}
     {% include 'documents/snippets/document_section.html' with title='Actuele informatie en formulieren' %}
 {% endblock %}
