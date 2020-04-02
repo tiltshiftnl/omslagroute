@@ -2,6 +2,16 @@
 
 {% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'form_list' %}">Alle formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %}
 <section class="section section--form section--form-{{ title|slugify }}">
     <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
