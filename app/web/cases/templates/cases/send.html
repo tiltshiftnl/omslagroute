@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load client_data_tags html_tags %}
 
 {% block title %} - Deel cliënt gegevens{% endblock %}
 
@@ -16,16 +17,35 @@
     <h2>Verstuur cli&euml;ntgegevens {{ title }}</h2>
     <form method="post" novalidate>
         {% csrf_token %}
+        {% if organization_list %}
+            <h3>De informatie over deze cliënt wordt met de volgende organisaties gedeeld.</h3>
 
-        {{ form.errors }}
-        {{ form.to_email.label }}
-        {{ form.to_email }}
 
+        {% for organization in organization_list  %}
+            <h4>De organisatie '{{ organization.name }}' ziet de volgende informatie.</h4>
+            <table>
+            {% case_data form.instance organization.field_restrictions as data %}
+        {% for k, field in data.items  %}
+            <tr>
+                <th>{{ field.label }}: </th>
+        <td>
+                    {% if field.value|is_date %}
+                        {{ field.value|str_date_to_date|date:"j b Y" }}
+                    {% else %}
+                        {{ field.value }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </table>
+
+            {% endfor %}
         <div data-submit-container class="form-field form-field--buttons screen-only">
             <input type="submit" value="Verstuur" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
         </div>
-
+        {% else %}
+        {% endif %}
     </form>
 </section>
 {% endblock %}

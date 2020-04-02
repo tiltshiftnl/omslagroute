@@ -16,6 +16,7 @@ from sendgrid.helpers.mail import Mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.template.loader import render_to_string
+from web.organizations.models import Organization
 
 
 def form_completed(instance, sections):
@@ -179,26 +180,31 @@ class SendCaseView(UpdateView):
 
     def get_context_data(self, **kwargs):
         kwargs.update(self.kwargs)
+        kwargs.update({
+            'organization_list': Organization.objects.filter(main_email__isnull=False),
+            'object': self.object,
+        })
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        body = render_to_string('cases/mail/case.txt', {'case': self.object.to_dict()})
-        to_email = form.cleaned_data['to_email']
-        current_site = get_current_site(self.request)
-        sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
-        email = Mail(
-            from_email='noreply@%s' % current_site.domain,
-            to_emails=to_email,
-            subject='Omslagroute - %s' % self.kwargs.get('title'),
-            plain_text_content=body
-        )
-        sg.send(email)
-        messages.add_message(
-            self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
-                self.object.client_name,
-                to_email
+        organization_list = Organization.objects.filter(main_email__isnull=False)
+        for organization in organization_list:
+            body = render_to_string('cases/mail/case.txt', {'case': self.object.to_dict(organization.field_restrictions)})
+            current_site = get_current_site(self.request)
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=organization.main_email,
+                subject='Omslagroute - %s' % self.kwargs.get('title'),
+                plain_text_content=body
             )
-        )
+            sg.send(email)
+            messages.add_message(
+                self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
+                    self.object.client_name,
+                    organization.main_email
+                )
+            )
         return super().form_valid(form)
 
     def form_invalid(self, form):
