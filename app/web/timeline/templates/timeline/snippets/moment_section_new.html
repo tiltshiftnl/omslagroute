@@ -3,7 +3,7 @@
      data-moment
      data-decorator="edit-moment"
      data-moment-proto
-     style="display: none;">
+     {% if moment_form_set|length > 1 %}style="display: none;"{% endif %}>
 
     <div class="alert-container  alert-container--inline">
         <div class="alert alert--saving">

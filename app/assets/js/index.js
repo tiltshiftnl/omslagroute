@@ -155,13 +155,13 @@ Array.prototype.sortOnData = function(key){
                                     var ul = elem[i].querySelector('ul'),
                                         items = ul.querySelectorAll('li');
                                     for (j = 0; j < items.length; j++){
-                                        items[j].style.display = 'none';
+                                        items[j].style.cssText = 'display: none';
                                     }
                                     if (!data[k].value.length) {
-                                        items[items.length - 1].style.display = 'initial';
+                                        items[items.length - 1].style.cssText = 'display: initial';
                                     } else {
                                         for (j = 0; j < data[k].value.length; j++){
-                                            ul.querySelector('[data-listitem-id="'+data[k].value[j]+'"]').style.display = 'initial';
+                                            ul.querySelector('[data-listitem-id="'+data[k].value[j]+'"]').style.cssText = 'display: initial';
                                         }
                                     }
                                 }else {
