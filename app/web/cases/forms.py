@@ -28,7 +28,7 @@ class CaseGenericModeForm(GenericModelForm):
 class SendCaseForm(forms.ModelForm):
     to_email = forms.EmailField(
         label=_('E-mailadres van de afdeling wonen van de gemeente Amsterdam'),
-        required=True,
+        required=False,
     )
 
     class Meta:

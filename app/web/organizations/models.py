@@ -1,5 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from multiselectfield import MultiSelectField
+from web.cases.models import Case
+
+
+def get_fields():
+    return [[str(f.name), str(f.verbose_name)] for f in Case._meta.fields]
 
 
 class Organization(models.Model):
@@ -13,6 +19,22 @@ class Organization(models.Model):
         blank=True,
         null=True,
     )
+    main_email = models.EmailField(
+        verbose_name=('Standaard e-mailadres'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    field_restrictions = MultiSelectField(
+        verbose_name=_('Cliënt gegevens velden'),
+        help_text=_('De inhoud van een geselecteerd veld wordt zichtbaar voor deze organisatie.'),
+        choices=get_fields(),
+        blank=True,
+        null=True,
+    )
+
+    def get_case_data(self, case):
+        return case.to_dict(self.field_restrictions)
 
     @property
     def abbreviation(self):

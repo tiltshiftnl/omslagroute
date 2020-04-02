@@ -24,6 +24,7 @@ INSTALLED_APPS = (
     'constance.backends.database',  # for dynamic configurations in admin
     'mozilla_django_oidc',       # for authentication
     'webpack_loader',
+    'multiselectfield',
 
     'web.core',
     'web.documents',
@@ -201,11 +202,13 @@ CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_ALLOW_DATA_ACCESS_KEY = 'ALLOW_DATA_ACCESS'
 CONSTANCE_BRK_AUTHENTICATION_TOKEN_KEY = 'BRK_AUTHENTICATION_TOKEN'
 CONSTANCE_BRK_AUTHENTICATION_TOKEN_EXPIRY_KEY = 'BRK_AUTHENTICATION_TOKEN_EXPIRY'
+CONSTANCE_HOMEPAGE_INTRO_KEY = 'HOMEPAGE_INTRO'
 
 CONSTANCE_CONFIG = {
     CONSTANCE_ALLOW_DATA_ACCESS_KEY: (True, 'Allow data to be accesible through the API'),
     CONSTANCE_BRK_AUTHENTICATION_TOKEN_KEY: ('', 'Authentication token for accessing BRK API'),
     CONSTANCE_BRK_AUTHENTICATION_TOKEN_EXPIRY_KEY: ('', 'Expiry date for BRK API token'),
+    CONSTANCE_HOMEPAGE_INTRO_KEY: ('', 'Homepage introduction html'),
 }
 
 # Error logging through Sentry
