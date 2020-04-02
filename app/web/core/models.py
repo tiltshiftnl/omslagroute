@@ -26,7 +26,7 @@ class PrintableModel(models.Model):
                     data[f.name] = f.value_from_object(self)
                 if isinstance(data[f.name], (datetime.date, datetime.datetime)):
                     data[f.name] = data[f.name].isoformat()
-                if not data[f.name]:
+                if data[f.name] is None or data[f.name] is '':
                     data[f.name] = self.EMPTY_VALUE if hasattr(self, 'EMPTY_VALUE') else '- leeg -'
                 data[f.name] = {
                     'value': data[f.name],
