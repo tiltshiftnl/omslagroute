@@ -5,6 +5,7 @@
 legend {
     padding: 0;
     display: table;
+    margin-bottom: 1rem;
 }
 
 fieldset {
@@ -376,7 +377,6 @@ select {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
-    margin: 0px;
  
     /* IE11 (hide native arrow button) */
     &::-ms-expand {

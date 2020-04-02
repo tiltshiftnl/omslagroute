@@ -37,7 +37,6 @@
     border-radius: 0;
     font-family: inherit;
     font-size: inherit;
-    border: 0;
     box-sizing: content-box;
     color: $primary-white;
     cursor: pointer;
@@ -94,6 +93,7 @@
     
 .button--primary,
 [type="submit"] {
+    border: 1px solid $primary-darkblue;
     background-color: $primary-darkblue;
     color: $primary-white;
 
