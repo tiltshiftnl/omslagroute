@@ -17,16 +17,30 @@
     <h2>Verwijder document</h2>
     
     <form method="post">{% csrf_token %}
+        {% if form.errors %}
+            <div class="errors" aria-live="polite">
+                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
         <p>Weet je zeker dat je het document {{ object.name|striptags }} 
             {% if object.document_to_document_version.all|length %} 
                 met <strong>alle versies</strong>
             {% endif %} 
             wilt verwijderen?
-        </p>
-
-        <p class="error-text">
-            {{ form.non_field_errors }}
-        </p>
+        </p> 
 
         {% if object.document_to_document_version.all|length %}
             <h3>Versies:</h3>

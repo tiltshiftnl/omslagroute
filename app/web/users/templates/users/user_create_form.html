@@ -15,9 +15,23 @@
     <h2>Nieuwe gebruiker toevoegen</h2>
 
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
-        <p class="error-text">
-            {{ form.non_field_errors }}
-        </p>
+        {% if form.errors %}
+            <div class="errors" aria-live="polite">
+                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
         <div class="form-field">
             <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
