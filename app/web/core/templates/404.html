@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %} - Er ging iets mis{% endblock %}
 
-{% load staticfiles %}
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">404</li>
+        </ol>
+    </nav>
+{% endblock %}
 
 {% block main %}
     <section class="section section--404">
