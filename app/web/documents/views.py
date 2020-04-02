@@ -11,12 +11,11 @@ from django.http.response import HttpResponse, HttpResponseForbidden, FileRespon
 from django.forms.models import inlineformset_factory
 from web.timeline.models import Moment
 from django.core.files.storage import default_storage
-from django.utils.html import mark_safe
-from django.conf import settings
-import urllib
-import requests
-from urllib.request import urlopen
+from web.users.auth import user_passes_test
+from django.views.decorators.http import require_http_methods
 from web.users.statics import BEHEERDER
+import json
+from django.http import HttpResponseRedirect, JsonResponse
 
 
 class DocumentList(ListView):
@@ -177,3 +176,21 @@ def download_documentversion(request, id):
         raise Http404()
 
     return HttpResponseRedirect(documentversion.uploaded_file.url)
+
+
+@require_http_methods(["POST"])
+@user_passes_test(auth_test, user_type=BEHEERDER)
+def document_name_exists(request):
+    data = json.loads(request.body)
+    status_code = 200
+    if data.get('id'):
+        get_object_or_404(Document, id=data.get('id'))
+    if not data.get('name'):
+        out = False
+    else:
+        existing_names = Document.objects.get_by_name(name=data.get('name'))
+        if data.get('id'):
+            existing_names = existing_names.exclude(id=data.get('id'))
+        out = bool(existing_names)
+
+    return JsonResponse({'message': out}, status=status_code)

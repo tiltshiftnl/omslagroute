@@ -122,6 +122,48 @@ Array.prototype.sortOnData = function(key){
     }
   };
     var decorators = {
+        'document-name-exists': function() {
+            var self = this,
+                input = self.querySelector('input[name$="name"]'),
+                wrapper = _closest(input, '.form-field'),
+                id = self.dataset.documentId,
+                submit = _closest(self, 'form').querySelector('input[type="submit"]'),
+                q = '',
+                _getData = function(){
+                    var data = {'name': q};
+                    if (id) {
+                        data.id = id;
+                    }
+                    return data;
+                },
+                _search = function(){
+                    submit.removeAttribute('disabled');
+                    input.setCustomValidity('');
+                    delete wrapper.dataset.errorMessage;
+                    helpers.ajax({
+                        'type': 'POST',
+                        'url': '/document/naam-bestaat',
+                        'data': JSON.stringify(_getData()),
+                        'callback': function(responseText){
+                            var response = JSON.parse(responseText);
+                            if (response.message) {
+                                submit.setAttribute('disabled', 'disabled');
+                                input.setCustomValidity('invalid');
+                                wrapper.dataset.errorMessage = 'Er is al een document met deze naam!';
+                            }
+                        }
+                    });
+                },
+                _keyUp = function(e){
+                  if (e.keyCode === 38 || e.keyCode === 40) {
+                    e.preventDefault();
+                  } else {
+                    q = input.value.trim();
+                    _search();
+                  }
+                };
+            input.addEventListener('keyup', _keyUp);
+        },
         'edit-moment': function () {
             var saveStateTimeout;
             var self = this,
