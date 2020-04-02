@@ -22,6 +22,8 @@ class PrintableModel(models.Model):
                         data[f.name] = f.value_from_object(self).timestamp()
                     else:
                         data[f.name] = None
+                elif isinstance(f, models.BooleanField):
+                    data[f.name] = 'Ja' if f.value_from_object(self) else 'Nee'
                 else:
                     data[f.name] = f.value_from_object(self)
                 if isinstance(data[f.name], (datetime.date, datetime.datetime)):

@@ -42,7 +42,7 @@
             {% endfor %}
         <div data-submit-container class="form-field form-field--buttons screen-only">
             <input type="submit" value="Verstuur" class="button button--primary">
-            <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleer</a>
         </div>
         {% else %}
         {% endif %}
