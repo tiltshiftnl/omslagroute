@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %}- Verwijder document{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'document_list' %}">Actuele informatie en formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Verwijder document</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %} 
     <h2>Verwijder document</h2>
     

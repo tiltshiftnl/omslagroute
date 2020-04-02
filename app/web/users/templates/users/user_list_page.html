@@ -2,12 +2,24 @@
 
 {% block title %} - Alle gebruikers{% endblock %}
 
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Alle gebruikers</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
     <h2>Alle gebruikers</h2>
 
     <ul role="list" class="list-vertical">
     {% for object in object_list %}
-        <li>{{ object.username }}: {{ object.user_type_value }}</li>
+        <li>{{ object.username }} 
+            {% if object.user_type_value %} 
+               ( {{ object.user_type_value }} )
+            {% endif %}</li>
     {% endfor %}
     </ul>
     

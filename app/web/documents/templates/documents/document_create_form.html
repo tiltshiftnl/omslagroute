@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 
+{% comment %}
+    This view is not currently in use!
+{% endcomment %}
+
+{% block title %}- Document toevoegen{% endblock %} 
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'document_list' %}">Actuele informatie en formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Document toevoegen</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %} 
-    <h2>Document Create form</h2>
+    <h2>Document toevoegen</h2>
 
     <form method="post">
         {% csrf_token %}

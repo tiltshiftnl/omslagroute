@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 
+{% block title %}- Documenteigenschappen wijzigen{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'document_list' %}">Actuele informatie en formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Documenteigenschappen wijzigen</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %}
-    <h2>Document eigenschappen wijzigen</h2>
+    <h2>Documenteigenschappen wijzigen</h2>
 
     <form method="post">
         {% csrf_token %}

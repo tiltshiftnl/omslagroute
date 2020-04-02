@@ -2,9 +2,20 @@
 {% load i18n %}
 
 {% comment %}
-    Delete an existing document 
-    URL: /document/delete-versie/[number]
+    This view is not currently in use!
 {% endcomment %}
+
+{% block title %}- Verwijder document versie{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'document_list' %}">Actuele informatie en formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Verwijder document versie</li>
+    </ol>
+</nav>
+{% endblock %}
 
 {% block main %}
     <h2>Verwijder document versie</h2>

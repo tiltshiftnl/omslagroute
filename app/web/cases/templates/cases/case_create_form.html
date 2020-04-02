@@ -1,10 +1,19 @@
 {% extends 'base.html' %}
 
-
 {% block title %} - Cli&euml;nt aanmaken{% endblock %}
 
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Cli&euml;nt aanmaken</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
-    <h2>Cliënt aanmaken</h2>
+    <h2>Cli&euml;nt aanmaken</h2>
 
     <form method="post">
         {% csrf_token %}

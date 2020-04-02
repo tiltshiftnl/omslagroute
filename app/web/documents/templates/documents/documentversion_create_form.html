@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 
 {% comment %}
-    Upload a new version of an existing document 
-    URL:    /document/update/2
+    This view is not currently in use!
 {% endcomment %}
 
+{% block title %}- Document versie uploaden{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'document_list' %}">Actuele informatie en formulieren</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Document versie uploaden</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %}
-    <h2>Document uploaden</h2>
+    <h2>Document versie uploaden</h2>
 
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-field">

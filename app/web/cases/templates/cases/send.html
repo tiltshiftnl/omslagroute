@@ -2,19 +2,30 @@
 
 {% block title %} - Deel cliënt gegevens{% endblock %}
 
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Verstuur cli&euml;ntgegevens {{ title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
 <section class="section section--form">
-    <h1>Verstuur '{{ title }}'</h1>
+    <h2>Verstuur cli&euml;ntgegevens {{ title }}</h2>
     <form method="post" novalidate>
         {% csrf_token %}
 
         {{ form.errors }}
         {{ form.to_email.label }}
         {{ form.to_email }}
+
         <div data-submit-container class="form-field form-field--buttons screen-only">
             <input type="submit" value="Verstuur" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
         </div>
+
     </form>
 </section>
 {% endblock %}
