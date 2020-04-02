@@ -7,12 +7,12 @@ GESLACHT = (
 )
 
 CENTRALE_TOEGANG = (
-    (1, 'CTBW'),
-    (2, 'CTMO'),
-    (3, 'CTMOJ'),
-    (4, 'CTMOG'),
-    (5, 'JEUGDHULP'),
-    (6, 'CTBWLvB'),
+    (1, 'Centrale Toegang Begeleid Wonen (CTBW)'),
+    (2, 'Centrale Toegang Maatschappelijke Opvang (CTMO)'),
+    (3, 'Centrale Toegang Maatschappelijke Opvang Jeugd (CTMOJ)'),
+    (4, 'Centrale Toegang Maatschappelijke Opvang Gezin (CTMOG)'),
+    (5, 'Jeugdhulp'),
+    (6, 'Centrale Toegang Begeleid Wonen Licht Verstandelijke Beperking (CTBWLvB)'),
 )
 
 JONGER_DAN_26 = (
