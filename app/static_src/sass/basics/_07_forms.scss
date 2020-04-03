@@ -77,7 +77,7 @@ body:not(:-moz-handler-blocked) fieldset {
     grid-gap: 10px;
     grid-template-columns: auto auto auto;
     justify-content: flex-start;
-    margin-bottom: 0;
+    // margin-bottom: 0;
 
     > .button {
         -ms-grid-column-span: 1;
