@@ -26,10 +26,12 @@ def generic_login(request):
 
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
-            if user.user_type == BEGELEIDER:
-                return HttpResponseRedirect(reverse('cases_by_profile'))
-            return HttpResponseRedirect(request.POST.get('next', '/'))
+
+            if user:
+                login(request, user)
+                if user.user_type == BEGELEIDER:
+                    return HttpResponseRedirect(reverse('cases_by_profile'))
+                return HttpResponseRedirect(request.POST.get('next', '/'))
     messages.add_message(request, messages.ERROR, 'Er is iets mis gegaan met het inloggen')
     return HttpResponseRedirect('%s#login' % (request.POST.get('next', '/')))
 
