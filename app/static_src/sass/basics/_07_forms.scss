@@ -126,19 +126,18 @@ body:not(:-moz-handler-blocked) fieldset {
     margin-bottom: 0;
     margin-top: 10px;
 }
-[data-error-message] {
-    position: relative;
-}
-[data-error-message]:before {
-    content: attr(data-error-message);
+.error-name-exists {
     background-color: $primary-red;
     color: $primary-white;
     padding: 4px 8px;
     position: absolute;
     left: 0;
     top: 100%;
-    white-space: nowrap;
+    max-width: 620px;
     z-index: 20;
+    a {
+        color: $primary-white;
+    }
 }
 
 input[required]:valid {
@@ -429,12 +428,12 @@ ul.form-field__radiogroup,
             content: '';
             transform: translateY(.25rem);
         }
-        
+
         &:hover::after {
             box-shadow: inset 0 0 1px 1px #000;
             border: 1px solid $primary-black;
         }
-        
+
         &:focus::after {
             box-shadow: inset 0 0 1px 1px #000;
             border: 1px solid $primary-black;

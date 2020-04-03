@@ -129,9 +129,13 @@ Array.prototype.sortOnData = function(key){
             var self = this,
                 input = self.querySelector('input[name$="name"]'),
                 wrapper = _closest(input, '.form-field'),
+                errorMessageTmpl = 'Er is al een document met deze naam! Als je hier een nieuwe versie voor wil oploaden, klik dan <a href="[[link]]">hier</a>?',
                 id = self.dataset.documentId,
                 submit = _closest(self, 'form').querySelector('input[type="submit"]'),
                 q = '',
+                _init = function(){
+                    wrapper.style.cssText = 'position: relative';
+                },
                 _getData = function(){
                     var data = {'name': q};
                     if (id) {
@@ -140,9 +144,12 @@ Array.prototype.sortOnData = function(key){
                     return data;
                 },
                 _search = function(){
+                    var errorMessageElem = wrapper.querySelector('.error-name-exists');
                     submit.removeAttribute('disabled');
                     input.setCustomValidity('');
-                    delete wrapper.dataset.errorMessage;
+                    if (errorMessageElem) {
+                        wrapper.removeChild(wrapper.querySelector('.error-name-exists'));
+                    }
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/document/naam-bestaat',
@@ -152,7 +159,10 @@ Array.prototype.sortOnData = function(key){
                             if (response.message) {
                                 submit.setAttribute('disabled', 'disabled');
                                 input.setCustomValidity('invalid');
-                                wrapper.dataset.errorMessage = 'Er is al een document met deze naam!';
+                                var span = document.createElement('span');
+                                span.classList.add('error-name-exists');
+                                span.innerHTML = errorMessageTmpl.trim().replace('[[link]]', response.message);
+                                _insertAfter(span, input);
                             }
                         }
                     });
@@ -166,6 +176,7 @@ Array.prototype.sortOnData = function(key){
                   }
                 };
             input.addEventListener('keyup', _keyUp);
+            _init();
         },
         'edit-moment': function () {
             var saveStateTimeout;
