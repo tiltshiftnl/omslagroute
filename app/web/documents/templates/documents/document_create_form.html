@@ -43,7 +43,7 @@
         <div class="form-field"  data-decorator="document-name-exists">
             {{ form.name.label_tag }} 
             {% if form.name.help_text %}
-                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                <div class="help-text">{{ form.name.help_text|safe }}</div>
             {% endif %}
             {{ form.name }}
             {% if form.name.errors %}
@@ -58,7 +58,7 @@
         <div class="form-field">
             {{ form.document_type.label_tag }}
             {% if form.document_type.help_text %}
-                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+                <div class="help-text">{{ form.document_type.help_text|safe }}</div>
             {% endif %}
             {{ form.document_type.tag }}
             {{ form.document_type }}

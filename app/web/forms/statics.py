@@ -87,11 +87,11 @@ FIELDS = (
         required=True,
     )),
     ('partner_gehuwd', forms.BooleanField(
-        label=_('Gehuwd?'),
+        label=_('Gehuwd'),
         required=False,
     )),
     ('partner_echtscheiding_rond', forms.BooleanField(
-        label=_('Echtscheiding rond?'),
+        label=_('Echtscheiding rond'),
         required=False,
     )),
     ('partner_woonsituatie', forms.CharField(
@@ -102,7 +102,7 @@ FIELDS = (
     )),
     ('kinderen', forms.CharField(
         label=_('Kinderen'),
-        help_text=_('Geef aan per kind, naam + voorletters, geboortedatum(dd-mm-jjjj), ouderlijk gezag(Ja of Nee), mee aangemeld(Ja of Nee)'),
+        help_text=_('Geef aan per kind: <ul><li>Naam + voorletters</li><li>Geboortedatum (dag-maand-jaar)</li><li>Ouderlijk gezag (ja of nee)</li><li>Mee aangemeld (ja of nee)</li></ul>'),
         widget=forms.Textarea(),
         required=False,
     )),
@@ -155,7 +155,7 @@ FIELDS = (
         label=_('De betrokken kinderen hebben een gezonde omgeving'),
         widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
         required=True,
-        help_text='De betrokken kinderen hebben een gezonde omgeving, waarmee wordt bedoeld dat deze:<ul><li>Een veilige omgeving hebben waarin zij opgroeien; en</li><li>Zich leeftijdsadequaat kunnen ontwikkelen</li><li>Een omgeving hebben waarin voldoende emotioneel en fysiek beschikbare opvoeder(s) zijn</li></ul>',
+        help_text='De betrokken kinderen hebben een gezonde omgeving, waarmee wordt bedoeld dat deze:<ul><li>Een veilige omgeving hebben waarin zij opgroeien; en</li><li>Zich leeftijdsadequaat kunnen ontwikkelen; en</li><li>Een omgeving hebben waarin voldoende emotioneel en fysiek beschikbare opvoeder(s) zijn</li></ul>',
     )),
     ('medische_problemen_mbt_traplopen', forms.BooleanField(
         label=_('Zijn er medische problemen met betrekking tot traplopen?'),

@@ -43,7 +43,7 @@
         <div class="form-field"  data-decorator="document-name-exists" data-document-id="{{ form.instance.id }}">
             <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
             {% if form.name.help_text %}
-                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                <div class="help-text">{{ form.name.help_text|safe }}</div>
             {% endif %}
             {{ form.name }}
             {% if form.name.errors %}
@@ -58,7 +58,7 @@
         <div class="form-field">
             <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
             {% if form.description.help_text %}
-                <p class="help-text">{{ form.description.help_text|safe }}</p>
+                <div class="help-text">{{ form.description.help_text|safe }}</div>
             {% endif %}
             {{ form.description }}
             {% if form.description.errors %}
@@ -73,7 +73,7 @@
         <div class="form-field">
             <label for="{{ form.document_type.id_for_label }}">{{ form.document_type.label }}</label>
             {% if form.document_type.help_text %}
-                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+                <div class="help-text">{{ form.document_type.help_text|safe }}</div>
             {% endif %}
             <ul role="list" class="form-field__radiogroup">
                 {% for radio in form.document_type %}
@@ -97,7 +97,7 @@
         <div class="form-field">
             <label for="{{ form.moment_list.id_for_label }}">{{ form.moment_list.label }}</label>
             {% if form.moment_list.help_text %}
-                <p class="help-text">{{ form.moment_list.help_text|safe }}</p>
+                <div class="help-text">{{ form.moment_list.help_text|safe }}</div>
             {% endif %}
             {{ form.moment_list }}
             {% if form.moment_list.errors %}

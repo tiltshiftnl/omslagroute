@@ -41,7 +41,7 @@
 
             <strong>Voeg hieronder het document toe</strong>
             {% if form.uploaded_file.help_text %}
-                <p class="help-text">{{ form.uploaded_file.help_text|safe }}</p>
+                <div class="help-text">{{ form.uploaded_file.help_text|safe }}</div>
             {% endif %}
             {{ form.uploaded_file }}
             <label for="{{ form.uploaded_file.id_for_label }}">
