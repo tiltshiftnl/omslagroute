@@ -97,6 +97,12 @@ FIELDS = (
         widget=forms.Textarea(),
         required=True,
     )),
+    ('kinderen', forms.CharField(
+        label=_('Kinderen'),
+        help_text=_('Geef aan per kind, naam + voorletters, geboortedatum(dd-mm-jjjj), ouderlijk gezag(Ja of Nee), mee aangemeld(Ja of Nee)'),
+        widget=forms.Textarea(),
+        required=False,
+    )),
     ('centrale_toegang_trajectwijziging_ed', forms.ChoiceField(
         label=_('Toegang en trajectwijziging / doorstroom en jeugdzorg'),
         choices=CENTRALE_TOEGANG,
@@ -218,6 +224,7 @@ URGENTIE_AANVRAAG = [
                     'partner_gehuwd',
                     'partner_echtscheiding_rond',
                     'partner_woonsituatie',
+                    'kinderen',
                 ],
             },
 

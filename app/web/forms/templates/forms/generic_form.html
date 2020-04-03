@@ -20,7 +20,7 @@
                     {% for field in form %}
                         {% for error in field.errors %}
                             <li>
-                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>:
                                 {{ error|escape }}
                             </li>
                         {% endfor %}
@@ -54,7 +54,7 @@
         <div data-submit-container class="form-field form-field--buttons screen-only">
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
-            <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Vestuur aanvraag</a>
+            {% if form.instance.id %}<a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Vestuur aanvraag</a>{% endif %}
         </div>
     </form>
 </section>
