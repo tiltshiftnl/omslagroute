@@ -19,12 +19,13 @@ class BaseGenericForm:
         return self._html_section_output(
             normal_row='<div %(html_class_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
             checkbox_row='<div %(html_class_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
+            clearablefileinput_row='<div %(html_class_attr)s>%(help_text)s %(field)s %(label)s %(errors)s <div id="file-upload-filename" class="form-field__uploaded"></div></div>',
             error_row='%s',
             row_ender='</div>',
             help_text_html=' <div class="help-text">%s</div>',
             errors_on_separate_row=True)
 
-    def _html_section_output(self, normal_row, checkbox_row, error_row, row_ender, help_text_html, errors_on_separate_row):
+    def _html_section_output(self, normal_row, checkbox_row, clearablefileinput_row, error_row, row_ender, help_text_html, errors_on_separate_row):
         "Output HTML. Used by as_table(), as_ul(), as_p()."
         top_errors = self.non_field_errors()  # Errors that should be displayed above all fields.
         output, sections_output, hidden_fields = [], {}, []
@@ -37,6 +38,8 @@ class BaseGenericForm:
             bf_type = bf.field.widget.__class__.__name__.lower()
             if bf_type == 'checkboxinput':
                 row = checkbox_row
+            if bf_type == 'clearablefileinput':
+                row = clearablefileinput_row
 
             # Escape and cache in local variable.
             bf_errors = self.error_class([conditional_escape(error) for error in bf.errors])
