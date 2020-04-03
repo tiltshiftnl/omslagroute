@@ -7,19 +7,19 @@ GESLACHT = (
 )
 
 CENTRALE_TOEGANG = (
-    (1, 'Centrale Toegang Begeleid Wonen (CTBW)'),
-    (2, 'Centrale Toegang Maatschappelijke Opvang (CTMO)'),
-    (3, 'Centrale Toegang Maatschappelijke Opvang Jeugd (CTMOJ)'),
-    (4, 'Centrale Toegang Maatschappelijke Opvang Gezin (CTMOG)'),
+    (1, 'CTBW (Centrale Toegang Begeleid Wonen)'),
+    (2, 'CTMO (Centrale Toegang Maatschappelijke Opvang)'),
+    (3, 'CTMOJ (Centrale Toegang Maatschappelijke Opvang Jeugd)'),
+    (4, 'CTMOG (Centrale Toegang Maatschappelijke Opvang Gezin)'),
     (5, 'Jeugdhulp'),
-    (6, 'Centrale Toegang Begeleid Wonen Licht Verstandelijke Beperking (CTBWLvB)'),
+    (6, 'CTBWLvB (Centrale Toegang Begeleid Wonen Licht Verstandelijke Beperking)'),
 )
 
 JONGER_DAN_26 = (
     (1, 'Nee'),
     (2, 'Ja: standaard plaatsing jongerenwoning (5 jaar contract bij omklap)'),
     (3, 'Ja: plaatsing reguliere woning noodzakelijk (onbepaalde tijd bij omklap)'),
-    (4, 'Ja: Plaatsing in een project: ……………………………'),
+    (4, 'Ja: Plaatsing in een project (Licht dit toe bij de volgende vraag)'),
 )
 
 DEFAULT_YES_OR_NO = (

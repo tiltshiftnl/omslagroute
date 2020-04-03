@@ -50,6 +50,7 @@ FIELDS = (
             years=birth_dates_years(),
         ),
         required=True,
+        help_text=_('Tot wanneer is de inschrijving bij Woningnet geldig?')
     )),
     ('centrale_toegang_naam', forms.ChoiceField(
         label=_('Naam centrale toegang'),
@@ -64,14 +65,15 @@ FIELDS = (
         required=True,
     )),
     ('jonger_dan_26_plaatsing_project', forms.CharField(
-        label=_('Plaatsing jonger project'),
-        widget=forms.Textarea(),
+        label=_('In geval van plaatsing in een project'),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
         required=False,
     )),
     ('jonger_dan_26_motivatie_contract_onbepaalde', forms.CharField(
         label=_('Motivatie voor contract onbepaalde tijd jongere'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
         required=False,
+        help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
     )),
     ('partner_naam', forms.CharField(
         label=_('Partner naam'),
@@ -94,8 +96,9 @@ FIELDS = (
     )),
     ('partner_woonsituatie', forms.CharField(
         label=_('Woonsituatie partner'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
         required=True,
+        help_text='Waar/bij wie/hoe?'
     )),
     ('kinderen', forms.CharField(
         label=_('Kinderen'),
@@ -126,45 +129,51 @@ FIELDS = (
     )),
     ('urgentiecriteria_zinvolle_dagbesteding', forms.CharField(
         label=_('De cliënt heeft passende zinvolle dagbesteding'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
         required=True,
+        help_text='Bijvoorbeeld: cliënt wil een betaalde baan die zij kan combineren met de zorg voor haar kinderen',
     )),
     ('urgentiecriteria_functioneert_sociaal_stabiel', forms.CharField(
         label=_('De cliënt functioneert sociaal stabiel'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
         required=True,
+        help_text='Bijvoorbeeld: Het doel is om het huidige netwerk te behouden en het contact met haar ex-man te stabiliseren.',
     )),
     ('urgentiecriteria_functioneert_psychisch_stabiel', forms.CharField(
         label=_('De cliënt functioneert psychisch stabiel'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
         required=True,
+        help_text='Bijvoorbeeld: cliënt functioneert psychisch stabiel en heeft als doel dit voort te zetten. <br /><strong>Let op! Leg geen medische informatie vast.</strong>',
     )),
     ('urgentiecriteria_is_financieel_stabiel', forms.CharField(
         label=_('De cliënt is financieel stabiel'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
         required=True,
+        help_text='Met financieel stabiel wordt bedoeld dat deze een stabiel inkomen heeft inzage heeft gegeven in eventuele schulden op basis van informatie van Bureau KredietRegistratie.<br /><br />In het geval er schulden zijn is de cliënt financieel stabiel wanneer de cliënt aan een of meerdere van deze zaken voldoet: <ul><li>een overzicht heeft gegeven van alle schulden en betalingsverplichtingen</li><li>inzicht heeft gegeven in eventuele openstaande CJIB-boetes en heeft aangetoond dat er geen kans is op detentie vanwege openstaande boetes</li><li>in inkomensbeheer zit</li><li>een stabiel werkend budgetplan heeft</li><li>een overeenkomst heeft met een schuldhulpverleningsbureau waarbij het schuldhulpverleningstraject voorspoedig loopt</li></ul>Bijvoorbeeld: cliënt wil zelfstandig haar administratie bijhouden en haar schulden regelen.',
     )),
     ('urgentiecriteria_kinderen_gezonde_omgeving', forms.CharField(
         label=_('De betrokken kinderen hebben een gezonde omgeving'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
         required=True,
+        help_text='De betrokken kinderen hebben een gezonde omgeving, waarmee wordt bedoeld dat deze:<ul><li>Een veilige omgeving hebben waarin zij opgroeien; en</li><li>Zich leeftijdsadequaat kunnen ontwikkelen</li><li>Een omgeving hebben waarin voldoende emotioneel en fysiek beschikbare opvoeder(s) zijn</li></ul>',
     )),
     ('medische_problemen_mbt_traplopen', forms.BooleanField(
-        label=_('Zijn er medische problemen m.b.t. traplopen?'),
+        label=_('Zijn er medische problemen met betrekking tot traplopen?'),
         required=False,
+        help_text='',
     )),
     ('medische_problemen_wooneisen', forms.CharField(
         label=_('Zo ja, benedenwoning of woning met lift? Anders?'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
         required=False,
     )),
     ('medische_problemen_bewijslast', forms.FileField(
-        label=_('Voeg medische gegevens toe m.b.t. problematiek'),
+        label=_('Voeg medische gegevens toe met betrekking tot problematiek'),
         required=False,
     )),
     ('uitsluiting_stadsdeel_argumentatie', forms.CharField(
         label=_('Uitsluiting stadsdeel, argumentatie'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
         required=False,
     )),
 )
@@ -202,9 +211,15 @@ URGENTIE_AANVRAAG = [
                     'client_first_name',
                     'client_last_name',
                     'geboortedatum',
+                    'centrale_toegang_naam',
+                ],
+            },
+            {
+                'title': 'Woningnet',
+                'description': '',
+                'fields': [
                     'woningnet_nummer',
                     'woningnet_geldigheid',
-                    'centrale_toegang_naam',
                 ],
             },
             {
@@ -220,6 +235,7 @@ URGENTIE_AANVRAAG = [
                 'title': 'Gezinssamenstelling',
                 'description': '',
                 'fields': [
+                    'partner_naam',
                     'partner_geboortedatum',
                     'partner_gehuwd',
                     'partner_echtscheiding_rond',
@@ -235,7 +251,7 @@ URGENTIE_AANVRAAG = [
         'description': '',
         'section_list': [
             {
-                'title': '',
+                'title': 'Toegang',
                 'description': '',
                 'fields': [
                     'centrale_toegang_trajectwijziging_ed',
@@ -252,6 +268,12 @@ URGENTIE_AANVRAAG = [
                     'urgentiecriteria_functioneert_sociaal_stabiel',
                     'urgentiecriteria_functioneert_psychisch_stabiel',
                     'urgentiecriteria_is_financieel_stabiel',
+                ],
+            },
+            {
+                'title': 'Indien er kinderen gebruik maken van de opvang',
+                'description': 'NB: Voor de toewijzing van een woning is de juiste samenstelling van het huishouden in WoningNet relevant. let hierop bij kinderen!',
+                'fields': [
                     'urgentiecriteria_kinderen_gezonde_omgeving',
                 ],
             },

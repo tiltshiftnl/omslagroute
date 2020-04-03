@@ -21,7 +21,7 @@ class BaseGenericForm:
             checkbox_row='<div %(html_class_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
             error_row='%s',
             row_ender='</div>',
-            help_text_html=' <span class="help-text">%s</span>',
+            help_text_html=' <div class="help-text">%s</div>',
             errors_on_separate_row=True)
 
     def _html_section_output(self, normal_row, checkbox_row, error_row, row_ender, help_text_html, errors_on_separate_row):
@@ -56,7 +56,7 @@ class BaseGenericForm:
                 if bf.label:
                     label = conditional_escape(bf.label)
                     if bf.field.required:
-                        label = '%s*' % label
+                        label = '%s *' % label
                     label = bf.label_tag(label) or ''
                 else:
                     label = ''

@@ -26,6 +26,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 .section--step__title {
     font-size: 1.25rem;
+    margin-bottom: 0;
 }
 
 .sub-section {
@@ -72,9 +73,9 @@ body:not(:-moz-handler-blocked) fieldset {
 .form-field--buttons {
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 200px 10px 200px;
+    -ms-grid-columns: 200px 10px 200px 10px 200px;
     grid-gap: 10px;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     justify-content: flex-start;
     margin-bottom: 0;
 
@@ -105,6 +106,17 @@ body:not(:-moz-handler-blocked) fieldset {
     color: $neutral-grey4;
     margin-top: 5px;
     margin-bottom: 0;
+    max-width: 600px;
+
+    ul {
+        margin: 10px 0;
+        padding-left: 1rem;
+        list-style-position: outside;
+    }
+
+    li {
+        padding-bottom: .5rem;
+    }
 }
 
 .error-text,
@@ -127,6 +139,14 @@ body:not(:-moz-handler-blocked) fieldset {
     top: 100%;
     white-space: nowrap;
     z-index: 20;
+}
+
+input[required]:valid {
+    border: 1px solid $default-text-color;
+}
+
+input[required] {
+    border: 1px solid $primary-darkblue;
 }
 
 // ********************
@@ -269,6 +289,12 @@ ul.form-field__radiogroup,
     li {
         margin-top: 10px;
     }
+}
+
+
+.form-field--radioselect ul,
+.form-field--checkboxselectmultiple ul {
+    margin-top: 10px;
 }
 
 .form-field__checkbox,
@@ -429,10 +455,6 @@ select {
 // ********************
 
 .form-field--selectdatewidget {
-    label {
-        margin-bottom: 10px;
-    }
-
     select {
         display: inline-block;
         width: auto;
