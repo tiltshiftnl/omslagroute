@@ -26,8 +26,4 @@ Migrate database without restarting containers:
 
 ```bash
 docker-compose exec web python manage.py migrate
-```
-
-# Used resources
-
-(Line Basic Icon Set)[https://www.iconfinder.com/iconsets/line-basic-icon-set] by Adlena Zhuvich for download icons. (Temporary)
+``` 

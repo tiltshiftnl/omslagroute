@@ -1,4 +1,6 @@
 {% load static %}
+{% load auth_tags %}
+
 <!DOCTYPE html>
 <html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}" id="login" class="no-js">
 <head>
@@ -46,7 +48,12 @@
                     </div>
                 {% else %}
                     <div class="site-userinfo">
-                        <a href="#login">Log in</a>
+                        {% url 'home' as home_url %}
+                        {% if request.get_full_path == home_url %}
+                            <a href="#login">Log in</a>
+                        {% else %}
+                            <a href="{% url 'home' %}#login">Log in</a>
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
@@ -90,36 +97,36 @@
             {% if request.user.is_authenticated %}
             <nav>
                 <ul class="navigation-container">
-                    <li>
-                        <button class="navigation__open"><span>Omslagroute</span></button>
-                        <ul>
+                        <li>
+                            <a href="{% url 'home' %}">Omslagroute</a>
+
+                            {% if request.user|is_beheerder %}
+                            <ul>
+                                <li>
+                                    <a href="{% url 'document_list' %}">
+                                        <svg width="9" height="14">
+                                            <use href="#chevron-right" xlink:href="#chevron-right" width="9" height="14"></use>
+                                        </svg>
+                                        Beheer documenten</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'manage_timeline' %}">
+                                        <svg width="9" height="14">
+                                            <use href="#chevron-right" xlink:href="#chevron-right" width="9" height="14"></use>
+                                        </svg>
+                                        Bewerk omslagroute</a>
+                                </li>
+                            </ul>
+                            {% endif %}
+                        </li>
+
+                        {% if request.user|is_begeleider %}
                             <li>
-                                <a href="{% url 'document_list' %}">
-                                    <svg width="9" height="14">
-                                        <use href="#chevron-right" xlink:href="#chevron-right" width="9" height="14"></use>
-                                    </svg>
-                                    Beheer documenten</a>
+                                <a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a>
                             </li>
-                            <!-- <li>
-                                <a href="{% url 'home' %}">
-                                    <svg width="9" height="14">
-                                        <use href="#chevron-right" xlink:href="#chevron-right" width="9" height="14"></use>
-                                    </svg>
-                                    Beheer formulieren</a>
-                            </li> -->
-                            <li>
-                                <a href="{% url 'manage_timeline' %}">
-                                    <svg width="9" height="14">
-                                        <use href="#chevron-right" xlink:href="#chevron-right" width="9" height="14"></use>
-                                    </svg>
-                                    Bewerk omslagroute</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{% url 'cases_by_profile' %}">Cli&euml;nten</a>
-                    </li>
-                    {% if request.user.is_superuser %}
+                        {% endif %}
+
+                    {% if request.user|is_beheerder %}
                         <li class="admin-settings">
                             <button class="navigation__open"><span>Beheer</span></button>
                             <ul>
