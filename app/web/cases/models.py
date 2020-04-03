@@ -96,6 +96,11 @@ class Case(PrintableModel):
         blank=True,
         null=True,
     )
+    kinderen = models.TextField(
+        verbose_name=_('Kinderen'),
+        blank=True,
+        null=True,
+    )
     centrale_toegang_trajectwijziging_ed = models.PositiveSmallIntegerField(
         verbose_name=_('Toegang en trajectwijziging / doorstroom en jeugdzorg'),
         choices=CENTRALE_TOEGANG,
