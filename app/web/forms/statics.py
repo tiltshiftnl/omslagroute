@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.forms import widgets
-from .utils import birth_dates_years
+from .utils import *
 from .widgets import *
 from web.cases.statics import *
 
@@ -47,7 +47,7 @@ FIELDS = (
     ('woningnet_geldigheid', forms.DateField(
         label=_('Geldigheid woninget'),
         widget=widgets.SelectDateWidget(
-            years=birth_dates_years(),
+            years=future_dates_years(),
         ),
         required=True,
         help_text=_('Tot wanneer is de inschrijving bij Woningnet geldig?')
@@ -169,6 +169,7 @@ FIELDS = (
     )),
     ('medische_problemen_bewijslast', forms.FileField(
         label=_('Voeg medische gegevens toe met betrekking tot problematiek'),
+        widget=ClearableFileInput(),
         required=False,
     )),
     ('uitsluiting_stadsdeel_argumentatie', forms.CharField(
