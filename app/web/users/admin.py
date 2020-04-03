@@ -1,8 +1,31 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
+from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.html import mark_safe
+from django.urls import reverse
 
 
 @admin.register(User)
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', )
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'profile_link', 'is_staff')
+
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (_('Omslagroute instellingen'), {'fields': ('user_type',)}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+
+    def profile_link(self, obj):
+        url = reverse('admin:%s_%s_change' % ('profiles',  'profile'),  args=[obj.profile.id])
+        # print(url)
+        return mark_safe(
+            """<a id="edit_related" class="button related-widget-wrapper-link add-related" href="%s?_popup=1">
+            Profiel
+            </a>""" % url
+        )
+
