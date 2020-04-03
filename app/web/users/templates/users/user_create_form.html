@@ -15,14 +15,28 @@
     <h2>Nieuwe gebruiker toevoegen</h2>
 
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
-        <p class="error-text">
-            {{ form.non_field_errors }}
-        </p>
+        {% if form.errors %}
+            <div class="errors" aria-live="polite">
+                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
         <div class="form-field">
             <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
             {% if form.username.help_text %}
-                <p class="help-text">{{ form.username.help_text|safe }}</p>
+                <div class="help-text">{{ form.username.help_text|safe }}</div>
             {% endif %}
             {{ form.username }}
             {% if form.username.errors %}
@@ -37,7 +51,7 @@
         <div class="form-field">
             <label for="{{ form.user_type.id_for_label }}">{{ form.user_type.label }}</label>
             {% if form.name.help_text %}
-                <p class="help-text">{{ form.user_type.help_text|safe }}</p>
+                <div class="help-text">{{ form.user_type.help_text|safe }}</div>
             {% endif %}
             {{ form.user_type }}
             {% if form.user_type.errors %}
@@ -52,7 +66,7 @@
         <div class="form-field">
             <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
             {% if form.password1.help_text %}
-                <p class="help-text">{{ form.password1.help_text|safe }}</p>
+                <div class="help-text">{{ form.password1.help_text|safe }}</div>
             {% endif %}
             {{ form.password1 }}
             {% if form.password1.errors %}
@@ -67,7 +81,7 @@
         <div class="form-field">
             <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
             {% if form.password2.help_text %}
-                <p class="help-text">{{ form.password2.help_text|safe }}</p>
+                <div class="help-text">{{ form.password2.help_text|safe }}</div>
             {% endif %}
             {{ form.password2 }}
             {% if form.password2.errors %}

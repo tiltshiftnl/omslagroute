@@ -2,6 +2,15 @@
 
 {% block title %} - Organisatiebeheer{% endblock %}
 
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Organisatiebeheer</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %}
     <section class="section section--manage-organisations">
         <h2>Organisatiebeheer</h2>
@@ -12,9 +21,23 @@
             {% csrf_token %}
             {{ formset.management_form }}
 
-            <p class="error-text">
-                {{ form.non_field_errors }}
-            </p>
+            {% if form.errors %}
+                <div class="errors" aria-live="polite">
+                    <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>
+                                    <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                    {{ error|escape }}
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
             <table data-moment-container class="organisation-list">
                 <thead>
@@ -29,7 +52,7 @@
                         <td class="form-field">
                             <label for="{{ form.name.id_for_label }}" class="sr-only">{{ form.name.label }}</label>
                             {% if form.name.help_text %}
-                                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                                <div class="help-text">{{ form.name.help_text|safe }}</div>
                             {% endif %}
                             {{ form.name }}
                             {% if form.name.errors %}
@@ -44,7 +67,7 @@
                         <td class="form-field">
                             <label for="{{ form.name_abbreviation.id_for_label }}" class="sr-only">{{ form.name_abbreviation.label }}</label>
                             {% if form.name_abbreviation.help_text %}
-                                <p class="help-text">{{ form.name_abbreviation.help_text|safe }}</p>
+                                <div class="help-text">{{ form.name_abbreviation.help_text|safe }}</div>
                             {% endif %}
                             {{ form.name_abbreviation }}
                             {% if form.name_abbreviation.errors %}

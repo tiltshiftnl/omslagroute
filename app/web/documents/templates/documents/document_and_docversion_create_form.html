@@ -19,14 +19,28 @@
         {{ documentversionformset.management_form }}
         {{ form.moment_id }}
 
-        <p class="error-text">
-            {{ form.non_field_errors }}
-        </p>
+        {% if form.errors %}
+            <div class="errors" aria-live="polite">
+                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
         <div class="form-field" data-decorator="document-name-exists">
             <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
             {% if form.name.help_text %}
-                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                <div class="help-text">{{ form.name.help_text|safe }}</div>
             {% endif %}
             {{ form.name }}
             {% if form.name.errors %}
@@ -41,7 +55,7 @@
         <div class="form-field">
             <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
             {% if form.description.help_text %}
-                <p class="help-text">{{ form.description.help_text|safe }}</p>
+                <div class="help-text">{{ form.description.help_text|safe }}</div>
             {% endif %}
             {{ form.description }}
             {% if form.description.errors %}
@@ -56,7 +70,7 @@
         <div class="form-field">
             <label for="{{ form.document_type.id_for_label }}">{{ form.document_type.label }}</label>
             {% if form.document_type.help_text %}
-                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+                <div class="help-text">{{ form.document_type.help_text|safe }}</div>
             {% endif %}
             <ul role="list" class="form-field__radiogroup">
                 {% for radio in form.document_type %}
@@ -80,7 +94,7 @@
         <div class="form-field">
             <strong>Voeg hieronder het document toe</strong>
             {% if form.uploaded_file.help_text %}
-                <p class="help-text">{{ form.uploaded_file.help_text|safe }}</p>
+                <div class="help-text">{{ form.uploaded_file.help_text|safe }}</div>
             {% endif %}
             {% for form in documentversionformset.forms %}
                 {{ form.uploaded_file }}

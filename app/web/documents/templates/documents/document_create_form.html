@@ -22,14 +22,28 @@
     <form method="post">
         {% csrf_token %}
 
-        <p class="error-text">
-            {{ form.non_field_errors }}
-        </p>
+        {% if form.errors %}
+            <div class="form-errors" aria-live="polite">
+                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
-        <div class="form-field" data-decorator="document-name-exists">
-            {{ form.name.label_tag }}
+        <div class="form-field"  data-decorator="document-name-exists">
+            {{ form.name.label_tag }} 
             {% if form.name.help_text %}
-                <p class="help-text">{{ form.name.help_text|safe }}</p>
+                <div class="help-text">{{ form.name.help_text|safe }}</div>
             {% endif %}
             {{ form.name }}
             {% if form.name.errors %}
@@ -44,7 +58,7 @@
         <div class="form-field">
             {{ form.document_type.label_tag }}
             {% if form.document_type.help_text %}
-                <p class="help-text">{{ form.document_type.help_text|safe }}</p>
+                <div class="help-text">{{ form.document_type.help_text|safe }}</div>
             {% endif %}
             {{ form.document_type.tag }}
             {{ form.document_type }}
