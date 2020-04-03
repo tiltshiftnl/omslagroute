@@ -83,10 +83,13 @@ Array.prototype.sortOnData = function(key){
       'exit-edit-moment': function(e){
           e.preventDefault();
           var self = _closest(e.target, '[data-handler="exit-edit-moment"]'),
-              moment = _closest(e.target, '[data-moment]'),
-              momentListContainer = moment.parentNode;
+              momentListContainer = _closest(self, '.details-list-wrapper'),
+              moments = momentListContainer.querySelectorAll('[data-moment]');
           momentListContainer.classList.remove('details-list-wrapper--edit');
-          moment.classList.remove('details-wrapper--edit');
+
+          for (var i  = 0; i < moments.length; i++){
+              moments[i].classList.remove('details-wrapper--edit')
+          }
 
       },
       'enter-edit-moment': function(e){
@@ -280,6 +283,10 @@ Array.prototype.sortOnData = function(key){
                                 self.classList.remove('details-wrapper--new-moment');
                                 delete self.dataset.momentProto;
                                 d.querySelector('[data-edit-timeline]').save();
+                            } else {
+                                self.querySelector('.alert--saving .alert__message').textContent = 'Uw wijzigingen worden opgeslagen...';
+                                self.querySelector('.alert--saved .alert__message').textContent = 'Wijzigingen opgeslagen.';
+
                             }
                             if (self.previousSibling.classList) {
                                 self.previousSibling.querySelector('[data-handler="new-moment"]').style.display = 'block';

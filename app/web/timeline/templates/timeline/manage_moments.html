@@ -29,6 +29,7 @@
             {{ moment_form_set.management_form }}
             <!-- {{ moment_form_set.errors }} -->
             <div data-moment-container class="details-list-wrapper">
+                <a href="#" class="modal-bg" data-handler="exit-edit-moment"></a>
                 {% for moment in moment_form_set %}
                     {% if moment.instance.id %}
                     {% include 'timeline/snippets/moment_section_edit.html' %}
