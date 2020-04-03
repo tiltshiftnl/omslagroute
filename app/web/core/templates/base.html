@@ -35,12 +35,14 @@
                 </h1>
                 {% if request.user.is_authenticated %}
                     <div class="site-userinfo">
-                        Ingelogd als:
-                            {% if request.user.is_superuser %}
-                                <a href="/admin" class="site-userinfo__username">admin</a>
-                            {% endif %}
-                                <span class="site-userinfo__username">{{ request.user.first_name }}</span>
-                            | <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                        {% if request.user.is_superuser %}
+                            Ingelogd als: <a href="/admin" class="site-userinfo__username">admin</a> |
+                        {% elif request.user.first_name %}
+                            Ingelogd als: <span class="site-userinfo__username">{{ request.user.first_name }}</span> |
+                        {% else %}
+                            Ingelogd als: <span class="site-userinfo__username">{{ request.user.username }}</span> |
+                        {% endif %}
+                        <a href="{% url 'uitloggen' %}">Uitloggen</a>
                     </div>
                 {% else %}
                     <div class="site-userinfo">
