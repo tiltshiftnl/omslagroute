@@ -25,7 +25,7 @@ urlpatterns = [
 
 
     path('nieuw/', GenericCaseCreateFormView.as_view(), {
-        'title': 'Cliënt basisgegevens',
+        'title': 'Nieuwe cliënt',
         'sections': BASIS_GEGEVENS,
     }, name='add_case'),
 ]
