@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from .models import *
-from django.urls import reverse_lazy
+from django.urls import reverse
 from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -192,5 +192,7 @@ def document_name_exists(request):
         if data.get('id'):
             existing_names = existing_names.exclude(id=data.get('id'))
         out = bool(existing_names)
+        if existing_names:
+            out = reverse('add_document_version_to_document', kwargs={'document': existing_names[0].id})
 
     return JsonResponse({'message': out}, status=status_code)
