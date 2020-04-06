@@ -1,6 +1,12 @@
+// ********************
+// BREADCRUMBS
+// 
+// ALSO SEE https://designsystem.amsterdam.nl/7awj1hc9f/p/35ca97-breadcrumbs
+// ********************
+
 .breadcrumb {
-    margin-bottom: 2rem;
-    margin-top: 1rem;
+    margin-bottom: 2.813rem; 
+    margin-top: .938rem;
 }
 
 .breadcrumb-list {
@@ -11,23 +17,29 @@
 
 .breadcrumb-step {
     color: $primary-black;
-    display: inline-block;
+    display: inline;
 
-    &:not(:last-child)::after {
-        content: ' \00BB ';
-        display: inline;
+    &:not(:nth-last-child(2))::after {
+        content: ' >';
+        background-image: url("/static/images/chevron-right.svg");
+        background-position: center .438rem;
+        background-repeat: no-repeat;
+        background-size: auto .563rem;
+        display: inline-block;
+        margin: 0 .375rem 0 .625rem;
+        width: .563rem;
+        color: transparent;
     }
 
     a { 
         color: $neutral-grey4;
+        text-decoration: none;
 
         &:hover,
         &:focus {
-            color: $primary-darkblue;
+            color: $primary-red;
+            text-decoration: underline;
         }
 
     }
-}
-
-.breadcrumb-step--current {
 }
