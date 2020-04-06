@@ -73,7 +73,7 @@ body:not(:-moz-handler-blocked) fieldset {
 .form-field--buttons {
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 12.5rem .625rem 12.5rem .625rem 12.5rem;
+    -ms-grid-columns: auto .625rem auto .625rem auto;
     grid-gap: .625rem;
     grid-template-columns: auto auto auto;
     justify-content: flex-start;
@@ -84,12 +84,16 @@ body:not(:-moz-handler-blocked) fieldset {
         -ms-grid-row-span: 1;
     }
 
-    > .button:first-child {
+    > .button:nth-child(1) {
         -ms-grid-column: 1;
     }
 
-    > .button:last-child {
+    > .button:nth-child(2) {
         -ms-grid-column: 3;
+    }
+
+    > .button:nth-child(3) {
+        -ms-grid-column: 5;
     }
 
     > .button:only-child {
