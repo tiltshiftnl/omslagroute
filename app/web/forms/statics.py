@@ -9,14 +9,17 @@ from web.cases.statics import *
 FIELDS = (
     ('naam_client', forms.CharField(
         label=_('Naam cliënt'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True
     )),
     ('client_first_name', forms.CharField(
         label=_('Voornaam'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True
     )),
     ('client_last_name', forms.CharField(
         label=_('Achternaam'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True
     )),
     ('geslacht', forms.ChoiceField(
@@ -38,10 +41,12 @@ FIELDS = (
     )),
     ('email', forms.EmailField(
         label=_('E-mailadres'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True,
     )),
     ('woningnet_nummer', forms.CharField(
         label=_('Woningnetnummer'),
+        widget=forms.TextInput(attrs={'placeholder': ' ', 'pattern': '^[0-9]*$'}),
         required=True,
     )),
     ('woningnet_geldigheid', forms.DateField(
@@ -76,11 +81,12 @@ FIELDS = (
         help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
     )),
     ('partner_naam', forms.CharField(
-        label=_('Partner naam'),
+        label=_('Naam partner'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True,
     )),
     ('partner_geboortedatum', forms.DateField(
-        label=_('Partner geboortedatum'),
+        label=_('Geboortedatum partner'),
         widget=widgets.SelectDateWidget(
             years=birth_dates_years(),
         ),
@@ -96,7 +102,7 @@ FIELDS = (
     )),
     ('partner_woonsituatie', forms.CharField(
         label=_('Woonsituatie partner'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder': ' '}),
         required=True,
         help_text='Waar/bij wie/hoe?'
     )),
@@ -114,6 +120,7 @@ FIELDS = (
     )),
     ('trajecthouder_naam', forms.CharField(
         label=_('Naam instroomfunctionaris of trajecthouder'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True,
     )),
     ('aanvraag_datum', forms.DateField(
@@ -125,6 +132,7 @@ FIELDS = (
     )),
     ('omslagwoning_zorgaanbieder', forms.CharField(
         label=_('Zorgaanbieder omslagwoning'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True,
     )),
     ('urgentiecriteria_zinvolle_dagbesteding', forms.CharField(
@@ -164,7 +172,7 @@ FIELDS = (
     )),
     ('medische_problemen_wooneisen', forms.CharField(
         label=_('Zo ja, benedenwoning of woning met lift? Anders?'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder': ' '}),
         required=False,
     )),
     ('medische_problemen_bewijslast', forms.FileField(
@@ -174,7 +182,7 @@ FIELDS = (
     )),
     ('uitsluiting_stadsdeel_argumentatie', forms.CharField(
         label=_('Uitsluiting stadsdeel, argumentatie'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
+        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder': ' '}),
         required=False,
     )),
 )
