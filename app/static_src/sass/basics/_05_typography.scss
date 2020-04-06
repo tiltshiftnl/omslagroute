@@ -4,7 +4,13 @@
 // ********************   
 
 html {
-    font-size: 16px;
+    font-size: 100%;
+}
+
+// convert pixels to rem units
+@mixin size($property, $valuepixels) {
+    $valuerem : $valuepixels * .0625;
+    #{$property}: $valuerem + rem;
 }
 
 body {
@@ -79,7 +85,7 @@ p, ul, ol {
 }
 
 ul {
-    padding-left: 2px;
+    padding-left: .125rem;
     list-style-position: inside;
 }
 
@@ -109,9 +115,9 @@ a:active,a:hover {
     color: $primary-red;
 }
 
-hr {
-    min-height: 1px;
-    height: 1px;
+hr { 
+    min-height: .063rem;
+    height: .063rem;
     background-color: $neutral-grey2;
     color: $neutral-grey2;
     border-style: solid;
@@ -123,12 +129,12 @@ hr {
 // If we have clicked an anchor link, create some space at the top
 
 input[name] {
-    scroll-margin-top: 70px;
+    scroll-margin-top: 4.375rem;
     
     @supports (-webkit-overflow-scrolling: touch) { 
         // bc ios safari is not playing along
         // CSS specific to iOS devices only
-        padding-top: 70px;
-        margin-top: -70px;
+        padding-top: 4.375rem;
+        margin-top: -4.375rem;
     }
 }

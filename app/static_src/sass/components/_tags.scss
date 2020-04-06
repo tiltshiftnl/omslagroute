@@ -5,8 +5,8 @@
 // ********************
 
 .tag-list {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: .625rem;
+    margin-bottom: 1.25rem;
     padding: 0;
 }
 
@@ -14,7 +14,7 @@
     display: inline-block;
 
     &:not(:last-of-type) {
-        margin-right: 10px;
+        margin-right: .625rem;
     }
 }
 
@@ -29,13 +29,15 @@
     }
 
     .button--tinytag {
-        background-color: $neutral-grey3;
+        background-color: $neutral-grey2;
     }
 
     .details__header:hover,
     .details__header:focus {
-        .button--tinytag {
-            background-color: $primary-darkerblue;
+        .button--tinytag:hover,
+        .button--tinytag:focus {
+            // background-color: $primary-darkerblue;
+            background-color: $neutral-grey4;
         }
     }
 }
@@ -62,7 +64,7 @@
 .button--tag {
     background-color: $neutral-grey4;
     color: $primary-white;
-    border: 1px solid transparent;
+    border: .063rem solid transparent;
     pointer-events: auto;
 
     &:hover,
@@ -87,6 +89,8 @@
 }
 
 .button--tag {
+    margin-bottom: .625rem;
+
     .button__icon-checked,
     .button__icon-close {
         display: none;
@@ -100,15 +104,15 @@
 
 .tinytag,
 .button--tinytag {
-    padding: 2px 9px;
-    border-radius: 12px;
+    padding: .125rem .563rem;
+    border-radius: .75rem;
     font-weight: bold;
     font-size: .8rem;
     text-transform: uppercase;
     min-width: auto;
     background-color: $neutral-grey4;
     color: $primary-white;
-    border: 1px solid transparent;
+    border: .063rem solid transparent;
     pointer-events: auto;
 
     &:hover {

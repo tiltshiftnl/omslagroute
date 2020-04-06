@@ -32,8 +32,8 @@
     position: relative;
     list-style-type: none;
     margin-bottom: 1.5rem;
-    border-right: 2px solid transparent;
-    border-bottom: 2px solid transparent;
+    border-right: .125rem solid transparent;
+    border-bottom: .125rem solid transparent;
 
     @media all and (min-width: $tablets) {
         margin-bottom: 0;
@@ -48,8 +48,8 @@
     &:focus {
         text-decoration: none;
         color: $primary-black;
-        border-right: 2px solid $primary-red;
-        border-bottom: 2px solid $primary-red;
+        border-right: .125rem solid $primary-red;
+        border-bottom: .125rem solid $primary-red;
         
         @media all and (min-width: $tablets) {
             border-right: 0;
@@ -63,7 +63,7 @@
     .document {
         -ms-grid-column-span: 1;
         -ms-grid-row-span: 1;
-        padding-bottom: 30px;
+        padding-bottom: 1.875rem;
     }
 
     @media all and (min-width: $tablets) and (max-width: $large) {
@@ -183,7 +183,7 @@
     padding-left: 1rem;
 
     @media screen and (min-width: $tablets) {
-        flex: 1 1 100px;
+        flex: 1 1 6.25rem;
         padding-left: 0;
         text-align: center;
         justify-content: center;
@@ -218,7 +218,7 @@
 }
 
 .document__icon {
-    flex: 0 0 40px;
+    flex: 0 02.5rem;
 
     @media all and (min-width: $tablets) { 
         align-self: center;
@@ -268,19 +268,19 @@
     }
 
     @media all and (min-width: $tablets) {
-        width: 300px;
+        width: 18.75rem;
         background-color: $primary-white;
-        box-shadow: 0 0 5px 2px $neutral-grey3;
+        box-shadow: 0 0 .313rem .125rem $neutral-grey3;
 
         li {
             display: inline-block;
-            margin-right: 5px;
+            margin-right: .313rem;
             margin-bottom: 0;
         }
     }
 
     @media all and (min-width: $tablets) {
-        width: 500px;
+        width: 31.25rem;
     }
 }
 
@@ -302,8 +302,8 @@
     
     &,
     &:visited {
-        border-right: 2px solid transparent;
-        border-bottom: 2px solid transparent;
+        border-right: .125rem solid transparent;
+        border-bottom: .125rem solid transparent;
         text-decoration: none;
     }
 
@@ -313,8 +313,8 @@
         color: $primary-black;
         
         @media all and (min-width: $tablets) {
-            border-right: 2px solid $primary-red;
-            border-bottom: 2px solid $primary-red;
+            border-right: .125rem solid $primary-red;
+            border-bottom: .125rem solid $primary-red;
         }
 
         .document__name {

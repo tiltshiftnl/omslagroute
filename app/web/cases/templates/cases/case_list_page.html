@@ -7,7 +7,7 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step breadcrumb-step--current" aria-current="location">Mijn cli&euml;nten</li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Mijn cli&euml;nten</li>
         </ol>
     </nav>
 {% endblock %}
@@ -27,20 +27,24 @@
         <tbody>
             {% for object in object_list %}
                 <tr>
-                    <td><a href="{% url 'case' object.id %}">
-                        {{ object.client_name }}</a>
+                    <td>
+                        <a href="{% url 'case' object.id %}">
+                        {{ object.client_name }}
+                        </a>
                     </td>
                     <td>
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            {% client_status object 'basis_gegevens' %}%
+                            {% client_status object 'basis_gegevens' %}% ingevuld
                         </a>
-                        <span class="sr-only">{% client_status object 'basis_gegevens' %}%</span>
+                        <!-- hide the above and show only the text in the span here; otherwise screenreaders
+                            will read the link three times and tabbing through the page becomes annoying -->
+                        <span class="sr-only">{% client_status object 'basis_gegevens' %}% ingevuld</span>
                     </td>
                     <td>
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            {% client_status object 'urgentie_aanvraag' %}%
+                            {% client_status object 'urgentie_aanvraag' %}% ingevuld
                         </a>
-                        <span class="sr-only">{% client_status object 'urgentie_aanvraag' %}%</span>
+                        <span class="sr-only">{% client_status object 'urgentie_aanvraag' %}% ingevuld</span>
                     </td>
                 </tr>
             {% endfor %}

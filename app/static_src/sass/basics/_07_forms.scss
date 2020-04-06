@@ -12,7 +12,7 @@ fieldset {
     margin: 0;
     box-shadow: none;
     border: 0;
-    padding: 0.01em 0 0 0;
+    padding: .01em 0 0 0;
     min-width: 0;
 }
 
@@ -32,7 +32,7 @@ body:not(:-moz-handler-blocked) fieldset {
 .sub-section {
     padding: 1rem;
     margin-bottom: 1rem;
-    border: 1px solid $neutral-grey3;
+    border: .063rem solid $neutral-grey3;
 }
 
 .sub-section__title {
@@ -41,7 +41,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 .section--step__description,
 .sub-section__description {
-    max-width: 650px;
+    max-width: 40.625rem;
 }
 
 .next-previous {
@@ -57,8 +57,8 @@ body:not(:-moz-handler-blocked) fieldset {
 // ********************
 
 .form-field {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: .625rem;
+    margin-bottom: 1.25rem;
 
     .details__header & {
         margin-top: 0;
@@ -73,8 +73,8 @@ body:not(:-moz-handler-blocked) fieldset {
 .form-field--buttons {
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 200px 10px 200px 10px 200px;
-    grid-gap: 10px;
+    -ms-grid-columns: auto .625rem auto .625rem auto;
+    grid-gap: .625rem;
     grid-template-columns: auto auto auto;
     justify-content: flex-start;
     // margin-bottom: 0;
@@ -84,12 +84,16 @@ body:not(:-moz-handler-blocked) fieldset {
         -ms-grid-row-span: 1;
     }
 
-    > .button:first-child {
+    > .button:nth-child(1) {
         -ms-grid-column: 1;
     }
 
-    > .button:last-child {
+    > .button:nth-child(2) {
         -ms-grid-column: 3;
+    }
+
+    > .button:nth-child(3) {
+        -ms-grid-column: 5;
     }
 
     > .button:only-child {
@@ -104,12 +108,12 @@ body:not(:-moz-handler-blocked) fieldset {
 .help-text {
     font-size: .9rem;
     color: $neutral-grey4;
-    margin-top: 5px;
+    margin-top: .313rem;
     margin-bottom: 0;
-    max-width: 600px;
+    max-width: 37.5rem;
 
     ul {
-        margin: 10px 0;
+        margin: .625rem 0;
         padding-left: 1rem;
         list-style-position: outside;
     }
@@ -124,12 +128,12 @@ body:not(:-moz-handler-blocked) fieldset {
     color: $primary-red;
     font-weight: bold;
     margin-bottom: 0;
-    margin-top: 10px;
+    margin-top: .625rem;
 }
 .error-name-exists {
     background-color: $primary-red;
     color: $primary-white;
-    padding: 4px 8px;
+    padding: .25rem .5rem;
     position: absolute;
     left: 0;
     top: 100%;
@@ -141,11 +145,11 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 input[required]:valid {
-    border: 1px solid $default-text-color;
+    border: .063rem solid $default-text-color;
 }
 
 input[required] {
-    border: 1px solid $primary-darkblue;
+    border: .063rem solid $primary-darkblue;
 }
 
 // ********************
@@ -165,13 +169,13 @@ select,
 textarea {
     font-family: inherit;
     font-size: inherit;
-    border: 1px solid $neutral-grey4;
+    border: .063rem solid $neutral-grey4;
     border-radius: 0;
     color: $primary-black;
-    padding: 12px 15px;
-    min-width: 70px;
-    max-width: 620px;
-    margin-top: 10px;
+    padding: .75rem .938rem;
+    min-width: 4.375rem;
+    max-width: 38.75rem;
+    margin-top: .625rem;
     width: 100%;
 
     &:hover {
@@ -182,9 +186,17 @@ textarea {
         color: $neutral-grey3;
     }
 
-    &[required]:invalid {
-        border: 1px solid $primary-red;
-        box-shadow: inset 0 0 0 1px $primary-red;
+    &[required]:valid {
+        border: .063rem solid $primary-black;
+    }
+
+    // When input is...
+    //   1. NOT empty
+    //   2. NOT in focus
+    //   3. NOT valid
+    &[required]:invalid:not(:focus):not(:placeholder-shown) {
+        border: .063rem solid $primary-red;
+        box-shadow: inset 0 0 0 .063rem $primary-red;
     }
 
     &:invalid + .error-text,
@@ -194,8 +206,8 @@ textarea {
 }
 
 input[data-error-message] {
-    outline: 1px $primary-red solid;
-    border: 1px $primary-red solid;
+    outline: .063rem $primary-red solid;
+    border: .063rem $primary-red solid;
 }
 
 // ********************
@@ -221,17 +233,17 @@ input[data-error-message] {
 
     &:hover + label,
     &:focus + label {
-        border: 1px solid $primary-red;
+        border: .063rem solid $primary-red;
     }
 
     &:focus + label {
-        outline: 1px dotted #212121;
-        outline: 5px auto -webkit-focus-ring-color;
+        outline: .063rem dotted #212121;
+        outline: .313rem auto -webkit-focus-ring-color;
     }
 
     &[required].invalid + label {
-        border: 1px solid $primary-red;
-        box-shadow: inset 0 0 0 1px $primary-red;
+        border: .063rem solid $primary-red;
+        box-shadow: inset 0 0 0 .063rem $primary-red;
     }
 
     &[required].invalid + label + .error-text {
@@ -241,10 +253,10 @@ input[data-error-message] {
 
 [type="file"] + label {
     background-color: $neutral-grey1;
-    margin-top: 10px;
-    min-width: 70px;
-    max-width: 620px;
-    height: 100px;
+    margin-top: .625rem;
+    min-width: 4.375rem;
+    max-width: 38.75rem;
+    height: 6.25rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -260,11 +272,11 @@ input[data-error-message] {
 }
 
 .file-upload__icon {
-    margin-left: 15px;
+    margin-left: .938rem;
 }
 
 .form-field__uploaded {
-    margin-top: 10px;
+    margin-top: .625rem;
 }
 
 // ********************
@@ -278,22 +290,22 @@ ul.form-field__radiogroup,
 .form-field--delete {
     list-style-type: none;
     padding: 0;
-    min-width: 70px;
-    max-width: 620px;
+    min-width: 4.375rem;
+    max-width: 38.75rem;
 
     label {
         font-weight: normal;
     }
 
     li {
-        margin-top: 10px;
+        margin-top: .625rem;
     }
 }
 
 
 .form-field--radioselect ul,
 .form-field--checkboxselectmultiple ul {
-    margin-top: 10px;
+    margin-top: .625rem;
 }
 
 .form-field__checkbox,
@@ -310,7 +322,7 @@ ul.form-field__radiogroup,
     &:checked + .form-field__checkboxlabel::before {
         border-color: $primary-black;
         border-radius: 50%;
-        box-shadow: inset 0 0 0 0.3125em $primary-white;
+        box-shadow: inset 0 0 0 .3125em $primary-white;
         background-color: $primary-black;
     }
 
@@ -320,7 +332,7 @@ ul.form-field__radiogroup,
 
     &:checked:focus + .form-field__radiolabel::before,
     &:checked:focus + .form-field__checkboxlabel::before {
-        border: 1px solid $primary-black;
+        border: .063rem solid $primary-black;
     }
 
     &:disabled + .form-field__radiolabel,
@@ -350,8 +362,8 @@ ul.form-field__radiogroup,
         height: 1.25rem;
         min-height: 1.25em;
         background-color: $primary-white;
-        border: 1px solid $neutral-grey4;
-        margin-right: 0.75rem;
+        border: .063rem solid $neutral-grey4;
+        margin-right: .75rem;
         content: '';
         transform: translateY(.25rem);
     }
@@ -361,16 +373,16 @@ ul.form-field__radiogroup,
     }
 
     &:hover::before {
-        box-shadow: inset 0 0 1px 1px #000;
-        border: 1px solid $primary-black;
+        box-shadow: inset 0 0 .063rem .063rem #000;
+        border: .063rem solid $primary-black;
     }
 
     &:focus::before {
-        box-shadow: inset 0 0 1px 1px #000;
-        border: 1px solid $primary-black;
-        // box-shadow: 0 0 0 0.3125em orange; #Amsterdam.nl style
-        outline: 1px dotted #212121;
-        outline: 5px auto -webkit-focus-ring-color;
+        box-shadow: inset 0 0 .063rem .063rem #000;
+        border: .063rem solid $primary-black;
+        // box-shadow: 0 0 0 .3125em orange; #Amsterdam.nl style
+        outline: .063rem dotted #212121;
+        outline: .313rem auto -webkit-focus-ring-color;
     }
 }
 
@@ -386,7 +398,7 @@ ul.form-field__radiogroup,
 
         &:checked + label::after  {
             border-color: $primary-black;
-            box-shadow: inset 0 0 0 0.3125em $primary-white;
+            box-shadow: inset 0 0 0 .3125em $primary-white;
             background-color: $primary-black;
         }
 
@@ -396,7 +408,7 @@ ul.form-field__radiogroup,
 
         &:checked:focus + label::after,
         &:checked:focus + label::after {
-            border: 1px solid $primary-black;
+            border: .063rem solid $primary-black;
         }
 
         &:disabled + label,
@@ -423,33 +435,33 @@ ul.form-field__radiogroup,
             height: 1.25rem;
             min-height: 1.25em;
             background-color: $primary-white;
-            border: 1px solid $neutral-grey4;
-            margin-left: 0.75rem;
+            border: .063rem solid $neutral-grey4;
+            margin-left: .75rem;
             content: '';
             transform: translateY(.25rem);
         }
 
         &:hover::after {
-            box-shadow: inset 0 0 1px 1px #000;
-            border: 1px solid $primary-black;
+            box-shadow: inset 0 0 .063rem .063rem #000;
+            border: .063rem solid $primary-black;
         }
 
         &:focus::after {
-            box-shadow: inset 0 0 1px 1px #000;
-            border: 1px solid $primary-black;
-            // box-shadow: 0 0 0 0.3125em orange; #Amsterdam.nl style
-            outline: 1px dotted #212121;
-            outline: 5px auto -webkit-focus-ring-color;
+            box-shadow: inset 0 0 .063rem .063rem #000;
+            border: .063rem solid $primary-black;
+            // box-shadow: 0 0 0 .3125em orange; #Amsterdam.nl style
+            outline: .063rem dotted #212121;
+            outline: .313rem auto -webkit-focus-ring-color;
         }
     }
 }
 
 li:focus-within .form-field__radiolabel::before,
 li:focus-within .form-field__checkboxlabel::before {
-    box-shadow: inset 0 0 1px 1px #000;
-    border: 1px solid $primary-black;
-    outline: 1px dotted #212121;
-    outline: 5px auto -webkit-focus-ring-color;
+    box-shadow: inset 0 0 .063rem .063rem #000;
+    border: .063rem solid $primary-black;
+    outline: .063rem dotted #212121;
+    outline: .313rem auto -webkit-focus-ring-color;
 }
 
 .form-field__checkboxgroup li {
@@ -462,21 +474,21 @@ li:focus-within .form-field__checkboxlabel::before {
 
 select {
     width: 100%;
-    height: 40px;
+    height:2.5rem;
     font-size: 1rem;
     background-color: rgb(255, 255, 255);
     background-image: url("/static/images/chevron-down.svg");
-    background-size: 12px;
+    background-size: .75rem;
     -webkit-appearance: none;
     cursor: pointer;
-    box-shadow: rgb(118, 118, 118) 0px 0px 0px 1px inset;
-    padding: 0px 12px;
-    border-width: 0px;
+    box-shadow: rgb(118, 118, 118) 0 0 0 .063rem inset;
+    padding: 0 .75rem;
+    border-width: 0;
     border-style: initial;
     border-color: initial;
     border-image: initial;
-    border-radius: 0px;
-    background-position: calc(100% - 12px) 50%;
+    border-radius: 0;
+    background-position: calc(100% - .75rem) 50%;
     background-repeat: no-repeat;
     text-transform: none;
 
@@ -500,19 +512,19 @@ select {
     }
 
     &:hover {
-        box-shadow: rgb(0, 0, 0) 0px 0px 0px 1px inset;
+        box-shadow: rgb(0, 0, 0) 0 0 0 .063rem inset;
     }
 
     &:disabled {
         pointer-events: none;
-        opacity: 0.5;
-        box-shadow: rgb(180, 180, 180) 0px 0px 0px 1px inset;
+        opacity: .5;
+        box-shadow: rgb(180, 180, 180) 0 0 0 .063rem inset;
     }
 }
 
 @media all and (-ms-high-contrast:none) {
     select {
-        background-size: 14px 20px;
+        background-size: .875rem 1.25rem;
     }
 }
 
@@ -524,7 +536,7 @@ select {
     select {
         display: inline-block;
         width: auto;
-        padding-right: 40px;
-        margin-right: 10px;
+        padding-right:2.5rem;
+        margin-right: .625rem;
     }
 }
