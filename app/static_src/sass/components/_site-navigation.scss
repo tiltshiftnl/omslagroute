@@ -22,11 +22,12 @@
         }
     }
 
-    > li:first-child a {
+    > li:first-child > a {
         padding-left: 0;
     }
 
-    > li:last-child a {
+    > li:last-child > a,
+    > li:last-child > button {
         padding-right: 0;
     }
 
