@@ -29,13 +29,15 @@
     }
 
     .button--tinytag {
-        background-color: $neutral-grey3;
+        background-color: $neutral-grey2;
     }
 
     .details__header:hover,
     .details__header:focus {
-        .button--tinytag {
-            background-color: $primary-darkerblue;
+        .button--tinytag:hover,
+        .button--tinytag:focus {
+            // background-color: $primary-darkerblue;
+            background-color: $neutral-grey4;
         }
     }
 }
