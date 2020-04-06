@@ -4,8 +4,8 @@
 
 $toplevel-moment: 1.5rem;
 $sublevel-moment: 1rem;
-$timeline-width: 3px;
-$padding-left: 30px;
+$timeline-width: .188rem;
+$padding-left: 1.875rem;
 
 .details-list-wrapper {
     position: relative;
@@ -17,7 +17,7 @@ $padding-left: 30px;
         top: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, .5);
     }
 }
 
@@ -85,12 +85,12 @@ $padding-left: 30px;
 
     // timeline line
     &:not(:last-of-type)::before {
-        border-left: 3px solid $neutral-grey4;
+        border-left: .188rem solid $neutral-grey4;
         top: 1rem;
         position: absolute;
         content: ' ';
         height: 100%;
-        width: 0px;
+        width: 0;
         left: calc(
             #{$padding-left} -
             #{$timeline-width}
@@ -105,17 +105,17 @@ $padding-left: 30px;
     display: block;
     position: relative;
     left: $padding-left;
-    width: calc(100% - 30px);
+    width: calc(100% - 1.875rem);
 
     // timeline line
     &:not(:last-of-type)::before {
-        border-left: 3px solid $primary-darkblue;
+        border-left: .188rem solid $primary-darkblue;
         top: 1rem;
         position: absolute;
         content: ' ';
         height: 100%;
-        width: 0px;
-        left: calc(-1rem + 12px);
+        width: 0;
+        left: calc(-1rem + .75rem);
         z-index: 21;
     }
 
@@ -184,7 +184,7 @@ $padding-left: 30px;
         content: ' ';
         background-color: $neutral-grey1;
         position: absolute;
-        left: -30px;
+        left: -1.875rem;
         top: 0;
         border-left: 0;
     }
@@ -241,8 +241,8 @@ $padding-left: 30px;
         margin: 0;
         display: inline-block;
         position: absolute;
-        right: 10px;
-        top: 12px;
+        right: .625rem;
+        top: .75rem;
     }
 }
 
@@ -310,7 +310,7 @@ $padding-left: 30px;
 // ********************
 
 .details__content p {
-    max-width: 650px;
+    max-width: 40.625rem;
 }
 
 .section--timeline {
@@ -344,8 +344,8 @@ $padding-left: 30px;
 .details-wrapper {
     .alert-container {
         position: absolute;
-        top: -44px;
-        height: 44px;
+        top: -2.75rem;
+        height: 2.75rem;
         display: block;
         z-index: 100;
         width: 100%;
@@ -356,14 +356,14 @@ $padding-left: 30px;
 
     .alert {
         color: $primary-white;
-        padding: 3px 7px;
+        padding: .188rem .438rem;
         opacity: 0;
         transition: opacity .4s linear;
         height: 100%;
         position: absolute;
         top: 0;
         animation: none;
-        padding-left: 30px;
+        padding-left: 1.875rem;
 
         .alert__icon {
             transform: translateX(-50%);
@@ -426,7 +426,7 @@ $padding-left: 30px;
     .dot {
         display: block;
         background-color: $primary-white;
-        border: 2px $neutral-grey4 solid;
+        border: .125rem $neutral-grey4 solid;
     }
     .details__header-closed {
         color: $neutral-grey4;
@@ -544,7 +544,7 @@ $padding-left: 30px;
 .new-moment__add {
     display: flex;
     align-items: center;
-    height: 40px;
+    height:2.5rem;
     width: 100%;
     max-width: 100%;
     border-radius: 0;
@@ -564,18 +564,18 @@ $padding-left: 30px;
     outline: none;
 
     .dot {
-        top: 8px;
+        top: .5rem;
         display: none;
 
     }
     .details__header-closed {
         color: $primary-white;
         fill: currentColor;
-        margin-top: 2px;
+        margin-top: .125rem;
     }
     .new-moment__line {
         background-color: $neutral-grey2;
-        height: 2px;
+        height: .125rem;
         width: 100%;
     }
 
@@ -583,11 +583,11 @@ $padding-left: 30px;
         visibility: hidden;
         opacity: 0;
         background-color: $primary-darkblue;
-        width: 24px;
-        height: 24px;
+        width: 1.5rem;
+        height: 1.5rem;
         min-width: auto;
-        left: 17px;
-        top: 17px;
+        left: 1.063rem;
+        top: 1.063rem;
         position: absolute;
         padding: 0;
         display: flex;
@@ -625,7 +625,7 @@ $padding-left: 30px;
         .details__header-closed {
             color: $primary-white;
             fill: currentColor;
-            margin-top: 4px;
+            margin-top: .25rem;
         }
 
         .button {

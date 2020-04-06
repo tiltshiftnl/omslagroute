@@ -1,10 +1,14 @@
 .navigation-container {
     list-style: none;
     padding: 0;
-    min-height: 44px;
-    margin: 0px auto;
-    max-width: 960px;
+    min-height: 2.75rem;
+    margin: 0 auto;
+    max-width: 60rem;
     display: flex; 
+
+    li a {
+        padding: .75rem .938rem;
+    }
 
     > li {
         display: flex;
@@ -18,8 +22,12 @@
         }
     }
 
-    li a {
-        padding: 12px 15px;
+    > li:first-child a {
+        padding-left: 0;
+    }
+
+    > li:last-child a {
+        padding-right: 0;
     }
 
     li ul {
@@ -27,17 +35,16 @@
         position: absolute;
         top: 100%;
         left: 0;
-        width: 300px;
+        width: 18.75rem;
         background: $primary-white;
         list-style-type: none;
     }
 
     li ul li {
         width: 100%;
-        border: 1px solid $neutral-grey3;
+        border: .063rem solid $neutral-grey3;
 
-        a {
-            padding: 12px 15px;
+        a { 
             display: block;
             text-decoration: none;
         }
@@ -61,7 +68,7 @@
     box-sizing: content-box;
     cursor: pointer;
     margin: 0;
-    padding: 12px 15px;
+    padding: .75rem .938rem;
     text-decoration: none;
     -webkit-appearance: none;
     -moz-appearance: none;

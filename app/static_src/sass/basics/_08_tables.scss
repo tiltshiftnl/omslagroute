@@ -10,8 +10,8 @@ table {
     margin-top: .6;
     margin-bottom: 1rem;
 
-    border-top: 2px solid $neutral-grey2;
-    border-bottom: 2px solid $neutral-grey2;
+    border-top: .125rem solid $neutral-grey2;
+    border-bottom: .125rem solid $neutral-grey2;
 }
 
 thead th {
@@ -37,7 +37,7 @@ tr {
 tr:not(:last-of-type) {
     th, 
     td {
-        border-bottom: 1px solid $neutral-grey2;
+        border-bottom: .063rem solid $neutral-grey2;
     }
 }
 
@@ -50,7 +50,7 @@ tr:nth-of-type(even) {
     thead {
         th, 
         td {
-            border-bottom: 1px solid $neutral-grey2;
+            border-bottom: .063rem solid $neutral-grey2;
         }
     }
 

@@ -11,7 +11,7 @@
 // ********************
     
 [type="submit"] {
-    margin: 10px 0;
+    margin: .625rem 0;
 
     &:hover {
         color: $primary-black;
@@ -22,8 +22,8 @@
     }
 
     &.invalid {
-        border: 1px solid $primary-red;
-        box-shadow: inset 0 0 0 1px $primary-red;
+        border: .063rem solid $primary-red;
+        box-shadow: inset 0 0 0 .063rem $primary-red;
     }
 
     &.invalid + .error-text {
@@ -33,7 +33,7 @@
 
 .button,
 [type="submit"] {
-    border: 1px solid transparent;
+    border: .063rem solid transparent;
     border-radius: 0;
     font-family: inherit;
     font-size: inherit;
@@ -42,9 +42,9 @@
     cursor: pointer;
     font-weight: bold;
     margin: 0;
-    max-width: 620px;
-    min-width: 70px;
-    padding: 12px 15px;
+    max-width: 38.75rem;
+    min-width: 4.375rem;
+    padding: .75rem .938rem;
     text-decoration: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -55,7 +55,7 @@
     &:hover,
     &:focus {
         text-decoration: none;
-        box-shadow: inset 0 0 0 1px $primary-darkblue;
+        box-shadow: inset 0 0 0 .063rem $primary-darkblue;
     }
 
     &[disabled] {
@@ -72,9 +72,9 @@
     display: inline-block;
 
     &:not(:only-child) {
-        margin-right: 10px;
+        margin-right: .625rem;
         position: relative;
-        top: 1px;
+        top: .063rem;
     }
 }
 
@@ -83,7 +83,7 @@
 
     &:not(:only-child) {
         position: relative;
-        top: -3px;
+        top: -0.188rem;
     }
 }
 
@@ -93,7 +93,7 @@
     
 .button--primary,
 [type="submit"] {
-    border: 1px solid $primary-darkblue;
+    border: .063rem solid $primary-darkblue;
     background-color: $primary-darkblue;
     color: $primary-white;
 
@@ -110,7 +110,7 @@
 // ********************
     
 .button--secondary {
-    border: 1px solid $primary-darkblue;
+    border: .063rem solid $primary-darkblue;
     background-color: $primary-white;
     color: $primary-darkblue;
     
@@ -125,7 +125,7 @@
 // ********************
     
 .button--tertiary {
-    border: 1px solid $neutral-grey2;
+    border: .063rem solid $neutral-grey2;
     background-color: $neutral-grey2;
     color: $primary-black;
     
@@ -138,9 +138,9 @@
     }
 
     &:focus {
-        // box-shadow: 0 0 0 0.3125em orange;
-        outline: 1px dotted #212121;
-        outline: 5px auto -webkit-focus-ring-color;
+        // box-shadow: 0 0 0 .3125em orange;
+        outline: .063rem dotted #212121;
+        outline: .313rem auto -webkit-focus-ring-color;
     }
 }
 
@@ -161,8 +161,8 @@
 // button that serves as a read more 
 .button--readmore {
     display: inline-block; 
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 1.875rem;
+    margin-bottom: 1.25rem;
 }
 
 
@@ -172,7 +172,7 @@
     -webkit-box-align: center;
     color: $primary-darkblue;
     align-items: center;
-    line-height: 20px;
+    line-height: 1.25rem;
     position: relative;
     z-index: 0;
     text-decoration: none;
@@ -180,11 +180,11 @@
     border-style: none;
     border-color: initial;
     border-image: initial;
-    padding: 12px 15px;
+    padding: .75rem .938rem;
 
     .button__icon:not(:only-child) {
         margin-right: 0;
-        top: 0px;
+        top: 0;
     }
 
     &:hover {
@@ -200,7 +200,7 @@
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
-    line-height: 20px;
+    line-height: 1.25rem;
     background-color: rgb(236, 0, 0);
     color: rgb(255, 255, 255);
     position: relative;
@@ -210,38 +210,38 @@
     border-style: none;
     border-color: initial;
     border-image: initial;
-    padding: 12px 15px;
-    transition: color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s;
-    margin-right: 25px;
+    padding: .75rem .938rem;
+    transition: color .1s ease-in-out 0s, background-color .1s ease-in-out 0s;
+    margin-right: 1.563rem;
     overflow: visible;
 
     .arrow {
         position: absolute;
-        top: 0px;
-        right: -37px;
-        width: 0px;
-        height: 0px;
-        border-width: 22px 22px 22px 15px;
+        top: 0;
+        right: -2.313rem;
+        width: 0;
+        height: 0;
+        border-width: 1.375rem 1.375rem 1.375rem .938rem;
         border-style: solid;
         border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgb(236, 0, 0);
         border-image: initial;
-        border-left: 15px solid rgb(236, 0, 0);
-        transition: border-color 0s ease 0s, all 0.1s ease-in-out 0s;
+        border-left: .938rem solid rgb(236, 0, 0);
+        transition: border-color 0s ease 0s, all .1s ease-in-out 0s;
 
         &::after {
             content: "";
             position: absolute;
-            top: -26px;
-            right: -30px;
-            width: 0px;
-            height: 0px;
+            top: -1.625rem;
+            right: -1.875rem;
+            width: 0;
+            height: 0;
             z-index: -1;
             opacity: 0;
-            border-width: 26px 26px 26px 17px;
+            border-width: 1.625rem 1.625rem 1.625rem 1.063rem;
             border-style: solid;
             border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) -webkit-focus-ring-color;
             border-image: initial;
-            border-left: 17px solid -webkit-focus-ring-color;
+            border-left: 1.063rem solid -webkit-focus-ring-color;
         }
     }
 
@@ -251,8 +251,8 @@
     }
 
     &:focus {
-        outline: 1px dotted #212121;
-        outline: 3px auto -webkit-focus-ring-color;
+        outline: .063rem dotted #212121;
+        outline: .188rem auto -webkit-focus-ring-color;
 
         .arrow::after {
             opacity: 1;
@@ -267,6 +267,6 @@
         content: "";
         display: block;
         min-height: inherit;
-        font-size: 0px;
+        font-size: 0;
     }
 }
