@@ -74,7 +74,7 @@ class BaseGenericForm:
                     help_text = help_text_html % field.help_text
                 else:
                     help_text = ''
-                sections_output[name] = mark_safe(row % {
+                obj = {
                     'errors': error_row % str(bf_errors),
                     'label': label,
                     'field': bf,
@@ -82,7 +82,12 @@ class BaseGenericForm:
                     'html_class_attr': html_class_attr,
                     'css_classes': css_classes,
                     'field_step_complete': FIELDS_REQUIRED_DICT.get(bf.name) and not bf_is_empty,
-                })
+                    'verbose_name': bf.label,
+                }
+                sections_output[name] = {
+                    'rendered': mark_safe(row % obj),
+                    'object': obj
+                }
         if top_errors:
             output.insert(0, error_row % top_errors)
 

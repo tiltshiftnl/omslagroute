@@ -50,6 +50,22 @@ body:not(:-moz-handler-blocked) fieldset {
     display: flex;
     justify-content: space-between;
 }
+.section--form form {
+    position: relative;
+}
+.floating-section-base {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+
+}
+.floating-section-wrapper {
+    position: sticky;
+    top: 0;
+    width: 200px;
+}
 
 // ********************
 // FIELD CONTAINERS
