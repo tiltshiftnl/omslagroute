@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from .statics import FIELDS_DICT
+from .statics import FIELDS_DICT, FIELDS_REQUIRED_DICT
 from django.forms.utils import ErrorDict, ErrorList
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
@@ -52,8 +52,12 @@ class BaseGenericForm:
             else:
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
-                css_classes = bf.css_classes()
-                css_classes += ' form-field form-field--%s' % bf_type
+                css_classes = bf.css_classes('form-field form-field--%s%s%s' % (
+                    bf_type,
+                    ' form-field--step-required' if FIELDS_REQUIRED_DICT.get(bf.name) else '',
+                    ' form-field--error' if bf_errors else '',
+                ))
+                # css_classes += ' form-field form-field--%s' % bf_type
                 if css_classes:
                     html_class_attr = ' class="%s"' % css_classes
                 if bf.label:

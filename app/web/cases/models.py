@@ -3,11 +3,11 @@ from django.utils.translation import ugettext_lazy as _
 from .statics import *
 from web.core.models import PrintableModel
 from web.forms.forms import BaseGenericForm
-from web.forms.statics import FIELDS_DICT
+from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT
 
 
 class Case(PrintableModel):
-    EMPTY_VALUE = '- leeg -'
+    EMPTY_VALUE = '\u2014'
 
     client_first_name = models.CharField(
         verbose_name=_('Client voornaam'),
@@ -202,9 +202,7 @@ class Case(PrintableModel):
 
     def status(self, sections):
         section_fields = BaseGenericForm._get_fields(sections)
-        print(section_fields)
-        required_fields = [f for f in section_fields if FIELDS_DICT.get(f) and FIELDS_DICT.get(f).required]
-        print(required_fields)
+        required_fields = [f for f in section_fields if FIELDS_REQUIRED_DICT.get(f)]
         filled_fields = [f for f in required_fields if hasattr(self, f) and getattr(self, f)]
         return int(float(float(len(filled_fields) / len(required_fields))) * 100)
 

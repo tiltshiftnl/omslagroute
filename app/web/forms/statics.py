@@ -7,187 +7,190 @@ from web.cases.statics import *
 
 
 FIELDS = (
-    ('naam_client', forms.CharField(
-        label=_('Naam cliënt'),
-        widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True
-    )),
     ('client_first_name', forms.CharField(
         label=_('Voornaam'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True
-    )),
+    ), {'step_required': True}),
     ('client_last_name', forms.CharField(
         label=_('Achternaam'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=True
-    )),
+    ), {'step_required': True}),
     ('geslacht', forms.ChoiceField(
         label=_('Geslacht'),
-        required=True,
+        required=False,
         widget=RadioSelect(),
         choices=GESLACHT,
-    )),
+    ), {}),
     ('geboortedatum', forms.DateField(
         label=_('Geboortedatum'),
-        required=True,
-        widget=widgets.SelectDateWidget(
-            years=birth_dates_years(),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
         ),
-    )),
+    ), {}),
     ('emailadres', forms.EmailField(
         label=_('E-mailadres'),
-        required=False,
-    )),
-    ('email', forms.EmailField(
-        label=_('E-mailadres'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True,
-    )),
+        required=False,
+    ), {}),
     ('woningnet_nummer', forms.CharField(
         label=_('Woningnetnummer'),
         widget=forms.TextInput(attrs={'placeholder': ' ', 'pattern': '^[0-9]*$'}),
-        required=True,
-    )),
+        required=False,
+    ), {'step_required': True}),
     ('woningnet_geldigheid', forms.DateField(
         label=_('Geldigheid woninget'),
-        widget=widgets.SelectDateWidget(
-            years=future_dates_years(),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
         ),
-        required=True,
+        required=False,
         help_text=_('Tot wanneer is de inschrijving bij Woningnet geldig?')
-    )),
-    ('centrale_toegang_naam', forms.ChoiceField(
+    ), {'step_required': True}),
+    ('centrale_toegang_naam', forms.IntegerField(
         label=_('Naam centrale toegang'),
-        widget=RadioSelect(),
-        choices=CENTRALE_TOEGANG,
-        required=True,
-    )),
-    ('jonger_dan_26', forms.ChoiceField(
+        widget=RadioSelect(
+            choices=CENTRALE_TOEGANG,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('jonger_dan_26', forms.IntegerField(
         label=_('Plaatsing jonger dan 26 jaar'),
-        choices=JONGER_DAN_26,
-        widget=RadioSelect(),
-        required=True,
-    )),
+        widget=RadioSelect(
+            choices=JONGER_DAN_26,
+        ),
+        required=False,
+    ), {'step_required': True}),
     ('jonger_dan_26_plaatsing_project', forms.CharField(
         label=_('In geval van plaatsing in een project'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
-    )),
+    ), {}),
     ('jonger_dan_26_motivatie_contract_onbepaalde', forms.CharField(
         label=_('Motivatie voor contract onbepaalde tijd jongere'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15}),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
-    )),
+    ), {'step_required': True}),
     ('partner_naam', forms.CharField(
         label=_('Naam partner'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True,
-    )),
+        required=False,
+    ), {}),
     ('partner_geboortedatum', forms.DateField(
         label=_('Geboortedatum partner'),
-        widget=widgets.SelectDateWidget(
-            years=birth_dates_years(),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
         ),
-        required=True,
-    )),
+        required=False,
+    ), {}),
     ('partner_gehuwd', forms.BooleanField(
         label=_('Gehuwd'),
         required=False,
-    )),
+    ), {}),
     ('partner_echtscheiding_rond', forms.BooleanField(
         label=_('Echtscheiding rond'),
         required=False,
-    )),
+    ), {}),
     ('partner_woonsituatie', forms.CharField(
         label=_('Woonsituatie partner'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder': ' '}),
-        required=True,
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
         help_text='Waar/bij wie/hoe?'
-    )),
+    ), {}),
     ('kinderen', forms.CharField(
         label=_('Kinderen'),
         help_text=_('Geef aan per kind: <ul><li>Naam + voorletters</li><li>Geboortedatum (dag-maand-jaar)</li><li>Ouderlijk gezag (ja of nee)</li><li>Mee aangemeld (ja of nee)</li></ul>'),
         widget=forms.Textarea(),
         required=False,
-    )),
-    ('centrale_toegang_trajectwijziging_ed', forms.ChoiceField(
+    ), {}),
+    ('centrale_toegang_trajectwijziging_ed', forms.IntegerField(
         label=_('Toegang en trajectwijziging / doorstroom en jeugdzorg'),
-        choices=CENTRALE_TOEGANG,
-        widget=RadioSelect(),
-        required=True,
-    )),
+        widget=RadioSelect(
+            choices=CENTRALE_TOEGANG,
+        ),
+        required=False,
+    ), {}),
     ('trajecthouder_naam', forms.CharField(
         label=_('Naam instroomfunctionaris of trajecthouder'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True,
-    )),
+        required=False,
+    ), {}),
     ('aanvraag_datum', forms.DateField(
         label=_('Datum aanvraag'),
-        widget=widgets.SelectDateWidget(
-            years=birth_dates_years(),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
         ),
-        required=True,
-    )),
+        required=False,
+    ), {}),
     ('omslagwoning_zorgaanbieder', forms.CharField(
         label=_('Zorgaanbieder omslagwoning'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True,
-    )),
+        required=False,
+    ), {}),
     ('urgentiecriteria_zinvolle_dagbesteding', forms.CharField(
         label=_('De cliënt heeft passende zinvolle dagbesteding'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
-        required=True,
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
+        required=False,
         help_text='Bijvoorbeeld: cliënt wil een betaalde baan die zij kan combineren met de zorg voor haar kinderen',
-    )),
+    ), {}),
     ('urgentiecriteria_functioneert_sociaal_stabiel', forms.CharField(
         label=_('De cliënt functioneert sociaal stabiel'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
-        required=True,
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
+        required=False,
         help_text='Bijvoorbeeld: Het doel is om het huidige netwerk te behouden en het contact met haar ex-man te stabiliseren.',
-    )),
+    ), {}),
     ('urgentiecriteria_functioneert_psychisch_stabiel', forms.CharField(
         label=_('De cliënt functioneert psychisch stabiel'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
-        required=True,
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
+        required=False,
         help_text='Bijvoorbeeld: cliënt functioneert psychisch stabiel en heeft als doel dit voort te zetten. <br /><strong>Let op! Leg geen medische informatie vast.</strong>',
-    )),
+    ), {}),
     ('urgentiecriteria_is_financieel_stabiel', forms.CharField(
         label=_('De cliënt is financieel stabiel'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
-        required=True,
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
+        required=False,
         help_text='Met financieel stabiel wordt bedoeld dat deze een stabiel inkomen heeft inzage heeft gegeven in eventuele schulden op basis van informatie van Bureau KredietRegistratie.<br /><br />In het geval er schulden zijn is de cliënt financieel stabiel wanneer de cliënt aan een of meerdere van deze zaken voldoet: <ul><li>een overzicht heeft gegeven van alle schulden en betalingsverplichtingen</li><li>inzicht heeft gegeven in eventuele openstaande CJIB-boetes en heeft aangetoond dat er geen kans is op detentie vanwege openstaande boetes</li><li>in inkomensbeheer zit</li><li>een stabiel werkend budgetplan heeft</li><li>een overeenkomst heeft met een schuldhulpverleningsbureau waarbij het schuldhulpverleningstraject voorspoedig loopt</li></ul>Bijvoorbeeld: cliënt wil zelfstandig haar administratie bijhouden en haar schulden regelen.',
-    )),
+    ), {}),
     ('urgentiecriteria_kinderen_gezonde_omgeving', forms.CharField(
         label=_('De betrokken kinderen hebben een gezonde omgeving'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder':'Dat betekent voor deze cliënt het volgende:'}),
-        required=True,
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': 'Dat betekent voor deze cliënt het volgende:'}),
+        required=False,
         help_text='De betrokken kinderen hebben een gezonde omgeving, waarmee wordt bedoeld dat deze:<ul><li>Een veilige omgeving hebben waarin zij opgroeien; en</li><li>Zich leeftijdsadequaat kunnen ontwikkelen; en</li><li>Een omgeving hebben waarin voldoende emotioneel en fysiek beschikbare opvoeder(s) zijn</li></ul>',
-    )),
+    ), {}),
     ('medische_problemen_mbt_traplopen', forms.BooleanField(
         label=_('Zijn er medische problemen met betrekking tot traplopen?'),
         required=False,
         help_text='',
-    )),
+    ), {}),
     ('medische_problemen_wooneisen', forms.CharField(
         label=_('Zo ja, benedenwoning of woning met lift? Anders?'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder': ' '}),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    )),
+    ), {}),
     ('medische_problemen_bewijslast', forms.FileField(
         label=_('Voeg medische gegevens toe met betrekking tot problematiek'),
         widget=ClearableFileInput(),
         required=False,
-    )),
+    ), {}),
     ('uitsluiting_stadsdeel_argumentatie', forms.CharField(
         label=_('Uitsluiting stadsdeel, argumentatie'),
-        widget=forms.Textarea(attrs={'rows':4, 'cols':15, 'placeholder': ' '}),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    )),
+    ), {}),
 )
 
 FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
+FIELDS_REQUIRED_DICT = dict((f[0], f[2].get('step_required', False)) for f in FIELDS)
 
 BASIS_GEGEVENS = [
     {
