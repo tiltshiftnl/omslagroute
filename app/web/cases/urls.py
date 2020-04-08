@@ -23,6 +23,10 @@ urlpatterns = [
         'sections': URGENTIE_AANVRAAG
     }, name='nieuwe_aanvraag_omslag_en_urgentie_send'),
 
+    path('nieuw/nieuwe-aanvraag-omslag-en-urgentie', GenericCaseCreateFormView.as_view(), {
+        'title': 'Nieuwe aanvraag omslag en urgentie',
+        'sections': URGENTIE_AANVRAAG,
+    }, name='new_nieuwe_aanvraag_omslag_en_urgentie'),
 
     path('nieuw/', GenericCaseCreateFormView.as_view(), {
         'title': 'Nieuwe cliënt',
