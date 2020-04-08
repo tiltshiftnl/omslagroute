@@ -81,7 +81,7 @@ class BaseGenericForm:
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
                     'css_classes': css_classes,
-                    'field_name': bf.html_name,
+                    'field_step_complete': FIELDS_REQUIRED_DICT.get(bf.name) and not bf_is_empty,
                 })
         if top_errors:
             output.insert(0, error_row % top_errors)
@@ -92,7 +92,7 @@ class BaseGenericForm:
         return {
             'errors': mark_safe('\n'.join(output)),
             'hidden_fields': mark_safe(''.join(hidden_fields)),
-            'sections': [dict((k, v if not isinstance(v, list) else [dict((kk, vv if not isinstance(vv, list) else [sections_output.get(sss, '') for sss in vv]) for kk, vv in ss.items()) for ss in v]) for k, v in s.items()) for s in sections]
+            'sections': [dict((k, v if not isinstance(v, list) else [dict((kk, vv if not isinstance(vv, list) else [sections_output.get(sss, '') for sss in vv]) for kk, vv in ss.items()) for ss in v]) for k, v in section.items()) for section in sections]
         }
 
 
