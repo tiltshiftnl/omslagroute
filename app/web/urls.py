@@ -9,7 +9,8 @@ from web.users.views import generic_logout, generic_login
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
-    path('admin/env-vars', VariablesView.as_view(), name='variables'),
+    path('admin/settings', VariablesView.as_view(), name='variables'),
+    path('admin/dumpdata', dumpdata, name='dumpdata'),
     path('admin/objectstore', ObjectStoreView.as_view(), name='objectstore'),
     path('admin/sendmail', SendMailView.as_view(), name='sendmail'),
 

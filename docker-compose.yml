@@ -49,6 +49,7 @@ services:
       - ./app:/app
       - ./media:/media
       - ./app/deploy:/deploy
+      - ./.git:/.git
     command: bash -c "
       cd /app &&
       npm install &&
