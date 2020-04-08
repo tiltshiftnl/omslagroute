@@ -129,7 +129,7 @@ Array.prototype.sortOnData = function(key){
             var self = this,
                 input = self.querySelector('input[name$="name"]'),
                 wrapper = _closest(input, '.form-field'),
-                errorMessageTmpl = 'Er bestaat al een document met deze naam. Wilt u een nieuwe versie van dit document uploaden? <a href="[[link]]">Klik hier</a>.',
+                errorMessageTmpl = 'Er bestaat al een document met deze naam. Wilt u een nieuwe versie van dit document uploaden? <a href="[[link]]">Klik hier <span class="sr-only">om een nieuwe versie te uploaden</span></a>.',
                 id = self.dataset.documentId,
                 q = '',
                 _init = function(){
