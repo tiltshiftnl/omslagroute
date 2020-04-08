@@ -177,6 +177,10 @@ textarea {
         border: .063rem solid $primary-black;
     }
 
+    &:valid + .error-text {
+        display: none;
+    }
+
     // When input is...
     //   1. NOT empty
     //   2. NOT in focus
@@ -191,7 +195,6 @@ textarea {
     }
 
     &:invalid + .error-text,
-    &.invalid + .error-text,
     &[data-error-message] + .error-text {
         display: block;
     }

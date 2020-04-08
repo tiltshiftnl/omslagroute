@@ -24,5 +24,6 @@ class MomentForm(forms.ModelForm):
                   'organizations',
         )
         widgets = {
+            'name': forms.TextInput(attrs={'placeholder': ' ','autofocus': 'true'}),
             'organizations': forms.CheckboxSelectMultiple(attrs={'class': 'form-field__checkbox'})
         }

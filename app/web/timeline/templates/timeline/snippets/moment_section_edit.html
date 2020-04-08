@@ -36,13 +36,7 @@
             <div class="form-field data-edit-mode">
                 <label for="{{ moment.name.id_for_label }}" class="sr-only">{{ moment.name.label }}</label>
                 {{ moment.name }}
-                {% if moment.name.errors %}
-                    <ol class="error-text">
-                    {% for error in moment.name.errors %}
-                        <li><strong>{{ error|escape }}</strong></li>
-                    {% endfor %}
-                    </ol>
-                {% endif %}
+                <p class="error-text">Dit veld is verplicht.</p>
             </div>
 
             <span class="details__toggle-icon">
