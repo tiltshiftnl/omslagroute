@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView, RedirectView
 import os
+import sys
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.files.storage import default_storage
 from web.timeline.models import *
@@ -10,6 +11,10 @@ import sendgrid
 from sendgrid.helpers.mail import *
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from .utils import *
+from django.contrib.auth.decorators import user_passes_test
+from django.core.management import call_command
+from django.http import HttpResponse
 
 
 class HomePageView(TemplateView):
@@ -95,3 +100,17 @@ class SendMailView(UserPassesTestMixin, RedirectView):
             sg.send(email)
 
         return super().get(request, *args, **kwargs)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def dumpdata(request):
+    sysout = sys.stdout
+    fname = "%s-%s.json" % ('omslagroute', settings.SOURCE_COMMIT.strip())
+    response = HttpResponse(content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename=%s' % fname
+
+    sys.stdout = response
+    call_command('dumpdata', ' --format=json', 'organizations', 'documents', 'timeline', '--indent=4')
+    sys.stdout = sysout
+
+    return response
