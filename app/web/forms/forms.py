@@ -36,6 +36,7 @@ class BaseGenericForm:
             row = normal_row
             bf = self[name]
             bf_type = bf.field.widget.__class__.__name__.lower()
+            bf_is_empty = not bool(bf.value())
             if bf_type == 'checkboxinput':
                 row = checkbox_row
             if bf_type == 'clearablefileinput':
@@ -52,10 +53,11 @@ class BaseGenericForm:
             else:
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
-                css_classes = bf.css_classes('form-field form-field--%s%s%s' % (
+                css_classes = bf.css_classes('form-field form-field--%s%s%s%s' % (
                     bf_type,
                     ' form-field--step-required' if FIELDS_REQUIRED_DICT.get(bf.name) else '',
                     ' form-field--error' if bf_errors else '',
+                    ' form-field--empty' if bf_is_empty else '',
                 ))
                 # css_classes += ' form-field form-field--%s' % bf_type
                 if css_classes:
