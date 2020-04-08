@@ -81,5 +81,5 @@ class UserCreationView(UserPassesTestMixin, CreateView):
         profile = profile_form.save(commit=False)
         profile.user = user
         profile.save()
-        messages.add_message(self.request, messages.INFO, "De gebruiker '%s' is aangemaakt" % user.username)
+        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
         return super().form_valid(form)
