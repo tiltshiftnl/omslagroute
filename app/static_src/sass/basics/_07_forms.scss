@@ -130,19 +130,6 @@ body:not(:-moz-handler-blocked) fieldset {
     margin-bottom: 0;
     margin-top: .625rem;
 }
-.error-name-exists {
-    background-color: $primary-red;
-    color: $primary-white;
-    padding: .25rem .5rem;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    max-width: 620px;
-    z-index: 20;
-    a {
-        color: $primary-white;
-    }
-}
 
 input[required]:valid {
     border: .063rem solid $default-text-color;
@@ -190,6 +177,10 @@ textarea {
         border: .063rem solid $primary-black;
     }
 
+    &:valid + .error-text {
+        display: none;
+    }
+
     // When input is...
     //   1. NOT empty
     //   2. NOT in focus
@@ -197,6 +188,10 @@ textarea {
     &[required]:invalid:not(:focus):not(:placeholder-shown) {
         border: .063rem solid $primary-red;
         box-shadow: inset 0 0 0 .063rem $primary-red;
+
+        + error-text {
+            display: block;
+        }
     }
 
     &:invalid + .error-text,

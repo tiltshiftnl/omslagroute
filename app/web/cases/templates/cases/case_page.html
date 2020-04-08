@@ -39,7 +39,7 @@
         {% for k, client_info in object.to_dict.items %}
         {% if not forloop.first %}
         <tr>
-            <th>{{ client_info.label }}: </th>
+            <th width="40%">{{ client_info.label }}: </th>
             <td>
                 {% if client_info.value|is_date %}
                     {{ client_info.value|str_date_to_date|date:"j b Y" }}

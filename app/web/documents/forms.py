@@ -59,6 +59,7 @@ class DocumentForm(forms.ModelForm):
         model = Document
         exclude = ()
         widgets = {
+            'name': forms.TextInput(attrs={'placeholder': ' ','autofocus': 'true'}),
             'document_type': forms.RadioSelect(attrs={'class': 'form-field__radio'})
         }
 
