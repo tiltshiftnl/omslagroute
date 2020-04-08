@@ -129,9 +129,8 @@ Array.prototype.sortOnData = function(key){
             var self = this,
                 input = self.querySelector('input[name$="name"]'),
                 wrapper = _closest(input, '.form-field'),
-                errorMessageTmpl = 'Er is al een document met deze naam! Als je hier een nieuwe versie voor wil oploaden, klik dan <a href="[[link]]">hier</a>?',
+                errorMessageTmpl = 'Er bestaat al een document met deze naam. <a href="[[link]]">Wilt u een nieuwe versie van dit document uploaden</a>?',
                 id = self.dataset.documentId,
-                submit = _closest(self, 'form').querySelector('input[type="submit"]'),
                 q = '',
                 _init = function(){
                     wrapper.style.cssText = 'position: relative';
@@ -144,11 +143,10 @@ Array.prototype.sortOnData = function(key){
                     return data;
                 },
                 _search = function(){
-                    var errorMessageElem = wrapper.querySelector('.error-name-exists');
-                    submit.removeAttribute('disabled');
+                    var errorMessageElem = wrapper.querySelector('.error-text');
                     input.setCustomValidity('');
                     if (errorMessageElem) {
-                        wrapper.removeChild(wrapper.querySelector('.error-name-exists'));
+                        wrapper.removeChild(wrapper.querySelector('.error-text'));
                     }
                     helpers.ajax({
                         'type': 'POST',
@@ -157,10 +155,9 @@ Array.prototype.sortOnData = function(key){
                         'callback': function(responseText){
                             var response = JSON.parse(responseText);
                             if (response.message) {
-                                submit.setAttribute('disabled', 'disabled');
                                 input.setCustomValidity('invalid');
-                                var span = document.createElement('span');
-                                span.classList.add('error-name-exists');
+                                var span = document.createElement('p');
+                                span.classList.add('error-text');
                                 span.innerHTML = errorMessageTmpl.trim().replace('[[link]]', response.message);
                                 _insertAfter(span, input);
                             }
@@ -175,7 +172,7 @@ Array.prototype.sortOnData = function(key){
                     _search();
                   }
                 };
-            input.addEventListener('keyup', _keyUp);
+            input.addEventListener('blur', _keyUp);
             _init();
         },
         'edit-moment': function () {

@@ -12,23 +12,6 @@
     
 [type="submit"] {
     margin: .625rem 0;
-
-    &:hover {
-        color: $primary-black;
-    }
-
-    &[disabled] {
-        color: $neutral-grey3;
-    }
-
-    &.invalid {
-        border: .063rem solid $primary-red;
-        box-shadow: inset 0 0 0 .063rem $primary-red;
-    }
-
-    &.invalid + .error-text {
-        display: block;
-    }
 }
 
 .button,
@@ -61,6 +44,7 @@
     &[disabled] {
         background-color: $neutral-grey2;
         color: $neutral-grey3;
+        border: 1px solid $neutral-grey2;
     }
 
     .form-field--buttons > & {
