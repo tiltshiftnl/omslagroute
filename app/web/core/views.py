@@ -110,7 +110,7 @@ def dumpdata(request):
     response['Content-Disposition'] = 'attachment; filename=%s' % fname
 
     sys.stdout = response
-    call_command('dumpdata', ' --format=json', 'organizations', 'documents', 'timeline', '--indent=4')
+    call_command('dumpdata', 'organizations', 'documents', 'timeline', '--indent=4')
     sys.stdout = sysout
 
     return response
