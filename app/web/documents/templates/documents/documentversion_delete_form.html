@@ -22,7 +22,7 @@
 
     <form method="post">{% csrf_token %}
         <legend>
-            Weet je zeker dat je de versie geupload op 
+            Weet u zeker dat u de versie geupload op 
                 {% language 'nl' %}
                     <time timestamp="{{ object.uploaded|date }}">
                         {{ object.uploaded|date:"j b Y" }} om {{ object.uploaded|date:"H:i" }}
