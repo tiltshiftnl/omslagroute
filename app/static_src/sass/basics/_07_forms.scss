@@ -172,7 +172,13 @@ textarea {
     &[disabled] {
         color: $neutral-grey3;
     }
+}
 
+[type="text"],
+[type="email"],
+[type="number"],
+select,
+textarea {
     &[required]:valid {
         border: .063rem solid $primary-black;
     }
@@ -191,6 +197,11 @@ textarea {
 
         + error-text {
             display: block;
+        }
+
+        &[name="username"] {
+            border: .063rem solid $primary-black;
+            box-shadow: none;
         }
     }
 
