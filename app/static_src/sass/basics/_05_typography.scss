@@ -130,11 +130,4 @@ hr {
 
 input[name] {
     scroll-margin-top: 4.375rem;
-    
-    @supports (-webkit-overflow-scrolling: touch) { 
-        // bc ios safari is not playing along
-        // CSS specific to iOS devices only
-        padding-top: 4.375rem;
-        margin-top: -4.375rem;
-    }
 }
