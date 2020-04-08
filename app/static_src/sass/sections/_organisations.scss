@@ -3,19 +3,19 @@
     border-spacing: 0;
     border-collapse: collapse;
     margin-top: 3rem;
+    border-bottom: 0;
 
     th {
         text-align: left;
     }
 
-    th:nth-of-type(2),
-    td:nth-of-type(2) {
-        padding: 0 1rem;
+    td:last-of-type {
+        width: 2.5rem;
+        text-align: center;
     }
 
-    td:last-of-type {
-        width:2.5rem;
-        text-align: center;
+    [type="password"], [type="text"], [type="email"], [type="number"], select, textarea {
+        margin-top: 0;
     }
 }
 
@@ -29,11 +29,13 @@
     }
 
     &:last-of-type td {
-        padding-top: 2rem;
+        padding-top: 3rem;
         padding-bottom: 2rem;
     }
 
     .form-field--delete {
+        vertical-align: middle;
+
         label {
             display: block;
         }
