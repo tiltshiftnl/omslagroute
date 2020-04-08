@@ -6,7 +6,11 @@
 
 .breadcrumb {
     margin-bottom: 2.813rem; 
-    margin-top: .938rem;
+    margin-top: 0;
+
+    @media all and (min-width: $tablets) {
+        margin-top: .938rem;
+    }
 }
 
 .breadcrumb-list {
@@ -36,7 +40,8 @@
         text-decoration: none;
 
         &:hover,
-        &:focus {
+        &:focus,
+        &:active {
             color: $primary-red;
             text-decoration: underline;
         }

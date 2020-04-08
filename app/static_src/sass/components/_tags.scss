@@ -21,6 +21,11 @@
 .section--timeline--filtering {
     .dot {
         background-color: $neutral-grey2;
+        box-shadow: 0 0 1px 1px #000;
+
+        @media all and (min-width: $tablets) {
+            box-shadow: none;
+        }
     }
 
     .details__title,
@@ -33,10 +38,11 @@
     }
 
     .details__header:hover,
-    .details__header:focus {
+    .details__header:focus,
+    .details__header:active {
         .button--tinytag:hover,
-        .button--tinytag:focus {
-            // background-color: $primary-darkerblue;
+        .button--tinytag:focus,
+        .button--tinytag:active {
             background-color: $neutral-grey4;
         }
     }
@@ -68,7 +74,8 @@
     pointer-events: auto;
 
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
         border-color: $primary-darkerblue;
         color: $primary-white;
         background-color: $primary-darkerblue;

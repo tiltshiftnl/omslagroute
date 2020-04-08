@@ -180,11 +180,10 @@
     justify-content: flex-start;
     display: flex;
     align-content: flex-start;
-    padding-left: 1rem;
+    text-align: left;
 
     @media screen and (min-width: $tablets) {
         flex: 1 1 6.25rem;
-        padding-left: 0;
         text-align: center;
         justify-content: center;
     }
@@ -218,10 +217,11 @@
 }
 
 .document__icon {
-    flex: 0 02.5rem;
+    display: none;
 
     @media all and (min-width: $tablets) { 
-        align-self: center;
+        display: block;
+        flex: 0 02.5rem;
     }
 }
 
@@ -260,11 +260,19 @@
 
     li {
         display: block;
-        margin-bottom: 1rem;
+        margin-bottom: .5rem;
+
+        @media all and (min-width: $tablets) {
+            margin-bottom: 1rem;
+        }
 
         &:last-child {
             margin-bottom: 0;
         }
+    } 
+
+    p:last-child {
+        margin-bottom: 0;
     }
 
     @media all and (min-width: $tablets) {
@@ -288,15 +296,17 @@
 .document__new {
     color: $primary-black;
     background-color: $neutral-grey1; 
-    display: flex;
-    text-align: center;
-    justify-content: flex-start;
-    padding: 1.5rem 1rem 0rem 1rem;
+    padding: 1rem 1rem 0rem 1rem;
     position: relative;
+    display: block;
     height: 100%;
 
     @media all and (min-width: $tablets) {
+        display: flex;
         flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: flex-start;
         padding: 1.5rem 1rem 1rem 1rem;
     }
     
@@ -325,8 +335,10 @@
             display: none;
         }
 
-        .document__icon--hover {
-            display: flex;
+        @media all and (min-width: $tablets) {
+            .document__icon--hover {
+                display: flex;
+            }
         }
     }
 

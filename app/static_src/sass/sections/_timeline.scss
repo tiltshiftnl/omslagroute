@@ -54,13 +54,24 @@ $padding-left: 1.875rem;
 
     .dot--large {
         background-color: $neutral-grey4;
-        width: $toplevel-moment;
-        height:  $toplevel-moment;
+        width: ($toplevel-moment / 2);
+        height: ($toplevel-moment / 2);
         left: calc(
-            #{$padding-left / 2} +
-            #{$timeline-width  / 2}
+            #{$padding-left / 4} +
+            #{$timeline-width  / 4}
             );
-        top: calc(#{$toplevel-moment / 2});
+        top: calc(#{2rem - ($toplevel-moment / 2)});
+
+        @media all and (min-width: $tablets) {
+            width: $toplevel-moment;
+            height:  $toplevel-moment;
+            left: calc(
+                #{$padding-left / 2} +
+                #{$timeline-width  / 2}
+                );
+            top: calc(#{$toplevel-moment / 2});
+        }
+
     }
 
     .dot--small {
@@ -80,22 +91,29 @@ $padding-left: 1.875rem;
 
     .dot--blue {
         background-color: $primary-darkblue;
-
     }
 
     // timeline line
     &:not(:last-of-type)::before {
         border-left: .188rem solid $neutral-grey4;
-        top: 1rem;
+        top: 2rem;
         position: absolute;
         content: ' ';
         height: 100%;
         width: 0;
         left: calc(
-            #{$padding-left} -
-            #{$timeline-width}
+            #{$padding-left / 2} -
+            #{$timeline-width / 2}
             );
         z-index: 1;
+
+        @media all and (min-width: $tablets) {
+            top: 1rem;
+            left: calc(
+                #{$padding-left} -
+                #{$timeline-width}
+                );
+        }
     }
 }
 
@@ -132,7 +150,8 @@ $padding-left: 1.875rem;
     }
 
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
         background-color: $neutral-grey1;
         position: relative;
 
@@ -193,12 +212,16 @@ $padding-left: 1.875rem;
 
 .details__header {
     font-weight: bold;
-    display: block;
     border: 0;
     width: 100%;
     position: relative;
     -webkit-appearance:none;
     list-style-image: none;
+    display: flex;
+
+    @media all and (min-width: $tablets) {
+        display: block;
+    }
 
     &::-webkit-details-marker {
         display: none;
@@ -208,7 +231,8 @@ $padding-left: 1.875rem;
         margin: 0;
     }
 
-    &:hover {
+    &:hover,
+    &:active {
         background-color: $neutral-grey1;
 
         + .details__content {
@@ -238,11 +262,15 @@ $padding-left: 1.875rem;
     }
 
     .tag-list {
-        margin: 0;
-        display: inline-block;
-        position: absolute;
-        right: .625rem;
-        top: .75rem;
+        display: none;
+
+        @media all and (min-width: $tablets) {
+            margin: 0;
+            display: inline-block;
+            position: absolute;
+            right: .625rem;
+            top: .75rem;
+        }
     }
 }
 
@@ -253,10 +281,16 @@ $padding-left: 1.875rem;
 }
 
 .details-admin  {
-    text-align: right;
+    @media all and (min-width: $tablets) {
+        text-align: right;
+    }
 
-    .button {
-        display: inline-block;
+    a {
+        margin-bottom: .5rem;
+
+        @media all and (min-width: $tablets) {
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -272,7 +306,8 @@ $padding-left: 1.875rem;
         padding-top: 0;
         padding-bottom: 0;
 
-        &:hover {
+        &:hover,
+        &:active {
             color: $primary-red;
             box-shadow: none;
         }
@@ -289,6 +324,8 @@ $padding-left: 1.875rem;
     display: inline;
     margin: 0;
     position: relative;
+    font-size: 1rem;
+    line-height: 1.15rem;
 }
 
 .details__toggle-icon {
@@ -297,7 +334,11 @@ $padding-left: 1.875rem;
 
 .details__header,
 .details__content {
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 1rem;
+
+    @media all and (min-width: $tablets) {
+        padding: 1rem 1rem 1rem 2rem;
+    }
 }
 
 .details__content {
@@ -320,9 +361,24 @@ $padding-left: 1.875rem;
 
     .document__version,
     .document__new {
+        border-top: 1px solid $neutral-grey3;
+        border-left: 1px solid $neutral-grey3;
+        border-right: 1px solid $neutral-grey3;
+
         &,
         &:visited {
             background-color: $primary-white;
+        }
+
+        &:only-child {
+            border-bottom: 1px solid $neutral-grey3;
+        }
+
+        @media all and (min-width: $tablets) {
+            &,
+            &:only-child {
+                border: 0;
+            }
         }
     }
 
@@ -334,6 +390,18 @@ $padding-left: 1.875rem;
     .document__change {
         border-top: .5rem solid transparent;
         margin: 0;
+    }
+
+    .document__info {
+        background-color: $primary-white;
+        border-bottom: 1px solid $neutral-grey3;
+        border-left: 1px solid $neutral-grey3;
+        border-right: 1px solid $neutral-grey3;
+
+        @media all and (min-width: $tablets) {
+            border: 0;
+            background-color: $neutral-grey1; 
+        }
     }
 }
 
@@ -607,17 +675,19 @@ $padding-left: 1.875rem;
             opacity: 1;
             z-index: 5;
 
-            &:hover {
+            &:hover,
+            &:active {
                 box-shadow: none;
             }
         }
     }
 
-    &:not(:disabled):hover {
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
         .dot {
             display: block;
             background-color: $primary-darkblue;
-        border: none;
+            border: none;
         }
         .new-moment__line {
             background-color: $primary-darkblue;

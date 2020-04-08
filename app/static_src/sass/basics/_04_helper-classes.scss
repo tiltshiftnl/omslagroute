@@ -22,7 +22,13 @@
     display: none;
 
     @media screen and (min-width: $tablets) {
-        display: block;
+        display: inherit;
+    }
+}
+
+.show-on-mobile { 
+    @media screen and (min-width: $tablets) {
+        display: none;
     }
 }
 

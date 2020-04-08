@@ -12,28 +12,39 @@
 
 body {
     background-color: $neutral-grey2;
+    margin: 0;
+
+    @media screen and (min-width: $tablets) {
+        margin: inherit;
+    }
 }
 
 .site-container {
     background: $primary-white;
     width: 100%;
     margin: 0 auto;
-    padding: 0 .938rem;
     min-height: 100%;
 
     @media screen and (min-width: $tablets) {
         max-width: 87.5rem; // (1400px)
-        margin: 0 auto;
+        padding: 0 .938rem;
     }
 }
 
-.site-navigation,
-.site-footer {
-    margin: 0 -0.938rem;
+.site-navigation {
+    display: block;
+    padding: 0 .938rem;
+    background-color: $neutral-grey1;
+    min-height: 2.75rem;
+    margin-bottom: .938rem;
+    position: relative;
+
+    @media screen and (min-width: $tablets) { 
+        margin: 0 -0.938rem;
+    }
 }
 
 .site-header,
-.site-navigation,
 .site-main,
 .site-footer {
     display: block;
@@ -43,30 +54,47 @@ body {
         padding: 0;
     }
 }
- 
+
 .site-header {
     background-color: $primary-white;
     margin: 0 auto;
     max-width: 60rem;
+}
 
-    .site-header-wrapper {
-        @media all and (min-width: $tablets) {
-            -ms-flex-line-pack: start;
-            align-content: flex-start; 
-            display: -ms-flexbox;
-            display: grid;
-            grid-gap: 0 1.687rem;
-            grid-template-columns: auto 2fr 1fr;
-                -ms-flex-pack: start;
-                    justify-content: space-between;
-            height: 6.75rem;
-            padding-top: 1.125rem; 
+.site-header-wrapper {
+    -ms-flex-line-pack: start;
+    align-content: flex-start; 
+    display: -ms-flexbox;
+    display: grid;
+    grid-gap: 0 1.687rem;
+    grid-template-columns: auto 1fr;
+    -ms-flex-pack: start;
+        justify-content: space-between;
+
+    img {
+        width: 6.25rem; 
+    }
+
+    @media all and (min-width: $tablets) {
+        grid-template-columns: auto 2fr 1fr;
+        height: 6.75rem;
+        padding-top: 1.125rem; 
+
+        img {
+            width: auto;
         }
     }
 }
 
-.site-title {
-    margin-right: auto;
+.site-userinfo {
+    margin-top: 1rem;
+    grid-column: span 2;
+
+    @media all and (min-width: $tablets) {
+        grid-column: span 1;
+        margin-top: 0;
+        margin-left: auto;
+    }
 }
 
 @media all and (-ms-high-contrast:none) {
@@ -74,14 +102,7 @@ body {
         margin-left:2.5rem;
     }
 }
-
-.site-navigation {
-    background-color: $neutral-grey1;
-    min-height: 2.75rem;
-    margin-bottom: .938rem;
-    position: relative;
-}
-
+ 
 @media all and (min-width: $tablets) {
     .site-userinfo {
         text-align: right;

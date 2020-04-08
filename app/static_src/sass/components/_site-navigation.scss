@@ -15,7 +15,8 @@
         align-items: center;
         position: relative;
         
-        &:hover {
+        &:hover,
+        &:active {
             ul {
                 display: block;
             }
@@ -80,7 +81,8 @@
     color: $primary-darkblue;
 
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
         text-decoration: underline;
         color: $primary-red;
 

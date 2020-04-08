@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5 {
 h1 {
     font-size: 1.4125rem;
     font-weight: bold;
-    line-height: 1.37931rem;
+    line-height: 1.47931rem;
     margin-top: 0;
     margin-bottom: 0;
 
@@ -58,19 +58,46 @@ h1 {
 
 h2 {
     font-size: 1.5rem;
-    line-height: 1.25rem;
     font-weight: bold;
+
+    &:first-child {
+        margin-top: 0;
+
+        @media screen and (min-width: $tablets) {
+            margin-top: 2rem;
+        }
+    }
 }
 
 h3 {
-    font-size: 1rem;
-    line-height: 1.15rem
+    font-size: 1.25rem;
+    line-height: 1.75rem;
 }
 
 h4 {
-    font-size: 1.125rem;
-    line-height: 1.55556rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
     margin-bottom: 1rem;
+}
+
+
+@media screen and (min-width: $tablets) {
+    h2 {
+        font-size: 1.5rem;
+        line-height: 1.875rem;
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+
+    h4 {
+        font-size: 1.125rem;
+        line-height: 1.563rem;
+        margin-bottom: 1rem;
+    }
 }
 
 p, ul, ol {
