@@ -45,42 +45,73 @@
     }
 
     .site-main {
-        padding: 0 0 0 2cm;
+        padding: 0 0 0 1cm;
         margin: 0;
         max-width: 100%;
         border: 0;
+    }
+
+    .sub-section { 
+        border: 0;
+        background: $neutral-grey1;
+        // comment next line to save paper ;)
+        page-break-inside: avoid; 
+    }
+
+    .form-field {  page-break-inside: avoid; }
+
+    .form-field--clearablefileinput {
+        // hide text
+        color: transparent;
+        font-size: 0;
+
+        a { 
+            font-size: 1rem;
+            color: $primary-black;
+            text-decoration: none;
+        }
+
+        a:before {
+            content: "Bijgevoegde bestanden: ";
+            font-weight: bold;
+            display: block;
+            color: $primary-black;
+            margin-right: 1rem;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        input, label {
+            display: none;
+        }
     }
 
     // ********************
     // TABLES
     // ********************    
 
-    table { page-break-inside:auto; border-collapse: none; }
+    table { page-break-inside:auto; border-collapse: none; border: 0 !important; width: 80%; }
     tr    { page-break-inside:avoid; page-break-after:auto;  }
     td    { page-break-inside:avoid; page-break-after:auto }
     thead { display:table-header-group }
     tfoot { display:table-footer-group }
 
-    // div   { page-break-inside:avoid; }
-
-    tr:nth-of-type(even) {
-        background-color: none;
-    }
-
     tr {
-        border-bottom: .063rem solid $neutral-grey3;
+        background-color: $primary-white !important;
+        border-bottom: 0;
     }
 
     td:first-child,
     th:first-child {
-        padding-left: 0;
-        width: 30%;
         border: 0 !important;
+        padding-bottom: 0;
+        padding-left: 0;
     }
 
     th:last-child,
     td:last-child {
         padding-right: 0;
+        padding-left: 0;
         border: 0 !important;
     }
 
@@ -100,14 +131,9 @@
     }
 
     .print-header {
-        left: 0;
-        position: absolute;
         width: 100%;
-        height: 2cm;
-    }
-
-    .print-header {
-        top: 0cm;
+        height: 4cm;
+        padding-top: 1cm;
     }
 
     // .print-footer {
