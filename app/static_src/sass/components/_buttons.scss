@@ -51,7 +51,7 @@
     &[disabled] {
         background-color: $neutral-grey2;
         color: $neutral-grey3;
-        border: 1px solid $neutral-grey2;
+        border: .063rem solid $neutral-grey2;
     }
 
     @media all and (min-width: $tablets) {
