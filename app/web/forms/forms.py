@@ -92,7 +92,11 @@ class BaseGenericForm:
         return {
             'errors': mark_safe('\n'.join(output)),
             'hidden_fields': mark_safe(''.join(hidden_fields)),
-            'sections': [dict((k, v if not isinstance(v, list) else [dict((kk, vv if not isinstance(vv, list) else [sections_output.get(sss, '') for sss in vv]) for kk, vv in ss.items()) for ss in v]) for k, v in section.items()) for section in sections]
+            'sections': [dict((k, v if not isinstance(v, list) else [
+                dict((kk, vv if not isinstance(vv, list) else [
+                    sections_output.get(sss, '') for sss in vv
+                ]) for kk, vv in ss.items()) for ss in v
+            ]) for k, v in section.items()) for section in sections]
         }
 
 
