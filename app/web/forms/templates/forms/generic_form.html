@@ -60,7 +60,7 @@
         <div data-submit-container class="form-field form-field--buttons screen-only">
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
-            {% if form.instance.id %}<a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Verstuur aanvraag</a>{% endif %}
+            {% if form.instance.id %}<button type="submit" name="next" value="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
         </div>
     </form>
 </section>

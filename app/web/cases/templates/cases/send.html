@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load client_data_tags html_tags %}
+{% load client_data_tags html_tags client_status_tags %}
 
 {% block title %} - Deel cliënt gegevens{% endblock %}
 
@@ -14,10 +14,16 @@
 
 {% block main %}
 <section class="section section--form">
-    <h2>Verstuur cli&euml;ntgegevens {{ title }}</h2>
+    <h2>Verstuur cli&euml;ntgegevens '{{ title }}'</h2>
     <form method="post" novalidate>
         {% csrf_token %}
+        {% client_status form.instance 'urgentie_aanvraag' as status %}
+        {% if status.percentage >= 100 %}
         {% if organization_list %}
+            <div data-submit-container class="form-field form-field--buttons screen-only">
+                <input type="submit" value="Verstuur" class="button button--primary">
+                <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleer</a>
+            </div>
             <h3>De informatie over deze cliënt wordt met de volgende organisaties gedeeld.</h3>
 
 
@@ -40,11 +46,21 @@
             </table>
 
             {% endfor %}
-        <div data-submit-container class="form-field form-field--buttons screen-only">
-            <input type="submit" value="Verstuur" class="button button--primary">
-            <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleer</a>
-        </div>
+
         {% else %}
+        {% endif %}
+        {% else %}
+            <h3>Aanvraag incompleet</h3>
+            <p>De volledigheid van de benodigde informatie is <strong>{{ status.percentage }}%</strong>.<br>
+                De volgende informatie ontbreekt:</p>
+            <ul>
+                {% for f in status.remaining_fields %}
+                <li><strong>{{ f }}</strong></li>
+                {% endfor %}
+            </ul>
+            <div data-submit-container class="form-field form-field--buttons screen-only">
+                <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie' form.instance.id %}" class="button button--primary">Terug naar '{{ title }}'</a>
+            </div>
         {% endif %}
     </form>
 </section>

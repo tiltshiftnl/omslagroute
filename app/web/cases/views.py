@@ -108,6 +108,9 @@ class GenericFormView(GenericModelFormView):
     form_class = CaseGenericModeForm
 
     def get_success_url(self):
+        next = self.request.POST.get('next')
+        if next:
+            return next
         return reverse('case', kwargs={'pk': self.object.id})
 
     def get_discard_url(self):
@@ -125,7 +128,7 @@ class GenericFormView(GenericModelFormView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
+        # messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
         return response
 
     def get_context_data(self, **kwargs):

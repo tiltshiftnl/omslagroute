@@ -33,18 +33,20 @@
                         </a>
                     </td>
                     <td>
+                        {% client_status object 'basis_gegevens' as status %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            {% client_status object 'basis_gegevens' %}% ingevuld
+                            {{ status.percentage }}% ingevuld
                         </a>
                         <!-- hide the above and show only the text in the span here; otherwise screenreaders
                             will read the link three times and tabbing through the page becomes annoying -->
-                        <span class="sr-only">{% client_status object 'basis_gegevens' %}% ingevuld</span>
+                        <span class="sr-only">{{ status.percentage }}% ingevuld</span>
                     </td>
                     <td>
+                        {% client_status object 'urgentie_aanvraag' as status %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            {% client_status object 'urgentie_aanvraag' %}% ingevuld
+                            {{ status.percentage }}% ingevuld
                         </a>
-                        <span class="sr-only">{% client_status object 'urgentie_aanvraag' %}% ingevuld</span>
+                        <span class="sr-only">{{ status.percentage }}% ingevuld</span>
                     </td>
                 </tr>
             {% endfor %}

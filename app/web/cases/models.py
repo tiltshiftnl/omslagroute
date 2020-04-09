@@ -204,7 +204,11 @@ class Case(PrintableModel):
         section_fields = BaseGenericForm._get_fields(sections)
         required_fields = [f for f in section_fields if FIELDS_REQUIRED_DICT.get(f)]
         filled_fields = [f for f in required_fields if hasattr(self, f) and getattr(self, f)]
-        return int(float(float(len(filled_fields) / len(required_fields))) * 100)
+        not_filled_fields = [FIELDS_DICT.get(f).label for f in required_fields if hasattr(self, f) and not getattr(self, f)]
+        return {
+            'percentage': int(float(float(len(filled_fields) / len(required_fields))) * 100),
+            'remaining_fields': not_filled_fields
+        }
 
     def __str__(self):
         if self.client_first_name:
