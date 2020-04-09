@@ -11,15 +11,12 @@ $large: 64rem; // (1024px);
     html {
         .navigation-container li:first-child ul,
         .navigation-container .admin-settings,
+        .section--timeline .details-admin,
         .document__info ul,
-        .document--add // document edit buttons,
+        .document--add, // document edit buttons,
         .section--mijn-clienten .form-field--buttons
         {
             display: none;
-        }
-
-        .details__content p:last-child {
-            margin-bottom: 0;
         }
     }
 }
