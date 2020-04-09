@@ -5,3 +5,18 @@
 
 $tablets: 33.75rem; // (540px)
 $large: 64rem; // (1024px);
+
+// remove all 'edit' buttons on mobile
+@media all and (max-width: $tablets) {
+    html {
+        .navigation-container li:first-child ul,
+        .navigation-container .admin-settings,
+        .section--timeline .details-admin,
+        .document__info ul,
+        .document--add, // document edit buttons,
+        .section--mijn-clienten .form-field--buttons
+        {
+            display: none;
+        }
+    }
+}

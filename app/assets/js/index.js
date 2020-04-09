@@ -72,7 +72,7 @@ Array.prototype.sortOnData = function(key){
           var self = _closest(e.target, '[data-handler="delete-moment"]'),
               container = _closest(self, '[data-edit-moment]');
 
-          if (confirm("Weet je zeker dat je het timeline item met naam '"+container.querySelector('[name$="name"]').value+"' wil verwijderen")) {
+          if (confirm("Weet u zeker dat u het timeline item met naam '"+container.querySelector('[name$="name"]').value+"' wilt verwijderen")) {
               if (!container.dataset.id) {
                   container.parentNode.removeChild(container);
               } else {

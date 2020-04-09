@@ -48,7 +48,7 @@
                 {% if request.user|is_beheerder and object %}
                     <ul role="list">
                         <li>
-                            <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary" title="Vervang dit {{ object.document_type_value }}">
+                            <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary button--icon" title="Vervang dit {{ object.document_type_value }}">
                                 <svg class="button__icon"  width="20" height="20" >
                                     <use href="#upload" xlink:href="#upload"  width="20" height="20"></use>
                                 </svg>
@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'document_update' object.id %}" class="document__version-update button button--secondary" title="Pas de informatie over dit {{ object.document_type_value }} aan">
+                            <a href="{% url 'document_update' object.id %}" class="document__version-update button button--secondary button--icon" title="Pas de informatie over dit {{ object.document_type_value }} aan">
                                 <svg class="button__icon"  width="20" height="20" >
                                     <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20"></use>
                                 </svg>
@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'document_delete' object.id %}" class="document__version-update button button--secondary"  title="Verwijder dit {{ object.document_type_value }}">
+                            <a href="{% url 'document_delete' object.id %}" class="document__version-update button button--secondary button--icon"  title="Verwijder dit {{ object.document_type_value }}">
                                 <svg class="button__icon"  width="20" height="20" >
                                     <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
                                 </svg>
