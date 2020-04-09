@@ -28,7 +28,7 @@
         <header class="site-header screen-only">
             <div class="site-header-wrapper">
                 <a href="{% url 'home' %}" title="Ga terug naar de homepage">
-                    <img src="{% static 'images/logo.svg' %}" alt="Gemeente Amsterdam">
+                    <img src="{% static 'images/logo.svg' %}" alt="Gemeente Amsterdam" class="logo">
                 </a>
                 <h1 class="site-title">
                     <a href="{% url 'home' %}" title="Ga terug naar de homepage"> 
@@ -154,18 +154,18 @@
     {% endblock %}
 
     <main role="main" class="site-main">
+        {% block print-header %}
+            <div class="print-only print-header" aria-hidden="true">
+                <img src="{% static 'images/logo.svg' %}" class="print-logo">
+            </div>
+        {% endblock %}
+
         {% block breadcrumb %}
         {% endblock %}
 
         {% block main %}
         {% endblock %}
     </main>
-
-    {% block print-header %}
-        <div class="print-only print-header" aria-hidden="true">
-            <img src="{% static 'images/logo.svg' %}" class="print-logo">
-        </div>
-    {% endblock %}
 </div>
 
 <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>
