@@ -31,19 +31,23 @@
     .details__title,
     .details__toggle-icon {
         color: $neutral-grey3;
-    }
+    } 
 
-    .button--tinytag {
-        background-color: $neutral-grey2;
+    .button--tinytag { 
+        background-color: transparent;
+        color: $primary-darkblue;
+        border: .063rem solid $primary-darkblue;
     }
 
     .details__header:hover,
     .details__header:focus,
     .details__header:active {
+
         .button--tinytag:hover,
         .button--tinytag:focus,
         .button--tinytag:active {
-            background-color: $neutral-grey4;
+            background-color: $primary-darkerblue;
+            color: $primary-white;
         }
     }
 }
@@ -59,11 +63,14 @@
     }
 
     .button--tinytag {
-        background-color: $neutral-grey4;
+        background-color: transparent;
+        color: $primary-darkblue;
+        border: .063rem solid $primary-darkblue;
     }
 
     .button--tag--selected {
         background-color: $primary-darkblue;
+        color: $primary-white;
     }
 }
 
@@ -117,13 +124,16 @@
     font-size: .8rem;
     text-transform: uppercase;
     min-width: auto;
-    background-color: $neutral-grey4;
-    color: $primary-white;
-    border: .063rem solid transparent;
+    background-color: transparent;
+    color: $primary-darkblue;
+    border: .063rem solid $primary-darkblue; 
     pointer-events: auto;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
         background-color: $primary-darkerblue;
+        color: $primary-white;
         cursor: pointer;
     }
 } 
