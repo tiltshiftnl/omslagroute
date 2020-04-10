@@ -330,9 +330,42 @@ AANVRAAG_VERLENGING_TRACJECTWIJZIGING_MOBW = [
     },
 ]
 
-SECTIONS = (
-    ('basis_gegevens', BASIS_GEGEVENS),
-    ('urgentie_aanvraag', URGENTIE_AANVRAAG),
+FORMS = (
+    (
+        'basis_gegevens',
+        BASIS_GEGEVENS,
+        'basis-gegevens',
+        'Basis gegevens cliënt',
+        'Nieuwe cliënt',
+        False,
+        False,
+    ),
+    (
+        'urgentie_aanvraag',
+        URGENTIE_AANVRAAG,
+        'aanvraag-omslag-en-urgentie',
+        'Aanvraag omslag en urgentie',
+        'Nieuwe aanvraag omslag en urgentie',
+        True,
+        True,
+    ),
 )
-SECTIONS_DICT = dict((s[0], s[1]) for s in SECTIONS)
+
+
+def map_form_keys(f):
+    return {
+        'key': f[0],
+        'sections': f[1],
+        'slug': f[2],
+        'title': f[3],
+        'title_new': f[4],
+        'inpage_navigation': f[5],
+        'share': f[6],
+    }
+
+
+FORMS_BY_KEY = dict((s[0], map_form_keys(s)) for s in FORMS)
+FORMS_BY_SLUG = dict((s[2], map_form_keys(s)) for s in FORMS)
+
+
 

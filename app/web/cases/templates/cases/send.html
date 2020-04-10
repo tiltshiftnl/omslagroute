@@ -59,7 +59,7 @@
                 {% endfor %}
             </ul>
             <div data-submit-container class="form-field form-field--buttons screen-only">
-                <a href="{% url 'nieuwe_aanvraag_omslag_en_urgentie' form.instance.id %}" class="button button--primary">Terug naar '{{ title }}'</a>
+                <a href="{% url 'update_case' form.instance.id slug %}" class="button button--primary">Terug naar '{{ title }}'</a>
             </div>
         {% endif %}
     </form>

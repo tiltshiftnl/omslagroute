@@ -19,7 +19,7 @@ class CaseForm(forms.ModelForm):
         exclude = []
 
 
-class CaseGenericModeForm(GenericModelForm):
+class CaseGenericModelForm(GenericModelForm):
     class Meta:
         model = Case
         exclude = []

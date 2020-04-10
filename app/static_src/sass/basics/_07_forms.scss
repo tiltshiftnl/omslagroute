@@ -52,6 +52,8 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 .section--form form {
     position: relative;
+}
+.section__grid {
     @media all and (min-width: $tablets) {
         display: grid;
         grid-template-columns: 240px auto;
