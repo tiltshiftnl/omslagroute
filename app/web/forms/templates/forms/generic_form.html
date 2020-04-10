@@ -14,9 +14,12 @@
 
 {% block main %}
 <section class="section section--form section--form-{{ title|slugify }}">
-{#    {% if form.instance.id %}{% client_status form.instance  %}{% endif %}#}
+    {% if form.instance.id %}{% client_status form.instance key as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
+        {% if inpage_navigation %}
+        <div class="section__grid">
         <div class="section__main">
+        {% endif %}
 
         <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
         {% csrf_token %}
@@ -42,19 +45,27 @@
 
         {% for section in form.as_sections.sections %}
             <fieldset class="section section--step{% if not section.step_complete %} section--incomplete{% endif %}">
+                {% if section.title %}
                 <legend id="{{ section.title|slugify }}">
                     <h3 class="section--step__title">
-                        {{ section.title }}&nbsp;<div class="dot dot--large{% if section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>
+                        {{ section.title }}&nbsp;{% if inpage_navigation %}<div class="dot dot--large{% if section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>{% endif %}
                     </h3>
                 </legend>
+                {% endif %}
+                {% if section.description %}
                 <p class="section--step__description">{{ section.description }}</p>
+                {% endif %}
 
                 {% for sub_section in section.section_list %}
                     <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
+                        {% if sub_section.title %}
                         <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
-                            {{ sub_section.title }}&nbsp;<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>
+                            {{ sub_section.title }}&nbsp;{% if inpage_navigation %}<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>{% endif %}
                         </h4>
+                        {% endif %}
+                        {% if sub_section.description %}
                         <p class="sub-section__description">{{ sub_section.description }}</p>
+                        {% endif %}
 
                         {% for field in sub_section.fields %}
                             {{ field.rendered|safe }}
@@ -65,6 +76,7 @@
         {% endfor %}
 
         {{ form.as_sections.hidden_fields }}
+        {% if inpage_navigation %}
         </div>
         <div class="section__aside">
 
@@ -107,20 +119,26 @@
                     <div class="form-field form-field--buttons-vertical screen-only">
                         <input type="submit" value="Opslaan" class="button button--primary">
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
-                        {% if form.instance.id %}<button type="submit" name="next" value="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
+                        {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
                     </div>
                 </div>
             </div>
         </div>
         </div>
+        </div>
+        {% endif %}
 
+        {% if inpage_navigation %}
         <div class="show-mobile-only">
+        {% endif %}
         <div data-submit-container class="form-field form-field--buttons screen-only show-mobile-only">
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
-            {% if form.instance.id %}<button type="submit" name="next" value="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
+            {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
         </div>
+        {% if inpage_navigation %}
         </div>
+        {% endif %}
     </form>
 </section>
 {% endblock %}

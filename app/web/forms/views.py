@@ -5,6 +5,8 @@ from django.contrib import messages
 import json
 from json import JSONEncoder
 import datetime
+from .statics import FORMS_BY_SLUG
+from django.http import Http404
 
 
 class DateTimeEncoder(JSONEncoder):
@@ -53,7 +55,7 @@ class GenericFormView(FormView):
         return kwargs
 
 
-class GenericModelFormView(UpdateView):
+class GenericUpdateFormView(UpdateView):
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('form_list')
     form_class = GenericModelForm
@@ -63,28 +65,28 @@ class GenericModelFormView(UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        if not form_context:
+            raise Http404
         kwargs.update({
-            'sections': self.kwargs.get('sections'),
-        })
+            'form_context': form_context}
+        )
         return kwargs
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
-        return response
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
         kwargs.update(
             self.kwargs
         )
+        kwargs.update(form_context)
         kwargs.update({
             'discard_url': self.get_discard_url(),
         })
         return kwargs
 
 
-class GenericModelCreateFormView(CreateView):
+class GenericCreateFormView(CreateView):
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('form_list')
     form_class = GenericModelForm
@@ -94,21 +96,21 @@ class GenericModelCreateFormView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        if not form_context:
+            raise Http404
         kwargs.update({
-            'sections': self.kwargs.get('sections'),
-        })
+            'form_context': form_context}
+        )
         return kwargs
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
-        return response
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
         kwargs.update(
             self.kwargs
         )
+        kwargs.update(form_context)
         kwargs.update({
             'discard_url': self.get_discard_url(),
         })

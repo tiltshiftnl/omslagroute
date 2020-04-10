@@ -59,11 +59,6 @@ class ObjectStoreView(UserPassesTestMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
 
-        object_list = default_storage.listdir('uploads')[1]
-        for o in object_list:
-            print(default_storage.url(o))
-            print(default_storage.exists('uploads/%s' % default_storage.get_valid_name(o)))
-
         documentversion_list = [{
             'name': d.uploaded_file.name,
             'generate_filename': default_storage.generate_filename(d.uploaded_file.name),

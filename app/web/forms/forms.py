@@ -13,7 +13,10 @@ class BaseGenericForm:
 
     @staticmethod
     def _get_fields(sections):
-        return [fff for f in sections for ff in f.get('section_list', []) for fff in ff.get('fields', [])]
+        sections = [] if not sections else [
+            fff for f in sections for ff in f.get('section_list', []) for fff in ff.get('fields', [])
+        ]
+        return sections
 
     def as_sections(self):
         return self._html_section_output(
@@ -134,11 +137,10 @@ class GenericForm(BaseGenericForm, forms.Form):
 
 class GenericModelForm(BaseGenericForm, forms.ModelForm):
 
-    def __init__(self, sections=[], *args, **kwargs):
-        self.sections = sections
+    def __init__(self, *args, **kwargs):
+        # if kwargs.get('form_context'):
+        form_context = kwargs.pop('form_context')
         super().__init__(*args, **kwargs)
+        self.sections = form_context.get('sections', [])
         for f in self._get_fields(self.sections):
             self.fields[f] = FIELDS_DICT.get(f)
-
-    def completed(self):
-        print(self.instance)

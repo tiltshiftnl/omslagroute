@@ -7,24 +7,15 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from web.users.statics import BEGELEIDER
 from web.profiles.models import Profile
-from web.forms.statics import URGENTIE_AANVRAAG, FIELDS_DICT
-from web.forms.views import GenericModelFormView, GenericModelCreateFormView
-from web.forms.forms import BaseGenericForm, GenericForm
-import json
+from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG
+from web.forms.views import GenericUpdateFormView, GenericCreateFormView
 import sendgrid
 from sendgrid.helpers.mail import Mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.template.loader import render_to_string
 from web.organizations.models import Organization
-
-
-def form_completed(instance, sections):
-    section_fields = BaseGenericForm._get_fields(sections)
-    required_fields = [f for f in section_fields if FIELDS_DICT.get(f) and FIELDS_DICT.get(f).required]
-    filled_fields = [f for f in required_fields if hasattr(instance, f) and getattr(instance, f)]
-    print(len(required_fields))
-    print(len(filled_fields))
+from django.http import Http404
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -50,10 +41,6 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
-
-    def get_context_data(self, **kwargs):
-        completed = form_completed(self.object, URGENTIE_AANVRAAG)
-        return super().get_context_data(**kwargs)
 
 
 class CaseCreateView(UserPassesTestMixin, CreateView):
@@ -101,62 +88,41 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         return response
 
 
-class GenericFormView(GenericModelFormView):
+class GenericCaseUpdateFormView(GenericUpdateFormView):
     model = Case
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('cases_by_profile')
-    form_class = CaseGenericModeForm
+    form_class = CaseGenericModelForm
 
     def get_success_url(self):
         next = self.request.POST.get('next')
         if next:
             return next
-        return reverse('case', kwargs={'pk': self.object.id})
+        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
 
     def get_discard_url(self):
         return reverse('case', kwargs={'pk': self.object.id})
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({
-            'sections': self.kwargs.get('sections'),
-        })
-        return kwargs
 
     def form_invalid(self, form):
         return super().form_invalid(form)
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        # messages.add_message(self.request, messages.INFO, "Het formulier is ontvangen")
+        messages.add_message(self.request, messages.INFO, "De gegevens zijn aangepast.")
         return response
 
-    def get_context_data(self, **kwargs):
-        kwargs = super().get_context_data(**kwargs)
-        kwargs.update(
-            self.kwargs
-        )
-        return kwargs
 
-
-class GenericCaseCreateFormView(GenericModelCreateFormView):
+class GenericCaseCreateFormView(GenericCreateFormView):
     model = Case
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('cases_by_profile')
-    form_class = CaseGenericModeForm
+    form_class = CaseGenericModelForm
 
     def get_success_url(self):
-        return reverse('cases_by_profile')
+        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
 
     def get_discard_url(self):
         return reverse('cases_by_profile')
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({
-            'sections': self.kwargs.get('sections'),
-        })
-        return kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -164,13 +130,6 @@ class GenericCaseCreateFormView(GenericModelCreateFormView):
         self.request.user.profile.cases.add(case)
         messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangemaakt." % case.client_name)
         return response
-
-    def get_context_data(self, **kwargs):
-        kwargs = super().get_context_data(**kwargs)
-        kwargs.update(
-            self.kwargs
-        )
-        return kwargs
 
 
 class SendCaseView(UpdateView):
@@ -183,6 +142,10 @@ class SendCaseView(UpdateView):
 
     def get_context_data(self, **kwargs):
         kwargs.update(self.kwargs)
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        if not form_context:
+            raise Http404
+        kwargs.update(form_context)
         kwargs.update({
             'organization_list': Organization.objects.filter(main_email__isnull=False),
             'object': self.object,
@@ -192,7 +155,9 @@ class SendCaseView(UpdateView):
     def form_valid(self, form):
         organization_list = Organization.objects.filter(main_email__isnull=False)
         for organization in organization_list:
-            body = render_to_string('cases/mail/case.txt', {'case': self.object.to_dict(organization.field_restrictions)})
+            body = render_to_string('cases/mail/case.txt', {
+                'case': self.object.to_dict(organization.field_restrictions)
+            })
             current_site = get_current_site(self.request)
             sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
             email = Mail(

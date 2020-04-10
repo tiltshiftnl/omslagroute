@@ -22,7 +22,6 @@ class CustomUserAdmin(UserAdmin):
 
     def profile_link(self, obj):
         url = reverse('admin:%s_%s_change' % ('profiles',  'profile'),  args=[obj.profile.id])
-        # print(url)
         return mark_safe(
             """<a id="edit_related" class="button related-widget-wrapper-link add-related" href="%s?_popup=1">
             Profiel

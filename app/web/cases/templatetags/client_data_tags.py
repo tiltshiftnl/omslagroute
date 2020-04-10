@@ -1,5 +1,4 @@
 from django import template
-from web.forms.statics import SECTIONS_DICT
 register = template.Library()
 
 
