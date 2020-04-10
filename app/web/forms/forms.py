@@ -33,7 +33,7 @@ class BaseGenericForm:
         top_errors = self.non_field_errors()  # Errors that should be displayed above all fields.
         output, sections_output, hidden_fields = [], {}, []
         sections = copy.deepcopy(self.sections)
-
+        # print(self.fields)
         for name, field in self.fields.items():
             html_class_attr = ''
             row = normal_row
@@ -138,9 +138,9 @@ class GenericForm(BaseGenericForm, forms.Form):
 class GenericModelForm(BaseGenericForm, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        # if kwargs.get('form_context'):
         form_context = kwargs.pop('form_context')
         super().__init__(*args, **kwargs)
+        self.fields = {}
         self.sections = form_context.get('sections', [])
         for f in self._get_fields(self.sections):
             self.fields[f] = FIELDS_DICT.get(f)
