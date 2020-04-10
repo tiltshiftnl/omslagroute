@@ -89,7 +89,7 @@ pipeline {
           parameters: [
               [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
               [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
-              [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: '-e platform=secure -e app=omslagroute'],
+              [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_${env.APP}"],
           ]
       }
     }
