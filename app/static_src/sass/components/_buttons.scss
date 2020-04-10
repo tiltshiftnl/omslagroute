@@ -116,7 +116,8 @@
     &:hover,
     &:focus,
     &:active {
-        color: $primary-darkblue;
+        background-color: $primary-darkerblue;
+        color: $primary-white;
         border-color: $primary-darkerblue;
     }
 }
