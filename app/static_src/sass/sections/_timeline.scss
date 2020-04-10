@@ -114,7 +114,7 @@ $padding-left: 1.875rem;
             #{$padding-left / 2} -
             #{$timeline-width / 2}
             );
-        z-index: 1;
+        z-index: 2;
 
         @media all and (min-width: $tablets) {
             top: 1rem;
