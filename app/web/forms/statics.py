@@ -259,7 +259,7 @@ URGENTIE_AANVRAAG = [
         ]
     },
     {
-        'title': '',
+        'title': 'Aanvraag',
         'description': '',
         'section_list': [
             {

@@ -74,25 +74,46 @@ class BaseGenericForm:
                     help_text = help_text_html % field.help_text
                 else:
                     help_text = ''
-                sections_output[name] = mark_safe(row % {
+                obj = {
                     'errors': error_row % str(bf_errors),
                     'label': label,
                     'field': bf,
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
                     'css_classes': css_classes,
-                    'field_name': bf.html_name,
-                })
+                    'field_step_complete': not FIELDS_REQUIRED_DICT.get(bf.name) or not bf_is_empty,
+                    'verbose_name': bf.label,
+                }
+                sections_output[name] = {
+                    'rendered': mark_safe(row % obj),
+                    'object': obj
+                }
         if top_errors:
             output.insert(0, error_row % top_errors)
 
         if hidden_fields:  # Insert any hidden fields in the last row.
             str_hidden = ''.join(hidden_fields)
             output.append(str_hidden)
+
+        section_with_fields = [dict((k, v if not isinstance(v, list) else [
+                dict((kk, vv if not isinstance(vv, list) else [
+                    sections_output.get(sss, {}) for sss in vv
+                ]) for kk, vv in ss.items()) for ss in v
+            ]) for k, v in section.items()) for section in sections]
+        for section in section_with_fields:
+            section['step_complete'] = True
+            for k, v in section.items():
+                if isinstance(v, list):
+                    for ss in v:
+                        sub_step_complete = not bool([kk for kk, vv in ss.items() if isinstance(vv, list) and [sss for sss in vv if not sss.get('object', {}).get('field_step_complete')]])
+                        ss['step_complete'] = sub_step_complete
+                        if not sub_step_complete:
+                            section['step_complete'] = False
+
         return {
             'errors': mark_safe('\n'.join(output)),
             'hidden_fields': mark_safe(''.join(hidden_fields)),
-            'sections': [dict((k, v if not isinstance(v, list) else [dict((kk, vv if not isinstance(vv, list) else [sections_output.get(sss, '') for sss in vv]) for kk, vv in ss.items()) for ss in v]) for k, v in s.items()) for s in sections]
+            'sections': section_with_fields
         }
 
 
