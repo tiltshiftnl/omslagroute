@@ -81,7 +81,7 @@ class BaseGenericForm:
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
                     'css_classes': css_classes,
-                    'field_step_complete': FIELDS_REQUIRED_DICT.get(bf.name) and not bf_is_empty,
+                    'field_step_complete': not FIELDS_REQUIRED_DICT.get(bf.name) or not bf_is_empty,
                     'verbose_name': bf.label,
                 }
                 sections_output[name] = {
@@ -94,14 +94,26 @@ class BaseGenericForm:
         if hidden_fields:  # Insert any hidden fields in the last row.
             str_hidden = ''.join(hidden_fields)
             output.append(str_hidden)
+
+        section_with_fields = [dict((k, v if not isinstance(v, list) else [
+                dict((kk, vv if not isinstance(vv, list) else [
+                    sections_output.get(sss, {}) for sss in vv
+                ]) for kk, vv in ss.items()) for ss in v
+            ]) for k, v in section.items()) for section in sections]
+        for section in section_with_fields:
+            section['step_complete'] = True
+            for k, v in section.items():
+                if isinstance(v, list):
+                    for ss in v:
+                        sub_step_complete = not bool([kk for kk, vv in ss.items() if isinstance(vv, list) and [sss for sss in vv if not sss.get('object', {}).get('field_step_complete')]])
+                        ss['step_complete'] = sub_step_complete
+                        if not sub_step_complete:
+                            section['step_complete'] = False
+
         return {
             'errors': mark_safe('\n'.join(output)),
             'hidden_fields': mark_safe(''.join(hidden_fields)),
-            'sections': [dict((k, v if not isinstance(v, list) else [
-                dict((kk, vv if not isinstance(vv, list) else [
-                    sections_output.get(sss, '') for sss in vv
-                ]) for kk, vv in ss.items()) for ss in v
-            ]) for k, v in section.items()) for section in sections]
+            'sections': section_with_fields
         }
 
 

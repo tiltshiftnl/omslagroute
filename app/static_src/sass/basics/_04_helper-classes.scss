@@ -31,6 +31,13 @@
         display: none;
     }
 }
+.show-mobile-only {
+    display: block;
+
+    @media screen and (min-width: $tablets) {
+        display: none;
+    }
+}
 
 .print-only {
     display: none;

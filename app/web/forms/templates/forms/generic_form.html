@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load client_status_tags %}
 {% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
 {% block breadcrumb %}
@@ -14,9 +14,11 @@
 
 {% block main %}
 <section class="section section--form section--form-{{ title|slugify }}">
-    <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
-
+{#    {% if form.instance.id %}{% client_status form.instance  %}{% endif %}#}
     <form method="post" enctype="multipart/form-data" novalidate>
+        <div class="section__main">
+
+        <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
         {% csrf_token %}
         {{ form.as_sections.errors }}
 
@@ -39,13 +41,19 @@
         {% endif %}
 
         {% for section in form.as_sections.sections %}
-            <fieldset class="section section--step">
-                <legend id="{{ section.title|slugify }}"><h3 class="section--step__title">{{ section.title }}</h3></legend>
+            <fieldset class="section section--step{% if not section.step_complete %} section--incomplete{% endif %}">
+                <legend id="{{ section.title|slugify }}">
+                    <h3 class="section--step__title">
+                        {{ section.title }}&nbsp;<div class="dot dot--large{% if section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>
+                    </h3>
+                </legend>
                 <p class="section--step__description">{{ section.description }}</p>
 
                 {% for sub_section in section.section_list %}
-                    <div class="section sub-section">
-                        <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">{{ sub_section.title }}</h4>
+                    <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
+                        <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
+                            {{ sub_section.title }}&nbsp;<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>
+                        </h4>
                         <p class="sub-section__description">{{ sub_section.description }}</p>
 
                         {% for field in sub_section.fields %}
@@ -57,35 +65,61 @@
         {% endfor %}
 
         {{ form.as_sections.hidden_fields }}
+        </div>
+        <div class="section__aside">
 
         <div class="floating-section-base">
-        <div class="floating-section-wrapper">
-        {% for section in form.as_sections.sections %}
-            <div class="floating-section section section--step">
-                <h4 class="floating-section--step__title"><a href="#{{ section.title|slugify }}">{{ section.title }}</a></h4>
-
-                {% for sub_section in section.section_list %}
-                    <div class="floating-section-sub-section">
-                        <h5 class="sub-section__title"><a href="#{{ sub_section.title|slugify }}">{{ sub_section.title }}</a></h5>
-{#                        <dl>#}
-{#                        {% for field in sub_section.fields %}#}
-{##}
-{#                            <dt>{{ field.object.verbose_name }}</dt>#}
-{#                            <dd>{% if field.object.errors %}niet ok!{% else %}{% endif %}</dd>#}
-{#                        {% endfor %}#}
-{#                        </dl>#}
-
+            <div class="floating-section-wrapper">
+                <div>
+                {% for section in form.as_sections.sections %}
+                    <div class="details-wrapper">
+                        <div class="dot dot--large{% if section.step_complete %} dot--blue{% else %} dot--checked{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>
+                        <details class="details">
+                            <summary class="details__header">
+                            <h4 class="details__title"><a href="#{{ section.title|slugify }}" class="details__title__link">{{ section.title }}</a></h4>
+                            </summary>
+                        </details>
                     </div>
+                    {% for sub_section in section.section_list %}
+                        <div class="details-wrapper">
+                            <div class="dot dot--small{% if sub_section.step_complete %} dot--blue{% else %} dot--checked{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>
+                            <details class="details">
+                                <summary class="details__header">
+                                <h5 class="details__title"><a href="#{{ sub_section.title|slugify }}" class="details__title__link">{{ sub_section.title }}</a></h5>
+                                </summary>
+                            </details>
+                        </div>
+                    {% endfor %}
                 {% endfor %}
+
+                    <div class="details-wrapper">
+                        <div class="dot dot--large"></div>
+                        <details class="details">
+                            <summary class="details__header">
+                            <h4 class="details__title">
+
+                            </h4>
+                            </summary>
+                        </details>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-field form-field--buttons-vertical screen-only">
+                        <input type="submit" value="Opslaan" class="button button--primary">
+                        <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
+                        {% if form.instance.id %}<button type="submit" name="next" value="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
+                    </div>
+                </div>
             </div>
-        {% endfor %}
         </div>
         </div>
 
-        <div data-submit-container class="form-field form-field--buttons screen-only">
+        <div class="show-mobile-only">
+        <div data-submit-container class="form-field form-field--buttons screen-only show-mobile-only">
             <input type="submit" value="Opslaan" class="button button--primary">
             <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
             {% if form.instance.id %}<button type="submit" name="next" value="{% url 'nieuwe_aanvraag_omslag_en_urgentie_send' form.instance.id %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
+        </div>
         </div>
     </form>
 </section>
