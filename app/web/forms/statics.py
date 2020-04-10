@@ -336,3 +336,21 @@ SECTIONS = (
 )
 SECTIONS_DICT = dict((s[0], s[1]) for s in SECTIONS)
 
+FORMS = (
+    (
+        'basis_gegevens',
+        BASIS_GEGEVENS,
+        'basis-gegevens',
+        'Nieuwe cliënt',
+    ),
+    (
+        'urgentie_aanvraag',
+        URGENTIE_AANVRAAG,
+        'aanvraag-omslag-en-urgentie',
+        'Aanvraag omslag en urgentie',
+        'Nieuwe aanvraag omslag en urgentie',
+    ),
+)
+
+
+
