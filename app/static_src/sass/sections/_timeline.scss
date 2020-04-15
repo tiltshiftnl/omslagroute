@@ -222,7 +222,8 @@ $padding-left: 1.875rem;
     .details__content {
         padding-top: 1rem;
         padding-bottom: 1rem;
-        max-height: 10000px;
+        max-height: 2000px;
+        opacity: 1;
     }
 }
 
@@ -380,10 +381,12 @@ $padding-left: 1.875rem;
 
 .details__content {
     background-color: $neutral-grey1;
-    overflow: hidden;
+
     max-height: 0;
+    opacity: 0;
+    
     padding: 0 1rem;
-    transition: max-height .6s;
+    transition: max-height .2s linear, opacity .2s linear .2s;
     @media all and (min-width: $tablets) {
         padding: 0 1rem 0 2rem;
     }
