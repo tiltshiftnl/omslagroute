@@ -75,17 +75,20 @@
 }
 
 .button--tag {
-    background-color: $neutral-grey4;
-    color: $primary-white;
-    border: .063rem solid transparent;
+    background-color: $primary-white;
+    color: $primary-darkblue;
+    border: .063rem solid $primary-darkblue;
     pointer-events: auto;
 
     &:hover,
     &:focus,
     &:active {
         border-color: $primary-darkerblue;
-        color: $primary-white;
         background-color: $primary-darkerblue;
+        color: $primary-white;
+        .button__icon-unchecked {
+          color: $primary-white;
+        }
     }
 
     > * {
@@ -112,7 +115,7 @@
 
     .button__icon-unchecked {
         display: inline-block;
-        color: $primary-white;
+        color: $primary-darkblue;
     }
 }
 
@@ -144,6 +147,7 @@
 
 .button--tag--selected {
     background-color: $primary-darkblue;
+    color: $primary-white;
 
     .button__icon-checked {
         display: inline-block;
