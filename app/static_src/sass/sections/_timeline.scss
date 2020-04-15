@@ -62,20 +62,23 @@ $padding-left: 1.875rem;
 
         @media all and (min-width: $tablets) {
             width: $toplevel-moment;
-        height:  $toplevel-moment;
-    line-height: $toplevel-moment;
-    font-size: 1rem;    left: calc(
-            #{$padding-left / 2} +
-            #{$timeline-width  / 2}
+            height:  $toplevel-moment;
+            line-height: $toplevel-moment;
+            font-size: 1rem;
+            left: calc(
+                #{$padding-left / 2} +
+                #{$timeline-width  / 2}
             );
-        top: calc(#{$toplevel-moment / 2});
-    }
+            top: .9rem;
+        }
 
-    }.dot--small {
+    }
+    
+    .dot--small {
         background-color: $neutral-grey4;
         width: $sublevel-moment;
         height: $sublevel-moment;line-height: $sublevel-moment;
-    font-size: .8rem;
+        font-size: .8rem;
         left: calc(
             #{$padding-left / 2} +
             #{$timeline-width  / 2} +
@@ -84,12 +87,12 @@ $padding-left: 1.875rem;
         top: calc(
             #{$toplevel-moment / 2} +
             #{$sublevel-moment  / 4}
-            );
+        );
     }
 
     .dot--blue {
         background-color: $primary-darkblue;
-}
+    }
 .dot-wrapper {
     position: relative;
 }
@@ -195,6 +198,10 @@ $padding-left: 1.875rem;
 
     .details__header {
         background-color: $neutral-grey1;
+        .tag-list {
+            opacity: 1;
+            pointer-events: auto;
+        }
     }
 
     .details__header-closed {
@@ -214,6 +221,13 @@ $padding-left: 1.875rem;
         left: -1.875rem;
         top: 0;
         border-left: 0;
+    }
+    
+    .details__content {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        max-height: 2000px;
+        opacity: 1;
     }
 }
 
@@ -268,13 +282,19 @@ $padding-left: 1.875rem;
 
     .tag-list {
         display: none;
+        font-size: 0;
+        
+//        opacity: 0;
+//        pointer-events: none;
+        
+        transition: all .4s;
 
         @media all and (min-width: $tablets) { 
             margin: 0;
             display: inline-block;
             position: absolute;
             right: .625rem;
-            top: .75rem;
+            top: 1rem;
         }
     }
 }
@@ -371,6 +391,19 @@ $padding-left: 1.875rem;
 
 .details__content {
     background-color: $neutral-grey1;
+
+    max-height: 0;
+    opacity: 0;
+    
+    padding: 0 1rem;
+    transition: max-height .2s linear, opacity .2s linear .2s;
+    
+    line-height: 1.4;
+    
+    @media all and (min-width: $tablets) {
+        padding: 0 1rem 0 2rem;
+    }
+    
 }
 
 

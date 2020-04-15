@@ -15,16 +15,16 @@
             {% if object %}
                 <div class="document__header">
                     {% if class == 'timeline' %}
-                        <h4 class="document__name">{{ object.document_type_value }} {{ object.name }}</h4>
+                        <h4 class="document__name" data-document-type="{{ object.document_type_value }}">{{ object.name }}</h4>
                     {% else %}
-                        <h3 class="document__name">{{ object.document_type_value }} {{ object.name }}</h3>
+                        <h3 class="document__name" data-document-type="{{ object.document_type_value }}">{{ object.name }}</h3>
                     {% endif %}
                 </div>
 
                 {% if document_version.uploaded %}
                     {% language 'nl' %}
                     <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
-                        Gewijzigd: {{ document_version.uploaded|date:"j b" }}.
+                        gewijzigd: {{ document_version.uploaded|date:"j b Y" }}
                     </time>
                     {% endlanguage %}
                 {% else %}
@@ -38,7 +38,7 @@
         <div class="document__info-wrapper">
             <div class="document__info">
                 <p class="hide-on-mobile">
-                    <strong>{{ object.document_type_value }} {{ object.name }}</strong>
+                    <strong data-document-type="{{ object.document_type_value }}">{{ object.name }}</strong>
                 </p>
 
                 {% if object.description %}
