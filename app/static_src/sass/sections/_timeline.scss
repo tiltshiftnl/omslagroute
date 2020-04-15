@@ -69,7 +69,7 @@ $padding-left: 1.875rem;
                 #{$padding-left / 2} +
                 #{$timeline-width  / 2}
             );
-            top: calc(#{$toplevel-moment / 2});
+            top: .9rem;
         }
 
     }
@@ -198,6 +198,10 @@ $padding-left: 1.875rem;
 
     .details__header {
         background-color: $neutral-grey1;
+        .tag-list {
+            opacity: 1;
+            pointer-events: auto;
+        }
     }
 
     .details__header-closed {
@@ -278,13 +282,19 @@ $padding-left: 1.875rem;
 
     .tag-list {
         display: none;
+        font-size: 0;
+        
+//        opacity: 0;
+//        pointer-events: none;
+        
+        transition: all .4s;
 
         @media all and (min-width: $tablets) { 
             margin: 0;
             display: inline-block;
             position: absolute;
             right: .625rem;
-            top: .75rem;
+            top: 1rem;
         }
     }
 }
