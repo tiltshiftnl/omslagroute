@@ -62,20 +62,23 @@ $padding-left: 1.875rem;
 
         @media all and (min-width: $tablets) {
             width: $toplevel-moment;
-        height:  $toplevel-moment;
-    line-height: $toplevel-moment;
-    font-size: 1rem;    left: calc(
-            #{$padding-left / 2} +
-            #{$timeline-width  / 2}
+            height:  $toplevel-moment;
+            line-height: $toplevel-moment;
+            font-size: 1rem;
+            left: calc(
+                #{$padding-left / 2} +
+                #{$timeline-width  / 2}
             );
-        top: calc(#{$toplevel-moment / 2});
-    }
+            top: calc(#{$toplevel-moment / 2});
+        }
 
-    }.dot--small {
+    }
+    
+    .dot--small {
         background-color: $neutral-grey4;
         width: $sublevel-moment;
         height: $sublevel-moment;line-height: $sublevel-moment;
-    font-size: .8rem;
+        font-size: .8rem;
         left: calc(
             #{$padding-left / 2} +
             #{$timeline-width  / 2} +
@@ -84,12 +87,12 @@ $padding-left: 1.875rem;
         top: calc(
             #{$toplevel-moment / 2} +
             #{$sublevel-moment  / 4}
-            );
+        );
     }
 
     .dot--blue {
         background-color: $primary-darkblue;
-}
+    }
 .dot-wrapper {
     position: relative;
 }
@@ -214,6 +217,12 @@ $padding-left: 1.875rem;
         left: -1.875rem;
         top: 0;
         border-left: 0;
+    }
+    
+    .details__content {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        max-height: 10000px;
     }
 }
 
@@ -371,6 +380,14 @@ $padding-left: 1.875rem;
 
 .details__content {
     background-color: $neutral-grey1;
+    overflow: hidden;
+    max-height: 0;
+    padding: 0 1rem;
+    transition: max-height .6s;
+    @media all and (min-width: $tablets) {
+        padding: 0 1rem 0 2rem;
+    }
+    
 }
 
 
