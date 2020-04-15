@@ -22,6 +22,12 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
 
 .alert {
@@ -70,6 +76,11 @@
 
 .alert__message { 
     margin-top: .125rem;
+}
+.alert--busy {
+    background-color: $supplement-lightblue;
+    animation: none;
+    opacity: 1;
 }
 
 .alert--info {

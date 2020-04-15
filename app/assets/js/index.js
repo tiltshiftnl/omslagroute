@@ -122,7 +122,56 @@ Array.prototype.sortOnData = function(key){
               exitEditElem.click();
           });
 
-    }
+      },
+      'ajax-forms-submit': function (e) {
+            e.preventDefault();
+            var form = _closest(this, 'form'),
+                selector = '.site-container',
+                savingAlertTmpl = '<p class="alert__message">Bezig met opslaan...</p>',
+                _getData = function () {
+                     var data = new FormData(form);
+                     return data;
+                },
+                _submit = function (e) {
+                    e && e.preventDefault();
+                    var alertLi = document.createElement('li'),
+                        alertContainer = document.querySelector('.alert-container');
+                    alertContainer.innerHTML = '';
+                    alertLi.setAttribute('id', 'busy_alert');
+                    alertLi.classList.add('alert');
+                    alertLi.classList.add('alert--busy');
+                    alertLi.innerHTML = savingAlertTmpl;
+                    alertContainer.appendChild(alertLi);
+                    helpers.ajax({
+                        'type': 'POST',
+                        'url': '.',
+                        'data': _getData(),
+                        'callback': function(responseText){
+                            var div = document.createElement('div');
+                            div.innerHTML = responseText;
+                            var
+                              result = div.querySelectorAll(selector),
+                              target = d.querySelectorAll(selector);
+                            if (result && target) {
+                              for (var i = 0; i < target.length; i++) {
+                                target[i].innerHTML = result[i].innerHTML;
+
+                                // IE11 placeholder bug FIX
+                                var els = target[i].querySelectorAll('[placeholder]');
+                                for (var l = 0; l < els.length; l++) {
+                                  if (els[l].getAttribute('placeholder') === els[l].value) els[l].value = '';
+                                }
+                              }
+                            }
+                            _decorate();
+                        },
+                        'errors': function (responseText) {
+                            console.log(responseText)
+                        }
+                    });
+                };
+          helpers.debounce(_submit, 1000, 'ajax-forms-submit');
+      }
   };
     var decorators = {
         'document-name-exists': function() {
@@ -152,6 +201,11 @@ Array.prototype.sortOnData = function(key){
                         'type': 'POST',
                         'url': '/document/naam-bestaat',
                         'data': JSON.stringify(_getData()),
+                        'headers': {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                          'X-CSRFToken': d.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        },
                         'callback': function(responseText){
                             var response = JSON.parse(responseText);
                             if (response.message) {
@@ -268,6 +322,11 @@ Array.prototype.sortOnData = function(key){
                         'type': 'POST',
                         'url': '/timeline/delete-moment',
                         'data': JSON.stringify({"id": self.dataset.id}),
+                        'headers': {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                          'X-CSRFToken': d.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        },
                         'callback': function(){
                             if (this.status === 200){
                                 self.parentNode.removeChild(self);
@@ -284,6 +343,11 @@ Array.prototype.sortOnData = function(key){
                         'type': 'POST',
                         'url': '/timeline/update-moment',
                         'data': JSON.stringify(data),
+                        'headers': {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                          'X-CSRFToken': d.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        },
                         'callback': function(responseText){
                             var response = JSON.parse(responseText);
                             if (this.status === 201){
@@ -347,6 +411,11 @@ Array.prototype.sortOnData = function(key){
                     helpers.ajax({
                         'type': 'POST',
                         'url': '/timeline/order',
+                        'headers': {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                          'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        },
                         'data': JSON.stringify(data)
                     })
                 },
@@ -472,54 +541,120 @@ Array.prototype.sortOnData = function(key){
     var _insertAfter = function (newNode, referenceNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
     }
-var helpers = {
-    'ajax': function (options) {
-      var request = new XMLHttpRequest(),
-        defaultHeaders = {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-CSRFToken': d.querySelector('input[name="csrfmiddlewaretoken"]').value
-        },
-        headers = helpers.merge_options(defaultHeaders, options.headers || {});
-      request.open(options.type || 'GET', options.url, true);
-      for (var k in  headers){
-          if (headers.hasOwnProperty(k)){
-            request.setRequestHeader(k, headers[k]);
+    var helpers = {
+        'ajax': function (options) {
+          var request = new XMLHttpRequest(),
+            defaultHeaders = {
+              // 'X-Requested-With': 'XMLHttpRequest',
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+              // 'X-CSRFToken': d.querySelector('input[name="csrfmiddlewaretoken"]').value
+            },
+            headers = helpers.merge_options(options.headers || {}, defaultHeaders);
+          request.open(options.type || 'GET', options.url, true);
+          for (var k in  headers){
+              if (headers.hasOwnProperty(k)){
+                request.setRequestHeader(k, headers[k]);
+              }
           }
-      }
-      request.onreadystatechange = function () {
-        if (request.readyState === XMLHttpRequest.DONE) {
-          if (request.status >= 200 && request.status < 400) {
-            if (options.callback && typeof (options.callback) === 'function') {
-              options.callback.call(request, request.responseText);
-            }
+          request.onreadystatechange = function () {
+            if (request.readyState === XMLHttpRequest.DONE) {
+              if (request.status >= 200 && request.status < 400) {
+                if (options.callback && typeof (options.callback) === 'function') {
+                  options.callback.call(request, request.responseText);
+                }
 
-          } else if (request.status === 400) {
-                alert('Er ging iets mis.');
-          } else {
-            if (options.error && typeof (options.error) === 'function') {
-              options.error.call(request, request.responseText);
+              } else if (request.status === 400) {
+                    alert('Er ging iets mis.');
+              } else {
+                if (options.error && typeof (options.error) === 'function') {
+                  options.error.call(request, request.responseText);
+                }
+              }
             }
-          }
-        }
-      };
-      request.send(options.data);
-      return request;
-    },
-    'merge_options': function(obj1,obj2){
-        var obj3 = {};
-        for (var attrname1 in obj1) {
-            if(obj1.hasOwnProperty(attrname1)){
-                obj3[attrname1] = obj1[attrname1];
+          };
+          request.send(options.data);
+          return request;
+        },
+        'throttle': function(func, wait, options) {
+          var context, args, result;
+          var timeout = null;
+          var previous = 0;
+          if (!options) options = {};
+          var later = function() {
+            previous = options.leading === false ? 0 : Date.now();
+            timeout = null;
+            result = func.apply(context, args);
+            if (!timeout) context = args = null;
+          };
+          return function() {
+            var now = Date.now();
+            if (!previous && options.leading === false) previous = now;
+            var remaining = wait - (now - previous);
+            context = this;
+            args = arguments;
+            if (remaining <= 0 || remaining > wait) {
+              if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+              }
+              previous = now;
+              result = func.apply(context, args);
+              if (!timeout) context = args = null;
+            } else if (!timeout && options.trailing !== false) {
+              timeout = setTimeout(later, remaining);
             }
-        }
-        for (var attrname2 in obj2) {
-            if(obj1.hasOwnProperty(attrname1)) {
-                obj3[attrname2] = obj2[attrname2];
+            return result;
+          };
+        },
+        'debounce': function(callback, delay, timeoutKey) {
+            var lastClick = helpers.debounceTimeout[timeoutKey] || 0;
+              if (lastClick >= (Date.now() - delay))
+                return;
+              helpers.debounceTimeout[timeoutKey] = Date.now();
+              callback();
+        },
+        'debounceTimeout': {},
+        'serialize': function(form, evt){
+            var evt    = evt || window.event;
+            evt.target = evt.target || evt.srcElement || null;
+            var field, query='';
+            if(typeof form === 'object' && form.nodeName === "FORM"){
+                for(i=form.elements.length-1; i>=0; i--){
+                    field = form.elements[i];
+                    if(field.name && field.type !== 'file' && field.type !== 'reset'){
+                        if(field.type === 'select-multiple'){
+                            for(j=form.elements[i].options.length-1; j>=0; j--){
+                                if(field.options[j].selected){
+                                    query += '&' + field.name + "=" + encodeURIComponent(field.options[j].value).replace(/%20/g,'+');
+                                }
+                            }
+                        }
+                        else{
+                            if((field.type !== 'submit' && field.type !== 'button') || evt.target === field){
+                                if((field.type !== 'checkbox' && field.type !== 'radio') || field.checked){
+                                    query += '&' + field.name + "=" + encodeURIComponent(field.value).replace(/%20/g,'+');
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            return query.substr(1);
+        },
+        'merge_options': function(obj1,obj2){
+            var obj3 = {};
+            for (var attrname1 in obj1) {
+                if(obj1.hasOwnProperty(attrname1)){
+                    obj3[attrname1] = obj1[attrname1];
+                }
+            }
+            for (var attrname2 in obj2) {
+                if(obj1.hasOwnProperty(attrname1)) {
+                    obj3[attrname2] = obj2[attrname2];
+                }
+            }
+            return obj3;
         }
-        return obj3;
-    }
     };
    document.querySelector('html').classList.remove('no-js');
    _decorate();
