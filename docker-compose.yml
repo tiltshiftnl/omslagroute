@@ -44,7 +44,6 @@ services:
       - UWSGI_DIE_ON_TERM=1
       - UWSGI_ENABLE_THREADS=1
       - UWSGI_MODULE=wsgi:application
-      - SENTRY_DSN=https://foo@foo.data.amsterdam.nl/0
     volumes:
       - ./app:/app
       - ./media:/media

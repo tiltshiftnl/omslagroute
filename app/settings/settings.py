@@ -3,6 +3,8 @@ from os.path import join
 from datetime import timedelta
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from keycloak_oidc.default_settings import *
+import urllib.parse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'True'
@@ -25,6 +27,7 @@ INSTALLED_APPS = (
     'mozilla_django_oidc',       # for authentication
     'webpack_loader',
     'multiselectfield',
+    'keycloak_oidc',
 
     'web.core',
     'web.documents',
@@ -211,33 +214,27 @@ CONSTANCE_CONFIG = {
     CONSTANCE_HOMEPAGE_INTRO_KEY: ('', 'Homepage introduction html'),
 }
 
-# Error logging through Sentry
-sentry_sdk.init(
-    dsn=os.environ.get('SENTRY_DSN'),
-    integrations=[DjangoIntegration()]
-)
+# AUTHENTICATION_BACKENDS = [
+#     'keycloak_oidc.auth.OIDCAuthenticationBackend',
+# ]
 
-OIDC_RP_CLIENT_ID = os.environ.get('OIDC_RP_CLIENT_ID')
-OIDC_RP_CLIENT_SECRET = os.environ.get('OIDC_RP_CLIENT_SECRET')
+OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')
+OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
 
-OIDC_OP_LOGOUT_URL_METHOD = 'api.users.utils.oidc_op_logout'
-OIDC_USERNAME_ALGO = 'api.users.utils.generate_username'
+# OIDC_OP_LOGOUT_URL_METHOD = 'api.users.utils.oidc_op_logout'
+# OIDC_USERNAME_ALGO = 'api.users.utils.generate_username'
+# OIDC_RP_SIGN_ALGO = 'RS256'
+# OIDC_RP_SCOPES = 'openid'
+# OIDC_USE_NONCE = False
 
-OIDC_RP_SIGN_ALGO = 'RS256'
+if os.environ.get("IAM_URL"):
+    IAM_URL = os.environ.get('IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc/protocol/openid-connect/')
+    OIDC_OP_AUTHORIZATION_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'auth')
+    OIDC_OP_TOKEN_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'token')
+    OIDC_OP_USER_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'userinfo')
+    OIDC_OP_JWKS_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'certs')
+    OIDC_OP_LOGOUT_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'logout')
 
-OIDC_RP_SCOPES = 'openid'
-
-# https://auth.grip-on-it.com/v2/rjsfm52t/oidc/idp/.well-known/openid-configuration
-OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv('OIDC_OP_AUTHORIZATION_ENDPOINT',
-                                           'https://auth.grip-on-it.com/v2/rjsfm52t/oidc/idp/authorize')
-OIDC_OP_TOKEN_ENDPOINT = os.getenv('OIDC_OP_TOKEN_ENDPOINT',
-                                   'https://auth.grip-on-it.com/v2/rjsfm52t/oidc/idp/token')
-OIDC_OP_USER_ENDPOINT = os.getenv('OIDC_OP_USER_ENDPOINT',
-                                  'https://auth.grip-on-it.com/v2/rjsfm52t/oidc/idp/userinfo')
-OIDC_OP_JWKS_ENDPOINT = os.getenv('OIDC_OP_JWKS_ENDPOINT',
-                                  'https://auth.grip-on-it.com/v2/rjsfm52t/oidc/idp/.well-known/jwks.json')
-
-OIDC_USE_NONCE = False
 
 LOGGING = {
     'version': 1,
