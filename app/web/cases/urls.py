@@ -15,7 +15,7 @@ urlpatterns = [
     #     'sections': URGENTIE_AANVRAAG
     # }, name='nieuwe_aanvraag_omslag_en_urgentie_send'),
 
-    path('nieuw/<str:slug>', GenericCaseCreateFormView.as_view(), name='create_case'),
-    path('<int:pk>/<str:slug>', GenericCaseUpdateFormView.as_view(), name='update_case'),
+    path('nieuw/<str:slug>/', GenericCaseCreateFormView.as_view(), name='create_case'),
+    path('<int:pk>/<str:slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),
     path('<int:pk>/<str:slug>/verstuur', SendCaseView.as_view(), name='send_case'),
 ]

@@ -117,7 +117,7 @@
                 </div>
                 <div class="">
                     <div class="form-field form-field--buttons-vertical screen-only">
-                        <input type="submit" value="Opslaan" class="button button--primary">
+                        <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
                         {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
                     </div>
