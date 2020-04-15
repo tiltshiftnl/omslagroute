@@ -45,7 +45,6 @@
     &:focus,
     &:active {
         text-decoration: none;
-        box-shadow: inset 0 0 0 .063rem $primary-darkblue;
     }
 
     &[disabled] {
@@ -137,12 +136,10 @@
         color: $primary-black;
         border-color: $neutral-grey3;
         background-color: $neutral-grey3;
-        box-shadow: none;
     }
 
     &:focus,
     &:active {
-        // box-shadow: 0 0 0 .3125em orange;
         outline: .063rem dotted #212121;
         outline: .313rem auto -webkit-focus-ring-color;
     }
@@ -155,11 +152,6 @@
 // button with only an icon in it, no text
 .button--icon {
     min-width: inherit;
-
-    &:hover,
-    &:focus {
-        box-shadow: none;
-    }
 }
 
 // button that serves as a read more 
@@ -195,7 +187,6 @@
     }
 
     &:hover {
-        box-shadow: none;
         border-color: transparent;
         color: $primary-darkerblue;
         text-decoration: underline;
@@ -254,7 +245,6 @@
 
     &:hover {
         background-color: rgb(185, 0, 0);
-        box-shadow: none;
     }
 
     &:focus {
