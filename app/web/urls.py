@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.urls import path, include
+from django.urls import path, include as path_include
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from web.core.views import *
@@ -18,15 +19,17 @@ urlpatterns = [
     path('omslagroute/health', health_default),
     path('omslagroute/health-db', health_db),
 
-    path('document/', include('web.documents.urls')),
-    path('timeline/', include('web.timeline.urls')),
-    path('organisaties/', include('web.organizations.urls')),
-    path('gebruikers/', include('web.users.urls')),
+    path('document/', path_include('web.documents.urls')),
+    path('timeline/', path_include('web.timeline.urls')),
+    path('organisaties/', path_include('web.organizations.urls')),
+    path('gebruikers/', path_include('web.users.urls')),
     # path('formulieren/', include('web.forms.urls')),
-    path('clienten/', include('web.cases.urls')),
+    path('clienten/', path_include('web.cases.urls')),
 
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
+
+    url(r'^oidc/', include('keycloak_oidc.urls')),
 
     path('admin/', admin.site.urls),
 
