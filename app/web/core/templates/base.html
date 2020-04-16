@@ -60,8 +60,8 @@
         </header>
         <div class="site-navigation screen-only">
             {% block messages %}
+                <ul role="list" class="alert-container">
                 {% if messages %}
-                    <ul role="list" class="alert-container">
                         {% for message in messages %}
                             <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">
                                 {% if message.tags == 'success' %}
@@ -90,8 +90,8 @@
                                 -->
                             </li>
                         {% endfor %}
-                    </ul>
                 {% endif %}
+                </ul>
             {% endblock %}
 
             {% if request.user.is_authenticated %}

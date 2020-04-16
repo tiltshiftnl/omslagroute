@@ -26,6 +26,7 @@ FIELDS = (
     ('geboortedatum', forms.DateField(
         label=_('Geboortedatum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -49,6 +50,7 @@ FIELDS = (
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
+        localize=True,
         required=False,
         help_text=_('Tot wanneer is de inschrijving bij Woningnet geldig?')
     ), {'step_required': True}),
@@ -89,6 +91,7 @@ FIELDS = (
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
+        localize=True,
         required=False,
     ), {}),
     ('partner_gehuwd', forms.BooleanField(
@@ -130,6 +133,7 @@ FIELDS = (
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
+        localize=True,
         required=False,
     ), {}),
     ('omslagwoning_zorgaanbieder', forms.CharField(
