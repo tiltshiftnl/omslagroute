@@ -15,6 +15,10 @@
 {% block main %}
 <section class="section section--mijn-clienten">
     <h2>Mijn cli&euml;nten</h2>
+    
+    <div class="form-field form-field--buttons screen-only">
+        <a href="{% url 'create_case' 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
+    </div>
 
     <table class="case-list table--interactive">
         <thead>
@@ -56,8 +60,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class="form-field form-field--buttons screen-only">
-        <a href="{% url 'create_case' 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
-    </div>
 </section>
 {% endblock %}
