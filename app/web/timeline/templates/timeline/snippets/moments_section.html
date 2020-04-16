@@ -3,11 +3,11 @@
 {% if moment_list %}
     <section class="section section--timeline">
         {% if request.user|is_beheerder %}
-            <p class="details-admin screen-only">
+            <div class="details-admin screen-only">
                 <a href="/timeline/" class="button button--primary" title="Pas de processtappen aan">
                     Wijzig processtappen
                 </a>
-            </p>
+            </div>
         {% endif %}
         {% include 'organizations/snippets/filters.html' with object_list=organization_list %}
 
