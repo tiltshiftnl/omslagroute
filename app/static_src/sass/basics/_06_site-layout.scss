@@ -2,6 +2,8 @@
 // SITE LAYOUT AND STYLING OF SITE HEADER, NAVIGATION, MAIN AND FOOTER
 // ********************
 
+$navigation-height: 2.75rem;
+
 * {
     box-sizing: border-box;
 }
@@ -36,7 +38,7 @@ body {
     display: block;
     padding: 0 .938rem;
     background-color: $neutral-grey1;
-    min-height: 2.75rem;
+    min-height: $navigation-height;
     margin-bottom: .938rem;
     position: relative;
 
