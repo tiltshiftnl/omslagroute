@@ -5,10 +5,16 @@
 .section--login {
     display: none;
 }
-
-#login:target .section--login {
-    display: block;
-    border-bottom: .063rem solid $neutral-grey1;
-    margin-bottom: 2rem;
-    padding-bottom: 2.5rem;
+[name="login"] {
+  position: fixed;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+[name="login"]:target ~ .section--login{
+  display: block;
+  border-bottom: .063rem solid $neutral-grey1;
+  margin-bottom: 2rem;
+  padding-bottom: 2.5rem;
 }
