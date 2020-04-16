@@ -28,7 +28,9 @@
     
     .site-navigation + & {
       height: 0;
+      left: 0;
       top: $navigation-height;
+      position: fixed;
       position: sticky;
       position: -webkit-sticky;
       transform: translate3d(0, -$navigation-height, 0);
