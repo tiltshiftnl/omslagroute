@@ -228,12 +228,17 @@ OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
 # OIDC_USE_NONCE = False
 
 if os.environ.get("IAM_URL"):
-    IAM_URL = os.environ.get('IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc/protocol/openid-connect/')
-    OIDC_OP_AUTHORIZATION_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'auth')
-    OIDC_OP_TOKEN_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'token')
-    OIDC_OP_USER_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'userinfo')
-    OIDC_OP_JWKS_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'certs')
-    OIDC_OP_LOGOUT_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'logout')
+    IAM_URL = '%s%s' %(
+        os.environ.get(
+            'IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc'
+        ),
+        '/protocol/openid-connect/'
+    )
+    OIDC_OP_AUTHORIZATION_ENDPOINT = '%s%s' % (IAM_URL, 'auth')
+    OIDC_OP_TOKEN_ENDPOINT = '%s%s' % (IAM_URL, 'token')
+    OIDC_OP_USER_ENDPOINT = '%s%s' % (IAM_URL, 'userinfo')
+    OIDC_OP_JWKS_ENDPOINT = '%s%s' % (IAM_URL, 'certs')
+    OIDC_OP_LOGOUT_ENDPOINT = '%s%s' % (IAM_URL, 'logout')
 
 
 LOGGING = {
