@@ -189,7 +189,12 @@ $padding-left: 1.875rem;
     -webkit-appearance: none;
     list-style-image: none;
 
-    &::-webkit-details-marker,
+    &::-webkit-details-marker {
+      display: none;
+      color: transparent;
+      font-size: 0;
+    }
+    
     &::marker {
         display: none;
         color: transparent;
