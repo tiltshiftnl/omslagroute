@@ -3,6 +3,8 @@
 // And margins of default html elements
 // ********************   
 
+$max-text-width: 40.625rem;
+
 html {
     font-size: 100%;
 }
@@ -133,7 +135,10 @@ p {
         margin-bottom: 0;
     }
 }
-
+.section p {
+  max-width: $max-text-width;
+  line-height: 1.4;
+}
 a {
     color: $primary-darkblue;
 }

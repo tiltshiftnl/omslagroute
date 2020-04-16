@@ -244,6 +244,9 @@ $padding-left: 1.875rem;
 }
 
 .details-admin  {
+    
+    margin-bottom: 1rem;
+    
     @media all and (min-width: $tablets) {
         text-align: right;
     }
@@ -336,8 +339,6 @@ $padding-left: 1.875rem;
     padding: 0 1rem;
     transition: max-height .2s linear, opacity .2s linear .2s;
     
-    line-height: 1.4;
-    
     @media all and (min-width: $tablets) {
         padding: 0 1rem 0 2rem;
     }
@@ -349,10 +350,6 @@ $padding-left: 1.875rem;
 // LOCAL TIMELINE EXCEPTIONS TO GENERAL STYLING
 // ********************
 
-.details__content p {
-    max-width: 40.625rem;
-}
-
 .section--timeline {
     .downloads {
         padding-bottom: 0;
@@ -360,25 +357,12 @@ $padding-left: 1.875rem;
 
     .document__version,
     .document__new {
-        border-top: 1px solid $neutral-grey3;
-        border-left: 1px solid $neutral-grey3;
-        border-right: 1px solid $neutral-grey3;
 
         &,
         &:visited {
             background-color: $primary-white;
         }
 
-        &:only-child {
-            border-bottom: 1px solid $neutral-grey3;
-        }
-
-        @media all and (min-width: $tablets) {
-            &,
-            &:only-child {
-                border: 0;
-            }
-        }
     }
 
     .document:only-child,
