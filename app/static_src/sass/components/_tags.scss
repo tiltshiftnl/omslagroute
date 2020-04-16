@@ -19,7 +19,8 @@
 }
 
 .section--timeline--filtering {
-    .dot {
+    .dot,
+    .details-wrapper:before {
         background-color: $neutral-grey2;
         box-shadow: 0 0 1px 1px #000;
 
@@ -27,7 +28,11 @@
             box-shadow: none;
         }
     }
-
+    
+    .details-wrapper--highlighted:before {
+        background-color: $primary-darkblue;
+    }
+    
     .details__title,
     .details__toggle-icon {
         color: $neutral-grey3;
