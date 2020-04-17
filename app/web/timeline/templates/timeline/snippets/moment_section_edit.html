@@ -110,6 +110,11 @@
             <div class="form-field data-edit-mode">
                 <label for="{{ moment.description.id_for_label }}">{{ moment.description.label }}</label>
                 {{ moment.description }}
+                <p><strong>Opmaak uitleg:</strong><br>
+                "Link tekst":https://omslagroute.amsterdam.nl/link-doel/<br>
+                * Lijst item<br>
+                # Lijst item met nummer<br>
+                niet vet gedrukt *vet gedrukt* niet vet gedrukt</p>
                 {% if moment.description.errors %}
                     <ol class="error-text">
                     {% for error in moment.description.errors %}
