@@ -110,11 +110,36 @@
             <div class="form-field data-edit-mode">
                 <label for="{{ moment.description.id_for_label }}">{{ moment.description.label }}</label>
                 {{ moment.description }}
-                <p><strong>Opmaak uitleg:</strong><br>
-                "Link tekst":https://omslagroute.amsterdam.nl/link-doel/<br>
-                * Lijst item<br>
-                # Lijst item met nummer<br>
-                niet vet gedrukt *vet gedrukt* niet vet gedrukt</p>
+                <div class="form-field__help">
+                    <table>
+                        <caption>Uitleg opmaakmogelijkheden</caption>
+                        <thead>
+                            <tr>
+                                <th>Ingave</th>
+                                <th>Uitvoer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"Link tekst":https://fixxx.nl/</td>
+                                <td><a href="https://fixxx.nl" target="_blank">Link tekst</a></td>
+                            </tr>
+                            <tr>
+                                <td>* Lijst item</td>
+                                <td><ul><li>Lijst item</li></ul></td>
+                            </tr>
+                            <tr>
+                                <td># Lijst item met nummer</td>
+                                <td><ol><li>Lijst item met nummer</li></ol></td>
+                            </tr>
+                            <tr>
+                                <td>normaal, *vet gedrukt*, **schuin gedrukt**</td>
+                                <td>normaal, <strong>vet gedrukt</strong>, <em>schuin gedrukt</em></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
                 {% if moment.description.errors %}
                     <ol class="error-text">
                     {% for error in moment.description.errors %}
@@ -143,7 +168,6 @@
                 <button class="button button--secondary" data-handler="exit-edit-moment" disabled="disabled">Annuleer</button>
             </div>
         </div>
-        <div class="details__headerhoverblock"></div>
     </details>
 
     <button class="new-moment__add" data-handler="new-moment" title="Voeg hier een processtap toe">
