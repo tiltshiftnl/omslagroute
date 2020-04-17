@@ -119,3 +119,26 @@ body {
     margin: 0 auto;
     padding-bottom: 2rem;
 }
+
+// ********************
+// SIMPLE FLEXBOX GRID
+// ********************
+
+.grid__wrapper {
+    display: flex;
+}
+.grid__main {
+    flex-basis: 100%;
+}
+.grid__aside {
+    order: -1;
+    flex-basis: 25%;
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-right: 2rem;
+}
+.grid__aside--sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
