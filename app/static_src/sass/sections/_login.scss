@@ -5,14 +5,14 @@
 .section--login {
     display: none;
 }
-[name="login"] {
+#login {
   position: fixed;
   left: 0;
   top: 0;
   opacity: 0;
   pointer-events: none;
 }
-[name="login"]:target ~ .section--login{
+#login:target ~ .section--login {
   display: block;
   border-bottom: .063rem solid $neutral-grey1;
   margin-bottom: 2rem;
