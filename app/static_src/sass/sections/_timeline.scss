@@ -77,7 +77,8 @@ $padding-left: 1.875rem;
     .dot--small {
         background-color: $neutral-grey4;
         width: $sublevel-moment;
-        height: $sublevel-moment;line-height: $sublevel-moment;
+        height: $sublevel-moment;
+        line-height: $sublevel-moment;
         font-size: .8rem;
         left: calc(
             #{$padding-left / 2} +
