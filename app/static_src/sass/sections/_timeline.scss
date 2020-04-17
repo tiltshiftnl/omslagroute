@@ -318,6 +318,7 @@ $padding-left: 1.875rem;
 .details__toggle-icon {
     display: inline-block;
     margin-left: .5rem;
+    pointer-events: none;
 }
 
 .details__header,
