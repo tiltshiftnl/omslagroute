@@ -53,6 +53,72 @@ body:not(:-moz-handler-blocked) fieldset {
 .section--form form {
     position: relative;
 }
+
+.section--form__navigation {
+    margin-top: 4.875rem;
+    padding-top: 1rem;
+    ul {
+        position: relative;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    a {
+        position: relative;
+        padding: .5em 0 .5em 2em;
+        display: block;
+        
+        font-weight: 500;
+        
+        color: $primary-black;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+        
+        &:before {
+            content: '';
+            position: absolute;
+            z-index: 1;
+            left: .75rem;
+            margin-left: -1px;
+            top: 1rem;
+            bottom: -1rem;
+        
+            width: 2px;
+            margin-left: -1px;
+        
+            background-color: $neutral-grey4;
+        
+        }
+        
+    }
+    .section--form__navigation-item-complete {
+        &:before {
+            background-color: $primary-darkblue;
+        }
+    }
+    > ul > li:last-child > ul > li:last-child > a:last-child:before,
+    > ul > li:last-child > a:last-child:before {
+        display: none;
+    }
+    
+    ul ul a {
+        font-weight: 400;
+        font-size: .875em;
+    }
+    
+    .dot {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        top: .375rem;
+    }
+    .dot--small {
+        left: .25rem;
+        top: .625rem;
+    }
+}
 .section__grid {
     @media all and (min-width: $tablets) {
         display: grid;
@@ -68,23 +134,6 @@ body:not(:-moz-handler-blocked) fieldset {
     @media all and (min-width: $tablets) {
         grid-column-start: 1;
     }
-}
-.floating-section-base {
-    display: none;
-    @media all and (min-width: $tablets) {
-        display: block;
-        position: absolute;
-        top: 68px;
-        left: -1rem;
-        width: 200px;
-        height: 100%;
-    }
-
-}
-.floating-section-wrapper {
-    position: sticky;
-    top: 0;
-    width: 200px;
 }
 
 // ********************
@@ -122,11 +171,9 @@ body:not(:-moz-handler-blocked) fieldset {
     }
 }
 .form-field--buttons-vertical {
-    padding-left: .5rem;
-    padding-right: .5rem;
+
     > .button {
         display: block;
-        width: 100%;
         text-align: center;
         margin-bottom: .5rem;
     }
