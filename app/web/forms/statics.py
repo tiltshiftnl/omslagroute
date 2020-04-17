@@ -339,7 +339,7 @@ FORMS = (
         'basis_gegevens',
         BASIS_GEGEVENS,
         'basis-gegevens',
-        'Basis gegevens cliënt',
+        'Basisgegevens cliënt',
         'Nieuwe cliënt',
         False,
         False,
