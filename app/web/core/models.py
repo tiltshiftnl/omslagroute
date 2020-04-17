@@ -1,12 +1,14 @@
 from django.db import models
 from django.db.models.fields.related import ManyToManyField
 import datetime
+from textile import textile
 import json
 
 
 class PrintableModel(models.Model):
     def to_dict(self, fields=None):
         opts = self._meta
+        textile_fields = getattr(self.__class__, 'textile_fields') if hasattr(self.__class__, 'textile_fields') else []
         data = {}
         for f in opts.concrete_fields + opts.many_to_many:
             if fields is None or f.name in fields:
@@ -30,6 +32,8 @@ class PrintableModel(models.Model):
                     data[f.name] = data[f.name].isoformat()
                 if data[f.name] is None or data[f.name] is '':
                     data[f.name] = self.EMPTY_VALUE if hasattr(self, 'EMPTY_VALUE') else '\u2014'
+                if f.name in textile_fields:
+                    data[f.name] = textile(data[f.name])
                 data[f.name] = {
                     'value': data[f.name],
                     'label': str(f.verbose_name)
