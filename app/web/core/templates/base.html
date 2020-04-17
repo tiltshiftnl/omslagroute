@@ -50,9 +50,9 @@
                     <div class="site-userinfo">
                         {% url 'home' as home_url %}
                         {% if request.get_full_path == home_url %}
-                            <a href="{% url 'oidc_authentication_init' %}">Log in</a>
+                            <a href="#login">Log in</a>
                         {% else %}
-                            <a href="{% url 'oidc_authentication_init' %}">Log in</a>
+                            <a href="{% url 'home' %}#login">Log in</a>
                         {% endif %}
                     </div>
                 {% endif %}

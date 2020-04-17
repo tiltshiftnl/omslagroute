@@ -193,7 +193,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 AUTH_GROUPNAME_PROCESS = 'proces'
 
-# LOGIN_URL = '/#login'
+LOGIN_URL = '/#login'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login/',
@@ -214,9 +214,9 @@ CONSTANCE_CONFIG = {
     CONSTANCE_HOMEPAGE_INTRO_KEY: ('', 'Homepage introduction html'),
 }
 
-AUTHENTICATION_BACKENDS = [
-    'keycloak_oidc.auth.OIDCAuthenticationBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     'keycloak_oidc.auth.OIDCAuthenticationBackend',
+# ]
 
 OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')
 OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
