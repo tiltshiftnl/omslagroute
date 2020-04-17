@@ -46,6 +46,7 @@ requests==2.22.0
 django-webpack-loader
 sendgrid==6.2.0
 django-multiselectfield==0.1.12
+textile==4.0.1
 
 # Authentication
 datapunt_keycloak_oidc
