@@ -1,4 +1,4 @@
-{% load auth_tags timeline_tags %}
+{% load auth_tags timeline_tags html_tags %}
 
 {% if moment_list %}
     <section class="section section--timeline">
@@ -42,7 +42,7 @@
                     </summary>
 
                     <div class="details__content">
-                        <div>{{ moment.description|linebreaks }}</div>
+                        <div>{{ moment.description|textile }}</div>
 
                         <ul role="list" class="downloads {% if request.user|is_beheerder %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
                             {% if moment.documents.all %}

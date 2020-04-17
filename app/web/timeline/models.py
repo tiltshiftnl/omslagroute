@@ -4,6 +4,9 @@ from web.core.models import PrintableModel
 
 
 class Moment(PrintableModel):
+    textile_fields = (
+        'description'
+    )
     name = models.CharField(
         verbose_name=_('Naam'),
         max_length=100
