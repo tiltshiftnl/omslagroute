@@ -11,7 +11,7 @@ $padding-left: 1.875rem;
     position: relative;
     .modal-bg {
         display: none;
-        z-index: 999;
+        z-index: 1;
         position: fixed;
         left: 0;
         top: 0;
@@ -140,13 +140,6 @@ $padding-left: 1.875rem;
         background-color: $neutral-grey1;
         position: relative;
 
-    }
-
-    &:focus {
-        .details__header::before,
-        .details__headerhoverblock {
-            outline: 0;
-        }
     }
 
 }
@@ -525,16 +518,9 @@ $padding-left: 1.875rem;
     z-index: 1000;
     margin-bottom: 0;
     
-    &:not(:last-of-type)::before {
-        top: 0;
-    }
 
     [data-edit-mode] {
         display: block;
-
-        @supports (display: grid) {
-            display: grid;
-        }
     }
 
     [data-static-mode] {
@@ -543,21 +529,6 @@ $padding-left: 1.875rem;
 
     .details__toggle-icon {
         display: none;
-    }
-
-    .dot--large {
-        transform: translateY(1rem);
-    }
-
-    + .details-wrapper {
-        .dot {
-            z-index: 5;
-        }
-
-        &:not(:last-of-type)::before {
-            top: -1rem;
-            height: calc(100% + 2rem);
-        }
     }
 
     .new-moment__add {
@@ -569,6 +540,7 @@ $padding-left: 1.875rem;
     .details__header {
         padding-bottom: 0;
     }
+
 }
 
 .details-wrapper--new-moment {

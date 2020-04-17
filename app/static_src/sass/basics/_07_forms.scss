@@ -54,6 +54,45 @@ body:not(:-moz-handler-blocked) fieldset {
     position: relative;
 }
 
+.form-field__help {
+    font-size: .875rem;
+//    max-width: 38.75rem;
+    line-height: 1.4;
+    margin: 1rem 0;
+    table {
+        border: none;
+        width: auto;
+    }
+    caption {
+        text-align: left;
+        font-weight: 700;
+    }
+    td, th {
+        font-weight: normal;
+        padding: .25rem 1rem .25rem 0;
+        text-align: left;
+        border: none;
+    }
+    thead th {
+        font-weight: 500;
+    }
+    tr:not(:last-of-type) th, 
+    tr:not(:last-of-type) td {
+        border: none;
+    }
+    tbody td:first-child {
+       font-weight: normal; 
+    }
+    tbody tr {
+        background-color: transparent;
+    }
+    ul, ol {
+        padding-left: 0;
+        margin: 0;
+        list-style-position: inside;
+    }
+}
+
 .section--form__navigation {
     margin-top: 4.875rem;
     padding-top: 1rem;
@@ -250,6 +289,9 @@ textarea {
     &[disabled] {
         color: $neutral-grey3;
     }
+}
+textarea {
+    line-height: 1.4;
 }
 
 [type="text"],
