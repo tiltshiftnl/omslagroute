@@ -55,10 +55,11 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 .form-field__help {
-    font-size: .875rem;
-//    max-width: 38.75rem;
+    font-size: .9rem;
+    color: $neutral-grey4;
     line-height: 1.4;
-    margin: 1rem 0;
+    margin: .313rem 0 0 1rem;
+  
     table {
         border: none;
         width: auto;
@@ -69,7 +70,7 @@ body:not(:-moz-handler-blocked) fieldset {
     }
     td, th {
         font-weight: normal;
-        padding: .25rem 1rem .25rem 0;
+        padding: .125rem 1rem .125rem 0;
         text-align: left;
         border: none;
     }
@@ -104,7 +105,7 @@ body:not(:-moz-handler-blocked) fieldset {
     }
     a {
         position: relative;
-        padding: .5em 0 .5em 2em;
+        padding: .5rem 0 .5rem 2rem;
         display: block;
         
         font-weight: 500;
@@ -155,7 +156,7 @@ body:not(:-moz-handler-blocked) fieldset {
     }
     .dot--small {
         left: .25rem;
-        top: .625rem;
+        top: .5rem;
     }
 }
 .section__grid {
@@ -218,6 +219,13 @@ body:not(:-moz-handler-blocked) fieldset {
     }
 }
 
+.form-field--buttons-sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    bottom: 1rem;
+    background-color: $primary-white;
+    outline: 1rem solid rgba($primary-white, 1);
+}
 // ********************
 // HELPFUL INFORMATION
 // ********************

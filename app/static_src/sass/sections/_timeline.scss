@@ -553,7 +553,7 @@ $padding-left: 1.875rem;
         display: none;
     }
     [data-handler="exit-new-moment"] {
-        display: block;
+        display: inline-block;
     }
     .dot--large {
         background-color: $primary-darkblue;
@@ -565,7 +565,7 @@ $padding-left: 1.875rem;
         //display: none;
     }
     [data-handler="exit-new-moment"] {
-        display: block;
+        display: inline-block;
     }
 }
 

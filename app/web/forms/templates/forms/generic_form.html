@@ -48,7 +48,8 @@
                         {% if section.title %}
                         <legend id="{{ section.title|slugify }}">
                             <h3 class="section--step__title">
-                                {{ section.title }}&nbsp;{% if inpage_navigation %}<div class="dot dot--large{% if section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>{% endif %}
+                                {{ section.title }}
+                                <!-- &nbsp;{% if inpage_navigation %}<div class="dot dot--large{% if section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>{% endif %} -->
                             </h3>
                         </legend>
                         {% endif %}
@@ -60,7 +61,8 @@
                             <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
                                 {% if sub_section.title %}
                                 <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
-                                    {{ sub_section.title }}&nbsp;{% if inpage_navigation %}<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>{% endif %}
+                                    {{ sub_section.title }}
+                                    <!-- &nbsp;{% if inpage_navigation %}<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>{% endif %} -->
                                 </h4>
                                 {% endif %}
                                 {% if sub_section.description %}
@@ -76,6 +78,14 @@
                 {% endfor %}
 
                 {{ form.as_sections.hidden_fields }}
+                
+                <div class="form-field form-field--buttons-sticky screen-only">
+                    <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
+                    <!-- <input type="submit" value="Opslaan" class="button button--primary"> -->
+                    <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
+                    {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
+                </div>
+                
             </div>
             
             {% if inpage_navigation %}
@@ -88,15 +98,15 @@
                             <ul>
                                 {% for section in form.as_sections.sections %}
                                     <li>
-                                        <a href="#{{ section.title|slugify }}"{% if section.step_complete %} class="section--form__navigation-item-complete"{% endif %}>
-                                            <span class="dot dot--large{% if section.step_complete %} dot--blue{% else %} dot--checked{% endif %}"></span>
+                                        <a href="#{{ section.title|slugify }}">
+                                            <span class="dot dot--large"></span>
                                             {{ section.title }}
                                         </a>
                                         <ul>
                                             {% for sub_section in section.section_list %}
                                                 <li>
-                                                    <a href="#{{ sub_section.title|slugify }}"{% if sub_section.step_complete %}class="section--form__navigation-item-complete"{% endif %}>
-                                                        <span class="dot dot--small{% if sub_section.step_complete %} dot--blue{% else %} dot--checked{% endif %}"></span>
+                                                    <a href="#{{ sub_section.title|slugify }}">
+                                                        <span class="dot dot--small"></span>
                                                         {{ sub_section.title }}
                                                     </a>
                                                 </li>
@@ -106,19 +116,12 @@
                                 {% endfor %}
                             </ul>
                         </div>
-        
-                        <div class="form-field form-field--buttons-vertical screen-only">
-                            <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
-                            <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
-                            {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
-                        </div>
-        
                     </div>
                 </div>
                 
             {% endif %}
-            
         </div>
+        
     </form>
 </section>
 {% endblock %}
