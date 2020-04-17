@@ -2,7 +2,7 @@
 {% load auth_tags %}
 
 <!DOCTYPE html>
-<html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}" id="login" class="no-js">
+<html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -59,40 +59,6 @@
             </div>
         </header>
         <div class="site-navigation screen-only">
-            {% block messages %}
-                <ul role="list" class="alert-container">
-                {% if messages %}
-                        {% for message in messages %}
-                            <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">
-                                {% if message.tags == 'success' %}
-                                    <svg class="alert__icon" width="20" height="20">
-                                        <use href="#check" xlink:href="#check" width="20" height="20"></use>
-                                    </svg>
-                                {% elif message.tags == 'info' %}
-                                    <svg class="alert__icon" width="20" height="20">
-                                        <use href="#check" xlink:href="#check" width="20" height="20"></use>
-                                    </svg>
-                                {% elif message.tags == 'warning' or 'error' %}
-                                <svg class="alert__icon" width="20" height="20">
-                                    <use href="#alert" xlink:href="#alert" width="20" height="20"></use>
-                                </svg>
-                                {% endif %}
-
-                                <p class="alert__message">{{ message|safe }}</p>
-
-                                <!--
-                                    We're not using a close button on alerts just yet, but we have styling for it:
-                                    <button class="button button--icon alert__close">
-                                        <svg width="20" height="20"></svg>
-                                            <use href="#close" xlink:href="#close" width="20" height="20"></use>
-                                        </svg>
-                                    </button> 
-                                -->
-                            </li>
-                        {% endfor %}
-                {% endif %}
-                </ul>
-            {% endblock %}
 
             {% if request.user.is_authenticated %}
             <nav>
@@ -151,6 +117,41 @@
             </nav>
             {% endif %}
         </div>
+        {% block messages %}
+            <ul role="list" class="alert-container">
+            {% if messages %}
+                    {% for message in messages %}
+                        <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">
+                            {% if message.tags == 'success' %}
+                                <svg class="alert__icon" width="20" height="20">
+                                    <use href="#check" xlink:href="#check" width="20" height="20"></use>
+                                </svg>
+                            {% elif message.tags == 'info' %}
+                                <svg class="alert__icon" width="20" height="20">
+                                    <use href="#check" xlink:href="#check" width="20" height="20"></use>
+                                </svg>
+                            {% elif message.tags == 'warning' or 'error' %}
+                            <svg class="alert__icon" width="20" height="20">
+                                <use href="#alert" xlink:href="#alert" width="20" height="20"></use>
+                            </svg>
+                            {% endif %}
+
+                            <p class="alert__message">{{ message|safe }}</p>
+
+                            <!--
+                                We're not using a close button on alerts just yet, but we have styling for it:
+                                <button class="button button--icon alert__close">
+                                    <svg width="20" height="20"></svg>
+                                        <use href="#close" xlink:href="#close" width="20" height="20"></use>
+                                    </svg>
+                                </button> 
+                            -->
+                        </li>
+                    {% endfor %}
+            {% endif %}
+            </ul>
+        {% endblock %}
+        
     {% endblock %}
 
     <main role="main" class="site-main">

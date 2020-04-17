@@ -22,14 +22,14 @@
         {% endlanguage %}
     </p>
 
-    <p class="details-admin screen-only">
+    <div class="details-admin screen-only">
         <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="button button--secondary" title="Wijzig cli&euml;ntgegevens">
             Wijzig cli&euml;nt basisgegevens
         </a>
         <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="Verwijder cli&euml;ntgegevens">
             Verwijder cli&euml;ntgegevens
         </a>
-    </p>
+    </div>
 
     <div class="form-field form-field--buttons screen-only">
         <a href="{% url 'update_case' object.id 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Aanvraag omslag en urgentie</a>

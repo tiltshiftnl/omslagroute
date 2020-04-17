@@ -77,7 +77,8 @@ $padding-left: 1.875rem;
     .dot--small {
         background-color: $neutral-grey4;
         width: $sublevel-moment;
-        height: $sublevel-moment;line-height: $sublevel-moment;
+        height: $sublevel-moment;
+        line-height: $sublevel-moment;
         font-size: .8rem;
         left: calc(
             #{$padding-left / 2} +
@@ -99,6 +100,7 @@ $padding-left: 1.875rem;
 
 .details-wrapper {
     position: relative;
+    margin-bottom: .25rem;
     .dot {
         display: block;
         position: absolute;
@@ -106,26 +108,22 @@ $padding-left: 1.875rem;
     }
 
     // timeline line
-    &:not(:last-of-type)::before {
-        border-left: .188rem solid $neutral-grey4;
-        top: 2rem;
+    &:before {
+        content: '';
         position: absolute;
-        content: ' ';
-        height: 100%;
-        width: 0;
-        left: calc(
-            #{$padding-left / 2} -
-            #{$timeline-width / 2}
-            );
         z-index: 2;
-
-        @media all and (min-width: $tablets) {
-            top: 1rem;
-            left: calc(
-                #{$padding-left} -
-                #{$timeline-width}
-                );
-        }
+        left: 1.75rem;
+        top: 1rem;
+        bottom: -1.25rem;
+        
+        width: 2px;
+        margin-left: -1px;
+        
+        background-color: $neutral-grey4;
+        
+    }
+    &:last-child:before {
+        bottom: 1.5rem;
     }
 }
 
@@ -133,33 +131,8 @@ $padding-left: 1.875rem;
     border-top: 0;
     border-bottom: 0;
     display: block;
-    position: relative;
-    left: $padding-left;
-    width: calc(100% - 1.875rem);
+    padding-left: $padding-left;
 
-    // timeline line
-    &:not(:last-of-type)::before {
-        border-left: .188rem solid $primary-darkblue;
-        top: 1rem;
-        position: absolute;
-        content: ' ';
-        height: 100%;
-        width: 0;
-        left: calc(-1rem + .75rem);
-        z-index: 21;
-    }
-
-    .details__header::before {
-        height: 100%;
-        width: $padding-left;
-        content: ' ';
-        background-color: transparent;
-        position: absolute;
-        left: -#{$padding-left};
-        top: 0;
-        border-left: 0;
-        z-index: 0;
-    }
 
     &:hover,
     &:focus,
@@ -167,9 +140,6 @@ $padding-left: 1.875rem;
         background-color: $neutral-grey1;
         position: relative;
 
-        .details__header::before {
-            background-color: $neutral-grey1;
-        }
     }
 
     &:focus {
@@ -179,14 +149,6 @@ $padding-left: 1.875rem;
         }
     }
 
-    // Specified seperately, otherwise IE11 bugs out
-    &:focus-within {
-        background-color: $neutral-grey1;
-
-        .details__header::before {
-            background-color: $neutral-grey1;
-        }
-    }
 }
 
 .details__header-opened {
@@ -211,17 +173,6 @@ $padding-left: 1.875rem;
     .details__header-opened {
         display: inline-block;
     }
-
-    .details__headerhoverblock {
-        height: 100%;
-        width: $padding-left;
-        content: ' ';
-        background-color: $neutral-grey1;
-        position: absolute;
-        left: -1.875rem;
-        top: 0;
-        border-left: 0;
-    }
     
     .details__content {
         padding-top: 1rem;
@@ -239,7 +190,12 @@ $padding-left: 1.875rem;
     -webkit-appearance: none;
     list-style-image: none;
 
-    &::-webkit-details-marker,
+    &::-webkit-details-marker {
+      display: none;
+      color: transparent;
+      font-size: 0;
+    }
+    
     &::marker {
         display: none;
         color: transparent;
@@ -266,18 +222,6 @@ $padding-left: 1.875rem;
     &:active {
         background-color: $neutral-grey1;
         outline: none;
-
-        &::before {
-            background-color: $neutral-grey1;
-            height: 100%;
-            width: $padding-left;
-            content: ' ';
-            position: absolute;
-            left: -#{$padding-left};
-            top: 0;
-            border-left: 0;
-            z-index: 1;
-        }
     }
 
     .tag-list {
@@ -306,6 +250,9 @@ $padding-left: 1.875rem;
 }
 
 .details-admin  {
+    
+    margin-bottom: 1rem;
+    
     @media all and (min-width: $tablets) {
         text-align: right;
     }
@@ -398,8 +345,6 @@ $padding-left: 1.875rem;
     padding: 0 1rem;
     transition: max-height .2s linear, opacity .2s linear .2s;
     
-    line-height: 1.4;
-    
     @media all and (min-width: $tablets) {
         padding: 0 1rem 0 2rem;
     }
@@ -411,10 +356,6 @@ $padding-left: 1.875rem;
 // LOCAL TIMELINE EXCEPTIONS TO GENERAL STYLING
 // ********************
 
-.details__content p {
-    max-width: 40.625rem;
-}
-
 .section--timeline {
     .downloads {
         padding-bottom: 0;
@@ -422,25 +363,12 @@ $padding-left: 1.875rem;
 
     .document__version,
     .document__new {
-        border-top: 1px solid $neutral-grey3;
-        border-left: 1px solid $neutral-grey3;
-        border-right: 1px solid $neutral-grey3;
 
         &,
         &:visited {
             background-color: $primary-white;
         }
 
-        &:only-child {
-            border-bottom: 1px solid $neutral-grey3;
-        }
-
-        @media all and (min-width: $tablets) {
-            &,
-            &:only-child {
-                border: 0;
-            }
-        }
     }
 
     .document:only-child,
