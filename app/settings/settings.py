@@ -193,7 +193,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 AUTH_GROUPNAME_PROCESS = 'proces'
 
-LOGIN_URL = '/#login'
+# LOGIN_URL = '/#login'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login/',
@@ -214,9 +214,9 @@ CONSTANCE_CONFIG = {
     CONSTANCE_HOMEPAGE_INTRO_KEY: ('', 'Homepage introduction html'),
 }
 
-# AUTHENTICATION_BACKENDS = [
-#     'keycloak_oidc.auth.OIDCAuthenticationBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'keycloak_oidc.auth.OIDCAuthenticationBackend',
+]
 
 OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')
 OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
@@ -228,12 +228,20 @@ OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
 # OIDC_USE_NONCE = False
 
 if os.environ.get("IAM_URL"):
-    IAM_URL = os.environ.get('IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc/protocol/openid-connect/')
-    OIDC_OP_AUTHORIZATION_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'auth')
-    OIDC_OP_TOKEN_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'token')
-    OIDC_OP_USER_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'userinfo')
-    OIDC_OP_JWKS_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'certs')
-    OIDC_OP_LOGOUT_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'logout')
+    IAM_URL = '%s%s' %(
+        os.environ.get(
+            'IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc'
+        ),
+        '/protocol/openid-connect/'
+    )
+    OIDC_OP_AUTHORIZATION_ENDPOINT = '%s%s' % (IAM_URL, 'auth')
+    OIDC_OP_TOKEN_ENDPOINT = '%s%s' % (IAM_URL, 'token')
+    OIDC_OP_USER_ENDPOINT = '%s%s' % (IAM_URL, 'userinfo')
+    OIDC_OP_JWKS_ENDPOINT = '%s%s' % (IAM_URL, 'certs')
+    OIDC_OP_LOGOUT_ENDPOINT = '%s%s' % (IAM_URL, 'logout')
+    OIDC_AUTHENTICATION_CALLBACK_URL = 'inloggen'
+    OIDC_RP_SCOPES = 'profile email openid'
+    OIDC_USE_NONCE = False
 
 
 LOGGING = {

@@ -13,7 +13,7 @@
                 <!-- {{ login_form.username.label_tag }} -->
                 <label for="{{ login_form.username.id_for_label }}">Wat is uw gebruikersnaam?</label>
                 <div class="help-text"><strong>Pas op!</strong> De gebruikersnaam is hoofdlettergevoelig.</div>
-                {{ login_form.username }} 
+                {{ login_form.username }}
                 {% if login_form.username.errors %}
                     <ol class="error-text">
                     {% for error in login_form.username.errors %}
