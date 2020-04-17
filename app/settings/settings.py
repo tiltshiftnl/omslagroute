@@ -193,7 +193,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 AUTH_GROUPNAME_PROCESS = 'proces'
 
-LOGIN_URL = '/#login'
+# LOGIN_URL = '/#login'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login/',
@@ -214,9 +214,9 @@ CONSTANCE_CONFIG = {
     CONSTANCE_HOMEPAGE_INTRO_KEY: ('', 'Homepage introduction html'),
 }
 
-# AUTHENTICATION_BACKENDS = [
-#     'keycloak_oidc.auth.OIDCAuthenticationBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'keycloak_oidc.auth.OIDCAuthenticationBackend',
+]
 
 OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')
 OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
@@ -239,6 +239,9 @@ if os.environ.get("IAM_URL"):
     OIDC_OP_USER_ENDPOINT = '%s%s' % (IAM_URL, 'userinfo')
     OIDC_OP_JWKS_ENDPOINT = '%s%s' % (IAM_URL, 'certs')
     OIDC_OP_LOGOUT_ENDPOINT = '%s%s' % (IAM_URL, 'logout')
+    OIDC_AUTHENTICATION_CALLBACK_URL = 'inloggen'
+    OIDC_RP_SCOPES = 'profile email openid'
+    OIDC_USE_NONCE = False
 
 
 LOGGING = {
