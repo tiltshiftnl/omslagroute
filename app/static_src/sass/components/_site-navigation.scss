@@ -52,7 +52,7 @@
         
         font-size: 1rem;
         
-        box-shadow: -25vw 0 0 0 $neutral-grey1, -50vw 0 0 0 $neutral-grey1, 25vw 0 0 0 $neutral-grey1, 50vw 0 0 0 $neutral-grey1;
+        box-shadow: (((60rem - 87.5rem) / 2) + .938rem) 0 0 0 $neutral-grey1, (((87.5rem - 60rem) / 2) - .938rem) 0 0 0 $neutral-grey1;
         
         top: 100%;
         left: -.938rem;
