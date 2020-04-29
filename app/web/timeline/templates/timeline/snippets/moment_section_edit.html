@@ -94,15 +94,6 @@
                 </ul>
             </div>
 
-            {% if moment.instance and moment.instance.documents.all %}
-                <h4>Betrokken documenten</h4>
-                <p data-static-mode>
-                    <strong>
-                        {{ moment.instance.documents.all|length }} document(en)
-                    </strong>
-                </p>
-            {% endif %}
-
             <div data-static-mode class="form-field form-field--buttons screen-only">
                 <button data-handler="enter-edit-moment" class="button button--primary" disabled="disabled">Wijzigen</button>
             </div>
@@ -121,8 +112,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>"Link tekst":https://fixxx.nl/</td>
-                                <td><a href="https://fixxx.nl" target="_blank">Link tekst</a></td>
+                                <td>"Link tekst":https://www.amsterdam.nl</td>
+                                <td><a href="https://www.amsterdam.nl" target="_blank">Link tekst</a></td>
                             </tr>
                             <tr>
                                 <td>* Lijst item</td>

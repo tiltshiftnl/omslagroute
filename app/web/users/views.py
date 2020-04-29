@@ -36,10 +36,6 @@ def generic_login(request):
     return HttpResponseRedirect('%s#login' % (request.POST.get('next', '/')))
 
 
-# def keycloak_login(request):
-
-
-
 class UserList(UserPassesTestMixin, ListView):
     model = User
     template_name_suffix = '_list_page'
