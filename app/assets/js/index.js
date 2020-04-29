@@ -171,6 +171,10 @@ Array.prototype.sortOnData = function(key){
                     });
                 };
           helpers.debounce(_submit, 1000, 'ajax-forms-submit');
+      },
+      
+      'void': function(e){
+          e.preventDefault();
       }
   };
     var decorators = {

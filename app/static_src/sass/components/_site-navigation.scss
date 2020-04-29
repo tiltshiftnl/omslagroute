@@ -1,10 +1,23 @@
 .navigation-container {
+    position :relative;
     list-style: none;
     padding: 0;
-    min-height: 2.75rem;
+    height: 2.75rem;
     margin: 0 auto;
     max-width: 60rem;
     display: flex; 
+    
+    font-size: 1.125rem;
+    font-weight: 500;
+    
+    a {
+        display: inline-block;
+        color: $primary-black;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 
     li a {
         padding: .75rem .938rem;
@@ -13,12 +26,13 @@
     > li {
         display: flex;
         align-items: center;
-        position: relative;
         
         &:hover,
         &:active {
             ul {
-                display: block;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
             }
         }
     }
@@ -33,28 +47,32 @@
     }
 
     li ul {
-        display: none;
         position: absolute;
+        background-color: $neutral-grey1;
+        
+        font-size: 1rem;
+        
+        box-shadow: (((60rem - 87.5rem) / 2) + .938rem) 0 0 0 $neutral-grey1, (((87.5rem - 60rem) / 2) - .938rem) 0 0 0 $neutral-grey1;
+        
         top: 100%;
-        left: 0;
-        width: 18.75rem;
-        background: $primary-white;
+        left: -.938rem;
+        right: -.938rem;
+        
         list-style-type: none;
-    }
-
-    li ul li {
-        width: 100%;
-        border: .063rem solid $neutral-grey3;
-
-        a { 
-            display: block;
-            text-decoration: none;
+        
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        
+        transition: visibility 0s linear .2s;
+        
+        li {
+            margin-top: -.5rem;
         }
     }
 
     li.admin-settings ul {
-        right: 0;
-        left: auto;
+        text-align: right;
     }
 
     .admin-settings {
