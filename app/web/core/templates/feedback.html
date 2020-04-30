@@ -1,47 +1,14 @@
 <div class="container-button--feedback">
-  <button class="button button--primary">Uw mening</button>
+  <button
+    class="button button--primary"
+    data-handler="modal"
+    data-contentid="modalFeedback"
+  >
+    Uw mening
+  </button>
 </div>
 
-<div role="dialog" class="modal modal--feedback">
-  <header class="TopBarStyle-sc-1nvgwf jdCuyJ">
-    <h4 class="sc-AxjAm kBEebh sc-AxirZ bJCmFu" style="flex-grow: 1;">
-      Stuur ons je feedback
-      <button class="button">
-        <svg
-          title="Sluit feedback venster"
-          viewBox="0 0 32 32"
-          focusable="false"
-        >
-          <path
-            d="M29.333 5.47L26.53 2.668 16 13.187 5.47 2.666 2.668 5.47 13.187 16 2.666 26.53l2.804 2.803L16 18.813l10.53 10.52 2.803-2.804L18.813 16z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-      </button>
-    </h4>
-  </header>
-  <hr class="" />
-  <div class="">
-    <p class="">
-      Geef problemen, fouten of suggesties voor verbeteringen door.
-    </p>
-  </div>
-  <hr class="DividerStyle-sc-i5quwj bkNuPA" />
-  <div
-    class="form-field form-field--empty form-field--textinput form-field--step-required"
-  >
-    <label for="id_woningnet_geldigheid"
-      >Naam <small>(niet verplicht)</small></label
-    >
-    <div class="help-text">
-      Zodat we contact op kunnen nemen als we vragen hebben
-    </div>
-    <input
-      type="text"
-      name="woningnet_geldigheid"
-      placeholder="Naam"
-      id="id_woningnet_geldigheid"
-    />
-  </div>
-  <a href="#" class="modal-bg" data-handler="exit-edit-moment"></a>
+<div role="dialog" class="modal" id="modalFeedback">
+  <iframe class="modal--feedback" id="iframeFeedback" src="/document/update/14">
+  </iframe>
 </div>
