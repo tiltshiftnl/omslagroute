@@ -31,6 +31,61 @@ Array.prototype.sortOnData = function(key){
 
 !function (w, d) {
   var handlers = {
+    'modal': function(e){
+      e.preventDefault();
+      var
+        el = this.hash && document.getElementById(this.hash.substring(1)) || this.dataset.contentId && document.getElementById(this.dataset.contentId),
+        url = this.href,
+        form = _closest(this, 'form'),
+        rootElem = this.dataset.root && document.querySelector(this.dataset.root) || document.body,
+        template = '<div class="modal-inner">[[CONTENT]]</div><a href="#" class="modal-close" data-handler="modal-close">SLUITEN</a><a href="#" class="modal-close--bg" data-handler="modal-close"></a>';
+        var content = false;
+
+      var _render = function(content){
+        var modal = document.createElement('div');
+        modal.classList.add('modal');
+        modal.innerHTML = template.replace('[[CONTENT]]', content);
+        var fields = modal.querySelectorAll('select, input');
+        for (var i = 0; i < fields.length; i++){
+          var f = fields[i];
+          f.dataset.id && f.setAttribute('id', f.dataset.id);
+          f.dataset.name && f.setAttribute('name', f.dataset.name);
+        }
+        rootElem.appendChild(modal);
+        form && changers['change'].call(form);
+        setTimeout(function(){
+          modal.classList.add('active');
+        }, 300);
+      };
+
+      if (el) {
+        content = el.innerHTML;
+        _render(content);
+      } else if (url) {
+        helpers.ajax(url, function(response){
+          if (response.status >= 200 && response.status < 400) {
+            var r = document.createElement('div');
+            r.innerHTML = response.responseText;
+
+            (content = r.querySelector('main')) && _render(content.innerHTML);
+          } else {
+            w.location = url;
+          }
+        });
+      } else {
+        w.location = url;
+      }
+      document.body.classList.add('modal-active');
+
+    },
+    'modal-close': function(e){
+      var modal = _closest(this, '.modal');
+      if (modal) {
+        this.handled = true;
+        modal.parentNode.removeChild(modal);
+      }
+      document.body.classList.remove('modal-active');
+    },
       'moment-up': function (e) {
           e.preventDefault();
           var moment = _closest(e.target, '[data-moment]');
@@ -172,7 +227,7 @@ Array.prototype.sortOnData = function(key){
                 };
           helpers.debounce(_submit, 1000, 'ajax-forms-submit');
       },
-      
+
       'void': function(e){
           e.preventDefault();
       }
