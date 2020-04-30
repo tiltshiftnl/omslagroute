@@ -6,13 +6,14 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'user_list' %}">Alle gebruikers</a></li>
             <li class="breadcrumb-step sr-only" aria-current="location">Gebuiker '{{ form.instance.name }}' aanpassen</li>
         </ol>
     </nav>
 {% endblock %}
 
 {% block main %}
-    <h2>Gebuiker '{{ form.name }}' aanpassen</h2>
+    <h2>Gebuiker '{{ form.instance.name }}' aanpassen</h2>
 
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
         {% if form.errors %}

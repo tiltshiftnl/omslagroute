@@ -5,14 +5,18 @@ from django.contrib.auth.forms import (
 )
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, FormView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, BEHEERDER
+from .statics import BEGELEIDER, BEHEERDER, USER_TYPES_ACTIVE
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
+from django.core.paginator import Paginator
+import operator
+from django.db.models import Avg, Count
+
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -44,11 +48,59 @@ def generic_login(request):
     return HttpResponseRedirect('%s#login' % (request.POST.get('next', '/')))
 
 
-class UserList(UserPassesTestMixin, ListView):
-    model = User
+class UserList(UserPassesTestMixin, FormView):
+    # model = User
     template_name_suffix = '_list_page'
-    queryset = User.objects.all()
-    # queryset = User.objects.filter(is_staff=False, is_superuser=False)
+    template_name = 'users/user_list_page.html'
+    # queryset = User.objects.all()
+    form_class = FilterListForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        filter = self.request.GET.getlist('filter', USER_TYPES_ACTIVE)
+        object_list = User.objects.all().filter(user_type__in=filter)
+
+        # default sort on user_type by custom list
+        object_list = [[o, USER_TYPES_ACTIVE.index(o.user_type)] for o in object_list]
+        object_list = sorted(object_list, key=lambda o: o[1])
+        object_list = [o[0] for o in object_list]
+
+        paginator = Paginator(object_list, 20)
+        page = self.request.GET.get('page', 1)
+        object_list = paginator.get_page(page)
+        filter_form = FilterListForm()
+        kwargs.update({
+            'object_list': object_list,
+            # 'filter_form': filter_form,
+        })
+        return kwargs
+    #
+    # def get(self, request, *args, **kwargs):
+    #     filter_form = FilterListForm(request)
+    #     kwargs.update({
+    #         'filter_form': filter_form,
+    #     })
+    #     return super().get(request, *args, **kwargs)
+
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     kwargs = super().get_context_data(object_list=object_list, **kwargs)
+    #     filter = self.request.GET.getlist('filter', USER_TYPES_ACTIVE)
+    #     object_list = User.objects.all().filter(user_type__in=filter)
+    #
+    #     # default sort on user_type by custom list
+    #     object_list = [[o, USER_TYPES_ACTIVE.index(o.user_type)] for o in object_list]
+    #     object_list = sorted(object_list, key=lambda o: o[1])
+    #     object_list = [o[0] for o in object_list]
+    #
+    #     paginator = Paginator(object_list, 20)
+    #     page = self.request.GET.get('page', 1)
+    #     object_list = paginator.get_page(page)
+    #     filter_form = FilterListForm()
+    #     kwargs.update({
+    #         'object_list': object_list,
+    #         # 'filter_form': filter_form,
+    #     })
+    #     return kwargs
 
     def test_func(self):
         return auth_test(self.request.user, BEHEERDER)

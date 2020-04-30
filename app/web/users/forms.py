@@ -2,6 +2,7 @@ from django.contrib.auth.forms import (
     AuthenticationForm as DefaultAuthenticationForm, authenticate
 )
 from django import forms
+from django.forms import widgets
 from .models import *
 from django.http import HttpResponse
 from web.profiles.models import Profile
@@ -9,6 +10,17 @@ from django.forms.models import inlineformset_factory
 from web.organizations.models import Organization
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm as DefaultUserCreationForm
+from web.forms.widgets import CheckboxSelectMultiple
+
+
+class FilterListForm(forms.Form):
+    filter = forms.IntegerField(
+        label='Filter lijst',
+        widget=CheckboxSelectMultiple(
+            choices=User.user_types,
+        )
+
+    )
 
 
 class AuthenticationForm(DefaultAuthenticationForm):

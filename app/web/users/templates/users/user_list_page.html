@@ -13,22 +13,38 @@
 
 {% block main %}
     <h2>Alle gebruikers</h2>
+    <form method="get">
 
-    <ul role="list" class="list-vertical">
-    {% for object in object_list %}
-        <li>{{ object.username }}
-            {% if object.user_type_value %}
-               ( {{ object.user_type_value }} )
-            {% endif %}</li>
-    {% endfor %}
-    </ul>
+        {{ form.as_p }}
+
+{#        <div class="form-field form-field--checkboxinput">#}
+{##}
+{#            <input type="checkbox" name="filter" value="1" id="id_filter_1">#}
+{#                <label for="id_filter_1">#}
+{#                    Beheerder#}
+{#                </label>#}
+{#        </div>#}
+{#        <div class="form-field form-field--checkboxinput">#}
+{#                    <input type="checkbox" name="filter" value="6"  id="id_filter_6">#}
+{#                <label for="id_filter_6">#}
+{#                    Onbekent#}
+{#                </label>#}
+{#        </div>#}
+{#        <div class="form-field form-field--checkboxinput">#}
+{#                    <input type="checkbox" name="filter" value="5" id="id_filter_5">#}
+{#                <label for="id_filter_5">#}
+{#                    Persoonlijk begeleider#}
+{#                </label>#}
+{#        </div>#}
+        <button type="submit" >Filter</button>
+    </form>
     <table class="case-list table--interactive">
         <thead>
             <tr>
                 <th>E-mailadres (username)</th>
                 <th>Voornaam</th>
                 <th>Achternaam</th>
-                <th>Rol</th>
+                <th>Gebruiker rol</th>
             </tr>
         </thead>
         <tbody>
@@ -51,12 +67,30 @@
             </td>
             <td>
                 <a href="{% url 'update_user' object.id %}">
-                    {{ object.user_type_value }}
+                    {{ object.user_type_value }} ({{ object.user_type }})
                 </a>
             </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?page=1">&laquo; Eerste</a>
+                <a href="?page={{ object_list.previous_page_number }}">Vorige</a>
+            {% endif %}
+
+            <span class="current">
+                Pagina {{ object_list.number }} van {{ object_list.paginator.num_pages }}.
+            </span>
+
+            {% if object_list.has_next %}
+                <a href="?page={{ object_list.next_page_number }}">Volgende</a>
+                <a href="?page={{ object_list.paginator.num_pages }}">Laatste &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 
 {% endblock %}

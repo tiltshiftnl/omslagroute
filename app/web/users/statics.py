@@ -5,8 +5,11 @@ USER_TYPES = (
     (4, 'Woningcorporatie'),
     (5, 'Persoonlijk begeleider'),
     (6, 'Onbekent'),
+    (7, 'Gebruikers beheerder'),
 )
 USER_TYPES_DICT = dict((ut[0], ut[1]) for ut in USER_TYPES)
+
+USER_TYPES_ACTIVE = [6, 1, 5, 7]
 
 BEHEERDER = 1
 BEGELEIDER = 5
