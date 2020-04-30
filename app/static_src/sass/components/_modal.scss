@@ -1,0 +1,66 @@
+.modal {
+
+  background-color: rgb(255, 255, 255);
+    width: 100%;
+    max-width: 620px;
+    max-height: 75%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: all;
+    z-index: 21;
+    overflow: auto;
+
+    header {
+      padding: 15px;
+      h4 {
+        margin: 0;
+      }
+
+      button {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        svg{
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+  &--feedback {
+
+    .modal-bg {
+      display: none;
+    }
+  }
+}
+
+.modal-bg {
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+
+
+.container-button--feedback {
+  z-index: 999999;
+  right: 0;
+  top: 50%;
+  margin-top: -58.5px;
+  width: 40px;
+  height: 137px;
+  position: fixed;
+  .button {
+    white-space: nowrap;
+
+    transform: rotate(-90deg);
+    transform-origin: 50% 130%;
+  }
+}
