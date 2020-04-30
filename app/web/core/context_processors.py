@@ -7,6 +7,7 @@ import os.path
 
 SOURCE_COMMIT = settings.SOURCE_COMMIT
 BRANCH_NAME = settings.BRANCH_NAME
+LOGIN_URL_NAME = settings.LOGIN_URL_NAME
 if not SOURCE_COMMIT:
     fname = '/.git/FETCH_HEAD'
     if os.path.isfile(fname):
@@ -21,6 +22,7 @@ if not SOURCE_COMMIT:
 def app_settings(request=None):
     return {
         'SOURCE_COMMIT': SOURCE_COMMIT,
+        'LOGIN_URL_NAME': LOGIN_URL_NAME,
         'BRANCH_NAME': BRANCH_NAME,
         'HOMEPAGE_INTRO': config.HOMEPAGE_INTRO,
         'login_form': AuthenticationForm(),

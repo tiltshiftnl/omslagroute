@@ -4,6 +4,7 @@ USER_TYPES = (
     (3, 'GGD'),
     (4, 'Woningcorporatie'),
     (5, 'Persoonlijk begeleider'),
+    (6, 'Onbekent'),
 )
 USER_TYPES_DICT = dict((ut[0], ut[1]) for ut in USER_TYPES)
 

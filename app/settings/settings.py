@@ -51,7 +51,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'mozilla_django_oidc.middleware.SessionRefresh',
+    # 'web.users.middleware.SessionRefresh',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -195,6 +195,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 AUTH_GROUPNAME_PROCESS = 'proces'
 
 LOGIN_URL = '/#login'
+LOGIN_URL_NAME = 'inloggen'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login/',
@@ -217,26 +218,44 @@ CONSTANCE_CONFIG = {
     CONSTANCE_FEEDBACK_RECIPIENT_LIST_KEY: ('', 'Feedback ontvangers lijst(kommagescheiden)'),
 }
 
-# AUTHENTICATION_BACKENDS = [
-#     'keycloak_oidc.auth.OIDCAuthenticationBackend',
-# ]
-
 OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')
 OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
 
-# OIDC_OP_LOGOUT_URL_METHOD = 'api.users.utils.oidc_op_logout'
-# OIDC_USERNAME_ALGO = 'api.users.utils.generate_username'
-# OIDC_RP_SIGN_ALGO = 'RS256'
-# OIDC_RP_SCOPES = 'openid'
-# OIDC_USE_NONCE = False
-
+IAM_URL = None
 if os.environ.get("IAM_URL"):
-    IAM_URL = os.environ.get('IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc/protocol/openid-connect/')
-    OIDC_OP_AUTHORIZATION_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'auth')
-    OIDC_OP_TOKEN_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'token')
-    OIDC_OP_USER_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'userinfo')
-    OIDC_OP_JWKS_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'certs')
-    OIDC_OP_LOGOUT_ENDPOINT = urllib.parse.urljoin(IAM_URL, 'logout')
+    print('keycloak enabled')
+    IAM_URL = '%s%s' %(
+        os.environ.get(
+            'IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc'
+        ),
+        '/protocol/openid-connect/'
+    )
+    OIDC_OP_AUTHORIZATION_ENDPOINT = '%s%s' % (IAM_URL, 'auth')
+    OIDC_OP_TOKEN_ENDPOINT = '%s%s' % (IAM_URL, 'token')
+    OIDC_OP_USER_ENDPOINT = '%s%s' % (IAM_URL, 'userinfo')
+    OIDC_OP_JWKS_ENDPOINT = '%s%s' % (IAM_URL, 'certs')
+    OIDC_OP_LOGOUT_ENDPOINT = '%s%s' % (IAM_URL, 'logout')
+    # OIDC_AUTHENTICATION_CALLBACK_URL = 'inloggen'
+    OIDC_AUTHENTICATE_CLASS = 'web.users.views.OIDCAuthenticationRequestView'
+    OIDC_RP_SCOPES = 'profile email openid'
+    OIDC_USE_NONCE = False
+    OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = 60 * 2
+    AUTHENTICATION_BACKENDS = [
+        'web.users.auth.OIDCAuthenticationBackend',
+    ]
+    MIDDLEWARE = (
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'web.users.middleware.SessionRefresh',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+    LOGIN_URL_NAME = 'oidc_authentication_callback'
+    LOGIN_URL = 'oidc_authentication_init'
 
 
 LOGGING = {

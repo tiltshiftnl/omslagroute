@@ -5,13 +5,21 @@ from django.contrib.auth.forms import (
 )
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
 from .statics import BEGELEIDER, BEHEERDER
+from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    # Python < 3
+    from urllib import urlencode
+
+from mozilla_django_oidc.views import get_next_url, get_random_string
 
 
 def generic_logout(request):
@@ -39,7 +47,18 @@ def generic_login(request):
 class UserList(UserPassesTestMixin, ListView):
     model = User
     template_name_suffix = '_list_page'
-    queryset = User.objects.filter(is_staff=False, is_superuser=False)
+    queryset = User.objects.all()
+    # queryset = User.objects.filter(is_staff=False, is_superuser=False)
+
+    def test_func(self):
+        return auth_test(self.request.user, BEHEERDER)
+
+
+class UserUpdateView(UserPassesTestMixin, UpdateView):
+    model = User
+    template_name_suffix = '_update_form'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('user_list')
 
     def test_func(self):
         return auth_test(self.request.user, BEHEERDER)
@@ -83,3 +102,37 @@ class UserCreationView(UserPassesTestMixin, CreateView):
         profile.save()
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
         return super().form_valid(form)
+
+
+class OIDCAuthenticationRequestView(DatapuntOIDCAuthenticationRequestView):
+    def get(self, request):
+        """OIDC client authentication initialization HTTP endpoint"""
+        state = get_random_string(self.get_settings('OIDC_STATE_SIZE', 32))
+        redirect_field_name = self.get_settings('OIDC_REDIRECT_FIELD_NAME', 'next')
+        reverse_url = self.get_settings('OIDC_AUTHENTICATION_CALLBACK_URL',
+                                        'oidc_authentication_callback')
+
+        params = {
+            'response_type': 'code',
+            'scope': self.get_settings('OIDC_RP_SCOPES', 'openid email'),
+            'client_id': self.OIDC_RP_CLIENT_ID,
+            'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse(reverse_url),
+            'state': state,
+        }
+
+        params.update(self.get_extra_params(request))
+
+        if self.get_settings('OIDC_USE_NONCE', True):
+            nonce = get_random_string(self.get_settings('OIDC_NONCE_SIZE', 32))
+            params.update({
+                'nonce': nonce
+            })
+            request.session['oidc_nonce'] = nonce
+
+        request.session['oidc_state'] = state
+        request.session['oidc_login_next'] = get_next_url(request, redirect_field_name)
+
+        query = urlencode(params)
+        print(query)
+        redirect_url = '{url}?{query}'.format(url=self.OIDC_OP_AUTH_ENDPOINT, query=query)
+        return HttpResponseRedirect(redirect_url)

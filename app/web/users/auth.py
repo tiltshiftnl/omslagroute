@@ -6,6 +6,15 @@ from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import resolve_url
+from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured
+from keycloak_oidc.auth import OIDCAuthenticationBackend as DatapuntOIDCAuthenticationBackend
+import logging
+LOGGER = logging.getLogger(__name__)
+try:
+    from django.urls import reverse
+except ImportError:
+    # Django < 2.0.0
+    from django.core.urlresolvers import reverse
 
 
 def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME, user_type=None):
@@ -40,3 +49,58 @@ def auth_test(user, user_type):
     return hasattr(user, 'user_type') and user.user_type == user_type
 
 
+class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
+    def get_userinfo(self, access_token, id_token, payload):
+        userinfo = super().get_userinfo(access_token, id_token, payload)
+        print(userinfo)
+        return userinfo
+
+    def get_or_create_user(self, access_token, id_token, payload):
+
+        print(payload)
+        user = super().get_or_create_user(access_token, id_token, payload)
+        print(user)
+        return user
+
+    def authenticate(self, request, **kwargs):
+        """Authenticates a user based on the OIDC code flow."""
+
+        self.request = request
+        if not self.request:
+            return None
+
+        state = self.request.GET.get('state')
+        code = self.request.GET.get('code')
+        nonce = kwargs.pop('nonce', None)
+
+        if not code or not state:
+            return None
+
+        reverse_url = self.get_settings('OIDC_AUTHENTICATION_CALLBACK_URL',
+                                        'oidc_authentication_callback')
+
+        token_payload = {
+            'client_id': self.OIDC_RP_CLIENT_ID,
+            'client_secret': self.OIDC_RP_CLIENT_SECRET,
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse(reverse_url),
+        }
+
+        # Get the token
+        token_info = self.get_token(token_payload)
+        id_token = token_info.get('id_token')
+        access_token = token_info.get('access_token')
+
+        # Validate the token
+        payload = self.verify_token(id_token, nonce=nonce)
+
+        if payload:
+            self.store_tokens(access_token, id_token)
+            try:
+                return self.get_or_create_user(access_token, id_token, payload)
+            except SuspiciousOperation as exc:
+                LOGGER.warning('failed to get or create user: %s', exc)
+                return None
+
+        return None

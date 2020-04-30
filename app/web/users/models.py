@@ -7,15 +7,24 @@ from django.db import models
 
 
 class User(AbstractUser):
-    user_types = [ut for ut in USER_TYPES if ut[0] in [1, 5]]
+    user_types = [ut for ut in USER_TYPES if ut[0] in [1, 5, 6]]
 
     user_type = models.PositiveSmallIntegerField(
         verbose_name=_('Gebruiker type'),
         choices=user_types,
-        default=user_types[0][0],
+        default=6,
     )
 
     objects = UserManager()
+
+    @property
+    def name(self):
+        if self.first_name and self.last_name:
+            return '%s %s' % (
+                self.first_name,
+                self.last_name,
+            )
+        return self.username
 
     @property
     def user_type_value(self):
