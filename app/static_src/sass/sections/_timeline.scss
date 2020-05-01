@@ -42,27 +42,22 @@ $padding-left: 1.875rem;
     display: inline-block;
     text-align: center;
     color: $primary-white;
+    
+    pointer-events: none;
 }
 
     .dot--large {
         background-color: $neutral-grey4;
         width: ($toplevel-moment/ 2);
         height: ($toplevel-moment / 2);
-        left: calc(
-            #{$padding-left / 4} +
-            #{$timeline-width  / 4}
-            );
-        top: calc(#{2rem - ($toplevel-moment / 2)});
-
+        left: 1rem;
+        top: 1.25rem;
         @media all and (min-width: $tablets) {
             width: $toplevel-moment;
             height:  $toplevel-moment;
             line-height: $toplevel-moment;
             font-size: 1rem;
-            left: calc(
-                #{$padding-left / 2} +
-                #{$timeline-width  / 2}
-            );
+            left: 1rem;
             top: .9rem;
         }
 
@@ -106,14 +101,19 @@ $padding-left: 1.875rem;
         content: '';
         position: absolute;
         z-index: 2;
-        left: 1.75rem;
-        top: 1rem;
-        bottom: -1.25rem;
+        left: 1.375rem;
+        top: 1.25rem;
+        bottom: -1.5rem;
         
         width: 2px;
         margin-left: -1px;
         
         background-color: $neutral-grey4;
+        pointer-events: none;
+        
+        @media all and (min-width: $tablets) {
+          left: 1.75rem;
+        }
         
     }
     &:last-child:before {
@@ -125,8 +125,6 @@ $padding-left: 1.875rem;
     border-top: 0;
     border-bottom: 0;
     display: block;
-    padding-left: $padding-left;
-
 
     &:hover,
     &:focus,
@@ -289,15 +287,17 @@ $padding-left: 1.875rem;
 
 @media all and (max-width: $tablets) {
     .details__title {
-        width: 75%;
-        display: inline-block;
-        vertical-align: top;
+      display: block;
+      padding-right: calc(20px + .5rem);
     }
     .details__toggle-icon { 
+        position: absolute;
+        top: 1.375rem;
+        right: 1rem;
         width: 20px;
         display: inline-block;
         vertical-align: top;
-        text-align: right;
+        
     }
 }
 
@@ -317,11 +317,15 @@ $padding-left: 1.875rem;
 
 .details__header,
 .details__content {
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 2.875rem;
 
     @media all and (min-width: $tablets) {
-        padding: 1rem 1rem 1rem 2rem;
+        padding: 1rem 1rem 1rem 3.875rem;
     }
+}
+
+.details__header {
+  font-size: 0;
 }
 
 .details__content {
@@ -330,11 +334,11 @@ $padding-left: 1.875rem;
     max-height: 0;
     opacity: 0;
     
-    padding: 0 1rem;
+    padding: 0 1rem 0 2.875rem;
     transition: max-height .2s linear, opacity .2s linear .2s;
     
     @media all and (min-width: $tablets) {
-        padding: 0 1rem 0 2rem;
+        padding: 0 1rem 0 3.875rem;
     }
     
 }
