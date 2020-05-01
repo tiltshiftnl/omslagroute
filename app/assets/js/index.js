@@ -41,7 +41,6 @@ Array.prototype.sortOnData = function (key) {
           (this.dataset.contentid &&
             document.getElementById(this.dataset.contentid)),
         url = this.href,
-        form = _closest(this, "form"),
         rootElem =
           (this.dataset.root && document.querySelector(this.dataset.root)) ||
           document.body,
@@ -53,17 +52,23 @@ Array.prototype.sortOnData = function (key) {
         var modal = document.createElement("div");
         modal.classList.add("modal");
         modal.innerHTML = template.replace("[[CONTENT]]", content);
-        var fields = modal.querySelectorAll("select, input");
-        for (var i = 0; i < fields.length; i++) {
-          var f = fields[i];
-          f.dataset.id && f.setAttribute("id", f.dataset.id);
-          f.dataset.name && f.setAttribute("name", f.dataset.name);
-        }
         rootElem.appendChild(modal);
-        form && changers["change"].call(form);
-        setTimeout(function () {
-          modal.classList.add("active");
-        }, 300);
+        
+        var iframe = modal.querySelector('iframe');
+        if(iframe !== undefined) {
+          iframe.onload = function() {
+            modal.classList.add("active");
+            var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
+            var innerElement = doc.querySelector(".site-container");
+            doc.querySelector("body").classList.add('isInIframe');
+            iframe.style.height = innerElement.offsetHeight + 20 + "px";
+            modal.querySelector('.modal-inner').style.top = (window.innerHeight - innerElement.offsetHeight)/2 +"px";
+          }
+        }else{
+          setTimeout(function () {
+            modal.classList.add("active");
+          }, 300);
+        }
       };
 
       if (el) {
