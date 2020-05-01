@@ -29,53 +29,6 @@
 }
 
 .modal {
-  // background-color: rgb(255, 255, 255);
-  // width: 100%;
-  // max-width: 620px;
-  // max-height: 75%;
-  // position: fixed;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
-  // pointer-events: all;
-  // z-index: 21;
-  // overflow: auto;
-
-  header {
-    padding: 15px;
-    border-bottom: 1px solid $neutral-grey5;
-    h4 {
-      margin: 0;
-    }
-
-    button {
-      width: 30px;
-      height: 30px;
-      min-width: 30px;
-      position: absolute;
-      top: 0;
-      right: -8px;
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
-  }
-
-  .container-content {
-    padding: 15px;
-
-    form {
-      label {
-        small {
-          font-weight: 400;
-        }
-      }
-    }
-  }
-}
-
-.modal {
   display: none;
   position: fixed;
   z-index: 300;
@@ -102,17 +55,7 @@
   }
 
   &--feedback {
-    min-height: 500px;
-  }
-}
-.modal__button {
-  &--validate {
-    form.invalid & {
-      pointer-events: none;
-      color: #999;
-      border-color: #999;
-      background-color: white;
-    }
+    min-height: 590px;
   }
 }
 .modal-inner {
@@ -131,30 +74,19 @@
   iframe {
     border: 0;
     width: 100%;
+
+    body {
+      background-color: #fff;
+    }
+    
+    .site-container {
+      background-color: #fff;
+    }
   }
+
+  
 }
 
-// .modal-close {
-//   position: fixed;
-//   z-index: 3;
-//   right: calc((100vw / 2) - 350px);
-//   top: 100px;
-//   //width: $padding;
-//   //height: $padding;
-//   font-size: 0;
-//   text-align: center;
-
-//   background-color: #000;
-
-//   text-decoration: none;
-//   &:after {
-//     content: "×";
-
-//     color: #fff;
-//     font-size: 3rem;
-//     //line-height: $padding;
-//   }
-// }
 .modal-close--bg {
   z-index: 1;
   position: fixed;
@@ -163,19 +95,55 @@
   top: 0;
   bottom: 0;
 }
-// @include medium {
-//   .modal {
-//     padding: 44px 10px 10px 10px;
-//   }
-//   .modal-inner {
-//     margin: 0;
-//     max-width: none;
-//   }
-// }
 
 .modal-hidden {
   display: none;
   .modal & {
     display: block;
+  }
+}
+
+.feedback-container {
+  background-color: white;
+  padding: 15px;
+  margin: 0 -15px;
+  position: relative;
+  
+  h2 {
+    margin: 0 0 15px;
+  }
+  hr {
+    margin: 15px -15px;
+
+  }
+
+  label {
+    small {
+      font-weight: 400;
+    }
+  }
+
+  textarea[required]:invalid:not(:focus):not(:placeholder-shown) {
+    border: 0.063rem solid #ec0000;
+    box-shadow: inset 0 0 0 0.063rem #ec0000;
+  }
+  textarea[required]:not(:focus):not(:placeholder-shown) {
+    border: 0.063rem solid #004699;
+    box-shadow: none;
+  }
+
+  .button--close {
+    width: 20px;
+    height: 20px;
+    min-width: auto;
+    padding: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $primary-black;
+  }
+
+  @media screen and (max-width: $tablets) {
+    margin: -15px;
   }
 }
