@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>Omslagroute {% block title %} - Homepage{% endblock %}</title>
     <meta name="description" content="De centrale plek voor informatie over de Omslagroute. De Omslagroute is sinds november 2019 het werkproces voor de in- en doorstroom naar zelfstandig wonen met begeleiding in de wijk en de Omklap naar een huurcontract op naam van de cliënt. Zorgaanbieders, woningcorporaties en gemeente werken daarbij samen."/>
 
@@ -17,9 +17,12 @@
     <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/t/1.css?apiType=css&amp;projectid=3680cf49-2b05-4b8a-af28-fa9e27d2bed0">
 </head>
 <body>
-    
+
 <div class="site-container">
     {% include 'svg-sprite.html' %}
+    {% block feedback %}
+    {% include 'feedback/feedback_context.html' %}
+    {% endblock %}
 
     {% block skiplinks %}
     {% endblock %}
@@ -31,7 +34,7 @@
                     <img src="{% static 'images/logo.svg' %}" alt="Gemeente Amsterdam" class="logo">
                 </a>
                 <h1 class="site-title">
-                    <a href="{% url 'home' %}" title="Ga terug naar de homepage"> 
+                    <a href="{% url 'home' %}" title="Ga terug naar de homepage">
                         Omslagroute
                     </a>
                 </h1>
@@ -96,7 +99,7 @@
                         <li class="admin-settings">
                             <a href="#beheer" data-handler="void">Beheer</a>
                             <ul id="beheer">
-                                <li> 
+                                <li>
                                     <a href="{% url 'user_list' %}">
                                         <svg width="8" height="12">
                                             <use href="#chevron-right" xlink:href="#chevron-right" width="8" height="12"></use>
@@ -144,14 +147,14 @@
                                     <svg width="20" height="20"></svg>
                                         <use href="#close" xlink:href="#close" width="20" height="20"></use>
                                     </svg>
-                                </button> 
+                                </button>
                             -->
                         </li>
                     {% endfor %}
             {% endif %}
             </ul>
         {% endblock %}
-        
+
     {% endblock %}
 
     <main role="main" class="site-main">

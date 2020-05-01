@@ -1,0 +1,14 @@
+<div class="container-button--feedback">
+  <button
+    class="button button--primary"
+    data-handler="modal"
+    data-contentid="modalFeedback"
+  >
+    Uw mening
+  </button>
+</div>
+
+<div role="dialog" class="modal" id="modalFeedback">
+  <iframe class="modal--feedback" id="iframeFeedback" src="{% url 'feedback' %}">
+  </iframe>
+</div>
