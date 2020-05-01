@@ -25,6 +25,7 @@ urlpatterns = [
     path('gebruikers/', path_include('web.users.urls')),
     # path('formulieren/', include('web.forms.urls')),
     path('clienten/', path_include('web.cases.urls')),
+    path('feedback/', path_include('web.feedback.urls')),
 
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),

@@ -34,7 +34,7 @@ Array.prototype.sortOnData = function (key) {
 
 !(function (w, d) {
   var handlers = {
-    modal: function (e) {
+    'modal': function (e) {
       e.preventDefault();
       var el =
           (this.hash && document.getElementById(this.hash.substring(1))) ||
@@ -86,12 +86,13 @@ Array.prototype.sortOnData = function (key) {
       document.body.classList.add("modal-active");
     },
     "modal-close": function (e) {
-      var modal = _closest(this, ".modal");
+      var modal = parent.document.querySelector('.modal.active');
+      parent.document.body.classList.remove("modal-active");
+      document.body.classList.remove("modal-active");
       if (modal) {
         this.handled = true;
         modal.parentNode.removeChild(modal);
       }
-      document.body.classList.remove("modal-active");
     },
     "moment-up": function (e) {
       e.preventDefault();

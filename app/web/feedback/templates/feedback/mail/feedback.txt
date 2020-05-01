@@ -1,0 +1,15 @@
+Beste,
+
+Er is nieuwe feedback ingevuld door een gebruiker.
+
+Naam:
+{% if name %}{{ name }}{% else %}\u2014{% endif %}
+
+E-mailadres:
+{% if email %}{{ email }}{% else %}\u2014{% endif %}
+
+Rol:
+{% if rol %}{{ rol }}{% else %}Anoniem{% endif %}
+
+Feedback tekst:
+{{ feedback }}
