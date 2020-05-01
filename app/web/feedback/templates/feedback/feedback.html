@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block feedback %}{% endblock %}
+{% block header %}{% endblock %}
+
+{% block title %} - Stuur ons je feedback{% endblock %}
+
+{% block main %}
+{% if request.GET.send %}
+
+    <h2>Bedankt voor je feedback</h2>
+    <p>We hebben je feedback succesvol onvangen.</p>
+    <div class="form-field form-field--buttons screen-only">
+        <a data-handler="modal-close" href="#" class="button button--primary">Ga door waar ik mee bezig was</a>
+    </div>
+
+{% elif request.GET.error %}
+
+    <h2>Er is iets mis gegaan</h2>
+    <p>Je feedback is helaas niet goed verstuurd.</p>
+    <div class="form-field form-field--buttons screen-only">
+        <a href="." class="button button--primary">Probeer het nog een keer</a>
+        <a data-handler="modal-close" href="#" class="button button--secondary">Ga door waar ik mee bezig was</a>
+    </div>
+
+{% else %}
+
+    <h2>Stuur ons je feedback</h2>
+    <p>Geef problemen, fouten of suggesties voor verbeteringen door.</p>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-field form-field--buttons screen-only">
+            <input type="submit" value="Verstuur" class="button button--primary">
+            <a data-handler="modal-close" href="#" class="button button--secondary">Annuleren</a>
+        </div>
+    </form>
+
+{% endif %}
+{% endblock %}
