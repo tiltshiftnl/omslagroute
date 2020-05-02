@@ -8,7 +8,7 @@ from django.urls import reverse
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'profile_link', 'is_staff')
+    list_display = ('username', 'email', 'profile_link', 'is_staff', 'is_superuser', 'user_type')
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),

@@ -3,9 +3,6 @@
 {% load staticfiles auth_tags %}
 
 {% block main %}
-        {% if not request.user.is_authenticated %}
-            {% include 'users/login.html' %}
-        {% endif %}
 
         <h2>De Omslagroute</h2>
         {% if HOMEPAGE_INTRO %}

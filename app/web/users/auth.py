@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Group
+from web.profiles.models import Profile
 from functools import wraps
 from urllib.parse import urlparse
 
@@ -9,6 +9,13 @@ from django.shortcuts import resolve_url
 from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured
 from keycloak_oidc.auth import OIDCAuthenticationBackend as DatapuntOIDCAuthenticationBackend
 import logging
+from .statics import GEBRUIKERS_BEHEERDER
+from web.core.utils import validate_email_wrapper
+import sendgrid
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
+from sendgrid.helpers.mail import Mail
+from django.template.loader import render_to_string
 LOGGER = logging.getLogger(__name__)
 try:
     from django.urls import reverse
@@ -46,20 +53,47 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
 
 
 def auth_test(user, user_type):
+    if isinstance(user_type, list):
+        return hasattr(user, 'user_type') and user.user_type in user_type
     return hasattr(user, 'user_type') and user.user_type == user_type
 
 
 class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
+
+    def create_user(self, claims):
+        user = super().create_user(claims)
+        profile = Profile()
+        profile.user = user
+        profile.save()
+        addresses = [
+            user.username for user in self.UserModel.objects.all().filter(user_type=GEBRUIKERS_BEHEERDER)
+            if validate_email_wrapper(user.username)
+        ]
+        if settings.SENDGRID_KEY and addresses:
+            current_site = get_current_site(self.request)
+            data = {
+                'site': current_site.domain,
+                'url': reverse('update_user', kwargs={'pk': user.id})
+            }
+            body = render_to_string('users/mail/gebruikers_beheerders_new_user.txt', data)
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='no-reply@%s' % current_site.domain,
+                to_emails=addresses,
+                subject='Omslagroute - gebruiker aangemaakt',
+                plain_text_content=body
+            )
+            sg.send(email)
+
+        return user
+
     def get_userinfo(self, access_token, id_token, payload):
         userinfo = super().get_userinfo(access_token, id_token, payload)
-        print(userinfo)
         return userinfo
 
     def get_or_create_user(self, access_token, id_token, payload):
 
-        print(payload)
         user = super().get_or_create_user(access_token, id_token, payload)
-        print(user)
         return user
 
     def authenticate(self, request, **kwargs):

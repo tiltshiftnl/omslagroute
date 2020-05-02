@@ -11,7 +11,7 @@ from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, BEHEERDER, USER_TYPES_ACTIVE
+from .statics import BEGELEIDER, BEHEERDER, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 import operator
@@ -26,12 +26,14 @@ except ImportError:
 from mozilla_django_oidc.views import get_next_url, get_random_string
 
 
+# legacy dev only
 def generic_logout(request):
     logout(request)
     messages.add_message(request, messages.INFO, 'Je bent uitgelogd')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+# legacy dev only
 def generic_login(request):
     if request.method == 'POST' and 'is_top_login_form' in request.POST:
         form = AuthenticationForm(data=request.POST)
@@ -49,15 +51,18 @@ def generic_login(request):
 
 
 class UserList(UserPassesTestMixin, FormView):
-    # model = User
     template_name_suffix = '_list_page'
     template_name = 'users/user_list_page.html'
-    # queryset = User.objects.all()
     form_class = FilterListForm
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
-        filter = self.request.GET.getlist('filter', USER_TYPES_ACTIVE)
+
+        # filter
+        filter_list = [f for f in self.request.GET.getlist('filter', []) if f]
+        filter = filter_list if filter_list else USER_TYPES_ACTIVE
+        filter_params = '&filter='.join(filter_list)
+        filter_params = '&filter=%s' % filter_params if filter_params else ''
         object_list = User.objects.all().filter(user_type__in=filter)
 
         # default sort on user_type by custom list
@@ -65,55 +70,35 @@ class UserList(UserPassesTestMixin, FormView):
         object_list = sorted(object_list, key=lambda o: o[1])
         object_list = [o[0] for o in object_list]
 
+        # pagination
         paginator = Paginator(object_list, 20)
         page = self.request.GET.get('page', 1)
         object_list = paginator.get_page(page)
-        filter_form = FilterListForm()
+
+        form = FilterListForm(self.request.GET)
         kwargs.update({
             'object_list': object_list,
-            # 'filter_form': filter_form,
+            'form': form,
+            'filter_params': filter_params,
         })
         return kwargs
-    #
-    # def get(self, request, *args, **kwargs):
-    #     filter_form = FilterListForm(request)
-    #     kwargs.update({
-    #         'filter_form': filter_form,
-    #     })
-    #     return super().get(request, *args, **kwargs)
-
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     kwargs = super().get_context_data(object_list=object_list, **kwargs)
-    #     filter = self.request.GET.getlist('filter', USER_TYPES_ACTIVE)
-    #     object_list = User.objects.all().filter(user_type__in=filter)
-    #
-    #     # default sort on user_type by custom list
-    #     object_list = [[o, USER_TYPES_ACTIVE.index(o.user_type)] for o in object_list]
-    #     object_list = sorted(object_list, key=lambda o: o[1])
-    #     object_list = [o[0] for o in object_list]
-    #
-    #     paginator = Paginator(object_list, 20)
-    #     page = self.request.GET.get('page', 1)
-    #     object_list = paginator.get_page(page)
-    #     filter_form = FilterListForm()
-    #     kwargs.update({
-    #         'object_list': object_list,
-    #         # 'filter_form': filter_form,
-    #     })
-    #     return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, [BEHEERDER, GEBRUIKERS_BEHEERDER])
 
 
 class UserUpdateView(UserPassesTestMixin, UpdateView):
     model = User
     template_name_suffix = '_update_form'
-    form_class = UserCreationForm
+    form_class = UserUpdateForm
     success_url = reverse_lazy('user_list')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangepast" % self.object.username)
+        return super().form_valid(form)
 
 
 class UserCreationView(UserPassesTestMixin, CreateView):
@@ -123,7 +108,7 @@ class UserCreationView(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('user_list')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

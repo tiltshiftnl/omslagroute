@@ -35,11 +35,8 @@
         {% endif %}
 
         <div class="form-field">
-            <label for="{{ form.username.id_for_label }}">E-mailadres (username)</label>
-            {% if form.username.help_text %}
-                <div class="help-text">{{ form.username.help_text|safe }}</div>
-            {% endif %}
-            {{ form.username }}
+            <label for="id_username">E-mailadres (username)</label>
+            <input id="id_username" type="text" disabled value="{{ form.instance.username }}">
             {% if form.username.errors %}
                 <ol class="error-text">
                 {% for error in form.username.errors %}

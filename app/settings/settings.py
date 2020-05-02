@@ -182,11 +182,6 @@ REST_FRAMEWORK = {
     )
 }
 
-# Mail
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # CORS and allowed hosts
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
 CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST', '').split(',')
@@ -196,6 +191,7 @@ AUTH_GROUPNAME_PROCESS = 'proces'
 
 LOGIN_URL = '/#login'
 LOGIN_URL_NAME = 'inloggen'
+LOGOUT_URL_NAME = 'uitloggen'
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/admin/login/',
@@ -223,7 +219,6 @@ OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
 
 IAM_URL = None
 if os.environ.get("IAM_URL"):
-    print('keycloak enabled')
     IAM_URL = '%s%s' %(
         os.environ.get(
             'IAM_URL', 'https://iam.amsterdam.nl/auth/realms/datapunt-acc'
@@ -239,7 +234,6 @@ if os.environ.get("IAM_URL"):
     OIDC_AUTHENTICATE_CLASS = 'web.users.views.OIDCAuthenticationRequestView'
     OIDC_RP_SCOPES = 'profile email openid'
     OIDC_USE_NONCE = False
-    OIDC_RENEW_ID_TOKEN_EXPIRY_SECONDS = 60 * 2
     AUTHENTICATION_BACKENDS = [
         'web.users.auth.OIDCAuthenticationBackend',
     ]
@@ -255,7 +249,8 @@ if os.environ.get("IAM_URL"):
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
     LOGIN_URL_NAME = 'oidc_authentication_callback'
-    LOGIN_URL = 'oidc_authentication_init'
+    LOGOUT_URL_NAME = 'oidc_logout'
+    LOGIN_URL = '/oidc/authenticate/'
 
 
 LOGGING = {

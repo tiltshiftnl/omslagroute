@@ -14,12 +14,12 @@ from web.forms.widgets import CheckboxSelectMultiple
 
 
 class FilterListForm(forms.Form):
-    filter = forms.IntegerField(
+    filter = forms.CharField(
         label='Filter lijst',
         widget=CheckboxSelectMultiple(
             choices=User.user_types,
-        )
-
+        ),
+        required=False,
     )
 
 
@@ -43,7 +43,22 @@ class AuthenticationForm(DefaultAuthenticationForm):
         return self.cleaned_data
 
 
+class UserUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = (
+            'user_type',
+        )
+
+
 class UserCreationForm(DefaultUserCreationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'disabled': 'disabled'}
+        ),
+        required=False
+    )
 
     class Meta:
         model = User
@@ -54,12 +69,6 @@ class UserCreationForm(DefaultUserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    # organization = forms.ModelChoiceField(
-    #     required=True,
-    #     widget=forms.RadioSelect(),
-    #     queryset=Organization.objects.all(),
-    #     empty_label=None,
-    # )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

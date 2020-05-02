@@ -43,13 +43,13 @@
                         {% else %}
                             Ingelogd als: <span class="site-userinfo__username">{{ request.user.username }}</span> |
                         {% endif %}
-                        <a href="{% url 'uitloggen' %}">Uitloggen</a>
+                        <a href="{% url LOGOUT_URL_NAME %}">Uitloggen</a>
                     </div>
                 {% else %}
                     <div class="site-userinfo">
                         {% url 'home' as home_url %}
                         {% if request.get_full_path == home_url %}
-                            <a href="#login">Log in</a>
+                            <a href="{{ LOGIN_URL }}">Log in</a>
                         {% else %}
                             <a href="{% url 'home' %}#login">Log in</a>
                         {% endif %}
@@ -57,65 +57,7 @@
                 {% endif %}
             </div>
         </header>
-        <div class="site-navigation screen-only">
-
-            {% if request.user.is_authenticated %}
-            <nav>
-                <ul class="navigation-container" aria-haspopup="true">
-                        <li>
-                            <a href="{% url 'home' %}">Omslagroute</a>
-
-                            {% if request.user|is_beheerder %}
-                            <ul>
-                                <li>
-                                    <a href="{% url 'document_list' %}">
-                                        <svg width="8" height="12">
-                                            <use href="#chevron-right" xlink:href="#chevron-right" width="8" height="12"></use>
-                                        </svg>
-                                        Beheer documenten</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'manage_timeline' %}">
-                                        <svg width="8" height="12">
-                                            <use href="#chevron-right" xlink:href="#chevron-right" width="8" height="12"></use>
-                                        </svg>
-                                        Bewerk omslagroute</a>
-                                </li>
-                            </ul>
-                            {% endif %}
-                        </li>
-
-                        {% if request.user|is_begeleider %}
-                            <li>
-                                <a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a>
-                            </li>
-                        {% endif %}
-
-                    {% if request.user|is_beheerder %}
-                        <li class="admin-settings">
-                            <a href="#beheer" data-handler="void">Beheer</a>
-                            <ul id="beheer">
-                                <li>
-                                    <a href="{% url 'user_list' %}">
-                                        <svg width="8" height="12">
-                                            <use href="#chevron-right" xlink:href="#chevron-right" width="8" height="12"></use>
-                                        </svg>
-                                        Bewerk gebruikers</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'manage_organizations' %}">
-                                        <svg width="8" height="12">
-                                            <use href="#chevron-right" xlink:href="#chevron-right" width="8" height="12"></use>
-                                        </svg>
-                                        Bewerk organisaties</a>
-                                </li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-            {% endif %}
-        </div>
+        {% include 'users/user_type_menus.html' %}
         {% block messages %}
             <ul role="list" class="alert-container">
             {% if messages %}
