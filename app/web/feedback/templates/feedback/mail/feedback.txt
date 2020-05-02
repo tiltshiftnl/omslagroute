@@ -3,7 +3,7 @@ Beste,
 Er is op de site {{ site }} nieuwe feedback ingevuld door een gebruiker.
 
 Naam:
-{% if name %}{{ name }}{% else %}—% endif %}
+{% if name %}{{ name }}{% else %}—{% endif %}
 
 E-mailadres:
 {% if email %}{{ email }}{% else %}—{% endif %}
