@@ -40,19 +40,34 @@
 
         <div class="form-field--textinput form-field form-field--empty">
             <label for="id_name">Naam <small class="help-text">(Niet verplicht)</small>:</label>
-            <input type="text" name="name" id="id_name">
+            {{ form.name }}
         </div>
 
         <div class="form-field--textinput form-field form-field--empty">
             <label for="id_email">E-mailadres <small class="help-text">(Niet verplicht)</small>:</label>
             <div class="help-text">Zodat we contact op kunnen nemen als we vragen hebben</div>
-            <input type="email" name="email" id="id_email">
+            {{ form.email }}
+            {% if form.email.errors %}
+                <ol class="error-text">
+                {% for error in form.email.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
         <div class="form-field--textarea form-field form-field--empty">
-            <label for="id_feedback">Wat wil je ons laten weten <small class="help-text">(Verplicht)</small>:</label> 
-            <textarea name="feedback" cols="40" rows="4" required id="id_feedback"></textarea>
+            <label for="id_feedback">Wat wil je ons laten weten <small class="help-text">(Verplicht)</small>:</label>
+            {% if form.feedback.errors %}{% endif %}
+            {{ form.feedback }}
+            {% if form.feedback.errors %}
+                <ol class="error-text">
+                {% for error in form.feedback.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
         </div>
-            
+
         <div class="form-field form-field--buttons screen-only">
             <input type="submit" value="Verstuur" class="button button--primary">
             <a data-handler="modal-close" href="#" class="button button--secondary">Annuleren</a>
