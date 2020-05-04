@@ -13,17 +13,63 @@
 
 {% block main %}
     <h2>Alle gebruikers</h2>
+    <form method="get">
+        {{ form.filter }}
+        <button type="submit" >Filter</button>
+    </form>
+    <table class="case-list table--interactive">
+        <thead>
+            <tr>
+                <th>E-mailadres (username)</th>
+                <th>Voornaam</th>
+                <th>Achternaam</th>
+                <th>Gebruiker rol</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>
+                <a href="{% url 'update_user' object.id %}">
+                    {{ object.username }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'update_user' object.id %}">
+                    {{ object.last_name }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'update_user' object.id %}">
+                    {{ object.last_name }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'update_user' object.id %}">
+                    {{ object.user_type_value }}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    <ul role="list" class="list-vertical">
-    {% for object in object_list %}
-        <li>{{ object.username }} 
-            {% if object.user_type_value %} 
-               ( {{ object.user_type_value }} )
-            {% endif %}</li>
-    {% endfor %}
-    </ul>
-    
-    <div class="form-field form-field--buttons screen-only">
-        <a href="{% url 'add_user' %}" class="button button--primary">Nieuwe gebruiker</a>
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?page=1{{ filter_params }}">&laquo; Eerste</a>
+                <a href="?page={{ object_list.previous_page_number }}{{ filter_params }}">Vorige</a>
+            {% endif %}
+
+            <span class="current">
+                Pagina {{ object_list.number }} van {{ object_list.paginator.num_pages }}.
+            </span>
+
+            {% if object_list.has_next %}
+                <a href="?page={{ object_list.next_page_number }}{{ filter_params }}">Volgende</a>
+                <a href="?page={{ object_list.paginator.num_pages }}{{ filter_params }}">Laatste &raquo;</a>
+            {% endif %}
+        </span>
     </div>
+
 {% endblock %}

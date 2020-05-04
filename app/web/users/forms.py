@@ -2,6 +2,7 @@ from django.contrib.auth.forms import (
     AuthenticationForm as DefaultAuthenticationForm, authenticate
 )
 from django import forms
+from django.forms import widgets
 from .models import *
 from django.http import HttpResponse
 from web.profiles.models import Profile
@@ -9,6 +10,17 @@ from django.forms.models import inlineformset_factory
 from web.organizations.models import Organization
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm as DefaultUserCreationForm
+from web.forms.widgets import CheckboxSelectMultiple
+
+
+class FilterListForm(forms.Form):
+    filter = forms.CharField(
+        label='Filter lijst',
+        widget=CheckboxSelectMultiple(
+            choices=User.user_types,
+        ),
+        required=False,
+    )
 
 
 class AuthenticationForm(DefaultAuthenticationForm):
@@ -31,7 +43,22 @@ class AuthenticationForm(DefaultAuthenticationForm):
         return self.cleaned_data
 
 
+class UserUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = (
+            'user_type',
+        )
+
+
 class UserCreationForm(DefaultUserCreationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'disabled': 'disabled'}
+        ),
+        required=False
+    )
 
     class Meta:
         model = User
@@ -42,12 +69,6 @@ class UserCreationForm(DefaultUserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    # organization = forms.ModelChoiceField(
-    #     required=True,
-    #     widget=forms.RadioSelect(),
-    #     queryset=Organization.objects.all(),
-    #     empty_label=None,
-    # )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Group
+from web.profiles.models import Profile
 from functools import wraps
 from urllib.parse import urlparse
 
@@ -6,6 +6,23 @@ from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import resolve_url
+from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured
+from keycloak_oidc.auth import OIDCAuthenticationBackend as DatapuntOIDCAuthenticationBackend
+from mozilla_django_oidc.utils import absolutify
+import logging
+from .statics import GEBRUIKERS_BEHEERDER
+from web.core.utils import validate_email_wrapper
+import sendgrid
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
+from sendgrid.helpers.mail import Mail
+from django.template.loader import render_to_string
+LOGGER = logging.getLogger(__name__)
+try:
+    from django.urls import reverse
+except ImportError:
+    # Django < 2.0.0
+    from django.core.urlresolvers import reverse
 
 
 def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIELD_NAME, user_type=None):
@@ -37,6 +54,91 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
 
 
 def auth_test(user, user_type):
+    if isinstance(user_type, list):
+        return hasattr(user, 'user_type') and user.user_type in user_type
     return hasattr(user, 'user_type') and user.user_type == user_type
 
 
+class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
+
+    def create_user(self, claims):
+        user = super().create_user(claims)
+        profile = Profile()
+        profile.user = user
+        profile.save()
+        addresses = [
+            user.username for user in self.UserModel.objects.all().filter(user_type=GEBRUIKERS_BEHEERDER)
+            if validate_email_wrapper(user.username)
+        ]
+        if settings.SENDGRID_KEY and addresses:
+            current_site = get_current_site(self.request)
+            data = {
+                'site': current_site.domain,
+                'url': reverse('update_user', kwargs={'pk': user.id})
+            }
+            body = render_to_string('users/mail/gebruikers_beheerders_new_user.txt', data)
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='no-reply@%s' % current_site.domain,
+                to_emails=addresses,
+                subject='Omslagroute - gebruiker aangemaakt',
+                plain_text_content=body
+            )
+            sg.send(email)
+
+        return user
+
+    def get_userinfo(self, access_token, id_token, payload):
+        userinfo = super().get_userinfo(access_token, id_token, payload)
+        return userinfo
+
+    def get_or_create_user(self, access_token, id_token, payload):
+
+        user = super().get_or_create_user(access_token, id_token, payload)
+        return user
+
+    def authenticate(self, request, **kwargs):
+        """Authenticates a user based on the OIDC code flow."""
+
+        self.request = request
+        if not self.request:
+            return None
+
+        state = self.request.GET.get('state')
+        code = self.request.GET.get('code')
+        nonce = kwargs.pop('nonce', None)
+
+        if not code or not state:
+            return None
+
+        reverse_url = self.get_settings('OIDC_AUTHENTICATION_CALLBACK_URL',
+                                        'oidc_authentication_callback')
+
+        token_payload = {
+            'client_id': self.OIDC_RP_CLIENT_ID,
+            'client_secret': self.OIDC_RP_CLIENT_SECRET,
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': absolutify(
+                self.request,
+                reverse(reverse_url)
+            ),
+        }
+
+        # Get the token
+        token_info = self.get_token(token_payload)
+        id_token = token_info.get('id_token')
+        access_token = token_info.get('access_token')
+
+        # Validate the token
+        payload = self.verify_token(id_token, nonce=nonce)
+
+        if payload:
+            self.store_tokens(access_token, id_token)
+            try:
+                return self.get_or_create_user(access_token, id_token, payload)
+            except SuspiciousOperation as exc:
+                LOGGER.warning('failed to get or create user: %s', exc)
+                return None
+
+        return None

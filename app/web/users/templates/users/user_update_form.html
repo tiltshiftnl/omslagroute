@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %} - Gebruiker aanpassen{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'user_list' %}">Alle gebruikers</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Gebuiker '{{ form.instance.name }}' aanpassen</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Gebuiker '{{ form.instance.name }}' aanpassen</h2>
+
+    <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
+        {% if form.errors %}
+            <div class="errors" aria-live="polite">
+                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>:
+                                {{ error|escape }}
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="form-field">
+            <label for="id_username">E-mailadres (username)</label>
+            <input id="id_username" type="text" disabled value="{{ form.instance.username }}">
+            {% if form.username.errors %}
+                <ol class="error-text">
+                {% for error in form.username.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
+        </div>
+
+        <div class="form-field">
+            <label for="{{ form.user_type.id_for_label }}">{{ form.user_type.label }}</label>
+            {% if form.name.help_text %}
+                <div class="help-text">{{ form.user_type.help_text|safe }}</div>
+            {% endif %}
+            {{ form.user_type }}
+            {% if form.user_type.errors %}
+                <ol class="error-text">
+                {% for error in form.user_type.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
+        </div>
+
+
+
+        <input type="hidden" name="{{ form.user.id_for_label }}" id="{{ form.user.id_for_label }}">
+        <input type="hidden" name="{{ form.id.id_for_label }}" id="{{ form.id.id_for_label }}">
+
+        <div class="form-field form-field--buttons screen-only">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

@@ -16,8 +16,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         userModel = get_user_model()
-        if userModel.objects.count() == 0:
-            email = '%s@meail.com' % options.get('username')
+        # if userModel.objects.count() == 0:
+        try:
+            email = '%s@email.com' % options.get('username').split('@')[0]
             password = options.get('password')
             username = options.get('username')
             print('Creating account for %s (%s)' % (username, email))
@@ -25,5 +26,6 @@ class Command(BaseCommand):
             admin.is_active = True
             admin.is_admin = True
             admin.save()
-        else:
+        except:
             print('Admin accounts can only be initialized if no Accounts exist')
+        # else:

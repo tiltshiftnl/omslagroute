@@ -6,6 +6,9 @@ from django.contrib import admin
 from web.core.views import *
 from web.health.views import health_default, health_db
 from web.users.views import generic_logout, generic_login
+from django.views.generic import TemplateView
+from django.conf import settings
+from web.users.views import OIDCAuthenticationRequestView
 
 
 urlpatterns = [
@@ -30,8 +33,19 @@ urlpatterns = [
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
 
-    url(r'^oidc/', include('keycloak_oidc.urls')),
-
     path('admin/', admin.site.urls),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('404', TemplateView.as_view(**{
+            'template_name': '404.html',
+        }), name='sendmail'),
+    ]
+
+if settings.IAM_URL:
+    urlpatterns += [
+        url(r'^oidc/', include('keycloak_oidc.urls')),
+        path('inloggen/', OIDCAuthenticationRequestView.as_view(), name='inloggen'),
+    ]

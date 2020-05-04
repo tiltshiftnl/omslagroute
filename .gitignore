@@ -11,6 +11,7 @@
 db/
 *.DS_Store
 .idea
+python
 .idea/*
 pip-log.txt
 .sass-cache

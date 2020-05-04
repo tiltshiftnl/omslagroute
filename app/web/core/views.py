@@ -20,6 +20,12 @@ from django.http import HttpResponse
 class HomePageView(TemplateView):
     template_name = "home.html"
 
+    def get(self, request, *args, **kwargs):
+        print(request.session.get('oidc_state'))
+        print(request.user.__dict__)
+        print(request.session.get('oidc_id_token_expiration'))
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         document_list = Document.objects.all()
         floating_document_list = Document.objects.filter(moment__documents__isnull=True)

@@ -2,7 +2,7 @@
     <a id="login"></a>
     <section class="section section--login">
         <h2 class="section-login__title">Log in</h2>
-        <form class="login-form" method="post" action="{% url 'inloggen' %}">
+        <form class="login-form" method="post" action="{% url LOGIN_URL_NAME %}">
             {% csrf_token %}
 
             {% if request.GET.error == 'login' %}

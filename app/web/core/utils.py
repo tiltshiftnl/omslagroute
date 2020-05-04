@@ -11,6 +11,16 @@ import traceback
 from swiftclient.utils import TRUE_VALUES, EMPTY_ETAG, EXPIRES_ISO8601_FORMAT, SHORT_EXPIRES_ISO8601_FORMAT, TIME_ERRMSG
 
 
+def validate_email_wrapper(email):
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+    try:
+        validate_email(email)
+        return True
+    except ValidationError:
+        return False
+
+
 def generate_temp_url(path, seconds, key, method, absolute=False,
                       prefix=False, iso8601=False):
     """Generates a temporary URL that gives unauthenticated access to the
