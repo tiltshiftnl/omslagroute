@@ -22,6 +22,15 @@
   }
 }
 
+
+body.isInIframe {
+  background-color: #fff;
+
+  .site-container {
+    min-height: auto;
+  }
+}
+
 .modal-active {
   height: 100vh;
   overflow-y: hidden;
@@ -29,13 +38,16 @@
 }
 
 .modal {
-  display: none;
+  display: flex;
   position: fixed;
-  z-index: 300;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 3000;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
 
   align-items: flex-start;
   justify-content: center;
@@ -49,21 +61,28 @@
   background-color: $overlay-black70;
 
   &.active {
-    display: flex;
-
+    //display: flex;
+    pointer-events: all;
     opacity: 1;
+    right: 0;
+    bottom: 0;
   }
 
-  &--feedback {
-    min-height: 590px;
-  }
 }
+
+
 .modal-inner {
-  position: relative;
+  position: absolute;
+  opacity: 0;
   z-index: 2;
-  margin: 100px auto 20px auto;
+  //margin: 100px auto 20px auto;
+  top: 25%;
+  left: 50%;
+  transform: translatex(-50%);
   width: 95%;
   max-width: 700px;
+  max-height: 100vh;
+  transition: all .3s ease-in-out;
 
   background-color: #fff;
 
@@ -74,16 +93,13 @@
   iframe {
     border: 0;
     width: 100%;
+    transition: height .3s ease-in-out;
 
-    body {
-      background-color: #fff;
-    }
-    
-    .site-container {
-      background-color: #fff;
-    }
   }
 
+  .active & {
+    opacity: 1;
+  }
   
 }
 
@@ -94,13 +110,6 @@
   right: 0;
   top: 0;
   bottom: 0;
-}
-
-.modal-hidden {
-  display: none;
-  .modal & {
-    display: block;
-  }
 }
 
 .feedback-container {
@@ -121,15 +130,6 @@
     small {
       font-weight: 400;
     }
-  }
-
-  textarea[required]:invalid:not(:focus):not(:placeholder-shown) {
-    border: 0.063rem solid #ec0000;
-    box-shadow: inset 0 0 0 0.063rem #ec0000;
-  }
-  textarea[required]:not(:focus):not(:placeholder-shown) {
-    border: 0.063rem solid #004699;
-    box-shadow: none;
   }
 
   .button--close {

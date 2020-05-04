@@ -20,10 +20,6 @@
 
 <div class="site-container">
     {% include 'svg-sprite.html' %}
-    {% block feedback %}
-    {% include 'feedback/feedback_context.html' %}
-    {% endblock %}
-
     {% block skiplinks %}
     {% endblock %}
 
@@ -170,6 +166,10 @@
         {% block main %}
         {% endblock %}
     </main>
+    {% block feedback %}
+    {% include 'feedback/feedback_context.html' %}
+    {% endblock %}
+
 </div>
 
 <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>
