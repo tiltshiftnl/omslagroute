@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import resolve_url
 from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured
 from keycloak_oidc.auth import OIDCAuthenticationBackend as DatapuntOIDCAuthenticationBackend
+from mozilla_django_oidc.utils import absolutify
 import logging
 from .statics import GEBRUIKERS_BEHEERDER
 from web.core.utils import validate_email_wrapper
@@ -118,7 +119,10 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
             'client_secret': self.OIDC_RP_CLIENT_SECRET,
             'grant_type': 'authorization_code',
             'code': code,
-            'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse(reverse_url),
+            'redirect_uri': absolutify(
+                self.request,
+                reverse(reverse_url)
+            ),
         }
 
         # Get the token

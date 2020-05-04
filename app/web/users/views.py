@@ -14,8 +14,9 @@ from django.db import transaction
 from .statics import BEGELEIDER, BEHEERDER, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
-import operator
-from django.db.models import Avg, Count
+from mozilla_django_oidc.utils import (
+    absolutify
+)
 
 try:
     from urllib.parse import urlencode
@@ -153,7 +154,10 @@ class OIDCAuthenticationRequestView(DatapuntOIDCAuthenticationRequestView):
             'response_type': 'code',
             'scope': self.get_settings('OIDC_RP_SCOPES', 'openid email'),
             'client_id': self.OIDC_RP_CLIENT_ID,
-            'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse(reverse_url),
+            'redirect_uri': absolutify(
+                request,
+                reverse(reverse_url)
+            ),
             'state': state,
         }
 
@@ -170,6 +174,5 @@ class OIDCAuthenticationRequestView(DatapuntOIDCAuthenticationRequestView):
         request.session['oidc_login_next'] = get_next_url(request, redirect_field_name)
 
         query = urlencode(params)
-        print(query)
         redirect_url = '{url}?{query}'.format(url=self.OIDC_OP_AUTH_ENDPOINT, query=query)
         return HttpResponseRedirect(redirect_url)

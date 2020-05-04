@@ -54,11 +54,11 @@ class SessionRefresh(DatapuntSessionRefresh):
         params = {
             'response_type': 'code',
             'client_id': client_id,
-            # 'redirect_uri': absolutify(
-            #     request,
-            #     reverse('oidc_authentication_callback')
-            # ),
-            'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse('oidc_authentication_callback'),
+            'redirect_uri': absolutify(
+                request,
+                reverse('oidc_authentication_callback')
+            ),
+            # 'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse('oidc_authentication_callback'),
             'state': state,
             'scope': self.get_settings('OIDC_RP_SCOPES', 'openid email'),
             'prompt': 'none',
@@ -75,7 +75,7 @@ class SessionRefresh(DatapuntSessionRefresh):
         request.session['oidc_login_next'] = request.get_full_path()
 
         query = urlencode(params)
-        print(query)
+
         redirect_url = '{url}?{query}'.format(url=auth_url, query=query)
         if request.is_ajax():
             # Almost all XHR request handling in client-side code struggles
