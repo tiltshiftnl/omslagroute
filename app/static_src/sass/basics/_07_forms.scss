@@ -327,7 +327,8 @@ textarea {
             display: block;
         }
 
-        &[name="username"] {
+        &[name="username"],
+        &[name="feedback"] {
             border: .063rem solid $primary-black;
             box-shadow: none;
         }
