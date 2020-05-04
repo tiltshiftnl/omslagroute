@@ -222,6 +222,7 @@
 [data-document-type]:before {
     content: attr(data-document-type) ' ';
     opacity: .5;
+    display: block;
 }
 
 .document__icon {
