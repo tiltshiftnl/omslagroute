@@ -656,8 +656,21 @@ select {
         box-shadow: rgb(180, 180, 180) 0 0 0 .063rem inset;
     }
     &[multiple] {
-        height: 100%;
+        border-color: transparent;
+        //box-shadow: none;
+        height: auto;
         background: none;
+        overflow: visible;
+        padding: 10px;
+        //option {
+        //    padding: 10px;
+        //    border: 1px solid $neutral-grey4;
+        //    &:checked {
+        //        background-color: $default-text-color !important;
+        //        color: $primary-white !important;
+        //        background-image: url("/static/images/chevron-down.svg");
+        //    }
+        //}
     }
 }
 
