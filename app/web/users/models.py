@@ -17,6 +17,7 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    @property
     def user_type_value(self):
         return USER_TYPES_DICT[self.user_type]
 

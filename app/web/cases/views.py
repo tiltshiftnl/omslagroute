@@ -88,11 +88,14 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         return response
 
 
-class GenericCaseUpdateFormView(GenericUpdateFormView):
+class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
     model = Case
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('cases_by_profile')
     form_class = CaseGenericModelForm
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
     def get_success_url(self):
         next = self.request.POST.get('next')
@@ -112,11 +115,14 @@ class GenericCaseUpdateFormView(GenericUpdateFormView):
         return response
 
 
-class GenericCaseCreateFormView(GenericCreateFormView):
+class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
     model = Case
     template_name = 'forms/generic_form.html'
     success_url = reverse_lazy('cases_by_profile')
     form_class = CaseGenericModelForm
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
     def get_success_url(self):
         return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
@@ -132,10 +138,13 @@ class GenericCaseCreateFormView(GenericCreateFormView):
         return response
 
 
-class SendCaseView(UpdateView):
+class SendCaseView(UserPassesTestMixin, UpdateView):
     model = Case
     template_name = 'cases/send.html'
     form_class = SendCaseForm
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
     def get_success_url(self):
         return reverse('case', kwargs={'pk': self.object.id})
@@ -176,7 +185,6 @@ class SendCaseView(UpdateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-
         return super().form_invalid(form)
 
 

@@ -1,12 +1,12 @@
 Beste,
 
-Er is nieuwe feedback ingevuld door een gebruiker.
+Er is op de site {{ site }} nieuwe feedback ingevuld door een gebruiker.
 
 Naam:
-{% if name %}{{ name }}{% else %}\u2014{% endif %}
+{% if name %}{{ name }}{% else %}—{% endif %}
 
 E-mailadres:
-{% if email %}{{ email }}{% else %}\u2014{% endif %}
+{% if email %}{{ email }}{% else %}—{% endif %}
 
 Rol:
 {% if rol %}{{ rol }}{% else %}Anoniem{% endif %}

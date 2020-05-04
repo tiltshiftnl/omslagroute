@@ -22,11 +22,6 @@
     .dot,
     .details-wrapper:before {
         background-color: $neutral-grey2;
-        box-shadow: 0 0 1px 1px #000;
-
-        @media all and (min-width: $tablets) {
-            box-shadow: none;
-        }
     }
     
     .details-wrapper--highlighted:before {
