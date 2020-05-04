@@ -26,10 +26,11 @@ class DocumentVersionForm(forms.ModelForm):
 
 
 class DocumentForm(forms.ModelForm):
-    moment_list = forms.ModelChoiceField(
+    moment_list = forms.ModelMultipleChoiceField(
         label=_('Selecteer een processtap'),
         queryset=Moment.objects.all(),
-        required=False
+        help_text=_("Selecteer meerdere stappen door de toets Ctrl(Windows) / CMD(OS X) + linker muisklik op de processtap"),
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):
@@ -39,9 +40,14 @@ class DocumentForm(forms.ModelForm):
         self.fields['name'].label = "Wat is de titel van het document?"
         self.fields['description'].label = "Waar wordt dit document voor gebruikt?"
         self.fields['document_type'].label = "Om wat voor soort document gaat het?"
-
+        self.fields['moment_list'].widget = forms.SelectMultiple(
+            choices=self.fields['moment_list'].choices,
+            attrs={
+                'size': Moment.objects.all().count(),
+            },
+        )
         if self.instance.id and self.instance.moment_set.all():
-            self.fields['moment_list'].initial = self.instance.moment_set.all()[0]
+            self.fields['moment_list'].initial = self.instance.moment_set.all()
 
     def clean_name(self):
         data = self.cleaned_data['name']
