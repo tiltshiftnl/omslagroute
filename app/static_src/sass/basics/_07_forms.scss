@@ -59,7 +59,7 @@ body:not(:-moz-handler-blocked) fieldset {
     color: $neutral-grey4;
     line-height: 1.4;
     margin: .313rem 0 0 1rem;
-  
+
     table {
         border: none;
         width: auto;
@@ -77,12 +77,12 @@ body:not(:-moz-handler-blocked) fieldset {
     thead th {
         font-weight: 500;
     }
-    tr:not(:last-of-type) th, 
+    tr:not(:last-of-type) th,
     tr:not(:last-of-type) td {
         border: none;
     }
     tbody td:first-child {
-       font-weight: normal; 
+       font-weight: normal;
     }
     tbody tr {
         background-color: transparent;
@@ -107,15 +107,15 @@ body:not(:-moz-handler-blocked) fieldset {
         position: relative;
         padding: .5rem 0 .5rem 2rem;
         display: block;
-        
+
         font-weight: 500;
-        
+
         color: $primary-black;
         text-decoration: none;
         &:hover {
             text-decoration: underline;
         }
-        
+
         &:before {
             content: '';
             position: absolute;
@@ -124,14 +124,14 @@ body:not(:-moz-handler-blocked) fieldset {
             margin-left: -1px;
             top: 1rem;
             bottom: -1rem;
-        
+
             width: 2px;
             margin-left: -1px;
-        
+
             background-color: $neutral-grey4;
-        
+
         }
-        
+
     }
     .section--form__navigation-item-complete {
         &:before {
@@ -142,12 +142,12 @@ body:not(:-moz-handler-blocked) fieldset {
     > ul > li:last-child > a:last-child:before {
         display: none;
     }
-    
+
     ul ul a {
         font-weight: 400;
         font-size: .875em;
     }
-    
+
     .dot {
         position: absolute;
         z-index: 2;
@@ -654,6 +654,10 @@ select {
         pointer-events: none;
         opacity: .5;
         box-shadow: rgb(180, 180, 180) 0 0 0 .063rem inset;
+    }
+    &[multiple] {
+        height: 100%;
+        background: none;
     }
 }
 

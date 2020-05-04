@@ -65,8 +65,8 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
         response = super().form_valid(form)
         for moment in self.object.moment_set.all():
             moment.documents.remove(self.object)
-        if form.cleaned_data.get("moment_list"):
-            form.cleaned_data.get("moment_list").documents.add(self.object)
+        for moment in form.cleaned_data.get("moment_list"):
+            moment.documents.add(self.object)
         messages.add_message(self.request, messages.INFO, "Het document '%s' is aangepast." % self.object.name)
 
         return response
