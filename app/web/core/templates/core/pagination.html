@@ -1,0 +1,32 @@
+{% load html_tags %}
+<div class="pagination">
+    {% if object_list.paginator.num_pages < 8 %}
+    <ul>
+        {% for p in object_list.paginator.num_pages|range %}
+        <li>
+        {% if forloop.counter == object_list.number %}
+            {{ forloop.counter }}
+        {% else %}
+            <a href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+        {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    {% endif %}
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page=1{{ filter_params }}">&laquo; Eerste</a>
+            <a href="?page={{ object_list.previous_page_number }}{{ filter_params }}">Vorige</a>
+        {% endif %}
+
+        <span class="current">
+            Pagina {{ object_list.number }} van {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}{{ filter_params }}">Volgende</a>
+            <a href="?page={{ object_list.paginator.num_pages }}{{ filter_params }}">Laatste &raquo;</a>
+        {% endif %}
+    </span>
+</div>

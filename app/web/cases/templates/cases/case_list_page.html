@@ -15,7 +15,7 @@
 {% block main %}
 <section class="section section--mijn-clienten">
     <h2>Mijn cli&euml;nten</h2>
-    
+
     <div class="form-field form-field--buttons screen-only">
         <a href="{% url 'create_case' 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
     </div>
@@ -60,5 +60,6 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include 'core/pagination.html' %}
 </section>
 {% endblock %}
