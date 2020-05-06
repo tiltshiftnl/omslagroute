@@ -7,6 +7,7 @@
     <ol class="breadcrumb-list">
         <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
         <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'case' case.id %}">Cliënt: {{ case.client_name }}</a></li>
         <li class="breadcrumb-step sr-only" aria-current="location">Bijlage uploaden</li>
     </ol>
 </nav>
