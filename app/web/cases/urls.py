@@ -9,4 +9,7 @@ urlpatterns = [
     path('nieuw/<str:slug>/', GenericCaseCreateFormView.as_view(), name='create_case'),
     path('<int:pk>/<str:slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),
     path('<int:pk>/<str:slug>/verstuur', SendCaseView.as_view(), name='send_case'),
+
+    path('<int:case_pk>/download-bijlage/<int:document_pk>', download_document, name='download_case_document'),
+    path('<int:case_pk>/nieuwe-bijlage', DocumentCreate.as_view(), name='add_case_document'),
 ]

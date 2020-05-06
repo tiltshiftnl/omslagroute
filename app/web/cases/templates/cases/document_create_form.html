@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}- Bijlage uploaden{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+        <li class="breadcrumb-step sr-only" aria-current="location">Bijlage uploaden</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Bijlage uploaden</h2>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="form-field">
+            {% if form.errors %}
+                <div class="errors" aria-live="polite">
+                    <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>
+                                    <a href="#{{field.id_for_label }}">{{field.label}}</a>:
+                                    {{ error|escape }}
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+        <div class="form-field">
+            {{ form.name.label_tag }}
+            {% if form.name.help_text %}
+                <div class="help-text">{{ form.name.help_text|safe }}</div>
+            {% endif %}
+            {{ form.name }}
+            {% if form.name.errors %}
+                <ol class="error-text">
+                {% for error in form.name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
+        </div>
+
+            <strong>Voeg hieronder de bijlage toe</strong>
+            {% if form.uploaded_file.help_text %}
+                <div class="help-text">{{ form.uploaded_file.help_text|safe }}</div>
+            {% endif %}
+            {{ form.uploaded_file }}
+            <label for="{{ form.uploaded_file.id_for_label }}">
+                {{ form.uploaded_file.label }}
+                <svg class="file-upload__icon" width="24" height="24" >
+                    <use href="#upload" xlink:href="#upload" width="24" height="24"></use>
+                </svg>
+            </label>
+            {% if form.uploaded_file.errors %}
+                <ol class="error-text">
+                {% for error in form.uploaded_file.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
+            <div id="file-upload-filename" class="form-field__uploaded"></div>
+        </div>
+
+        <div class="form-field form-field--buttons screen-only">
+            <input type="submit" value="Upload" class="button button--primary">
+            <a href="{% url 'case' case.id %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

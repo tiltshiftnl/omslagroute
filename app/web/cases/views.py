@@ -16,6 +16,9 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from web.organizations.models import Organization
 from django.http import Http404
+from django.shortcuts import render, get_object_or_404
+from django.core.files.storage import default_storage
+from django.http import HttpResponseRedirect
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -186,6 +189,42 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class DocumentCreate(UserPassesTestMixin, CreateView):
+    model = Document
+    form_class = DocumentForm
+    template_name_suffix = '_create_form'
+    success_url = reverse_lazy('home')
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_context_data(self, **kwargs):
+        print(self.kwargs)
+        print(kwargs)
+        case = get_object_or_404(Case, id=self.kwargs.get('case_pk'))
+        kwargs.update({
+            'case': case,
+        })
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        document = form.save(commit=False)
+        print(self.kwargs)
+        document.case = Case.objects.get(id=self.kwargs.get('case_pk'))
+
+        messages.add_message(self.request, messages.INFO, "De bijlage '%s' is opgeslagen." % document.name)
+        return super().form_valid(form)
+
+
+def download_document(request, case_pk, document_pk):
+    case = get_object_or_404(Case, id=case_pk)
+    document = get_object_or_404(Document, id=document_pk)
+    if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
+        raise Http404()
+
+    return HttpResponseRedirect(document.uploaded_file.url)
 
 
 

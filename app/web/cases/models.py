@@ -221,3 +221,39 @@ class Case(PrintableModel):
         verbose_name = _('Client')
         verbose_name_plural = _('Clienten')
         ordering = ('client_last_name', )
+
+
+class Document(models.Model):
+    name = models.CharField(
+        verbose_name=_('Titel van het document'),
+        max_length=100,
+    )
+    uploaded_file = models.FileField(
+        verbose_name=_('Selecteer een bestand'),
+        upload_to='uploads'
+    )
+    uploaded = models.DateTimeField(
+        verbose_name=_('Initieel opgeslagen datum/tijd'),
+        auto_now_add=True,
+    )
+    saved = models.DateTimeField(
+        verbose_name=_('Opgeslagen datum/tijd'),
+        auto_now=True,
+    )
+    case = models.ForeignKey(
+        to='cases.Case',
+        verbose_name=_('Cliënt'),
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def uploaded_str(self):
+        return self.uploaded.strftime('%Y-%m-%d, %H:%M:%S')
+
+    class Meta:
+        verbose_name = _('Bijlage')
+        verbose_name_plural = _('Bijlagen')
+        ordering = ('-uploaded', )

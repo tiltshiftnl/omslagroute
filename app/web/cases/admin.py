@@ -9,3 +9,8 @@ class CaseAdmin(admin.ModelAdmin):
         'client_first_name',
         'client_last_name',
     )
+
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    pass

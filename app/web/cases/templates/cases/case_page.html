@@ -51,6 +51,48 @@
         {% endif %}
         {% endfor %}
     </table>
+    <h3>Bijlagen</h3>
+    <section class="section section-downloads">
+        <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
+        {% for document in document_list %}
+            <li class="document">
+                <a href="{% url 'download_case_document' document.case.id document.id %}" class="document__version" target="_blank" rel="noopener">
+                    <svg class="document__icon document__icon--default"  width="40" height="40" >
+                        <use href="#document" xlink:href="#document"  width="40" height="40"></use>
+                    </svg>
+                    <svg class="document__icon document__icon--hover"  width="40" height="40" >
+                        <use href="#download" xlink:href="#download"  width="40" height="40"></use>
+                    </svg>
+                    <div class="document__header">
+                        <h4 class="document__name" data-document-type="document">{{ document.name }}</h4>
+                    </div>
+                    {% language 'nl' %}
+                    <time timestamp="{{ document.uploaded|date }}" class="document__date">
+                        gewijzigd: {{ document.uploaded|date:"j b Y" }}
+                    </time>
+                    {% endlanguage %}
+                </a>
+
+                <div class="document__info-wrapper">
+                    <div class="document__info">
+                        <p class="hide-on-mobile">
+                            <strong data-document-type="document">{{ document.name }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+            <li class="document document--add">
+                <a href="{% url 'add_case_document' object.id %}" class="document__new" title="Voeg een nieuwe bijlage toe">
+                    <div class="document__icon-wrapper">
+                        <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="" width="40" height="40">
+                    </div>
+                    <h3 class="document__name">Nieuwe bijlage</h3>
+                    <span class="document__date">&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+    </section>
 </section>
 {% endblock %}
 

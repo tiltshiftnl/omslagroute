@@ -36,3 +36,21 @@ class SendCaseForm(forms.ModelForm):
         fields = []
 
 
+class DocumentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ''
+        self.fields['uploaded_file'].label = "Selecteer een bestand"
+        self.fields['name'].label = "Titel van de bijlage"
+
+    class Meta:
+        model = Document
+        exclude = (
+            'case',
+        )
+        widgets = {
+            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'required': 'required'}),
+        }
+
+
