@@ -21,6 +21,7 @@ if not SOURCE_COMMIT:
 
 def app_settings(request=None):
     return {
+        'KC_ENABLED': bool(settings.IAM_URL),
         'SOURCE_COMMIT': SOURCE_COMMIT,
         'LOGIN_URL_NAME': settings.LOGIN_URL_NAME,
         'LOGOUT_URL_NAME': settings.LOGOUT_URL_NAME,

@@ -3,7 +3,9 @@
 {% load staticfiles auth_tags %}
 
 {% block main %}
-
+        {% if not request.user.is_authenticated and not KC_ENABLED %}
+            {% include 'users/login.html' %}
+        {% endif %}
         <h2>De Omslagroute</h2>
         {% if HOMEPAGE_INTRO %}
             <section class="section section--intro">
