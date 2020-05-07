@@ -437,10 +437,14 @@ ul.form-field__radiogroup,
     }
 }
 
-
 .form-field--radioselect ul,
 .form-field--checkboxselectmultiple ul {
     margin-top: .625rem;
+
+    li {
+        margin-top: 0;
+        margin-bottom: .625rem;
+    }
 }
 
 .form-field__checkbox,
@@ -601,6 +605,17 @@ li:focus-within .form-field__checkboxlabel::before {
 
 .form-field__checkboxgroup li {
     display: flex;
+}
+
+// MULTISELECT CHECKBOX
+
+.form-field--checkboxselectmultiple {
+
+    @media all and (min-width: $tablets) {
+        ul {
+            columns: auto 2;
+        }
+    }
 }
 
 // ********************

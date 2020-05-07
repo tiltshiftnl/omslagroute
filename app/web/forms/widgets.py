@@ -1,5 +1,7 @@
 from django.forms import RadioSelect as DefaultRadioSelect
-from django.forms.widgets import ClearableFileInput as DefaultClearableFileInput, CheckboxSelectMultiple as DefaultCheckboxSelectMultiple
+from django.forms.widgets import \
+    ClearableFileInput as DefaultClearableFileInput, \
+    CheckboxSelectMultiple as DefaultCheckboxSelectMultiple
 
 
 class RadioSelect(DefaultRadioSelect):
