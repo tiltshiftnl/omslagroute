@@ -104,7 +104,7 @@ $padding-left: 1.875rem;
 
         &--double {
             left: 3px;
-            top: 10px;
+            top: .625rem;
         }
     }
 
@@ -133,9 +133,16 @@ $padding-left: 1.875rem;
     }
     &--before {
         color: $neutral-grey3;
+        border-bottom: 1px dashed $neutral-grey3;
         &:before {
             background-color: $neutral-grey3;
             top: 3.4rem;
+        }
+        .details {
+            padding-bottom: .25rem;
+        }
+        .details[open] {
+            color:$primary-black;
         }
     }
 }
