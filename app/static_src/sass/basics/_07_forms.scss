@@ -33,6 +33,10 @@ body:not(:-moz-handler-blocked) fieldset {
     padding: 1rem;
     margin-bottom: 1rem;
     border: .063rem solid $neutral-grey3;
+
+    .form-field:first-child {
+        margin-top: 0;
+    }
 }
 
 .sub-section__title {
