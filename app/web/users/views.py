@@ -11,7 +11,7 @@ from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, BEHEERDER, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER
+from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 from mozilla_django_oidc.utils import (
@@ -85,7 +85,7 @@ class UserList(UserPassesTestMixin, FormView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [BEHEERDER, GEBRUIKERS_BEHEERDER])
+        return auth_test(self.request.user, [REDACTIE, GEBRUIKERS_BEHEERDER])
 
 
 class UserUpdateView(UserPassesTestMixin, UpdateView):

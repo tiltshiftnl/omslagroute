@@ -15,9 +15,9 @@ def is_user_type(user, user_type):
     return auth_test(user, user_type)
 
 
-@register.filter(name='is_beheerder')
-def is_beheerder(user):
-    return auth_test(user, BEHEERDER)
+@register.filter(name='is_redactie')
+def is_redactie(user):
+    return auth_test(user, REDACTIE)
 
 
 @register.filter(name='is_begeleider')

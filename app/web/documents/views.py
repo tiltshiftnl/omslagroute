@@ -13,7 +13,7 @@ from web.timeline.models import Moment
 from django.core.files.storage import default_storage
 from web.users.auth import user_passes_test
 from django.views.decorators.http import require_http_methods
-from web.users.statics import BEHEERDER
+from web.users.statics import REDACTIE
 import json
 from django.http import HttpResponseRedirect, JsonResponse
 
@@ -29,7 +29,7 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, REDACTIE)
 
     def delete(self, request, *args, **kwargs):
         response = super().delete(self, request, *args, **kwargs)
@@ -44,7 +44,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, REDACTIE)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -59,7 +59,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, REDACTIE)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -85,7 +85,7 @@ class DocumentVersionCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, REDACTIE)
 
     def get_context_data(self, **kwargs):
         kwargs.update({
@@ -111,7 +111,7 @@ class DocumentVersionDelete(UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, REDACTIE)
 
 
 class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
@@ -121,7 +121,7 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def test_func(self):
-        return auth_test(self.request.user, BEHEERDER)
+        return auth_test(self.request.user, REDACTIE)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -179,7 +179,7 @@ def download_documentversion(request, id):
 
 
 @require_http_methods(["POST"])
-@user_passes_test(auth_test, user_type=BEHEERDER)
+@user_passes_test(auth_test, user_type=REDACTIE)
 def document_name_exists(request):
     data = json.loads(request.body)
     status_code = 200

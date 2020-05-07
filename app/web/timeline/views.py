@@ -8,10 +8,10 @@ from django.shortcuts import render, get_object_or_404
 from web.users.auth import user_passes_test
 from django.views.decorators.http import require_http_methods
 import json
-from web.users.statics import BEHEERDER
+from web.users.statics import REDACTIE
 
 
-@user_passes_test(auth_test, user_type=BEHEERDER)
+@user_passes_test(auth_test, user_type=REDACTIE)
 def manage_timeline(request):
     organization_list = Organization.objects.all()
     Moment_FormSet = modelformset_factory(Moment, form=MomentForm, extra=1, can_delete=True)
@@ -36,7 +36,7 @@ def manage_timeline(request):
 
 
 @require_http_methods(["POST"])
-@user_passes_test(auth_test, user_type=BEHEERDER)
+@user_passes_test(auth_test, user_type=REDACTIE)
 def update_moment(request):
     status_code = 400
     message = 'error'
@@ -55,7 +55,7 @@ def update_moment(request):
 
 
 @require_http_methods(["POST"])
-@user_passes_test(auth_test, user_type=BEHEERDER)
+@user_passes_test(auth_test, user_type=REDACTIE)
 def delete_moment(request):
     status_code = 400
     message = 'error'
@@ -69,7 +69,7 @@ def delete_moment(request):
 
 
 @require_http_methods(["POST"])
-@user_passes_test(auth_test, user_type=BEHEERDER)
+@user_passes_test(auth_test, user_type=REDACTIE)
 def create_moment(request):
     status_code = 400
     message = 'error'
@@ -87,7 +87,7 @@ def create_moment(request):
 
 
 @require_http_methods(["POST"])
-@user_passes_test(auth_test, user_type=BEHEERDER)
+@user_passes_test(auth_test, user_type=REDACTIE)
 def order_timeline(request):
     if request.is_ajax():
         data = json.loads(request.body)

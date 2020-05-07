@@ -7,7 +7,7 @@
                         <li>
                             <a href="{% url 'home' %}">Omslagroute</a>
 
-                            {% if request.user|is_beheerder %}
+                            {% if request.user|is_redactie %}
                             <ul>
                                 <li>
                                     <a href="{% url 'document_list' %}">
@@ -31,7 +31,7 @@
                             <a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a>
                         </li>
                     {% endif %}
-                    {% if request.user|is_beheerder %}
+                    {% if request.user|is_redactie %}
                         <li class="admin-settings">
                             <button class="navigation__open"><span>Beheer</span></button>
                             <ul>
