@@ -217,6 +217,9 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('home')
 
+    def get_success_url(self):
+        return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
+
     def test_func(self):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
