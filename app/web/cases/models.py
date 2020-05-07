@@ -169,6 +169,175 @@ class Case(PrintableModel):
         blank=True,
         null=True,
     )
+    # omklap form
+    organisatie = models.CharField(
+        verbose_name=_('Organisatie'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    persoonlijk_begeleider = models.CharField(
+        verbose_name=_('Persoonlijk begeleider'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    start_zelfstandig_wonen = models.CharField(
+        verbose_name=_('Start zelfstandig wonen (intermediair)'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    datum_voordracht = models.DateField(
+        verbose_name=_('Datum voordracht'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_akkoord_met_omklap = models.PositiveSmallIntegerField(
+        verbose_name=_('Woningcorporatie akkoord met omklap'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    datum_evaluatie_moment = models.DateField(
+        verbose_name=_('Datum evaluatie moment'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_zinvolle_dagbesteding_behaald_omdat = models.TextField(
+        verbose_name=_('Deze doelen zijn behaald omdat'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_zinvolle_dagbesteding_beoordeeld_door = models.TextField(
+        verbose_name=_('Deze doelen zijn beoordeeld door'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_zinvolle_dagbesteding_akkoord = models.PositiveSmallIntegerField(
+        verbose_name=_('Akkoord'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_zinvolle_dagbesteding_datum_evaluatiemoment = models.DateField(
+        verbose_name=_('Datum evaluatiemoment'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_sociaal_behaald_omdat = models.TextField(
+        verbose_name=_('Deze doelen zijn behaald omdat'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_sociaal_beoordeeld_door = models.TextField(
+        verbose_name=_('Deze doelen zijn beoordeeld door'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_sociaal_akkoord = models.PositiveSmallIntegerField(
+        verbose_name=_('Akkoord'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_sociaal_datum_evaluatiemoment = models.DateField(
+        verbose_name=_('Datum evaluatiemoment'),
+        blank=True,
+        null=True,
+    )
+
+    urgentiecriteria_functioneert_psychisch_behaald_omdat = models.TextField(
+        verbose_name=_('Deze doelen zijn behaald omdat'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_psychisch_beoordeeld_door = models.TextField(
+        verbose_name=_('Deze doelen zijn beoordeeld door'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_psychisch_akkoord = models.PositiveSmallIntegerField(
+        verbose_name=_('Akkoord'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_functioneert_psychisch_datum_evaluatiemoment = models.DateField(
+        verbose_name=_('Datum evaluatiemoment'),
+        blank=True,
+        null=True,
+    )
+
+    urgentiecriteria_is_financieel_stabiel_behaald_omdat = models.TextField(
+        verbose_name=_('Deze doelen zijn behaald omdat'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_is_financieel_stabiel_beoordeeld_door = models.TextField(
+        verbose_name=_('Deze doelen zijn beoordeeld door'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_is_financieel_stabiel_akkoord = models.PositiveSmallIntegerField(
+        verbose_name=_('Akkoord'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_is_financieel_stabiel_datum_evaluatiemoment = models.DateField(
+        verbose_name=_('Datum evaluatiemoment'),
+        blank=True,
+        null=True,
+    )
+
+    urgentiecriteria_kinderen_gezonde_behaald_omdat = models.TextField(
+        verbose_name=_('Deze doelen zijn behaald omdat'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_kinderen_gezonde_beoordeeld_door = models.TextField(
+        verbose_name=_('Deze doelen zijn beoordeeld door'),
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_kinderen_gezonde_akkoord = models.PositiveSmallIntegerField(
+        verbose_name=_('Akkoord'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    urgentiecriteria_kinderen_gezonde_datum_evaluatiemoment = models.DateField(
+        verbose_name=_('Datum evaluatiemoment'),
+        blank=True,
+        null=True,
+    )
+
+    omklap_client_openstaande_vragen = models.TextField(
+        verbose_name=_('Voor deze cliënt staan de volgende vragen nog open'),
+        blank=True,
+        null=True,
+    )
+    omklap_client_volgende_stappen_gezet = models.TextField(
+        verbose_name=_('Hiervoor worden de volgende stappen gezet (zowel formeel als informeel)'),
+        blank=True,
+        null=True,
+    )
+    omklap_beoordeeld_door = models.TextField(
+        verbose_name=_('Dit is beoordeeld door'),
+        blank=True,
+        null=True,
+    )
+    omklap_datum_evaluatiemoment = models.DateField(
+        verbose_name=_('Datum evaluatiemoment'),
+        blank=True,
+        null=True,
+    )
+    omklap_toelichting = models.TextField(
+        verbose_name=_('Toelichting (bv. doelen niet behaald maar geen risico voor zelfstandig wonen)'),
+        blank=True,
+        null=True,
+    )
 
     @property
     def centrale_toegang_naam_value(self):
