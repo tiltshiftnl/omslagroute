@@ -182,8 +182,8 @@ body:not(:-moz-handler-blocked) fieldset {
 // ********************
 
 .form-field {
-    margin-top: .625rem;
-    margin-bottom: 1.25rem;
+    margin-top: .9375rem;
+    margin-bottom: 1.875rem;
 
     .details__header & {
         margin-top: 0;
@@ -319,7 +319,7 @@ textarea {
     //   1. NOT empty
     //   2. NOT in focus
     //   3. NOT valid
-    &[required]:invalid:not(:focus):not(:placeholder-shown) {
+    &[required].invalid:not(:focus):not(:placeholder-shown) {
         border: .063rem solid $primary-red;
         box-shadow: inset 0 0 0 .063rem $primary-red;
 
@@ -334,7 +334,7 @@ textarea {
         }
     }
 
-    &:invalid + .error-text,
+    &.invalid + .error-text,
     &[data-error-message] + .error-text {
         display: block;
     }
@@ -411,7 +411,7 @@ input[data-error-message] {
 }
 
 .form-field__uploaded {
-    margin-top: .625rem;
+    margin: .9375rem 0 1.875rem;
 }
 
 // ********************
