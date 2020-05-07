@@ -191,6 +191,205 @@ FIELDS = (
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {}),
+    ('organisatie', forms.CharField(
+        label=_('Organisatie'),
+        required=False,
+    ), {}),
+    ('persoonlijk_begeleider', forms.CharField(
+        label=_('Persoonlijk begeleider'),
+        required=False,
+    ), {}),
+    ('start_zelfstandig_wonen', forms.CharField(
+        label=_('Start zelfstandig wonen (intermediair)'),
+        required=False,
+    ), {}),
+    ('datum_voordracht', forms.DateField(
+        label=_('Datum voordracht'),
+        required=False,
+    ), {}),
+    ('woningcorporatie_akkoord_met_omklap', forms.IntegerField(
+        label=_('Woningcorporatie akkoord met omklap'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('datum_evaluatie_moment', forms.DateField(
+        label=_('Datum evaluatie moment'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
+        required=False,
+    ), {}),
+    ('urgentiecriteria_zinvolle_dagbesteding_behaald_omdat', forms.CharField(
+        label=_('Deze doelen zijn behaald omdat'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_zinvolle_dagbesteding_beoordeeld_door', forms.CharField(
+        label=_('Deze doelen zijn beoordeeld door'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_zinvolle_dagbesteding_akkoord', forms.IntegerField(
+        label=_('Akkoord'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_zinvolle_dagbesteding_datum_evaluatiemoment', forms.DateField(
+        label=_('Datum evaluatiemoment'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_sociaal_behaald_omdat', forms.CharField(
+        label=_('Deze doelen zijn behaald omdat'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_sociaal_beoordeeld_door', forms.CharField(
+        label=_('Deze doelen zijn beoordeeld door'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_sociaal_akkoord', forms.IntegerField(
+        label=_('Akkoord'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_sociaal_datum_evaluatiemoment', forms.DateField(
+        label=_('Datum evaluatiemoment'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_psychisch_behaald_omdat', forms.CharField(
+        label=_('Deze doelen zijn behaald omdat'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_psychisch_beoordeeld_door', forms.CharField(
+        label=_('Deze doelen zijn beoordeeld door'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_psychisch_akkoord', forms.IntegerField(
+        label=_('Akkoord'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_functioneert_psychisch_datum_evaluatiemoment', forms.DateField(
+        label=_('Datum evaluatiemoment'),
+         widget=forms.TextInput(
+             attrs={
+                 'placeholder': 'dd-mm-jjjj',
+             }
+         ),
+         localize=True,
+         required=False,
+    ), {}),
+    ('urgentiecriteria_is_financieel_stabiel_behaald_omdat', forms.CharField(
+        label=_('Deze doelen zijn behaald omdat'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_is_financieel_stabiel_beoordeeld_door', forms.CharField(
+        label=_('Deze doelen zijn beoordeeld door'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_is_financieel_stabiel_akkoord', forms.IntegerField(
+        label=_('Akkoord'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_is_financieel_stabiel_datum_evaluatiemoment', forms.DateField(
+        label=_('Datum evaluatiemoment'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
+        required=False,
+    ), {}),
+    ('urgentiecriteria_kinderen_gezonde_behaald_omdat', forms.CharField(
+        label=_('Deze doelen zijn behaald omdat'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('urgentiecriteria_kinderen_gezonde_beoordeeld_door', forms.CharField(
+        label=_('Deze doelen zijn beoordeeld door'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+     ('urgentiecriteria_kinderen_gezonde_akkoord', forms.IntegerField(
+        label=_('Akkoord'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+     ), {}),
+     ('urgentiecriteria_kinderen_gezonde_datum_evaluatiemoment', forms.DateField(
+        label=_('Datum evaluatiemoment'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
+        required=False,
+     ), {}),
+     ('omklap_client_openstaande_vragen', forms.CharField(
+        label=_('Voor deze cliënt staan de volgende vragen nog open'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+     ), {}),
+     ('omklap_client_volgende_stappen_gezet', forms.CharField(
+        label=_('Hiervoor worden de volgende stappen gezet (zowel formeel als informeel)'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+     ), {}),
+     ('omklap_beoordeeld_door', forms.CharField(
+        label=_('Dit is beoordeeld door'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+             required = False,
+    ), {}),
+    ('omklap_datum_evaluatiemoment', forms.DateField(
+        label=_('Datum evaluatiemoment'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
+        required=False,
+    ), {}),
+    ('omklap_toelichting', forms.CharField(
+        label=_('Toelichting'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        help_text='Bijvoorbeeld: doelen niet behaald maar geen risico voor zelfstandig wonen',
+        required=False,
+    ), {}),
 )
 
 FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
@@ -308,29 +507,158 @@ URGENTIE_AANVRAAG = [
     },
 ]
 
-AANVRAAG_VERLENGING_TRACJECTWIJZIGING_MOBW = [
+OMKLAP_AANVRAAG = [
     {
-        'title': 'Persoonsgegevens',
-        'description': 'In deze stap vult u eenmalig informatie over uw cliënt in. Deze informatie wordt in uw browser opgeslagen zodat u na invullen op een later moment van deze informatie gebruik kunt maken.',
+        'title': 'Basisgegevens',
+        'description': '',
         'section_list': [
             {
-                'title': 'Basisgegevens',
+                'title': 'Persoonsgegevens',
                 'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
                 'fields': [
-                    'naam_client',
-                    'geslacht',
+                    'client_first_name',
+                    'client_last_name',
                     'geboortedatum',
                 ],
             },
             {
-                'title': 'Contactgegevens',
+                'title': 'Woningnet',
                 'description': '',
                 'fields': [
-                    'email',
+                    'woningnet_nummer',
+                    'woningnet_geldigheid',
                 ],
             },
-
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'organisatie',
+                    'persoonlijk_begeleider',
+                    'start_zelfstandig_wonen',
+                    'datum_voordracht',
+                ],
+            },
         ]
+    },
+    {
+        'title': 'Woonevaluatie gesprek',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woningcorporatie_akkoord_met_omklap',
+                    'datum_evaluatie_moment',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Jonger dan 26 jaar?',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'jonger_dan_26',
+                    'jonger_dan_26_plaatsing_project',
+                    'jonger_dan_26_motivatie_contract_onbepaalde',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Urgentiecriteria in de huisvestingsverordening',
+        'description': '',
+        'section_list': [
+            {
+                'title': 'Zinvolle dagbesteding',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_zinvolle_dagbesteding',
+                    'urgentiecriteria_zinvolle_dagbesteding_behaald_omdat',
+                    'urgentiecriteria_zinvolle_dagbesteding_beoordeeld_door',
+                    'urgentiecriteria_zinvolle_dagbesteding_akkoord',
+                    'urgentiecriteria_zinvolle_dagbesteding_datum_evaluatiemoment',
+                ],
+            },
+            {
+                'title': 'Sociaal',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_functioneert_sociaal_stabiel',
+                    'urgentiecriteria_functioneert_sociaal_behaald_omdat',
+                    'urgentiecriteria_functioneert_sociaal_beoordeeld_door',
+                    'urgentiecriteria_functioneert_sociaal_akkoord',
+                    'urgentiecriteria_functioneert_sociaal_datum_evaluatiemoment',
+                ],
+            },
+            {
+                'title': 'Psychisch',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_functioneert_psychisch_stabiel',
+                    'urgentiecriteria_functioneert_psychisch_behaald_omdat',
+                    'urgentiecriteria_functioneert_psychisch_beoordeeld_door',
+                    'urgentiecriteria_functioneert_psychisch_akkoord',
+                    'urgentiecriteria_functioneert_psychisch_datum_evaluatiemoment',
+                ],
+            },
+            {
+                'title': 'Financieel',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_is_financieel_stabiel',
+                    'urgentiecriteria_is_financieel_stabiel_behaald_omdat',
+                    'urgentiecriteria_is_financieel_stabiel_beoordeeld_door',
+                    'urgentiecriteria_is_financieel_stabiel_akkoord',
+                    'urgentiecriteria_is_financieel_stabiel_datum_evaluatiemoment',
+                ],
+            },
+            {
+                'title': 'En, indien er kinderen gebruik maken van de opvang',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_kinderen_gezonde_omgeving',
+                    'urgentiecriteria_kinderen_gezonde_behaald_omdat',
+                    'urgentiecriteria_kinderen_gezonde_beoordeeld_door',
+                    'urgentiecriteria_kinderen_gezonde_akkoord',
+                    'urgentiecriteria_kinderen_gezonde_datum_evaluatiemoment',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Afspraken na de omklap',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'omklap_client_openstaande_vragen',
+                    'omklap_client_volgende_stappen_gezet',
+                    'omklap_beoordeeld_door',
+                    'omklap_datum_evaluatiemoment',
+                ],
+            }
+        ],
+    },
+    {
+        'title': 'Toelichting',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'omklap_toelichting',
+                ],
+            }
+        ],
     },
 ]
 
@@ -350,6 +678,15 @@ FORMS = (
         'aanvraag-omslag-en-urgentie',
         'Aanvraag omslag en urgentie',
         'Nieuwe aanvraag omslag en urgentie',
+        True,
+        True,
+    ),
+    (
+        'omklap_aanvraag',
+        OMKLAP_AANVRAAG,
+        'aanvraag-omklap',
+        'Aanvraag omklap',
+        'Nieuwe aanvraag omklap',
         True,
         True,
     ),

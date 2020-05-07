@@ -7,7 +7,12 @@
     <ol class="breadcrumb-list">
         <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
         <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+        {% if form.instance.id %}
+            <li class="breadcrumb-step"><a href="{{ discard_url }}">Cliënt: {{ form.instance.client_name }}</a></li>
         <li class="breadcrumb-step sr-only" aria-current="location">{{ title }}</li>
+        {% else %}
+        <li class="breadcrumb-step sr-only" aria-current="location">{{ title }}</li>
+        {% endif %}
     </ol>
 </nav>
 {% endblock %}
@@ -16,12 +21,12 @@
 <section class="section section--form section--form-{{ title|slugify }}">
     {% if form.instance.id %}{% client_status form.instance key as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
-        
+
         <div class="grid__wrapper">
             <div class="grid__main">
 
                 <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
-                
+
                 {% csrf_token %}
                 {{ form.as_sections.errors }}
 
@@ -78,18 +83,18 @@
                 {% endfor %}
 
                 {{ form.as_sections.hidden_fields }}
-                
+
                 <div class="form-field form-field--buttons-sticky screen-only">
                     <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
                     <!-- <input type="submit" value="Opslaan" class="button button--primary"> -->
                     <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
                     {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
                 </div>
-                
+
             </div>
-            
+
             {% if inpage_navigation %}
-            
+
                 <div class="grid__aside">
 
                     <div class="grid__aside--sticky">
@@ -104,12 +109,14 @@
                                         </a>
                                         <ul>
                                             {% for sub_section in section.section_list %}
+                                                {% if sub_section.title %}
                                                 <li>
                                                     <a href="#{{ sub_section.title|slugify }}">
                                                         <span class="dot dot--small"></span>
                                                         {{ sub_section.title }}
                                                     </a>
                                                 </li>
+                                                {% endif %}
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -118,10 +125,10 @@
                         </div>
                     </div>
                 </div>
-                
+
             {% endif %}
         </div>
-        
+
     </form>
 </section>
 {% endblock %}
