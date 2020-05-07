@@ -8,7 +8,7 @@ if (fileUpload && fileUpload.addEventListener) {
 function showFileName(event) {
   var input = event.srcElement;
   var fileName = input.files[0].name;
-  filesUploaded.textContent = "Geselecteerd bestand: " + fileName;
+  filesUploaded.innerHTML = "Geselecteerd bestand: <i>" + fileName + "</i>";
 }
 
 if (document.addEventListener) {
