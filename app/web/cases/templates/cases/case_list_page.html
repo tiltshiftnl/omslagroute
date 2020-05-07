@@ -60,6 +60,6 @@
             {% endfor %}
         </tbody>
     </table>
-    {% include 'core/pagination.html' %}
+    {% include 'core/pagination.html' with object_list=pages %}
 </section>
 {% endblock %}
