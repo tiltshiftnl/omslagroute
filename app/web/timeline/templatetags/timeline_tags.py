@@ -5,12 +5,12 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def doc_added(context, moment_id):
+def doc_added(context, moment_id, added_str):
     request = context['request']
     referer = request.META.get('HTTP_REFERER')
 
     if referer and referer.split('/')[-1] == str(moment_id):
-        return 'open'
+        return added_str
     if request.GET.get('m') and request.GET.get('m') == str(moment_id):
-        return 'open'
+        return added_str
     return ''
