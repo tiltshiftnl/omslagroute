@@ -30,3 +30,15 @@ def str_date_to_date(str_date):
 def textile(textile_str):
     from textile import textile
     return mark_safe(textile(str(textile_str)))
+
+
+@register.filter(name='range')
+def _range(_min, args=None):
+    _max, _step = None, None
+    if args:
+        if not isinstance(args, int):
+            _max, _step = map(int, args.split(','))
+        else:
+            _max = args
+    args = filter(None, (_min, _max, _step))
+    return range(*args)

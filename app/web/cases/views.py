@@ -20,6 +20,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import default_storage
 from django.http import HttpResponseRedirect
 from web.users.auth import user_passes_test
+from django.core.paginator import Paginator
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -33,8 +34,19 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return self.request.user.profile.cases.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        # self.profile = self.request.user.profile
-        return super().get_context_data(object_list=object_list, **kwargs)
+        kwargs = super().get_context_data(object_list=object_list, **kwargs)
+        # pagination
+        object_list = kwargs.pop('object_list')
+        paginator = Paginator(object_list, 1)
+        paginator2 = Paginator(range(200), 20)
+        page = self.request.GET.get('page', 1)
+        object_list = paginator.get_page(page)
+        pages = paginator2.get_page(page)
+        kwargs.update({
+            'object_list': object_list,
+            'pages': pages,
+        })
+        return kwargs
 
 
 class CaseDetailView(UserPassesTestMixin, DetailView):
