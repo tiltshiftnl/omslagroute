@@ -1,0 +1,46 @@
+.pagination {
+  margin: 3.75rem 0;
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+
+    li {
+      position: relative;
+      a,
+      span {
+        display: inline-block;
+        padding: 0.2375rem 0.475rem;
+        margin: 0 0.475rem;
+        line-height: 1rem;
+        font-weight: 300;
+        color: $default-text-color;
+        text-transform: lowercase;
+      }
+
+      span {
+        background-color: $neutral-grey4;
+        color: $primary-white;
+      }
+
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+          color: $primary-red;
+        }
+      }
+
+      &.pagination-link--previous,
+      &.pagination-link--next {
+        a {
+          font-weight: 700;
+        }
+        svg {
+          vertical-align: middle;
+          margin: 0 0.475rem;
+        }
+      }
+    }
+  }
+}
