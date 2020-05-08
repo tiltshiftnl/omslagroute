@@ -1,163 +1,180 @@
 // ********************
 // TYPOGRAPHY
 // And margins of default html elements
-// ********************   
+// ********************
 
 $max-text-width: 40.625rem;
 
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 // convert pixels to rem units
 @mixin size($property, $valuepixels) {
-    $valuerem : $valuepixels * .0625;
-    #{$property}: $valuerem + rem;
+  $valuerem: $valuepixels * 0.0625;
+  #{$property}: $valuerem + rem;
 }
 
 body {
-    font-family: $default-font, Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 400;
-    color: $default-text-color;
-    -webkit-text-size-adjust: auto;
+  font-family: $default-font, Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  color: $default-text-color;
+  -webkit-text-size-adjust: auto;
 }
 
 a {
-    color: red;
-    text-decoration-skip: ink;
+  color: red;
+  text-decoration-skip: ink;
 
-    &:hover,
-    &:focus {
-        text-decoration: underline;
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: 500;
+}
+
+h1,
+.h1 {
+  font-size: 1.4125rem;
+  font-weight: bold;
+  line-height: 1.47931rem;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  a {
+    color: $default-text-color;
+    text-decoration: none;
+
+    &:hover {
+      color: $default-text-color;
+      text-decoration: none;
     }
+  }
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: inherit;
-    font-style: inherit;
-    font-weight: 500;
-}
+h2,
+.h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
 
-h1 {
-    font-size: 1.4125rem;
-    font-weight: bold;
-    line-height: 1.47931rem;
+  &:first-child {
     margin-top: 0;
-    margin-bottom: 0;
 
-    a {
-        color: $default-text-color;
-        text-decoration: none;
-
-        &:hover {
-            color: $default-text-color;
-            text-decoration: none;
-        }
+    @media screen and (min-width: $tablets) {
+      margin-top: 2rem;
     }
+  }
 }
 
-h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-
-    &:first-child {
-        margin-top: 0;
-
-        @media screen and (min-width: $tablets) {
-            margin-top: 2rem;
-        }
-    }
+h3,
+.h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
-h3 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+h4,
+.h4 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 1rem;
 }
-
-h4 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    margin-bottom: 1rem;
-}
-
 
 @media screen and (min-width: $tablets) {
-    h2 {
-        font-size: 1.5rem;
-        line-height: 1.875rem;
-        font-weight: bold;
-    }
+  h2,
+  .h2 {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    font-weight: bold;
+  }
 
-    h3 {
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-    }
+  h3,
+  .h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 
-    h4 {
-        font-size: 1.125rem;
-        line-height: 1.563rem;
-        margin-bottom: 1rem;
-    }
+  h4,
+  .h4 {
+    font-size: 1.125rem;
+    line-height: 1.563rem;
+    margin-bottom: 1rem;
+  }
 }
 
-p, ul, ol {
-    margin-top: 0;
-    margin-bottom: 1rem;
+p,
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 .list-vertical {
-    li {
-        padding-bottom: .5rem;
-    }
+  li {
+    padding-bottom: 0.5rem;
+  }
 }
 
 ul {
-    padding-left: .125rem;
-    list-style-position: inside;
+  padding-left: 0.125rem;
+  list-style-position: inside;
 }
 
-b, strong, em, small, code {
-    line-height: 1rem;
+b,
+strong,
+em,
+small,
+code {
+  line-height: 1rem;
 }
 
 time {
-    color: $neutral-grey5;
-    font-size: .8rem;
-} 
+  color: $neutral-grey5;
+  font-size: 0.8rem;
+}
 
-p { 
-    margin-top: 0;
-    margin-bottom: 1rem;  
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
 
-    &:empty {
-        margin-bottom: 0;
-    }
+  &:empty {
+    margin-bottom: 0;
+  }
 }
 .section p {
   max-width: $max-text-width;
   line-height: 1.4;
 }
 a {
-    color: $primary-darkblue;
+  color: $primary-darkblue;
 }
 
-a:active,a:hover {
-    color: $primary-red;
+a:active,
+a:hover {
+  color: $primary-red;
 }
 
-hr { 
-    min-height: .063rem;
-    height: .063rem;
-    background-color: $neutral-grey2;
-    color: $neutral-grey2;
-    border-style: solid;
-    border: 0;
-    margin-bottom: 2rem;
-    margin-top: 2.5rem;
+hr {
+  min-height: 0.063rem;
+  height: 0.063rem;
+  background-color: $neutral-grey2;
+  color: $neutral-grey2;
+  border-style: solid;
+  border: 0;
+  margin-bottom: 2rem;
+  margin-top: 2.5rem;
 }
 
 input[name] {
-    scroll-margin-top: 4.375rem;    
+  scroll-margin-top: 4.375rem;
 }

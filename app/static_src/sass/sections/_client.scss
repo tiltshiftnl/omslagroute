@@ -1,0 +1,120 @@
+.section--client{
+
+    .section-details-client {
+        margin-bottom: 3.75rem;
+    }
+    .details-client {
+
+        header {
+            >*:not(:first-child){
+                display: inline-block;
+                margin-left: 1rem;
+            }
+        }
+        h2 {
+            display: inline-block;
+            small {
+                font-weight: normal;
+            }
+        }
+
+        .downloads {
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 1rem;
+            li {
+                margin-bottom: .625rem;
+            };
+        }
+
+        dl {
+            margin-top: 0;
+            div {
+                display: flex;
+                margin-bottom: .625rem;
+
+                dt, dd {
+                    flex: 1;
+                }
+                dt {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .section--forms {
+
+        h2 {
+            display: inline;
+        }
+
+        a.selected {
+            background-color: $neutral-grey3;
+        }
+        ul {
+            list-style: none;
+            margin-top: 1rem;
+
+            li {
+                position: relative;
+                background-color: $neutral-grey1;
+                padding: 1rem 1rem 1rem 3.875rem;
+                margin-bottom: .25rem;
+                @include clearfix;
+
+                &:not(:last-child):before {
+                    content: '';
+                    position: absolute;
+                    z-index: 2;
+                    left: 1.75rem;
+                    top: 1.25rem;
+                    bottom: -1.5rem;
+                    width: 2px;
+                    margin-left: -1px;
+                    background-color: #767676;
+                    pointer-events: none;
+                }
+
+                .strong {
+                    margin-bottom: 1rem;
+                }
+
+                .dot {
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 1rem;
+                    transform: translateY(-.75rem);
+                    z-index: 2;
+                }
+
+                .form-link {
+                    float: right;
+                    margin-left: 1rem;
+                }
+
+                [role="button"]{
+                    text-decoration: none;
+                }
+
+
+            }
+        }
+    }
+
+    @media all and (min-width: $tablets) {
+        .section-details-client {
+            display: flex;
+            .details-client{
+                flex: 1;
+
+
+            }
+        }
+        
+    }
+}

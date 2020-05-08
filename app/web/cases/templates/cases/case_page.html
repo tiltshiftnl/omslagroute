@@ -15,78 +15,98 @@
 
 {% block main %}
 <section class="section section--client">
-    <h2>Cliënt: {{ object.client_name }}</h2>
+    <h1>Cliënt: {{ object.client_name }}</h1>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}
         {% endlanguage %}
     </p>
 
-    <div class="details-admin screen-only">
-        <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="Verwijder cli&euml;ntgegevens">
-            Verwijder cli&euml;ntgegevens
-        </a>
-    </div>
+    <section class="section-details-client">
+        <!-- START Client basis gegevens -->
+        <div class="details-client details-client--basic">
+            <header>
+                <h2 class="h3">Basisgegevens</h2>
+                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
+                    Wijzigen
+                </a>
+                <a href="{% url 'delete_case' object.id %}" class="" title="Verwijder cli&euml;ntgegevens">
+                    Verwijderen
+                </a>
+            </header>
 
-
-    <!-- START Client basis gegevens -->
-    <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="button button--secondary" title="Wijzig cli&euml;ntgegevens">
-        Wijzig cli&euml;nt basisgegevens
-    </a>
-    <table cellspacing="0" cellpadding="0">
-        {% for k, client_info in object.to_dict.items %}
-        {% if not forloop.first and k in basis_gegevens_fields %}
-        <tr>
-            <th width="40%">{{ client_info.label }}: </th>
-            <td>
-                {% if client_info.value|is_date %}
-                    {{ client_info.value|str_date_to_date|date:"j b Y" }}
-                {% else %}
-                    {{ client_info.value }}
+            <dl>
+                {% for k, client_info in object.to_dict.items %}
+                {% if not forloop.first and k in basis_gegevens_fields %}
+                <div>
+                    <dt>{{ client_info.label }}: </dt>
+                    <dd>
+                        {% if client_info.value|is_date %}
+                            {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                        {% else %}
+                            {{ client_info.value }}
+                        {% endif %}
+                    </dd>
+                </div>
                 {% endif %}
-            </td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-    </table>
-    <!-- END Client basis gegevens -->
+                {% endfor %}
+            </dl>
+        </div>
+        <!-- END Client basis gegevens -->
 
 
-    <!-- START BIJLAGE -->
-    <h3>Bijlagen</h3>
-    <section class="section section-downloads">
-        <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
-        {% for document in object.document_set.all %}
-            {% if forloop.counter0 < 3 %}
-            <li>{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</li>
-            {% endif %}
-        {% endfor %}
+        <!-- START BIJLAGE -->
+        <div class="details-client details-client--appendix">
+            <header>
+                <h2 class="h3">Bijlagen <small>(5)</small></h2>
+                <a href="{% url 'add_case_document' object.id %}" class="" title="Voeg een nieuwe bijlage toe">
+                    Uploaden
+                </a>
+            </header>
 
-        </ul>
-        <a href="{% url 'add_case_document' object.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
-            Upload bijlage
-        </a>
-        <a href="{% url 'case_document_list' object.id %}" class="button button--secondary">Alle bijlages</a>
+            <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
+            {% for document in object.document_set.all %}
+                {% if forloop.counter0 < 3 %}
+                <li>{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</li>
+                {% endif %}
+            {% endfor %}
+
+            </ul>
+            
+            <a href="{% url 'case_document_list' object.id %}" class="">Alle bijlages</a>
+        </div>
     </section>
-    <!-- END BIJLAGE -->
+        <!-- END BIJLAGE -->
 
 
     <!-- START PROCESSTAPPEN -->
     <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
-    <a href="#">Per stap</a>
-    <a href="#">Alle gegevens</a>
-    <ul>
-    {% for moment in moment_list %}
-    <li>
-        <div class="dot dot--large"></div>
-        <h3>{{ moment.name }}</h3>
-        {% if moment.form %}
-            <a href="{% url 'update_case' object.id moment.form %}">Formulier</a>
-        {% endif %}
+    <section class="section section--forms">
+        <span class="h2">Toon:</span>
+        <a href="#" class="button button--tertiary selected">Per stap</a>
+        <a href="#"class="button button--tertiary">Alle gegevens</a>
+        <ul>
+        {% for moment in moment_list %}
+        <li>
+            <div class="dot dot--large"></div>
+            {% if moment.form %}
+                <a href="{% url 'update_case' object.id moment.form %}">
+            {% endif %}
+                <strong class="h4">{{ moment.name }}</strong>
+            {% if moment.form %}
+                </a>
+                {% endif %}
+            {% if moment.form %}
+                <a href="#" class="form-link form-link--delete" role="button">Verwijderen</a>
+                <a href="{% url 'update_case' object.id moment.form %}" class="form-link form-link--change" role="button">Wijzigen</a>
+                {% else %}
+                <a href="#" class="form-link form-link--create" role="button">+ Aanmaken</a>
+            {% endif %}
 
-    </li>
-    {% endfor %}
-    </ul>
+        </li>
+        {% endfor %}
+        </ul>
+    </section>
     <!-- END PROCESSTAPPEN -->
 
 </section>
