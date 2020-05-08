@@ -13,10 +13,14 @@
 
 {% block main %}
     <h2>Alle gebruikers</h2>
-    <form method="get">
-        {{ form.filter }}
+    <form method="get" class="u-margin-bottom-2x">
+        <div class="form-field form-field--checkboxselectmultiple">
+            <label>Filter op gebruiker rol</label>
+            {{ form.filter }}
+        </div>
         <button type="submit" >Filter</button>
     </form>
+    <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
     <table class="case-list table--interactive">
         <thead>
             <tr>

@@ -19,7 +19,7 @@
     <div class="form-field form-field--buttons screen-only">
         <a href="{% url 'create_case' 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
     </div>
-
+    <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
     <table class="case-list table--interactive">
         <thead>
             <tr>
