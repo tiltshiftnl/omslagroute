@@ -23,22 +23,19 @@
     </p>
 
     <div class="details-admin screen-only">
-        <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="button button--secondary" title="Wijzig cli&euml;ntgegevens">
-            Wijzig cli&euml;nt basisgegevens
-        </a>
         <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="Verwijder cli&euml;ntgegevens">
             Verwijder cli&euml;ntgegevens
         </a>
     </div>
 
-    <div class="form-field form-field--buttons screen-only">
-        <a href="{% url 'update_case' object.id 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Aanvraag omslag en urgentie</a>
-        <a href="{% url 'update_case' object.id 'aanvraag-omklap' %}" class="button button--primary">Aanvraag omklap</a>
-    </div>
 
+    <!-- START Client basis gegevens -->
+    <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="button button--secondary" title="Wijzig cli&euml;ntgegevens">
+        Wijzig cli&euml;nt basisgegevens
+    </a>
     <table cellspacing="0" cellpadding="0">
         {% for k, client_info in object.to_dict.items %}
-        {% if not forloop.first %}
+        {% if not forloop.first and k in basis_gegevens_fields %}
         <tr>
             <th width="40%">{{ client_info.label }}: </th>
             <td>
@@ -52,40 +49,46 @@
         {% endif %}
         {% endfor %}
     </table>
+    <!-- END Client basis gegevens -->
+
+
+    <!-- START BIJLAGE -->
     <h3>Bijlagen</h3>
     <section class="section section-downloads">
         <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
         {% for document in object.document_set.all %}
-            <li class="document">
-                <a href="{% url 'download_case_document' document.case.id document.id %}" class="document__version" target="_blank" rel="noopener">
-                    <svg class="document__icon document__icon--default"  width="40" height="40" >
-                        <use href="#document" xlink:href="#document"  width="40" height="40"></use>
-                    </svg>
-                    <svg class="document__icon document__icon--hover"  width="40" height="40" >
-                        <use href="#download" xlink:href="#download"  width="40" height="40"></use>
-                    </svg>
-                    <div class="document__header">
-                        <h4 class="document__name" data-document-type="bijlage">{{ document.name }}</h4>
-                    </div>
-                    {% language 'nl' %}
-                    <time timestamp="{{ document.uploaded|date }}" class="document__date">
-                        geüpload: {{ document.uploaded|date:"j b Y" }}
-                    </time>
-                    {% endlanguage %}
-                </a>
-            </li>
+            {% if forloop.counter0 < 3 %}
+            <li>{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</li>
+            {% endif %}
         {% endfor %}
-            <li class="document document--add">
-                <a href="{% url 'add_case_document' object.id %}" class="document__new" title="Voeg een nieuwe bijlage toe">
-                    <div class="document__icon-wrapper">
-                        <img src="{% static 'images/add-document.svg' %}" class="document__icon" alt="" width="40" height="40">
-                    </div>
-                    <h3 class="document__name">Nieuwe bijlage</h3>
-                    <span class="document__date">&nbsp;</span>
-                </a>
-            </li>
+
         </ul>
+        <a href="{% url 'add_case_document' object.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
+            Upload bijlage
+        </a>
+        <a href="{% url 'case_document_list' object.id %}" class="button button--secondary">Alle bijlages</a>
     </section>
+    <!-- END BIJLAGE -->
+
+
+    <!-- START PROCESSTAPPEN -->
+    <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
+    <a href="#">Per stap</a>
+    <a href="#">Alle gegevens</a>
+    <ul>
+    {% for moment in moment_list %}
+    <li>
+        <div class="dot dot--large"></div>
+        <h3>{{ moment.name }}</h3>
+        {% if moment.form %}
+            <a href="{% url 'update_case' object.id moment.form %}">Formulier</a>
+        {% endif %}
+
+    </li>
+    {% endfor %}
+    </ul>
+    <!-- END PROCESSTAPPEN -->
+
 </section>
 {% endblock %}
 

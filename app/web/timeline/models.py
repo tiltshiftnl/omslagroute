@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from web.core.models import PrintableModel
-
+from web.forms.statics import FORMS_CHOICES
 
 class Moment(PrintableModel):
     textile_fields = (
@@ -31,6 +31,13 @@ class Moment(PrintableModel):
         to='organizations.Organization',
         verbose_name=_('Organisaties'),
         blank=True,
+    )
+    form = models.CharField(
+        verbose_name=_('Formulier'),
+        max_length=100,
+        choices=FORMS_CHOICES,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
