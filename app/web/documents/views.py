@@ -129,6 +129,9 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
             data['documentversionformset'] = DocumentVersionFormSet(self.request.POST, self.request.FILES)
         else:
             data['documentversionformset'] = DocumentVersionFormSet()
+        data.update({
+            'moment_id': self.kwargs.get('moment_id'),
+        })
         return data
 
     def form_invalid(self, form):
@@ -152,6 +155,12 @@ class DocumentVersionFormSetCreate(UserPassesTestMixin, CreateView):
 
 
 class CreateDocumentAddToMoment(DocumentVersionFormSetCreate):
+    def get_success_url(self):
+        return '%s#processtap-%s' % (
+            self.success_url,
+            self.kwargs.get('moment_id')
+        )
+
     def get_initial(self):
         initial = super().get_initial()
         initial = initial.copy()
