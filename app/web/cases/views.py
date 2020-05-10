@@ -86,6 +86,10 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return self.request.user.profile.cases.all()
 
 
+class CaseDetailAllDataView(CaseDetailView):
+    template_name_suffix = '_page_all_data'
+
+
 class CaseCreateView(UserPassesTestMixin, CreateView):
     model = Case
     form_class = CaseForm

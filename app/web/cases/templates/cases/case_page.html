@@ -58,7 +58,7 @@
         <!-- START BIJLAGE -->
         <div class="details-client details-client--appendix">
             <header>
-                <h2 class="h3">Bijlagen <small>(5)</small></h2>
+                <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
                 <a href="{% url 'add_case_document' object.id %}" class="" title="Voeg een nieuwe bijlage toe">
                     Uploaden
                 </a>
@@ -78,13 +78,13 @@
     </section>
         <!-- END BIJLAGE -->
 
-
+    {% block processstappen %}
     <!-- START PROCESSTAPPEN -->
     <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
     <section class="section section--forms">
         <span class="h2">Toon:</span>
-        <a href="#" class="button button--tertiary selected">Per stap</a>
-        <a href="#"class="button button--tertiary">Alle gegevens</a>
+        <span class="button button--tertiary selected">Per stap</span>
+        <a href="{% url 'case_all_data' object.id %}"class="button button--tertiary">Alle gegevens</a>
         <ul>
         {% for moment in moment_list %}
         <li>
@@ -108,6 +108,7 @@
         </ul>
     </section>
     <!-- END PROCESSTAPPEN -->
+    {% endblock %}
 
 </section>
 {% endblock %}
