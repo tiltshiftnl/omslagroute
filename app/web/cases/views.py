@@ -224,20 +224,23 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
+        self.object.create_version(self.kwargs.get('slug'))
+
         organization_list = Organization.objects.filter(main_email__isnull=False)
         for organization in organization_list:
             body = render_to_string('cases/mail/case.txt', {
                 'case': self.object.to_dict(organization.field_restrictions)
             })
             current_site = get_current_site(self.request)
-            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
-            email = Mail(
-                from_email='noreply@%s' % current_site.domain,
-                to_emails=organization.main_email,
-                subject='Omslagroute - %s' % self.kwargs.get('title'),
-                plain_text_content=body
-            )
-            sg.send(email)
+            if settings.SENDGRID_KEY:
+                sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+                email = Mail(
+                    from_email='noreply@%s' % current_site.domain,
+                    to_emails=organization.main_email,
+                    subject='Omslagroute - %s' % self.kwargs.get('title'),
+                    plain_text_content=body
+                )
+                sg.send(email)
             messages.add_message(
                 self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
                     self.object.client_name,

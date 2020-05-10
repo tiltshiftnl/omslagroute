@@ -7,9 +7,17 @@ from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT
 import os
 
 
-class Case(PrintableModel):
+class CaseBase(PrintableModel):
     EMPTY_VALUE = '\u2014'
 
+    created = models.DateTimeField(
+        verbose_name=_('Initieel opgeslagen datum/tijd'),
+        auto_now_add=True,
+    )
+    saved = models.DateTimeField(
+        verbose_name=_('Opgeslagen datum/tijd'),
+        auto_now=True,
+    )
     client_first_name = models.CharField(
         verbose_name=_('Client voornaam'),
         max_length=100,
@@ -388,9 +396,49 @@ class Case(PrintableModel):
         return self.id
 
     class Meta:
+        abstract = True
+
+
+class Case(CaseBase):
+    def create_version(self, version):
+        case_dict = dict(
+            (k, v) for k, v in self.__dict__.items()
+            if k not in ['_state']
+        )
+        case_version = CaseVersion(**case_dict)
+        case_version.pk = None
+        case_version.id = None
+        case_version.version_verbose = version
+        case_version.case = self
+        case_version.save()
+        return case_version
+
+    class Meta:
         verbose_name = _('Client')
         verbose_name_plural = _('Clienten')
         ordering = ('client_last_name', )
+        abstract = False
+
+
+class CaseVersion(CaseBase):
+    version_verbose = models.CharField(
+        verbose_name=_('Versie'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    case = models.ForeignKey(
+        to='Case',
+        related_name='case_version_list',
+        verbose_name=_('Cliënt'),
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name = _('Client versie')
+        verbose_name_plural = _('Client versies')
+        ordering = ('created', )
+        abstract = False
 
 
 class Document(models.Model):
