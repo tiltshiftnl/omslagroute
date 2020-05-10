@@ -1,0 +1,33 @@
+{% extends 'cases/case_page.html' %}
+{% load static i18n html_tags %}
+
+{% block processstappen %}
+<!-- START PROCESSTAPPEN -->
+<!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
+<section class="section section--forms">
+    <span class="h2">Toon:</span>
+    <a href="{% url 'case' object.id %}" class="button button--tertiary">Per stap</a>
+    <span class="button button--tertiary selected">Alle gegevens</span>
+
+    <div class="details-client details-client--basic">
+        <dl>
+            {% for k, client_info in object.to_dict.items %}
+            {% if not forloop.first %}
+            <div>
+                <dt>{{ client_info.label }}: </dt>
+                <dd>
+                    {% if client_info.value|is_date %}
+                        {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                    {% else %}
+                        {{ client_info.value }}
+                    {% endif %}
+                </dd>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </dl>
+    </div>
+
+</section>
+<!-- END PROCESSTAPPEN -->
+{% endblock %}

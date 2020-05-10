@@ -5,7 +5,10 @@ from web.cases.models import Case
 
 
 def get_fields():
-    return [[str(f.name), str(f.verbose_name)] for f in Case._meta.fields]
+    return [[str(f.name), '%s [%s]' % (
+        str(f.name),
+        str(f.verbose_name),
+    )] for f in Case._meta.fields]
 
 
 class Organization(models.Model):

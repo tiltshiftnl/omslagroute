@@ -707,6 +707,7 @@ def map_form_keys(f):
 
 FORMS_BY_KEY = dict((s[0], map_form_keys(s)) for s in FORMS)
 FORMS_BY_SLUG = dict((s[2], map_form_keys(s)) for s in FORMS)
+FORMS_CHOICES = [[s[2], s[3]] for s in FORMS]
 
 
 

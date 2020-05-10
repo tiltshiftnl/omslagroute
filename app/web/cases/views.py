@@ -7,8 +7,9 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from web.users.statics import BEGELEIDER
 from web.profiles.models import Profile
-from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG
+from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
+from web.forms.utils import get_fields
 import sendgrid
 from sendgrid.helpers.mail import Mail
 from django.contrib.sites.shortcuts import get_current_site
@@ -21,6 +22,7 @@ from django.core.files.storage import default_storage
 from django.http import HttpResponseRedirect
 from web.users.auth import user_passes_test
 from django.core.paginator import Paginator
+from web.timeline.models import Moment
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -46,15 +48,46 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return kwargs
 
 
-class CaseDetailView(UserPassesTestMixin, DetailView):
+class CaseDocumentList(UserPassesTestMixin, DetailView):
     model = Case
-    template_name_suffix = '_page'
+    template_name_suffix = '_document_list_page'
 
     def test_func(self):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
+
+    def get_context_data(self, **kwargs):
+        print(kwargs)
+        print(self.kwargs)
+        print(self.object)
+        kwargs.update({
+            'document_list': ''
+        })
+        return super().get_context_data(**kwargs)
+
+
+class CaseDetailView(UserPassesTestMixin, DetailView):
+    model = Case
+    template_name_suffix = '_page'
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'moment_list': Moment.objects.all(),
+            'basis_gegevens_fields': get_fields(BASIS_GEGEVENS),
+        })
+        return super().get_context_data(**kwargs)
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+
+class CaseDetailAllDataView(CaseDetailView):
+    template_name_suffix = '_page_all_data'
 
 
 class CaseCreateView(UserPassesTestMixin, CreateView):

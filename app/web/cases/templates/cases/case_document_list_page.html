@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static client_status_tags i18n %}
+
+{% block title %} - Alle bijlagen bij cliënt: {{ case.client_name }}{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step">Mijn cli&euml;nten</li>
+            <li class="breadcrumb-step">Cliënt: {{ case.client_name }}</li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Alle bijlagen bij cliënt: {{ case.client_name }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+<section class="section section--mijn-clienten">
+    <h2>Alle bijlagen bij cliënt: {{ case.client_name }}</h2>
+
+    <ul>
+
+    {% for object in object_list %}
+        <li>{{ object.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ object.extension }}</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'add_case_document' case.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
+        Nieuwe bijlage
+    </a>
+    <a href="{% url 'case' case.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
+        Terug naar cliënt
+    </a>
+</section>
+{% endblock %}
