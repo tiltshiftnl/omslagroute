@@ -224,6 +224,7 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 .form-field--buttons-sticky {
+    position: fixed; //IE11
     position: sticky;
     position: -webkit-sticky;
     bottom: 1rem;
