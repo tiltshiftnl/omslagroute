@@ -4,6 +4,7 @@ from .statics import *
 from web.core.models import PrintableModel
 from web.forms.forms import BaseGenericForm
 from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT
+import os
 
 
 class Case(PrintableModel):
@@ -417,6 +418,11 @@ class Document(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def extension(self):
+        name, extension = os.path.splitext(self.uploaded_file.name)
+        return extension
 
     @property
     def uploaded_str(self):

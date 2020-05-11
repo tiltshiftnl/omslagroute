@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags %}
+{% load static i18n html_tags client_status_tags %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -30,9 +30,9 @@
                 <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
                     Wijzigen
                 </a>
-                <a href="{% url 'delete_case' object.id %}" class="" title="Verwijder cli&euml;ntgegevens">
-                    Verwijderen
-                </a>
+{#                <a href="{% url 'delete_case' object.id %}" class="" title="Verwijder cli&euml;ntgegevens">#}
+{#                    Verwijderen#}
+{#                </a>#}
             </header>
 
             <dl>
@@ -66,19 +66,20 @@
 
             <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
             {% for document in object.document_set.all %}
-                {% if forloop.counter0 < 3 %}
-                <li>{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</li>
+                {% if forloop.counter0 < 4 %}
+                    <li><a href="{% url 'download_case_document' object.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a></li>
                 {% endif %}
             {% endfor %}
 
             </ul>
-
+            {% if object.document_set.all|length > 3 %}
             <a href="{% url 'case_document_list' object.id %}" class="">Alle bijlages</a>
+            {% endif %}
         </div>
     </section>
         <!-- END BIJLAGE -->
 
-    {% block processstappen %}
+    {% block processtappen %}
     <!-- START PROCESSTAPPEN -->
     <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
     <section class="section section--forms">
@@ -92,7 +93,10 @@
 {#            {% if moment.form %}#}
 {#                <a href="{% url 'update_case' object.id moment.form %}">#}
 {#            {% endif %}#}
-                <strong class="h4">{{ moment.name }}</strong>
+                {% client_status object 'basis-gegevens' as status %}
+                <strong class="h4">
+                    {{ moment.name }} {% if moment.form %}{% client_status object moment.form as status %}({{ status.percentage }}%){% endif %}
+                </strong>
 {#            {% if moment.form %}#}
 {#                </a>#}
 {#            {% endif %}#}

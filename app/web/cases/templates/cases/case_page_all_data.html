@@ -1,7 +1,7 @@
 {% extends 'cases/case_page.html' %}
 {% load static i18n html_tags %}
 
-{% block processstappen %}
+{% block processtappen %}
 <!-- START PROCESSTAPPEN -->
 <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
 <section class="section section--forms">
@@ -12,7 +12,7 @@
     <div class="details-client details-client--basic">
         <dl>
             {% for k, client_info in object.to_dict.items %}
-            {% if not forloop.first %}
+            {% if forloop.counter > 6 %}
             <div>
                 <dt>{{ client_info.label }}: </dt>
                 <dd>

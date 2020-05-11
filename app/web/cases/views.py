@@ -59,11 +59,8 @@ class CaseDocumentList(UserPassesTestMixin, DetailView):
         return self.request.user.profile.cases.all()
 
     def get_context_data(self, **kwargs):
-        print(kwargs)
-        print(self.kwargs)
-        print(self.object)
         kwargs.update({
-            'document_list': ''
+            'document_list': Document.objects.filter(case=self.object)
         })
         return super().get_context_data(**kwargs)
 

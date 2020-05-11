@@ -194,26 +194,26 @@ FIELDS = (
     ('organisatie', forms.CharField(
         label=_('Organisatie'),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('persoonlijk_begeleider', forms.CharField(
         label=_('Persoonlijk begeleider'),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('start_zelfstandig_wonen', forms.CharField(
         label=_('Start zelfstandig wonen (intermediair)'),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('datum_voordracht', forms.DateField(
         label=_('Datum voordracht'),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('woningcorporatie_akkoord_met_omklap', forms.IntegerField(
         label=_('Woningcorporatie akkoord met omklap'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('datum_evaluatie_moment', forms.DateField(
         label=_('Datum evaluatie moment'),
         widget=forms.TextInput(
@@ -223,24 +223,24 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_behaald_omdat', forms.CharField(
         label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_beoordeeld_door', forms.CharField(
         label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_akkoord', forms.IntegerField(
         label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_datum_evaluatiemoment', forms.DateField(
         label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
@@ -250,24 +250,24 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_behaald_omdat', forms.CharField(
         label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_beoordeeld_door', forms.CharField(
         label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_akkoord', forms.IntegerField(
         label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_datum_evaluatiemoment', forms.DateField(
         label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
@@ -277,24 +277,24 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_behaald_omdat', forms.CharField(
         label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_beoordeeld_door', forms.CharField(
         label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_akkoord', forms.IntegerField(
         label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_datum_evaluatiemoment', forms.DateField(
         label=_('Datum evaluatiemoment'),
          widget=forms.TextInput(
@@ -304,24 +304,24 @@ FIELDS = (
          ),
          localize=True,
          required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_behaald_omdat', forms.CharField(
         label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_beoordeeld_door', forms.CharField(
         label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_akkoord', forms.IntegerField(
         label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_datum_evaluatiemoment', forms.DateField(
         label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
@@ -331,7 +331,7 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_kinderen_gezonde_behaald_omdat', forms.CharField(
         label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
@@ -358,7 +358,7 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-     ), {}),
+     ), {'step_required': True}),
      ('omklap_client_openstaande_vragen', forms.CharField(
         label=_('Voor deze cliënt staan de volgende vragen nog open'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
@@ -373,7 +373,7 @@ FIELDS = (
         label=_('Dit is beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
              required = False,
-    ), {}),
+    ), {'step_required': True}),
     ('omklap_datum_evaluatiemoment', forms.DateField(
         label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(

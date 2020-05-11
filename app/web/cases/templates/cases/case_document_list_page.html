@@ -9,7 +9,7 @@
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-step">Mijn cli&euml;nten</li>
-            <li class="breadcrumb-step">Cliënt: {{ case.client_name }}</li>
+            <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ case.client_name }}</a></li>
             <li class="breadcrumb-step sr-only" aria-current="location">Alle bijlagen bij cliënt: {{ case.client_name }}</li>
         </ol>
     </nav>
@@ -21,11 +21,15 @@
 
     <ul>
 
-    {% for object in object_list %}
-        <li>{{ object.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ object.extension }}</li>
+    {% for document in document_list %}
+        <li>
+            <a href="{% url 'download_case_document' object.id document.id %}" target="_blank">
+            {{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}
+            </a>
+        </li>
     {% endfor %}
     </ul>
-    <a href="{% url 'add_case_document' case.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
+    <a href="{% url 'add_case_document' case.id %}" class="button button--primary" title="Voeg een nieuwe bijlage toe">
         Nieuwe bijlage
     </a>
     <a href="{% url 'case' case.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">

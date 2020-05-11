@@ -37,7 +37,7 @@
                 {% if request.user.is_authenticated %}
                     <div class="site-userinfo">
                         {% if request.user.is_superuser %}
-                            Ingelogd als: <a href="/admin" class="site-userinfo__username">admin</a> |
+                            Ingelogd als: <a href="{% url 'admin:users_user_change' request.user.id %}" class="site-userinfo__username">{{ request.user.username }}({{ request.user.user_type_value }})</a> |
                         {% elif request.user.first_name %}
                             Ingelogd als: <span class="site-userinfo__username">{{ request.user.first_name }}</span> |
                         {% else %}
