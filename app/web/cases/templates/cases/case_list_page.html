@@ -17,8 +17,12 @@
     <h2>Mijn cli&euml;nten</h2>
 
     <div class="form-field form-field--buttons screen-only">
-        <a href="{% url 'create_case' 'aanvraag-omslag-en-urgentie' %}" class="button button--primary">Nieuwe aanvraag omslag en urgentie</a>
+        <a href="{% url 'create_case' 'basis-gegevens' %}" class="button button--primary">Nieuwe cliënt</a>
     </div>
+{#    <div class="form-field form-field--buttons screen-only">#}
+{#        <a href="{% url 'create_case' 'aanvraag-omslag-en-urgentie' %}" class="button button--secondary">Nieuwe aanvraag omslag en urgentie</a>#}
+{#        <a href="{% url 'create_case' 'aanvraag-omklap' %}" class="button button--secondary">Nieuwe aanvraag omklap</a>#}
+{#    </div>#}
     <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
     <table class="case-list table--interactive">
         <thead>
@@ -26,6 +30,7 @@
                 <th width="200">Naam</th>
                 <th>Voortgang basisgegevens</th>
                 <th>Voortgang aanvraag omslag en urgentie</th>
+                <th>Aanvraag omklap</th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +44,7 @@
                         </a>
                     </td>
                     <td>
-                        {% client_status object 'basis_gegevens' as status %}
+                        {% client_status object 'basis-gegevens' as status %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
                             <span class="show-on-mobile">Basisgegevens:</span>
                             {{ status.percentage }}% ingevuld
@@ -49,9 +54,17 @@
                         <span class="sr-only">{{ status.percentage }}% ingevuld</span>
                     </td>
                     <td>
-                        {% client_status object 'urgentie_aanvraag' as status %}
+                        {% client_status object 'aanvraag-omslag-en-urgentie' as status %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
                             <span class="show-on-mobile">Aanvraag omslag en urgentie:</span>
+                            {{ status.percentage }}% ingevuld
+                        </a>
+                        <span class="sr-only">{{ status.percentage }}% ingevuld</span>
+                    </td>
+                    <td>
+                        {% client_status object 'aanvraag-omklap' as status %}
+                        <a href="{% url 'case' object.id %}" aria-hidden="true">
+                            <span class="show-on-mobile">Aanvraag omklap:</span>
                             {{ status.percentage }}% ingevuld
                         </a>
                         <span class="sr-only">{{ status.percentage }}% ingevuld</span>
