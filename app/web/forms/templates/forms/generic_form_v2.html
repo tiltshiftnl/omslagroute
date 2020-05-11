@@ -1,0 +1,19 @@
+{% extends 'forms/generic_form.html' %}
+
+{% block subsection %}
+<div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
+    {% if sub_section.title %}
+    <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
+        {{ sub_section.title }}
+        <!-- &nbsp;{% if inpage_navigation %}<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>{% endif %} -->
+    </h4>
+    {% endif %}
+    {% if sub_section.description %}
+    <p class="sub-section__description">{{ sub_section.description }}</p>
+    {% endif %}
+
+    {% for field in sub_section.fields %}
+        {{ field.rendered|safe }}
+    {% endfor %}
+</div>
+{% endblock %}

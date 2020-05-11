@@ -229,6 +229,11 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         return response
 
 
+class GenericCaseUpdateV2FormView(GenericCaseUpdateFormView):
+    template_name = 'forms/generic_form_v2.html'
+
+
+
 class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
     model = Case
     template_name = 'forms/generic_form.html'

@@ -48,6 +48,7 @@
                     </div>
                 {% endif %}
 
+                {% block all_sections %}
                 {% for section in form.as_sections.sections %}
                     <fieldset class="section section--step{% if not section.step_complete %} section--incomplete{% endif %}">
                         {% if section.title %}
@@ -63,6 +64,7 @@
                         {% endif %}
 
                         {% for sub_section in section.section_list %}
+                            {% block subsection %}
                             <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
                                 {% if sub_section.title %}
                                 <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
@@ -78,9 +80,11 @@
                                     {{ field.rendered|safe }}
                                 {% endfor %}
                             </div>
+                            {% endblock %}
                         {% endfor %}
                     </fieldset>
                 {% endfor %}
+                {% endblock %}
 
                 {{ form.as_sections.hidden_fields }}
 
@@ -92,7 +96,7 @@
                 </div>
 
             </div>
-
+            {% block inpage_navigation %}
             {% if inpage_navigation %}
 
                 <div class="grid__aside">
@@ -127,6 +131,7 @@
                 </div>
 
             {% endif %}
+            {% endblock %}
         </div>
 
     </form>
