@@ -30,3 +30,25 @@
     "components/alert",
     "components/modal",
     "components/pagination";
+
+
+    .history {
+        display: none;
+        margin: -1rem 1rem 2rem;
+
+        p {
+            margin: 0;
+        }
+
+        .help-text li {
+            margin-bottom: 0;
+        }
+
+    }
+
+    .form-field--textarea + .history-past {
+        display: block;
+    }
+    #woningnet + .form-field + .history + .history-changed {
+        display: block;
+    }

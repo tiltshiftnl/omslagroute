@@ -13,7 +13,41 @@
     {% endif %}
 
     {% for field in sub_section.fields %}
+    
         {{ field.rendered|safe }}
+        <div class="history history-past help-text u-margin-bottom-2x">
+            <strong class="u-margin-none">Eerder opgegeven in </strong>
+            <ul class="u-list-style-none">
+                <li><p>Aanvraag omslag en urgentie - 12-04-2019
+                    <svg class="details__header-closed" width="14" height="9">
+                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                    </svg>
+                    </p>
+                </li>
+                <li><p>Aanvraag omslag en urgentie - 12-03-2019
+                    <svg class="details__header-closed" width="14" height="9">
+                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                    </svg>
+                    </p>
+                </li>
+                <li><p>Aanvraag omslag en urgentie - 08-01-2019
+                    <svg class="details__header-closed" width="14" height="9">
+                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                    </svg>
+                </p>
+                    <div class="">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="history history-changed help-text u-margin-bottom-2x">
+            <strong class="u-margin-none">Eerdere nummers:</strong>
+            <ul class="u-list-style-none">
+                <li>234567 - geldig tot 31-12-2019</li>
+                <li>345678 - geldig tot 31-12-2017</li>
+            </ul>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}
