@@ -72,7 +72,7 @@
             {% endfor %}
 
             </ul>
-            
+
             <a href="{% url 'case_document_list' object.id %}" class="">Alle bijlages</a>
         </div>
     </section>
@@ -89,18 +89,19 @@
         {% for moment in moment_list %}
         <li>
             <div class="dot dot--large"></div>
-            {% if moment.form %}
-                <a href="{% url 'update_case' object.id moment.form %}">
-            {% endif %}
+{#            {% if moment.form %}#}
+{#                <a href="{% url 'update_case' object.id moment.form %}">#}
+{#            {% endif %}#}
                 <strong class="h4">{{ moment.name }}</strong>
+{#            {% if moment.form %}#}
+{#                </a>#}
+{#            {% endif %}#}
+
             {% if moment.form %}
-                </a>
-                {% endif %}
-            {% if moment.form %}
-                <a href="#" class="form-link form-link--delete" role="button">Verwijderen</a>
+{#                <a href="#" class="form-link form-link--delete" role="button">Verwijderen</a>#}
                 <a href="{% url 'update_case' object.id moment.form %}" class="form-link form-link--change" role="button">Wijzigen</a>
-                {% else %}
-                <a href="#" class="form-link form-link--create" role="button">+ Aanmaken</a>
+            {% else %}
+{#                <a href="#" class="form-link form-link--create" role="button">+ Aanmaken</a>#}
             {% endif %}
 
         </li>
