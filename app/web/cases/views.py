@@ -183,6 +183,12 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
     success_url = reverse_lazy('cases_by_profile')
     form_class = CaseGenericModelForm
 
+    def get_initial(self):
+        self.initial.update({
+            'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('slug'))
+        })
+        return super().get_initial()
+
     def test_func(self):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
@@ -203,6 +209,14 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        document_list = form.cleaned_data.get('document_list')
+        slug = self.kwargs.get('slug')
+        for doc in form.fields['document_list'].queryset:
+            if doc in document_list and slug not in doc.forms:
+                doc.forms.append(slug)
+            elif doc not in document_list and slug in doc.forms:
+                doc.forms.remove(slug)
+            doc.save()
         messages.add_message(self.request, messages.INFO, "De gegevens zijn aangepast.")
         return response
 
@@ -290,6 +304,37 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
 
 class DocumentCreate(UserPassesTestMixin, CreateView):
+    model = Document
+    form_class = DocumentForm
+    template_name_suffix = '_create_form'
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_context_data(self, **kwargs):
+        try:
+            case = self.request.user.profile.cases.get(id=self.kwargs.get('case_pk'))
+        except:
+            raise Http404
+
+        kwargs.update({
+            'case': case,
+        })
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        document = form.save(commit=False)
+        document.case = Case.objects.get(id=self.kwargs.get('case_pk'))
+
+        messages.add_message(self.request, messages.INFO, "De bijlage '%s' is opgeslagen." % document.name)
+        return super().form_valid(form)
+
+
+class DocumentUpdate(UserPassesTestMixin, UpdateView):
     model = Document
     form_class = DocumentForm
     template_name_suffix = '_create_form'

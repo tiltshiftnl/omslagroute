@@ -4,6 +4,7 @@ from django.forms import widgets
 from .utils import *
 from .widgets import *
 from web.cases.statics import *
+# from web.cases.models import Document
 
 
 FIELDS = (
@@ -390,6 +391,11 @@ FIELDS = (
         help_text='Bijvoorbeeld: doelen niet behaald maar geen risico voor zelfstandig wonen',
         required=False,
     ), {}),
+    # ('document_list', forms.ModelMultipleChoiceField(
+    #     label=_('Documenten lijst'),
+    #     # queryset=Document.objects.all(),
+    #     required=False,
+    # ), {}),
 )
 
 FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
@@ -503,6 +509,19 @@ URGENTIE_AANVRAAG = [
                 ],
             },
 
+        ]
+    },
+    {
+        'title': 'Bijlagen bij deze stap',
+        'description': "Voor de aanvraag omslag en urgentie zijn de volgende betstanden nodig: 'kopie indentiteitsbewijs, recente inkomsten verklaring'",
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'document_list',
+                ],
+            },
         ]
     },
 ]
@@ -660,6 +679,19 @@ OMKLAP_AANVRAAG = [
             }
         ],
     },
+    {
+        'title': 'Bijlagen bij deze stap',
+        'description': "Voor de aanvraag omslag en urgentie zijn de volgende betstanden nodig: 'kopie indentiteitsbewijs, recente inkomsten verklaring'",
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'document_list',
+                ],
+            },
+        ]
+    },
 ]
 
 FORMS = (
@@ -692,6 +724,11 @@ FORMS = (
     ),
 )
 
+FORMS_PROCESSTAP = [
+    'aanvraag-omslag-en-urgentie',
+    'aanvraag-omklap',
+]
+
 
 FORMS_PROCESSTAP = [
     'aanvraag-omslag-en-urgentie',
@@ -715,4 +752,5 @@ FORMS_BY_KEY = dict((s[0], map_form_keys(s)) for s in FORMS)
 FORMS_BY_SLUG = dict((s[2], map_form_keys(s)) for s in FORMS)
 FORMS_CHOICES = [[s[2], s[3]] for s in FORMS]
 FORMS_PROCESSTAP_CHOICES = [[s[2], s[3]] for s in FORMS if s[2] in FORMS_PROCESSTAP]
+
 FORM_TITLE_BY_SLUG = dict((s[2], s[3]) for s in FORMS)

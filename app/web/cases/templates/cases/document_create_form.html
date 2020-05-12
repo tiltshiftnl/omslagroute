@@ -16,7 +16,7 @@
 {% block main %}
     <h2>Bijlage uploaden</h2>
 
-    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
         <div class="form-field">
             {% if form.errors %}
                 <div class="errors" aria-live="polite">
@@ -70,6 +70,14 @@
                 </ol>
             {% endif %}
             <div id="file-upload-filename" class="form-field__uploaded"></div>
+        </div>
+
+        <div class="form-field form-field--checkboxselectmultiple">
+            {{ form.forms.label_tag }}
+            {% if form.forms.help_text %}
+                <div class="help-text">{{ form.forms.help_text|safe }}</div>
+            {% endif %}
+            {{ form.forms }}
         </div>
 
         <div class="form-field form-field--buttons screen-only">

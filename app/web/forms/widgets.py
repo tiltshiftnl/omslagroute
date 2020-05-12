@@ -16,3 +16,8 @@ class ClearableFileInput(DefaultClearableFileInput):
 class CheckboxSelectMultiple(DefaultCheckboxSelectMultiple):
     template_name = 'forms/checkbox_select.html'
     option_template_name = 'forms/checkbox_option.html'
+
+
+class CheckboxSelectMultipleDocument(DefaultCheckboxSelectMultiple):
+    template_name = 'forms/checkbox_select_document.html'
+    option_template_name = 'forms/checkbox_option_document.html'

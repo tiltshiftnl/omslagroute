@@ -3,8 +3,9 @@ from django.utils.translation import ugettext_lazy as _
 from .statics import *
 from web.core.models import PrintableModel
 from web.forms.forms import BaseGenericForm
-from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT
+from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT, FORMS_PROCESSTAP_CHOICES
 import os
+from multiselectfield import MultiSelectField
 
 
 class CaseBase(PrintableModel):
@@ -462,6 +463,12 @@ class Document(models.Model):
         to='cases.Case',
         verbose_name=_('Cliënt'),
         on_delete=models.CASCADE,
+    )
+    forms = MultiSelectField(
+        verbose_name=_('Formulieren'),
+        choices=FORMS_PROCESSTAP_CHOICES,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):

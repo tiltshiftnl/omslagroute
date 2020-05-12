@@ -67,7 +67,10 @@
             <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
             {% for document in object.document_set.all %}
                 {% if forloop.counter0 < 4 %}
-                    <li><a href="{% url 'download_case_document' object.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a></li>
+                    <li>
+                        <a href="{% url 'download_case_document' object.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a><br>
+                        <a href="{% url 'update_case_document' object.id document.id %}">(wijzig)</a>
+                    </li>
                 {% endif %}
             {% endfor %}
 

@@ -137,10 +137,13 @@ class GenericForm(BaseGenericForm, forms.Form):
 
 class GenericModelForm(BaseGenericForm, forms.ModelForm):
 
+    def save(self, commit=True):
+        return super().save(commit)
+
     def __init__(self, *args, **kwargs):
-        form_context = kwargs.pop('form_context')
-        super().__init__(*args, **kwargs)
-        self.fields = {}
-        self.sections = form_context.get('sections', [])
-        for f in self._get_fields(self.sections):
-            self.fields[f] = FIELDS_DICT.get(f)
+            form_context = kwargs.pop('form_context')
+            super().__init__(*args, **kwargs)
+            self.fields = {}
+            self.sections = form_context.get('sections', [])
+            for f in self._get_fields(self.sections):
+                self.fields[f] = FIELDS_DICT.get(f)
