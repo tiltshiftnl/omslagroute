@@ -17,7 +17,7 @@
     <h2>Verstuur cli&euml;ntgegevens '{{ title }}'</h2>
     <form method="post" novalidate>
         {% csrf_token %}
-        {% client_status form.instance 'urgentie_aanvraag' as status %}
+        {% client_status form.instance slug as status %}
         {% if status.percentage >= 100 %}
         {% if organization_list %}
             <div data-submit-container class="form-field form-field--buttons screen-only">

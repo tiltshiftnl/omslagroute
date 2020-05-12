@@ -31,6 +31,11 @@
                             <a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a>
                         </li>
                     {% endif %}
+                    {% if request.user|is_wonen_medewerker %}
+                        <li>
+                            <a href="{% url 'case_list' %}">Alle cli&euml;nten</a>
+                        </li>
+                    {% endif %}
                     {% if request.user|is_redactie %}
                         <li class="admin-settings">
                             <button class="navigation__open"><span>Beheer</span></button>

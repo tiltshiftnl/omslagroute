@@ -19,7 +19,7 @@
 
 {% block main %}
 <section class="section section--form section--form-{{ title|slugify }}">
-    {% if form.instance.id %}{% client_status form.instance key as status  %}{% endif %}
+    {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
 
         <div class="grid__wrapper">

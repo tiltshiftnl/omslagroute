@@ -4,6 +4,7 @@ from django.contrib.auth.forms import (
 )
 from constance import config
 import os.path
+from web.forms.statics import FORMS_PROCESSTAP_CHOICES
 
 SOURCE_COMMIT = settings.SOURCE_COMMIT
 BRANCH_NAME = settings.BRANCH_NAME
@@ -28,5 +29,6 @@ def app_settings(request=None):
         'LOGIN_URL': settings.LOGIN_URL,
         'BRANCH_NAME': BRANCH_NAME,
         'HOMEPAGE_INTRO': config.HOMEPAGE_INTRO,
+        'FORMS_PROCESSTAP_CHOICES': FORMS_PROCESSTAP_CHOICES,
         'login_form': AuthenticationForm(),
     }
