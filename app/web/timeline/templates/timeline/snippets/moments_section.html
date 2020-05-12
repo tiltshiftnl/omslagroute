@@ -20,7 +20,7 @@
                     </svg>
                     {% endif %}
                 </div>
-                <details class="details" data-moment-order="{{ moment.order }}" {% doc_added moment.id %}>
+                <details class="details" data-moment-order="{{ moment.order }}" {% doc_added moment.id 'open' %}>
                     <summary class="details__header">
                         <h3 class="details__title">{{ moment.name }}</h3>
                         <span class="details__toggle-icon">
