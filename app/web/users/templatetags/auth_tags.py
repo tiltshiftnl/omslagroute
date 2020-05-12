@@ -30,3 +30,8 @@ def is_gebruikers_beheerder(user):
     return auth_test(user, GEBRUIKERS_BEHEERDER)
 
 
+@register.filter(name='is_wonen_medewerker')
+def is_wonen_medewerker(user):
+    return auth_test(user, WONEN)
+
+

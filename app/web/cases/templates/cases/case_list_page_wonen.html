@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static client_status_tags i18n %}
+
+{% block title %} - Alle cli&euml;nten{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Alle cli&euml;nten</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+<section class="section section--mijn-clienten">
+    <h2>Alle cli&euml;nten</h2>
+
+    <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
+    <table class="case-list table--interactive">
+        <thead>
+            <tr>
+                <th width="200">Naam</th>
+                {% for form in FORMS_PROCESSTAP_CHOICES %}
+                <th>{{ form.1 }} ingediend</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'case' object.id %}">
+
+                            <span class="show-on-mobile">Naam:</span>
+                            {{ object.client_name }}
+                        </a>
+                    </td>
+                    {% for form in FORMS_PROCESSTAP_CHOICES %}
+
+                    <td>
+                        {% client_submitted_form object form.0 as case_version %}
+                        {% if case_version %}
+                            <a href="{% url 'case_version_form' case_version.id form.0 %}">
+                                Ja ({{ case_version.created|date:"j b Y" }})
+                            </a>
+                        {% else %}
+                            Nee
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'core/pagination.html' with object_list=object_list filter_params='' %}
+</section>
+{% endblock %}

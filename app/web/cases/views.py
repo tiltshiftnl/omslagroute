@@ -5,7 +5,7 @@ from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
-from web.users.statics import BEGELEIDER
+from web.users.statics import BEGELEIDER, WONEN
 from web.profiles.models import Profile
 from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
@@ -34,6 +34,26 @@ class UserCaseList(UserPassesTestMixin, ListView):
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        kwargs = super().get_context_data(object_list=object_list, **kwargs)
+        # pagination
+        object_list = kwargs.pop('object_list')
+        paginator = Paginator(object_list, 20)
+        page = self.request.GET.get('page', 1)
+        object_list = paginator.get_page(page)
+        kwargs.update({
+            'object_list': object_list,
+        })
+        return kwargs
+
+
+class UserCaseListAll(UserPassesTestMixin, ListView):
+    model = Case
+    template_name_suffix = '_list_page_wonen'
+
+    def test_func(self):
+        return auth_test(self.request.user, WONEN) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         kwargs = super().get_context_data(object_list=object_list, **kwargs)
@@ -81,6 +101,22 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
+
+
+class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
+    model = CaseVersion
+    template_name_suffix = '_page'
+
+    def get_context_data(self, **kwargs):
+        form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        kwargs.update({
+            'form_fields': get_fields(form_data.get('sections')),
+            'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
+        })
+        return super().get_context_data(**kwargs)
+
+    def test_func(self):
+        return auth_test(self.request.user, WONEN) and hasattr(self.request.user, 'profile')
 
 
 class CaseDetailAllDataView(CaseDetailView):
@@ -290,6 +326,15 @@ def download_document(request, case_pk, document_pk):
         case = request.user.profile.cases.get(id=case_pk)
     except:
         raise Http404
+    document = get_object_or_404(Document, id=document_pk)
+    if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
+        raise Http404()
+
+    return HttpResponseRedirect(document.uploaded_file.url)
+
+
+@user_passes_test(auth_test, user_type=WONEN)
+def download_document_wonen(request, document_pk):
     document = get_object_or_404(Document, id=document_pk)
     if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
         raise Http404()

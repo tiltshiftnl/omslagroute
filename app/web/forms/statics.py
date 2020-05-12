@@ -693,6 +693,12 @@ FORMS = (
 )
 
 
+FORMS_PROCESSTAP = [
+    'aanvraag-omslag-en-urgentie',
+    'aanvraag-omklap',
+]
+
+
 def map_form_keys(f):
     return {
         'key': f[0],
@@ -708,6 +714,5 @@ def map_form_keys(f):
 FORMS_BY_KEY = dict((s[0], map_form_keys(s)) for s in FORMS)
 FORMS_BY_SLUG = dict((s[2], map_form_keys(s)) for s in FORMS)
 FORMS_CHOICES = [[s[2], s[3]] for s in FORMS]
-
-
-
+FORMS_PROCESSTAP_CHOICES = [[s[2], s[3]] for s in FORMS if s[2] in FORMS_PROCESSTAP]
+FORM_TITLE_BY_SLUG = dict((s[2], s[3]) for s in FORMS)
