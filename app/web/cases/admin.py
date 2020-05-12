@@ -6,6 +6,18 @@ from .models import *
 class CaseAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'created',
+        'client_first_name',
+        'client_last_name',
+    )
+
+
+@admin.register(CaseVersion)
+class CaseVersionAdmin(CaseAdmin):
+    list_display = (
+        'id',
+        'version_verbose',
+        'created',
         'client_first_name',
         'client_last_name',
     )
