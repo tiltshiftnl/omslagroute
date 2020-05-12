@@ -28,7 +28,11 @@
         </div>
     </div>
 
-    <div class="dot dot--large"></div>
+    <div class="dot dot--large">
+        <svg class="" width="50" height="50" style="display: none">
+            <use href="#dot-double" xlink:href="#dot-double" width="50" height="50"></use>
+        </svg>
+    </div>
     <details class="details" open>
         <summary class="details__header" data-handler="open-moment">
             <h3 data-static-mode data-moment-name class="details__title">{{ moment.instance.name }}</h3>
@@ -130,7 +134,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 {% if moment.description.errors %}
                     <ol class="error-text">
                     {% for error in moment.description.errors %}
