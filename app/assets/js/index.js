@@ -582,12 +582,27 @@ Array.prototype.sortOnData = function (key) {
               momentElem.style.opacity = 1;
               if (direction < 0) {
                 _insertAfter(nextElem, momentElem);
+                _removeFirstStyle(nextElem);
               } else {
                 _insertAfter(momentElem, nextElem);
+                _removeFirstStyle(momentElem);
               }
+              _addFirstStyle(d.querySelector(momentQ));
               _save();
             }, 500);
           }
+        },
+        _removeFirstStyle = function (elem) {
+          elem.querySelector('.dot svg').style.display = 'none';
+          elem.querySelector('.dot').classList.add('dot--large');
+          elem.querySelector('.dot').classList.remove('dot--double');
+          elem.classList.remove('details-wrapper--before');
+        },
+        _addFirstStyle = function (elem) {
+          elem.querySelector('.dot svg').style.display = 'inline';
+          elem.querySelector('.dot').classList.remove('dot--large');
+          elem.querySelector('.dot').classList.add('dot--double');
+          elem.classList.add('details-wrapper--before');
         },
         _init = function () {
           var deleteElements = document.querySelectorAll(
@@ -600,6 +615,7 @@ Array.prototype.sortOnData = function (key) {
           if (self.classList.contains("details-wrapper--new-moment")) {
             self.style.display = "none";
           }
+          _addFirstStyle(d.querySelector(momentQ));
         };
       _init();
       self.dataset.editTimeline = self;
