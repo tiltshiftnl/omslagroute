@@ -32,23 +32,61 @@
     "components/pagination";
 
 
-    .history {
-        display: none;
+    .form-field-history {
         margin: -1rem 1rem 2rem;
 
-        p {
-            margin: 0;
+        details {
+
+            .icon-details--open {
+                display: none;
+            }
+            .icon-details--closed {
+                display: inline;
+            }
+
+            &[open]{
+                .icon-details--closed {
+                    display: none;
+                }
+                .icon-details--open {
+                    display: inline;
+                }
+            }
+            > summary {
+                list-style: none;
+
+                &::-webkit-details-marker {
+                    display: none;
+                }
+            }
         }
 
-        .help-text li {
-            margin-bottom: 0;
-        }
+        // li {
+        //     margin-bottom: 0;
+        //     padding-bottom: 0;
+            
+        //     .content {
+        //         height: 0;
+        //         padding: 0 5px;
+        //         overflow: hidden;
+        //         margin-top: 0;
+        //         transition: all .3s ease-in-out;
+        //     }
+        //     &:focus-within {
+        //         .content {
+        //             margin-top: 5px;
+        //             height: 3rem;
+        //             padding: 5px;
+        //             border: 1px solid $neutral-grey4;
+        //         }
+        //     }
+        // }
 
     }
 
-    .form-field--textarea + .history-past {
-        display: block;
-    }
-    #woningnet + .form-field + .history + .history-changed {
-        display: block;
-    }
+    // .form-field--textarea + .history-past {
+    //     display: block;
+    // }
+    // #woningnet + .form-field + .history + .history-changed {
+    //     display: block;
+    // }
