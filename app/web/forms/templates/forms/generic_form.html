@@ -87,8 +87,8 @@
                 <div class="form-field form-field--buttons-sticky screen-only">
                     <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
                     <!-- <input type="submit" value="Opslaan" class="button button--primary"> -->
-                    <a href="{{ discard_url }}" class="button button--secondary">Annuleer</a>
-                    {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Verstuur aanvraag</button>{% endif %}
+                    <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
+                    {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Controleren en versturen</button>{% endif %}
                 </div>
 
             </div>
