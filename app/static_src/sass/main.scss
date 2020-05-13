@@ -34,6 +34,8 @@
 
     .form-field-history {
         margin: -1rem 1rem 2rem;
+        font-size: .9rem;
+        color: $neutral-grey4;
 
         details {
 
@@ -54,9 +56,20 @@
             }
             > summary {
                 list-style: none;
+                small {
+                    font-size: .8rem;
+                }
 
                 &::-webkit-details-marker {
                     display: none;
+                }
+            }
+            >.content {
+                margin: 5px 10px 20px;
+                padding: 5px 10px 10px;
+                border: 1px solid $neutral-grey4;
+                *:last-child {
+                    margin-bottom: 0;
                 }
             }
         }
