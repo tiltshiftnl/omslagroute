@@ -69,7 +69,7 @@
                 {% if forloop.counter0 < 4 %}
                     <li>
                         <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"j b Y" }} </span></div>
-                        <div><a href="{% url 'update_case_document' object.id document.id %}"><span>wijzig</span></a></div>
+                        <div><a href="{% url 'update_case_document' object.id document.id %}"><span>Wijzigen</span></a></div>
                     </li>
                 {% endif %}
             {% endfor %}
