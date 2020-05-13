@@ -230,6 +230,10 @@ body:not(:-moz-handler-blocked) fieldset {
     bottom: 1rem;
     background-color: $primary-white;
     outline: 1rem solid rgba($primary-white, 1);
+
+    @media all and (min-width: $large) {
+        min-width: 680px; //IE11
+    }
 }
 // ********************
 // HELPFUL INFORMATION
