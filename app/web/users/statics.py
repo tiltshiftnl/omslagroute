@@ -1,6 +1,6 @@
 USER_TYPES = (
     (1, 'Redactie'),
-    (2, 'Afedeling Wonen medewerker'),
+    (2, 'Wonen medewerker'),
     (3, 'GGD'),
     (4, 'Woningcorporatie'),
     (5, 'Persoonlijk begeleider'),
