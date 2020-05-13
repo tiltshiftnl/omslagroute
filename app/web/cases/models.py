@@ -6,6 +6,8 @@ from web.forms.forms import BaseGenericForm
 from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT, FORMS_PROCESSTAP_CHOICES
 import os
 from multiselectfield import MultiSelectField
+from django.utils.safestring import mark_safe
+import locale
 
 
 class CaseBase(PrintableModel):
@@ -472,7 +474,13 @@ class Document(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
+        return mark_safe('<span>%s</span><span>%s</span><span>%s</span>' % (
+                self.name,
+                self.saved.strftime('%d %b %Y %H:%M:%S').lower(),
+                self.extension
+            )
+        )
 
     @property
     def extension(self):
