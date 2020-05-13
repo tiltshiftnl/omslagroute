@@ -712,3 +712,14 @@ select {
         margin-right: .625rem;
     }
 }
+
+// ********************
+// CHECKBOX MULTIPLESELECT DOCUMENTS
+// ********************
+ .form-field--checkboxselectmultipledocument {
+     ul{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+     }
+ }
