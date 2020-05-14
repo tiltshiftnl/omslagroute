@@ -55,10 +55,26 @@
                         flex: 1;
                         display: contents;
 
+                        &:first-of-type {
+                            a {
+                                width: 50%;
+                                padding-right: 10px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                            span{
+                                width: 20%;
+                                &:last-child{
+                                    width: 30%;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+
     }
 
     .section--forms {
@@ -116,6 +132,13 @@
                     text-decoration: none;
                 }
 
+                .form-link--statuscontainer {
+                    display: inline;
+                }
+                .form-link--added {
+                    display: inline-block;
+                    margin-right: 30px;
+                }
 
             }
         }
