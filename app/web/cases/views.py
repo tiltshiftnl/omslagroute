@@ -278,6 +278,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         kwargs.update({
             'organization_list': Organization.objects.filter(main_email__isnull=False),
             'object': self.object,
+            'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('slug')),
         })
         return super().get_context_data(**kwargs)
 
