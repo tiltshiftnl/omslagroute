@@ -25,7 +25,7 @@
             {% for organization in organization_list  %}
                 <p>De volgende informatie van deze cliënt wordt per mail gestuurd naar het e-mailadres <strong>{{ organization.main_email }}</strong> van de organisatie <strong>{{ organization.name }}</strong></p>
 
-            <section class="section section--client">
+            <section class="section section--client u-margin-bottom-2x">
             <div class="details-client details-client--basic">
                 <dl>
                 {% case_data form.instance organization.field_restrictions as data %}
@@ -45,7 +45,7 @@
             </div>
             </section>
             {% endfor %}
-            <div data-submit-container class="form-field form-field--buttons screen-only">
+            <div data-submit-container class="form-field form-field--buttons form-field--buttons-sticky screen-only">
                 <input type="submit" value="Verstuur" class="button button--primary">
                 <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleren</a>
             </div>
@@ -60,7 +60,7 @@
                 <li><strong>{{ f }}</strong></li>
                 {% endfor %}
             </ul>
-            <div data-submit-container class="form-field form-field--buttons screen-only">
+            <div data-submit-container class="form-field form-field--buttons form-field--buttons-sticky screen-only">
                 <a href="{% url 'update_case' form.instance.id slug %}" class="button button--primary">Terug naar '{{ title }}'</a>
             </div>
         {% endif %}
