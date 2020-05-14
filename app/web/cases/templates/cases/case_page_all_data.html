@@ -10,7 +10,7 @@
         <a href="{% url 'case' object.id %}" class="button button--tertiary">Per stap</a>
         <span class="button button--tertiary selected">Alle gegevens</span>
     </div>
-    <div class="details-client details-client--basic">
+    <div class="details-client">
         <dl>
             {% for k, client_info in object.to_dict.items %}
             {% if forloop.counter > 6 %}

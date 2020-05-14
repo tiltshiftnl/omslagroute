@@ -21,16 +21,38 @@
 
 {% block main %}
 <section class="section section--client">
-    <h1>Cliënt versie: {{ object.client_name }} ({{ object.created|date:"j b Y" }})</h1>
+    <h1>{{ object.client_name }}</h1>
+    <h2 class="h3">{{ form_data.title }} - versie {{ object.created|date:"j b Y" }}</h2>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}
         {% endlanguage %}
     </p>
 
-    <section class="section-details-client">
+    <section class="section-details-client section-details-client--vertical">
+
+        <!-- START BIJLAGE -->
+        <div class="details-client details-client--appendix">
+            <header>
+                <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
+            </header>
+
+            <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
+            {% for document in object.case.document_set.all %}
+                <!-- <li>
+                    <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>
+                </li> -->
+                <li>
+                    <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
+                    
+                </li>
+            {% endfor %}
+
+            </ul>
+        </div>
+        <!-- END BIJLAGE -->
         <!-- START Client basis gegevens -->
-        <div class="details-client details-client--basic">
+        <div class="details-client">
             <header>
                 <h2 class="h3">{{ form_data.title }} gegevens</h2>
             </header>
@@ -54,25 +76,19 @@
         </div>
         <!-- END Client basis gegevens -->
 
-
-        <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix">
-            <header>
-                <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
-            </header>
-
-            <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
-            {% for document in object.case.document_set.all %}
-                <li>
-                    <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>
-                </li>
-            {% endfor %}
-
-            </ul>
-        </div>
     </section>
-        <!-- END BIJLAGE -->
-
 </section>
+
+<section class="section section--forms">
+    <h2>Overige gegevens</h2>
+    <div class="tab-container">
+        <a href="{% url 'case' object.id %}" class="button button--tertiary">Per stap</a>
+        <span class="button button--tertiary selected">Alle gegevens</span>
+    </div>
+    <div class="details-client details-client--basic">
+
+    </div>
+</section>
+
 {% endblock %}
 

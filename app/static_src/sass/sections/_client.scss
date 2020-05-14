@@ -2,6 +2,16 @@
 
     .section-details-client {
         margin-bottom: 3.75rem;
+
+        .downloads {
+            display: block;
+        }
+
+        &--vertical{
+            .downloads {
+                max-width: 600px;
+            }
+        }
     }
     .details-client {
 
@@ -18,10 +28,6 @@
             }
         }
 
-        .downloads {
-            display: block;
-        }
-
         ul {
             list-style: none;
             margin-bottom: 1rem;
@@ -34,7 +40,16 @@
             margin-top: 0;
             div {
                 display: flex;
-                margin-bottom: .625rem;
+                
+                    padding: .475rem .938rem;
+                    border-left: 1px solid $neutral-grey1;
+                    border-right: 1px solid $neutral-grey1;
+                    border-bottom: 1px solid $neutral-grey1;
+                    margin-bottom: 0;
+        
+                    &:nth-of-type(odd){
+                        background-color: $neutral-grey1;
+                    }
 
                 dt, dd {
                     flex: 1;
@@ -45,6 +60,17 @@
             }
         }
 
+        &--basic{
+            dl {
+                div {
+                    border: 0;
+                    &:nth-of-type(odd){
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+    
         &--appendix {
             .downloads {
                 li {
@@ -74,9 +100,7 @@
                 }
             }
         }
-
     }
-
     .section--forms {
 
         .tab-container {
@@ -98,21 +122,7 @@
             }
 
             +.details-client--basic {
-                dl {
-                    >div {
-                        padding: .475rem .938rem;
-                        border-left: 1px solid $neutral-grey1;
-                        border-right: 1px solid $neutral-grey1;
-
-                        &:nth-of-type(odd){
-                            background-color: $neutral-grey1;
-                        }
-
-                        dt {
-
-                        }
-                    }
-                }
+                
             }
         }
 
@@ -124,6 +134,8 @@
             list-style: none;
             margin-top: 1rem;
             padding-left: 0;
+
+
 
             li {
                 position: relative;
@@ -180,7 +192,7 @@
     }
 
     @media all and (min-width: $tablets) {
-        .section-details-client {
+        .section-details-client:not(.section-details-client--vertical){
             display: flex;
             .details-client{
                 flex: 1;
