@@ -44,6 +44,21 @@
                 }
             }
         }
+
+        &--appendix {
+            .downloads {
+                li {
+                    display: flex;
+                    justify-content: space-between;
+
+                    >div {
+                        flex: 1;
+                        display: contents;
+
+                    }
+                }
+            }
+        }
     }
 
     .section--forms {

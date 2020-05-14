@@ -59,6 +59,10 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = os.environ.get('DJANGO_ROOT_URLCONF', 'web.urls')
 
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'local')
 WSGI_APPLICATION = 'wsgi.application'

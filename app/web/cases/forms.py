@@ -1,9 +1,11 @@
 from django import forms
 from .models import *
 from web.forms.forms import GenericModelForm
-from web.forms.widgets import RadioSelect
+from web.forms.widgets import RadioSelect, CheckboxSelectMultipleDocument, CheckboxSelectMultiple
 from .statics import GESLACHT
+from web.forms.statics import FORMS_PROCESSTAP_CHOICES
 from django.utils.translation import ugettext_lazy as _
+from web.forms.fields import MultiSelectFormField
 
 
 class CaseForm(forms.ModelForm):
@@ -20,12 +22,22 @@ class CaseForm(forms.ModelForm):
 
 
 class CaseGenericModelForm(GenericModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['document_list'] = forms.ModelMultipleChoiceField(
+            label=_('Bijlagen'),
+            queryset=Document.objects.filter(case=kwargs.get('instance')),
+            widget=CheckboxSelectMultipleDocument(),
+            required=False,
+        )
+
     class Meta:
         model = Case
         exclude = []
 
 
 class SendCaseForm(forms.ModelForm):
+
     to_email = forms.EmailField(
         label=_('E-mailadres van de afdeling wonen van de gemeente Amsterdam'),
         required=False,
@@ -37,6 +49,12 @@ class SendCaseForm(forms.ModelForm):
 
 
 class DocumentForm(forms.ModelForm):
+    forms = MultiSelectFormField(
+        label=_('Formulieren'),
+        help_text=_('Als er formulieren zijn waar deze bijlage aan toegevoegd moet worden, dan kun je die hier aanvinken'),
+        choices=FORMS_PROCESSTAP_CHOICES,
+        required=False
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
