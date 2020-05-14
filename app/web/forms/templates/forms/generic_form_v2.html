@@ -1,5 +1,5 @@
 {% extends 'forms/generic_form.html' %}
-
+{% load client_data_tags html_tags %}
 {% block subsection %}
 <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
     {% if sub_section.title %}
@@ -13,16 +13,18 @@
     {% endif %}
 
     {% for field in sub_section.fields %}
-    
+
         {{ field.rendered|safe }}
 
-        <!-- START history for items that have changed -->
+        {% get_case_versions case_versions field.object.name as history %}
+        {% if history %}
         <div class="form-field-history">
             <strong class="u-margin-none">Eerder ingevuld in </strong>
             <ul class="u-list-style-none">
+        {% for h in history %}
                 <li>
                     <details>
-                        <summary>Aanvraag omslag en urgentie <small>(02-05-2020)</small>
+                        <summary>{{ h.version_verbose }} <small>({{ h.saved }})</small>
                             <svg class="icon-details--closed" width="14" height="9">
                                 <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
                             </svg>
@@ -31,55 +33,14 @@
                             </svg>
                         </summary>
                         <div class="content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                            {{ h.value }}
                         </div>
-                        
-                    </details>                    
+                    </details>
                 </li>
-                <li>
-                    <details>
-                        <summary>Aanvraag omslag en urgentie <small>(09-12-2019)</small>
-                            <svg class="icon-details--closed" width="14" height="9">
-                                <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                            </svg>
-                            <svg class="icon-details--open" width="14" height="9">
-                                <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                            </svg>
-                        </summary>
-                        <div class="content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                        </div>
-                        
-                    </details>                    
-                </li>
-                <li>
-                    <details>
-                        <summary>Aanvraag omslag en urgentie <small>(12-04-2019)</small>
-                            <svg class="icon-details--closed" width="14" height="9">
-                                <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                            </svg>
-                            <svg class="icon-details--open" width="14" height="9">
-                                <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                            </svg>
-                        </summary>
-                        <div class="content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                        </div>
-                        
-                    </details>                    
-                </li>
+        {% endfor %}
             </ul>
         </div>
-<!-- END history for items that have changed -->
-<!-- START history for woningnetnummer -->
-        <div class="form-field-history">
-            <strong class="u-margin-none">Eerdere nummers:</strong>
-            <ul class="u-list-style-none">
-                <li>234567 - geldig tot 31-12-2019 -ingevuld in Aanvraag omslag en urgentie <small>(12-04-2019)</small></li>
-                <li>345678 - geldig tot 31-12-2017 -ingevuld in Aanvraag omslag en urgentie <small>(01-05-2017)</small></li>
-            </ul>
-        </div>
-<!-- START history for woningnetnummer -->
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

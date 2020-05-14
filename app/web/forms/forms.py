@@ -81,6 +81,7 @@ class BaseGenericForm:
                     'errors': error_row % str(bf_errors),
                     'label': label,
                     'field': bf,
+                    'name': name,
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
                     'css_classes': css_classes,

@@ -23,6 +23,8 @@ def is_date(str_date):
 
 @register.filter(name='str_date_to_date')
 def str_date_to_date(str_date):
+    print(str_date)
+    print(type(str_date))
     return datetime.strptime(str_date, "%Y-%m-%d")
 
 
