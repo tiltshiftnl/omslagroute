@@ -28,7 +28,9 @@ class PrintableModel(models.Model):
                     data[f.name] = 'Ja' if f.value_from_object(self) else 'Nee'
                 else:
                     data[f.name] = f.value_from_object(self)
-                if isinstance(data[f.name], (datetime.date, datetime.datetime)):
+                if isinstance(data[f.name], datetime.date):
+                    data[f.name] = datetime.datetime.strftime(data[f.name], '%d-%m-%Y')
+                if isinstance(data[f.name], datetime.datetime):
                     data[f.name] = data[f.name].isoformat()
                 if data[f.name] is None or data[f.name] is '':
                     data[f.name] = self.EMPTY_VALUE if hasattr(self, 'EMPTY_VALUE') else '\u2014'

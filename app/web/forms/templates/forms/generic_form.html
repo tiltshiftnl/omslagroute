@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load client_status_tags %}
+{% load client_status_tags client_data_tags html_tags %}
 {% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
 {% block breadcrumb %}
@@ -78,6 +78,33 @@
 
                                 {% for field in sub_section.fields %}
                                     {{ field.rendered|safe }}
+
+                                    {% get_case_versions case_versions field.object.name as history %}
+                                    {% if history %}
+                                    <div class="form-field form-field-history">
+                                        <strong class="u-margin-none">Eerder verstuur in </strong>
+                                        <ul class="u-list-style-none">
+                                        {% for h in history %}
+                                            <li>
+                                                <details>
+                                                    <summary>{{ h.version_verbose }} <small>({{ h.saved|timestamp_to_date|date:'j b Y H:i' }})</small>
+                                                        <svg class="icon-details--closed" width="14" height="9">
+                                                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                                        </svg>
+                                                        <svg class="icon-details--open" width="14" height="9">
+                                                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                                        </svg>
+                                                    </summary>
+                                                    <div class="content">
+                                                        {{ h.value }}
+                                                    </div>
+                                                </details>
+                                            </li>
+                                        {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
                                 {% endfor %}
                             </div>
                             {% endblock %}

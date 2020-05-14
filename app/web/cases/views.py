@@ -214,14 +214,20 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         value_key = 'value'
         version_key = 'version_verbose'
         saved_key = 'saved'
+        object_dict = self.object.to_dict()
         ld = [cv.to_dict() for cv in CaseVersion.objects.filter(case=self.object).order_by('-saved')]
         dl = {k: [{
             value_key: dic[k].get('value'),
-            version_key: dic[version_key].get('value'),
+            version_key: FORMS_BY_SLUG.get(dic[version_key].get('value')).get('title'),
             saved_key: dic[saved_key].get('value'),
         } for dic in ld] for k in ld[0] if self.object.to_dict().get(k)}
-        # v = {k: [vv for vv in v if vv.get(value_key) != getattr(self.object, k)] for k, v in dl.items()}
-
+        dl = {k: [
+            vv for vv in v if vv.get(value_key) != '—' and vv.get(value_key) != object_dict.get(k, {}).get('value')
+        ] for k, v in dl.items()}
+        # remove double values
+        dl = {k: [
+            v[i] for i in range(len(v)) if i == 0 or v[i].get('value') != v[i-1].get('value')
+        ] for k, v in dl.items()}
         kwargs.update({
             'case_versions': dl,
         })
@@ -243,7 +249,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
             elif doc not in document_list and slug in doc.forms:
                 doc.forms.remove(slug)
             doc.save()
-        messages.add_message(self.request, messages.INFO, "De gegevens zijn aangepast.")
+        messages.add_message(self.request, messages.INFO, "Eventuele wijzigingen zijn opgeslagen.")
         return response
 
 
