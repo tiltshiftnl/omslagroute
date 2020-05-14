@@ -115,8 +115,16 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         })
         return super().get_context_data(**kwargs)
 
+    def get_queryset(self):
+        if self.request.user.user_type == BEGELEIDER:
+            return CaseVersion.objects.filter(case__in=self.request.user.profile.cases.all())
+        return super().get_queryset()
+
+    def get_object(self, queryset=None):
+        return super().get_object(queryset)
+
     def test_func(self):
-        return auth_test(self.request.user, WONEN) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, BEGELEIDER]) and hasattr(self.request.user, 'profile')
 
 
 class CaseDetailAllDataView(CaseDetailView):
@@ -378,8 +386,11 @@ def download_document(request, case_pk, document_pk):
     return HttpResponseRedirect(document.uploaded_file.url)
 
 
-@user_passes_test(auth_test, user_type=WONEN)
-def download_document_wonen(request, document_pk):
+@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER])
+def download_document_wonen(request, case_pk, document_pk):
+    if request.user.user_type == BEGELEIDER:
+        return get_object_or_404(Case, id=case_pk)#CaseVersion.objects.filter(case__in=request.user.profile.cases.all())
+
     document = get_object_or_404(Document, id=document_pk)
     if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
         raise Http404()
