@@ -79,16 +79,51 @@
 
     .section--forms {
 
-        h2 {
-            display: inline;
+        .tab-container {
+            border-bottom: 1px solid $neutral-grey1;
+
+            .button--tertiary {
+                background-color: transparent;
+                border-color: $neutral-grey1;
+
+
+                &.selected,
+                &:hover{
+                    background-color: $neutral-grey1;
+                }
+            }
+
+            + ul{
+                margin-top: 0;
+            }
+
+            +.details-client--basic {
+                dl {
+                    >div {
+                        padding: .475rem .938rem;
+                        border-left: 1px solid $neutral-grey1;
+                        border-right: 1px solid $neutral-grey1;
+
+                        &:nth-of-type(odd){
+                            background-color: $neutral-grey1;
+                        }
+
+                        dt {
+
+                        }
+                    }
+                }
+            }
         }
 
-        a.selected {
-            background-color: $neutral-grey3;
-        }
+        // h2 {
+        //     display: inline;
+        // }
+
         ul {
             list-style: none;
             margin-top: 1rem;
+            padding-left: 0;
 
             li {
                 position: relative;

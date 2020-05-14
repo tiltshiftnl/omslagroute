@@ -5,10 +5,11 @@
 <!-- START PROCESSTAPPEN -->
 <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
 <section class="section section--forms">
-    <span class="h2">Toon:</span>
-    <a href="{% url 'case' object.id %}" class="button button--tertiary">Per stap</a>
-    <span class="button button--tertiary selected">Alle gegevens</span>
-
+    <h2>Overige gegevens</h2>
+    <div class="tab-container">
+        <a href="{% url 'case' object.id %}" class="button button--tertiary">Per stap</a>
+        <span class="button button--tertiary selected">Alle gegevens</span>
+    </div>
     <div class="details-client details-client--basic">
         <dl>
             {% for k, client_info in object.to_dict.items %}

@@ -15,7 +15,7 @@
 
 {% block main %}
 <section class="section section--client">
-    <h1>Cliënt: {{ object.client_name }}</h1>
+    <h1>{{ object.client_name }}</h1>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}
@@ -86,9 +86,11 @@
     <!-- START PROCESSTAPPEN -->
     <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
     <section class="section section--forms">
-        <span class="h2">Toon:</span>
-        <span class="button button--tertiary selected">Per stap</span>
-        <a href="{% url 'case_all_data' object.id %}"class="button button--tertiary">Alle gegevens</a>
+        <h2 class="h3">Overige gegevens</h2>
+        <div class="tab-container">
+            <span class="button button--tertiary selected">Per stap</span>
+            <a href="{% url 'case_all_data' object.id %}"class="button button--tertiary">Alle gegevens</a>
+        </div>
         <ul>
         {% for moment in moment_list %}
         <li>
