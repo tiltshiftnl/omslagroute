@@ -7,6 +7,7 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'case' form.instance.id %}">Cliënt: {{ form.instance.client_name }}</a></li>
             <li class="breadcrumb-step sr-only" aria-current="location">Verstuur cli&euml;ntgegevens {{ title }}</li>
         </ol>
     </nav>
@@ -14,39 +15,40 @@
 
 {% block main %}
 <section class="section section--form">
-    <h2>Verstuur cli&euml;ntgegevens '{{ title }}'</h2>
+    <h2>Controleer de gegevens '{{ title }}'</h2>
     <form method="post" novalidate>
         {% csrf_token %}
         {% client_status form.instance slug as status %}
         {% if status.percentage >= 100 %}
         {% if organization_list %}
+
+            {% for organization in organization_list  %}
+                <p>De volgende informatie van deze cliënt wordt per mail gestuurd naar het e-mailadres <strong>{{ organization.main_email }}</strong> van de organisatie <strong>{{ organization.name }}</strong></p>
+
+            <section class="section section--client">
+            <div class="details-client details-client--basic">
+                <dl>
+                {% case_data form.instance organization.field_restrictions as data %}
+                {% for k, field in data.items  %}
+                <div>
+                    <dt>{{ field.label }}: </dt>
+                    <dd>
+                        {% if field.value|is_date %}
+                            {{ field.value|str_date_to_date|date:"j b Y" }}
+                        {% else %}
+                            {{ field.value }}
+                        {% endif %}
+                    </dd>
+                </div>
+                {% endfor %}
+                </dl>
+            </div>
+            </section>
+            {% endfor %}
             <div data-submit-container class="form-field form-field--buttons screen-only">
                 <input type="submit" value="Verstuur" class="button button--primary">
-                <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleer</a>
+                <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleren</a>
             </div>
-            <h3>De informatie over deze cliënt wordt met de volgende organisaties gedeeld.</h3>
-
-
-        {% for organization in organization_list  %}
-            <h4>De organisatie '{{ organization.name }}' ziet de volgende informatie.</h4>
-            <table>
-            {% case_data form.instance organization.field_restrictions as data %}
-        {% for k, field in data.items  %}
-            <tr>
-                <th>{{ field.label }}: </th>
-        <td>
-                    {% if field.value|is_date %}
-                        {{ field.value|str_date_to_date|date:"j b Y" }}
-                    {% else %}
-                        {{ field.value }}
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-            </table>
-
-            {% endfor %}
-
         {% else %}
         {% endif %}
         {% else %}
