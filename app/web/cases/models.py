@@ -475,10 +475,10 @@ class Document(models.Model):
 
     def __str__(self):
         locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
-        return mark_safe('<span>%s</span><span>%s</span><span>%s</span>' % (
+        return mark_safe('<div><span>%s</span><small>%s</small><small>%s</small></div>' % (
                 self.name,
-                self.saved.strftime('%d %b %Y %H:%M:%S').lower(),
-                self.extension
+                self.extension,
+                self.saved.strftime('%d %b %Y %H:%M:%S').lower()
             )
         )
 
