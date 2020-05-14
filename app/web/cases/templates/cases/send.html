@@ -23,8 +23,8 @@
         {% if organization_list %}
 
             {% for organization in organization_list  %}
-                <p>De volgende informatie van deze cliënt wordt per mail gestuurd naar het e-mailadres <strong>{{ organization.main_email }}</strong> van de organisatie <strong>{{ organization.name }}</strong></p>
-
+            <p class="u-margin-bottom-2x">De volgende informatie van <strong>{{ form.instance.client_name }}</strong> wordt per mail verstuurd naar <strong>{{ organization.main_email }}</strong> van <strong>{{ organization.name }}</strong>.</p>
+                
             <section class="section section--client u-margin-bottom-2x">
             <div class="details-client details-client--basic">
                 <dl>
