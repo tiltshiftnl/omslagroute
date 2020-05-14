@@ -30,7 +30,7 @@
             {% for object in object_list %}
                 <tr>
                     <td>
-                        <a href="{% url 'case' object.id %}">
+                        <a href="#">
 
                             <span class="show-on-mobile">Naam:</span>
                             {{ object.client_name }}
@@ -45,7 +45,9 @@
                                 Ja ({{ case_version.created|date:"j b Y" }})
                             </a>
                         {% else %}
+                            <a href="#">
                             Nee
+                            </a>
                         {% endif %}
                     </td>
                     {% endfor %}

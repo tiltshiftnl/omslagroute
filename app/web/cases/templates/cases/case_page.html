@@ -93,23 +93,25 @@
         {% for moment in moment_list %}
         <li>
             <div class="dot dot--large"></div>
-{#            {% if moment.form %}#}
-{#                <a href="{% url 'update_case' object.id moment.form %}">#}
-{#            {% endif %}#}
                 {% client_status object 'basis-gegevens' as status %}
                 <strong class="h4">
                     {{ moment.name }} {% if moment.form %}{% client_status object moment.form as status %}({{ status.percentage }}%){% endif %}
                 </strong>
-{#            {% if moment.form %}#}
-{#                </a>#}
-{#            {% endif %}#}
-
             {% if moment.form %}
-{#                <a href="#" class="form-link form-link--delete" role="button">Verwijderen</a>#}
                 <a href="{% url 'update_case' object.id moment.form %}" class="form-link form-link--change" role="button">Wijzigen</a>
-            {% else %}
-{#                <a href="#" class="form-link form-link--create" role="button">+ Aanmaken</a>#}
             {% endif %}
+                    {% if moment.form %}
+                        {% client_submitted_form object moment.form as case_version %}
+                        {% if case_version %}
+                            <a href="{% url 'case_version_form' case_version.id moment.form %}" class="form-link form-link--change">
+                                Ingediend ({{ case_version.created|date:"j b Y" }})
+                            </a>
+                        {% else %}
+                            <span class="form-link form-link--change">
+                            Nog niet ingediend
+                            </span>
+                        {% endif %}
+                   {% endif %}
 
         </li>
         {% endfor %}
