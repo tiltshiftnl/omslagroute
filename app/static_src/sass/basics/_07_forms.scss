@@ -37,6 +37,9 @@ body:not(:-moz-handler-blocked) fieldset {
     .form-field:first-child {
         margin-top: 0;
     }
+    .form-field:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .sub-section__title {
@@ -697,6 +700,54 @@ select {
 @media all and (-ms-high-contrast:none) {
     select {
         background-size: .875rem 1.25rem;
+    }
+}
+
+// ********************
+// HISTORY OF FORM-FIELDS
+// ********************
+.form-field-history {
+    margin: -1.5rem 0 3rem;
+    font-size: .9rem;
+    color: $neutral-grey4;
+    min-width: 4.375rem;
+    max-width: 38.75rem;
+
+    details {
+        margin-left: 1rem;
+        .icon-details--open {
+            display: none;
+        }
+        .icon-details--closed {
+            display: inline;
+        }
+
+        &[open]{
+            .icon-details--closed {
+                display: none;
+            }
+            .icon-details--open {
+                display: inline;
+            }
+        }
+        > summary {
+            list-style: none;
+            small {
+                font-size: .8rem;
+            }
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+        >.content {
+            margin: 3px 0 20px;
+            padding: 8px 10px 10px;
+            border: 1px solid $neutral-grey4;
+            *:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }
 

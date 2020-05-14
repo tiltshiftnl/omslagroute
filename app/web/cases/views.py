@@ -209,6 +209,30 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
             return next
         return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
 
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        value_key = 'value'
+        version_key = 'version_verbose'
+        saved_key = 'saved'
+        object_dict = self.object.to_dict()
+        ld = [cv.to_dict() for cv in CaseVersion.objects.filter(case=self.object).order_by('-saved')]
+        dl = {k: [{
+            value_key: dic[k].get('value'),
+            version_key: FORMS_BY_SLUG.get(dic[version_key].get('value')).get('title'),
+            saved_key: dic[saved_key].get('value'),
+        } for dic in ld] for k in ld[0] if self.object.to_dict().get(k)}
+        dl = {k: [
+            vv for vv in v if vv.get(value_key) != '—' and vv.get(value_key) != object_dict.get(k, {}).get('value')
+        ] for k, v in dl.items()}
+        # remove double values
+        dl = {k: [
+            v[i] for i in range(len(v)) if i == 0 or v[i].get('value') != v[i-1].get('value')
+        ] for k, v in dl.items()}
+        kwargs.update({
+            'case_versions': dl,
+        })
+        return kwargs
+
     def get_discard_url(self):
         return reverse('case', kwargs={'pk': self.object.id})
 
@@ -225,8 +249,12 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
             elif doc not in document_list and slug in doc.forms:
                 doc.forms.remove(slug)
             doc.save()
-        messages.add_message(self.request, messages.INFO, "De gegevens zijn aangepast.")
+        messages.add_message(self.request, messages.INFO, "Eventuele wijzigingen zijn opgeslagen.")
         return response
+
+
+class GenericCaseUpdateV2FormView(GenericCaseUpdateFormView):
+    template_name = 'forms/generic_form_v2.html'
 
 
 class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):

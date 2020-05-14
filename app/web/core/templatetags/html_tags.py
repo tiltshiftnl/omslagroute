@@ -16,14 +16,19 @@ def linebreaks2html(txt):
 @register.filter(name='is_date')
 def is_date(str_date):
     try:
-        return isinstance(datetime.strptime(str_date, "%Y-%m-%d"), (date, datetime))
+        return isinstance(datetime.strptime(str_date, "%d-%m-%Y"), (date, datetime))
     except:
         return False
 
 
 @register.filter(name='str_date_to_date')
 def str_date_to_date(str_date):
-    return datetime.strptime(str_date, "%Y-%m-%d")
+    return datetime.strptime(str_date, "%d-%m-%Y")
+
+
+@register.filter(name='timestamp_to_date')
+def timestamp_to_date(timestamp):
+    return datetime.fromtimestamp(timestamp)
 
 
 @register.filter(name='textile')

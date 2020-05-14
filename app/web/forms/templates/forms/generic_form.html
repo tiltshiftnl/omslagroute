@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load client_status_tags %}
+{% load client_status_tags client_data_tags html_tags %}
 {% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
 {% block breadcrumb %}
@@ -48,6 +48,7 @@
                     </div>
                 {% endif %}
 
+                {% block all_sections %}
                 {% for section in form.as_sections.sections %}
                     <fieldset class="section section--step{% if not section.step_complete %} section--incomplete{% endif %}">
                         {% if section.title %}
@@ -63,6 +64,7 @@
                         {% endif %}
 
                         {% for sub_section in section.section_list %}
+                            {% block subsection %}
                             <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
                                 {% if sub_section.title %}
                                 <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
@@ -76,11 +78,40 @@
 
                                 {% for field in sub_section.fields %}
                                     {{ field.rendered|safe }}
+
+                                    {% get_case_versions case_versions field.object.name as history %}
+                                    {% if history %}
+                                    <div class="form-field form-field-history">
+                                        <strong class="u-margin-none">Eerder verstuur in </strong>
+                                        <ul class="u-list-style-none">
+                                        {% for h in history %}
+                                            <li>
+                                                <details>
+                                                    <summary>{{ h.version_verbose }} <small>({{ h.saved|timestamp_to_date|date:'j b Y H:i' }})</small>
+                                                        <svg class="icon-details--closed" width="14" height="9">
+                                                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                                        </svg>
+                                                        <svg class="icon-details--open" width="14" height="9">
+                                                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                                        </svg>
+                                                    </summary>
+                                                    <div class="content">
+                                                        {{ h.value }}
+                                                    </div>
+                                                </details>
+                                            </li>
+                                        {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
                                 {% endfor %}
                             </div>
+                            {% endblock %}
                         {% endfor %}
                     </fieldset>
                 {% endfor %}
+                {% endblock %}
 
                 {{ form.as_sections.hidden_fields }}
 
@@ -92,7 +123,7 @@
                 </div>
 
             </div>
-
+            {% block inpage_navigation %}
             {% if inpage_navigation %}
 
                 <div class="grid__aside">
@@ -127,6 +158,7 @@
                 </div>
 
             {% endif %}
+            {% endblock %}
         </div>
 
     </form>

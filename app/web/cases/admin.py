@@ -16,6 +16,7 @@ class CaseAdmin(admin.ModelAdmin):
 class CaseVersionAdmin(CaseAdmin):
     list_display = (
         'id',
+        'case',
         'version_verbose',
         'created',
         'client_first_name',
