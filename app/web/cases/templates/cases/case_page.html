@@ -15,7 +15,7 @@
 
 {% block main %}
 <section class="section section--client">
-    <h1>Cliënt: {{ object.client_name }}</h1>
+    <h1>{{ object.client_name }}</h1>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}
@@ -68,7 +68,7 @@
             {% for document in object.document_set.all %}
                 {% if forloop.counter0 < 4 %}
                     <li>
-                        <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"j b Y" }} </span></div>
+                        <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
                         <div><a href="{% url 'update_case_document' object.id document.id %}"><span>Wijzigen</span></a></div>
                     </li>
                 {% endif %}
@@ -86,33 +86,39 @@
     <!-- START PROCESSTAPPEN -->
     <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
     <section class="section section--forms">
-        <span class="h2">Toon:</span>
-        <span class="button button--tertiary selected">Per stap</span>
-        <a href="{% url 'case_all_data' object.id %}"class="button button--tertiary">Alle gegevens</a>
+        <h2 class="h3">Overige gegevens</h2>
+        <div class="tab-container">
+            <span class="button button--tertiary selected">Per stap</span>
+            <a href="{% url 'case_all_data' object.id %}"class="button button--tertiary">Alle gegevens</a>
+        </div>
         <ul>
         {% for moment in moment_list %}
         <li>
             <div class="dot dot--large"></div>
                 {% client_status object 'basis-gegevens' as status %}
                 <strong class="h4">
-                    {{ moment.name }} {% if moment.form %}{% client_status object moment.form as status %}({{ status.percentage }}%){% endif %}
+                    {{ moment.name }} 
                 </strong>
-            {% if moment.form %}
-                <a href="{% url 'update_case' object.id moment.form %}" class="form-link form-link--change" role="button">Wijzigen</a>
-            {% endif %}
-                    {% if moment.form %}
-                        {% client_submitted_form object moment.form as case_version %}
-                        {% if case_version %}
-                            <a href="{% url 'case_version_form' case_version.id moment.form %}" class="form-link form-link--change">
-                                Ingediend ({{ case_version.created|date:"j b Y" }})
-                            </a>
-                        {% else %}
-                            <span class="form-link form-link--change">
-                            Nog niet ingediend
-                            </span>
-                        {% endif %}
-                   {% endif %}
+                <div class="form-link--statuscontainer">
+                {% if moment.form %}
+                    <a href="{% url 'update_case' object.id moment.form %}" class="form-link form-link--change">Wijzigen</a>
+                {% endif %}
+                
+                {% if moment.form %}
+                    {% client_submitted_form object moment.form as case_version %}
+                    {% if case_version %}
+                        <a href="{% url 'case_version_form' case_version.id moment.form %}" class="form-link form-link--added">
+                            Ingediend {{ case_version.created|date:"d-m-y" }}
+                        </a>
+                    {% else %}
+                        <span class="form-link form-link--added">
+                        Nog niet ingediend
+                        </span>
+                    {% endif %}
+                {% endif %}
 
+                <span class="form-link form-link--added">{% if moment.form %}{% client_status object moment.form as status %}{{ status.percentage }}%{% endif %}</span>
+            </div>
         </li>
         {% endfor %}
         </ul>
