@@ -9,4 +9,6 @@ def case_data(case, fields, *args, **kwargs):
 
 @register.simple_tag()
 def get_case_versions(versions, key, *args, **kwargs):
+    if not versions:
+        return False
     return versions.get(key)
