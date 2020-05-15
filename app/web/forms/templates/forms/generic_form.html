@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block main %}
-<section class="section section--form section--form-{{ title|slugify }}">
+<section class="section section--form section--form-{{ title|slugify }} u-margin-bottom-sticky">
     {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
 
