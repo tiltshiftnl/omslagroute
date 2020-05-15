@@ -351,6 +351,8 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home')
 
     def get_success_url(self):
+        if self.request.POST.get('next'):
+            return '%s' % self.request.POST.get('next')
         return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
 
     def test_func(self):

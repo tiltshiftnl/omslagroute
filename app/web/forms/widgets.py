@@ -21,3 +21,7 @@ class CheckboxSelectMultiple(DefaultCheckboxSelectMultiple):
 class CheckboxSelectMultipleDocument(DefaultCheckboxSelectMultiple):
     template_name = 'forms/checkbox_select_document.html'
     option_template_name = 'forms/checkbox_option_document.html'
+
+    def get_context(self, name, value, attrs):
+        attrs.update(self.attrs)
+        return super().get_context(name, value, attrs)

@@ -142,10 +142,11 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         return super().save(commit)
 
     def __init__(self, *args, **kwargs):
-            form_context = kwargs.pop('form_context')
-            super().__init__(*args, **kwargs)
-            self.fields = {}
-            self.sections = form_context.get('sections', [])
-            self.enable_ajax = form_context.get('enable_ajax', False)
-            for f in self._get_fields(self.sections):
-                self.fields[f] = FIELDS_DICT.get(f)
+        self.path = kwargs.pop('path')
+        form_context = kwargs.pop('form_context')
+        super().__init__(*args, **kwargs)
+        self.fields = {}
+        self.sections = form_context.get('sections', [])
+        self.enable_ajax = form_context.get('enable_ajax', False)
+        for f in self._get_fields(self.sections):
+            self.fields[f] = FIELDS_DICT.get(f)

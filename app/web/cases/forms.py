@@ -27,7 +27,12 @@ class CaseGenericModelForm(GenericModelForm):
         self.fields['document_list'] = forms.ModelMultipleChoiceField(
             label=_('Bijlagen'),
             queryset=Document.objects.filter(case=kwargs.get('instance')),
-            widget=CheckboxSelectMultipleDocument(),
+            widget=CheckboxSelectMultipleDocument(
+                attrs={
+                    'instance_id': self.instance.id,
+                    'path': self.path,
+                }
+            ),
             required=False,
         )
 
