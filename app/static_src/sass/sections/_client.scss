@@ -40,16 +40,15 @@
             margin-top: 0;
             div {
                 display: flex;
-                
-                    padding: .475rem .938rem;
-                    border-left: 1px solid $neutral-grey1;
-                    border-right: 1px solid $neutral-grey1;
-                    border-bottom: 1px solid $neutral-grey1;
-                    margin-bottom: 0;
-        
-                    &:nth-of-type(odd){
-                        background-color: $neutral-grey1;
-                    }
+                padding: .475rem .938rem;
+                border-left: 1px solid $neutral-grey1;
+                border-right: 1px solid $neutral-grey1;
+                border-bottom: 1px solid $neutral-grey1;
+                margin-bottom: 0;
+    
+                &:nth-of-type(odd){
+                    background-color: $neutral-grey1;
+                }
 
                 dt, dd {
                     flex: 1;
@@ -60,10 +59,13 @@
             }
         }
 
+
         &--basic{
             dl {
                 div {
                     border: 0;
+                    background-color: transparent;
+                    padding-left: 0;
                     &:nth-of-type(odd){
                         background-color: transparent;
                     }
