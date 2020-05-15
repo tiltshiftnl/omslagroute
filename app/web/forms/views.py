@@ -69,8 +69,9 @@ class GenericUpdateFormView(UpdateView):
         if not form_context:
             raise Http404
         kwargs.update({
-            'form_context': form_context}
-        )
+            'form_context': form_context,
+            'path': self.request.path,
+        })
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -100,8 +101,9 @@ class GenericCreateFormView(CreateView):
         if not form_context:
             raise Http404
         kwargs.update({
-            'form_context': form_context}
-        )
+            'form_context': form_context,
+            'path': self.request.path,
+        })
         return kwargs
 
     def get_context_data(self, **kwargs):
