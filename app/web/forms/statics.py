@@ -703,6 +703,7 @@ FORMS = (
         'Nieuwe cliënt',
         False,
         False,
+        False,
     ),
     (
         'urgentie_aanvraag',
@@ -710,6 +711,7 @@ FORMS = (
         'aanvraag-omslag-en-urgentie',
         'Aanvraag omslag en urgentie',
         'Nieuwe aanvraag omslag en urgentie',
+        True,
         True,
         True,
     ),
@@ -721,14 +723,9 @@ FORMS = (
         'Nieuwe aanvraag omklap',
         True,
         True,
+        True,
     ),
 )
-
-FORMS_PROCESSTAP = [
-    'aanvraag-omslag-en-urgentie',
-    'aanvraag-omklap',
-]
-
 
 FORMS_PROCESSTAP = [
     'aanvraag-omslag-en-urgentie',
@@ -745,6 +742,7 @@ def map_form_keys(f):
         'title_new': f[4],
         'inpage_navigation': f[5],
         'share': f[6],
+        'enable_ajax': f[7],
     }
 
 

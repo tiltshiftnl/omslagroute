@@ -146,5 +146,6 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
             super().__init__(*args, **kwargs)
             self.fields = {}
             self.sections = form_context.get('sections', [])
+            self.enable_ajax = form_context.get('enable_ajax', False)
             for f in self._get_fields(self.sections):
                 self.fields[f] = FIELDS_DICT.get(f)

@@ -216,6 +216,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         saved_key = 'saved'
         object_dict = self.object.to_dict()
         ld = [cv.to_dict() for cv in CaseVersion.objects.filter(case=self.object).order_by('-saved')]
+        ld = ld if ld else [{}]
         dl = {k: [{
             value_key: dic[k].get('value'),
             version_key: FORMS_BY_SLUG.get(dic[version_key].get('value')).get('title'),
@@ -270,6 +271,9 @@ class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
         return self.request.user.profile.cases.all()
 
     def get_success_url(self):
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
+        if not form_context.get('enable_ajax', False):
+            return reverse('case', kwargs={'pk': self.object.id})
         return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
 
     def get_discard_url(self):
