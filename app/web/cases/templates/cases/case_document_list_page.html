@@ -19,12 +19,12 @@
 <section class="section section--mijn-clienten">
     <h2>Alle bijlagen bij cliënt: {{ case.client_name }}</h2>
 
-    <ul>
+    <ul class="list-as-table u-width-60">
 
     {% for document in document_list %}
         <li>
             <a href="{% url 'download_case_document' object.id document.id %}" target="_blank">
-            {{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}
+            {{ document }}
             </a>
         </li>
     {% endfor %}
