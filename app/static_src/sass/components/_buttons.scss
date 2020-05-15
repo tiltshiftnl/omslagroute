@@ -47,10 +47,12 @@
         text-decoration: none;
     }
 
-    &[disabled] {
+    &[disabled],
+    &[disabled]:hover {
         background-color: $neutral-grey2;
         color: $neutral-grey3;
         border: .063rem solid $neutral-grey2;
+        cursor: default;
     }
 
     @media all and (min-width: $tablets) {
