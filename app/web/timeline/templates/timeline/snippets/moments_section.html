@@ -12,13 +12,9 @@
         {% include 'organizations/snippets/filters.html' with object_list=organization_list %}
 
         {% for moment in moment_list %}
-            <div class="details-wrapper{% if forloop.first %} details-wrapper--before{% endif %}" data-tags="{% for organisation in moment.organizations.all %}{{ organisation|slugify }} {% endfor %}">
-                <div class="dot dot--{% if forloop.first %}double{% else %}large{% endif %}">
-                    {% if forloop.first %}
-                    <svg class="" width="50" height="50">
-                        <use href="#dot-double" xlink:href="#dot-double" width="50" height="50"></use>
-                    </svg>
-                    {% endif %}
+            <div class="details-wrapper" data-tags="{% for organisation in moment.organizations.all %}{{ organisation|slugify }} {% endfor %}">
+                <div class="dot dot--large">
+                    
                 </div>
                 <details class="details" data-moment-order="{{ moment.order }}" {% doc_added moment.id 'open' %}>
                     <summary class="details__header">
