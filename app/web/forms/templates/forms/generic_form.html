@@ -116,8 +116,11 @@
                 {{ form.as_sections.hidden_fields }}
 
                 <div class="form-field form-field--buttons-sticky screen-only">
+                    {% if form.enable_ajax %}
                     <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
-                    <!-- <input type="submit" value="Opslaan" class="button button--primary"> -->
+                    {% else %}
+                    <input type="submit" value="Opslaan" class="button button--primary">
+                    {% endif %}
                     <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
                     {% if form.instance.id and share and status.percentage >= 100 %}<button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="button button--secondary">Controleren en versturen</button>{% endif %}
                 </div>

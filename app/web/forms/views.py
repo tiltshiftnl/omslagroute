@@ -111,7 +111,9 @@ class GenericCreateFormView(CreateView):
             self.kwargs
         )
         kwargs.update(form_context)
+        self.kwargs.update(form_context)
         kwargs.update({
             'discard_url': self.get_discard_url(),
+            'title': form_context.get('title_new'),
         })
         return kwargs
