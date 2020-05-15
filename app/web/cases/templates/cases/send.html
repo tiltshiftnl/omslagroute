@@ -23,38 +23,41 @@
         {% if organization_list %}
 
             {% for organization in organization_list  %}
-            <p class="u-margin-bottom-2x">De volgende informatie van <strong>{{ form.instance.client_name }}</strong> wordt per mail verstuurd naar <strong>{{ organization.main_email }}</strong> van <strong>{{ organization.name }}</strong>.</p>
-
-            <section class="section section--client u-margin-bottom-2x">
-                <h3>Informatie</h3>
-                <div class="details-client details-client--basic">
-                    <dl>
-                    {% case_data form.instance organization.field_restrictions as data %}
-                    {% for k, field in data.items  %}
-                    <div>
-                        <dt>{{ field.label }}: </dt>
-                        <dd>
-                            {% if field.value|is_date %}
-                                {{ field.value|str_date_to_date|date:"j b Y" }}
-                            {% else %}
-                                {{ field.value }}
-                            {% endif %}
-                        </dd>
+            <div class="u-margin-bottom-2x u-border-bottom">
+                <p class="u-margin-bottom-2x">De volgende informatie van <strong>{{ form.instance.client_name }}</strong> wordt per mail verstuurd naar <strong>{{ organization.main_email }}</strong> van <strong>{{ organization.name }}</strong>.</p>
+                
+                <section class="section section--client u-margin-bottom-2x">
+                    <h3>Informatie</h3>
+                    <div class="details-client">
+                        <dl>
+                        {% case_data form.instance organization.field_restrictions as data %}
+                        {% for k, field in data.items  %}
+                        <div>
+                            <dt>{{ field.label }}: </dt>
+                            <dd>
+                                {% if field.value|is_date %}
+                                    {{ field.value|str_date_to_date|date:"j b Y" }}
+                                {% else %}
+                                    {{ field.value }}
+                                {% endif %}
+                            </dd>
+                        </div>
+                        {% endfor %}
+                        </dl>
                     </div>
-                    {% endfor %}
-                    </dl>
-                </div>
-            </section>
-            {% if document_list %}
-            <section class="section section--client u-margin-bottom-2x">
-                <h3>Bijlagen</h3>
-                <ul>
-                    {% for document in document_list %}
-                    <li>{{ document }}</li>
-                    {% endfor %}
-                </ul>
-            </section>
-            {% endif %}
+                </section>
+                {% if document_list %}
+                
+                <section class="section section--client u-margin-bottom-2x">
+                    <h3>Bijlagen</h3>
+                    <ul class="list-as-table u-width-60">
+                        {% for document in document_list %}
+                        <li>{{ document }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% endif %}
+            </div>
             {% endfor %}
             <div data-submit-container class="form-field form-field--buttons form-field--buttons-sticky screen-only">
                 <input type="submit" value="Verstuur" class="button button--primary">
