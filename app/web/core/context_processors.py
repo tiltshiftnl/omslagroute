@@ -29,6 +29,7 @@ def app_settings(request=None):
         'LOGIN_URL': settings.LOGIN_URL,
         'BRANCH_NAME': BRANCH_NAME,
         'HOMEPAGE_INTRO': config.HOMEPAGE_INTRO,
+        'NEW_USER_INTRO': config.NEW_USER_INTRO,
         'FORMS_PROCESSTAP_CHOICES': FORMS_PROCESSTAP_CHOICES,
         'login_form': AuthenticationForm(),
     }

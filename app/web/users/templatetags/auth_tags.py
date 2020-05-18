@@ -35,3 +35,8 @@ def is_wonen_medewerker(user):
     return auth_test(user, WONEN)
 
 
+@register.filter(name='is_onbekent')
+def is_onbekent(user):
+    return auth_test(user, ONBEKEND)
+
+
