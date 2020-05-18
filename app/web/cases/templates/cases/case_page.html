@@ -64,7 +64,7 @@
                 </a>
             </header>
 
-            <ul role="list" class="downloads downloads--logged_in {% if class %}downloads--{{ class }}{% endif %}">
+            <ul role="list" class="downloads">
             {% for document in object.document_set.all %}
                 {% if forloop.counter0 < 4 %}
                     <li>
