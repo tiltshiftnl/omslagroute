@@ -80,10 +80,13 @@
                     justify-content: space-between;
 
                     >div {
-                        flex: 1;
-                        display: contents;
+                        
+                        display: flex;
+                        text-align: right;
 
                         &:first-of-type {
+                            width: 90%;
+                            text-align: left;
                             a {
                                 width: 50%;
                                 padding-right: 10px;
