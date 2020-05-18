@@ -23,9 +23,7 @@
 
     {% for document in document_list %}
         <li>
-            <a href="{% url 'download_case_document' object.id document.id %}" target="_blank">
-            {{ document }}
-            </a>
+            <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
         </li>
     {% endfor %}
     </ul>

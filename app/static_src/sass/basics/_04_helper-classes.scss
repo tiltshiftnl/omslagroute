@@ -129,10 +129,11 @@
     padding-left: 18px;
     li {
         list-style-type: disc;
+        margin-bottom: .475rem;
         div{
             display: flex;
             justify-content: space-between;
-            span {
+            *:first-child {
                 width: 50%;
             }
         }
