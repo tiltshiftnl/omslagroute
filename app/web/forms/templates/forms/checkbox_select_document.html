@@ -4,11 +4,11 @@
     <li>{% include option.template_name with widget=option %}</li>{% endfor %}{% if group %}
   </ul></li>{% endif %}{% endfor %}
 </ul>{% endwith %}
-    {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary">Upload</a>{% endif %}</p>
+    {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary">Voeg bijlage toe</a>{% endif %}</p>
 {% else %}
     <br>
     <p><strong>Er zijn nog geen bijlages voor deze cliënt geüpload.</strong><br>
     Bijlages kun je uploaden vanuit het {% if widget.attrs.instance_id %}<a href="{% url 'case' widget.attrs.instance_id %}">{% endif %}dashboard{% if widget.attrs.instance_id %}</a>{% endif %} van de cliënt.
     <br>
-    {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary">Upload</a>{% endif %}</p>
+    {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary">Voeg bijlage toe</a>{% endif %}</p>
 {% endif %}

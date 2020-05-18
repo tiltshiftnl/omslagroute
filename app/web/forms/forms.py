@@ -41,18 +41,19 @@ class BaseGenericForm:
             bf = self[name]
             bf_type = bf.field.widget.__class__.__name__.lower()
             bf_is_empty = not bool(bf.value())
+            bf_is_readonly = name in self.options.get('readonly_fields', [])
+            bf_is_required = name in self.options.get('required_fields', [])
             if bf_type == 'checkboxinput':
                 row = checkbox_row
             if bf_type == 'clearablefileinput':
                 row = clearablefileinput_row
 
-            if name in self.options.get('readonly_fields', []):
-                bf.field.widget.attrs.update({
-                    'readonly': True,
-                    'disabled': True,
-                })
-                bf.field.widget.initial = bf.value()
-                bf.field.required = False
+            bf.field.required = bf_is_required if not bf_is_readonly else False
+
+            bf.field.widget.attrs.update({
+                'readonly': bf_is_readonly,
+                'disabled': bf_is_readonly,
+            })
             # Escape and cache in local variable.
             bf_errors = self.error_class([conditional_escape(error) for error in bf.errors])
             if bf.is_hidden:
