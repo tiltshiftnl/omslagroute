@@ -396,7 +396,7 @@ class CaseBase(PrintableModel):
             return self.client_first_name
         if self.client_last_name:
             return self.client_last_name
-        return self.id
+        return '%s' % self.id
 
     class Meta:
         abstract = True

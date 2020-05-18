@@ -2,29 +2,51 @@ var path = require("path")
 var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
   context: __dirname,
   mode: 'development',
 
-  entry: './assets/js/index', // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
+  entry: './assets/js/main', // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
   output: {
       path: path.resolve('./assets/bundles/'),
-      filename: "[name]-[hash].js",
+      filename: 'bundle.js'
+      // filename: "[name]-[hash].js",
   },
-
-  plugins: [
-    new BundleTracker({filename: './webpack-stats.json'}),
-  ],
 
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}, // to transform JSX into JS
-    ],
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: [
+            "vue-style-loader",
+            "css-loader",
+            "sass-loader"
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
+    ]
   },
 
   resolve: {
-    modules: ['node_modules', 'bower_components'],
-    extensions: ['*', '.js', '.jsx']
+   alias: {
+    vue$: "vue/dist/vue.esm.js"
+   },
+    // modules: ['node_modules', 'bower_components'],
+    extensions: ["*", ".js", ".vue", ".json"]
   },
+  plugins: [
+    // new BundleTracker({filename: './webpack-stats.json'}),
+    new VueLoaderPlugin(),
+  ],
 }

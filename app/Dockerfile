@@ -54,6 +54,8 @@ WORKDIR /app
 RUN npm install
 RUN ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass
 
+RUN ./node_modules/.bin/webpack --config webpack.config.js
+
 COPY requirements.txt /app/
 
 RUN pip install --no-cache-dir -r requirements.txt

@@ -9,6 +9,7 @@ from web.users.views import generic_logout, generic_login
 from django.views.generic import TemplateView
 from django.conf import settings
 from web.users.views import OIDCAuthenticationRequestView
+from .routers import router
 
 
 urlpatterns = [
@@ -33,6 +34,7 @@ urlpatterns = [
     path('inloggen/', generic_login, name='inloggen'),
     path('uitloggen/', generic_logout, name='uitloggen'),
 
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
