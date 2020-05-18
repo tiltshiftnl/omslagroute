@@ -7,6 +7,10 @@
             {% include 'users/login.html' %}
         {% endif %}
         <h2>De Omslagroute</h2>
+        {% if request.user.is_authenticated and request.user|is_onbekent and NEW_USER_INTRO %}
+            {{ NEW_USER_INTRO|safe }}
+        {% endif %}
+
         {% if HOMEPAGE_INTRO %}
             <section class="section section--intro">
                 {{ HOMEPAGE_INTRO|safe }}
