@@ -714,6 +714,12 @@ FORMS = (
         True,
         True,
         True,
+        {'readonly_fields': [
+            'client_first_name',
+            'client_last_name',
+            'geboortedatum',
+            'emailadres',
+        ]},
     ),
     (
         'omklap_aanvraag',
@@ -724,6 +730,12 @@ FORMS = (
         True,
         True,
         True,
+        {'readonly_fields': [
+            'client_first_name',
+            'client_last_name',
+            'geboortedatum',
+            'emailadres',
+        ]},
     ),
 )
 
@@ -743,6 +755,7 @@ def map_form_keys(f):
         'inpage_navigation': f[5],
         'share': f[6],
         'enable_ajax': f[7],
+        'options': f[8] if len(f) > 8 else {},
     }
 
 

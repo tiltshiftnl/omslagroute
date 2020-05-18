@@ -10,6 +10,7 @@ import copy
 
 class BaseGenericForm:
     sections = []
+    options = {}
 
     @staticmethod
     def _get_fields(sections):
@@ -33,7 +34,7 @@ class BaseGenericForm:
         top_errors = self.non_field_errors()  # Errors that should be displayed above all fields.
         output, sections_output, hidden_fields = [], {}, []
         sections = copy.deepcopy(self.sections)
-        # print(self.fields)
+
         for name, field in self.fields.items():
             html_class_attr = ''
             row = normal_row
@@ -45,6 +46,13 @@ class BaseGenericForm:
             if bf_type == 'clearablefileinput':
                 row = clearablefileinput_row
 
+            if name in self.options.get('readonly_fields', []):
+                bf.field.widget.attrs.update({
+                    'readonly': True,
+                    'disabled': True,
+                })
+                bf.field.widget.initial = bf.value()
+                bf.field.required = False
             # Escape and cache in local variable.
             bf_errors = self.error_class([conditional_escape(error) for error in bf.errors])
             if bf.is_hidden:
@@ -138,6 +146,13 @@ class GenericForm(BaseGenericForm, forms.Form):
 
 class GenericModelForm(BaseGenericForm, forms.ModelForm):
 
+    def clean(self):
+        cleaned_data = super().clean()
+        for field_name in self.options.get('readonly_fields', []):
+            if hasattr(self.instance, field_name):
+                cleaned_data[field_name] = getattr(self.instance, field_name)
+        return
+
     def save(self, commit=True):
         return super().save(commit)
 
@@ -147,6 +162,7 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields = {}
         self.sections = form_context.get('sections', [])
+        self.options = form_context.get('options', {})
         self.enable_ajax = form_context.get('enable_ajax', False)
         for f in self._get_fields(self.sections):
             self.fields[f] = FIELDS_DICT.get(f)
