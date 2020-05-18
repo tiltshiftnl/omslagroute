@@ -60,7 +60,7 @@
                         </legend>
                         {% endif %}
                         {% if section.description %}
-                        <p class="section--step__description">{{ section.description }}</p>
+                        <p class="section--step__description">{{ section.description|safe }}</p>
                         {% endif %}
 
                         {% for sub_section in section.section_list %}
@@ -73,7 +73,7 @@
                                 </h4>
                                 {% endif %}
                                 {% if sub_section.description %}
-                                <p class="sub-section__description">{{ sub_section.description }}</p>
+                                <p class="sub-section__description">{{ sub_section.description|safe }}</p>
                                 {% endif %}
 
                                 {% for field in sub_section.fields %}
@@ -82,7 +82,7 @@
                                     {% get_case_versions case_versions field.object.name as history %}
                                     {% if history %}
                                     <div class="form-field form-field-history">
-                                        <strong class="u-margin-none">Eerder verstuur in </strong>
+                                        <strong class="u-margin-none">Eerder verstuurd in </strong>
                                         <ul class="u-list-style-none">
                                         {% for h in history %}
                                             <li>
@@ -114,7 +114,9 @@
                 {% endblock %}
 
                 {{ form.as_sections.hidden_fields }}
-
+                {% if share %}
+                <p>Vul alle verplichte velden in(*) om het formulier te kunnen versturen naar de afdeling Wonen van de Gemeente Amsterdam</p>
+                {% endif %}
                 <div class="form-field form-field--buttons-sticky screen-only">
                     {% if form.enable_ajax %}
                     <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>

@@ -512,8 +512,8 @@ URGENTIE_AANVRAAG = [
         ]
     },
     {
-        'title': 'Bijlagen bij deze stap',
-        'description': "Voor de aanvraag omslag en urgentie zijn de volgende betstanden nodig: 'kopie indentiteitsbewijs, recente inkomsten verklaring'",
+        'title': 'Bijlagen',
+        'description': "<strong>Nodige bijlagen voor indienen Aanvraag omslag en Urgentie</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -680,8 +680,8 @@ OMKLAP_AANVRAAG = [
         ],
     },
     {
-        'title': 'Bijlagen bij deze stap',
-        'description': "Voor de aanvraag omslag en urgentie zijn de volgende betstanden nodig: 'kopie indentiteitsbewijs, recente inkomsten verklaring'",
+        'title': 'Bijlagen',
+        'description': "<strong>Nodige bijlagen voor indienen Aanvraag omslag en Urgentie</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -703,7 +703,11 @@ FORMS = (
         'Nieuwe cliënt',
         False,
         False,
-        False,
+        {'readonly_fields': [], 'required_fields': [
+            'client_first_name',
+            'client_last_name',
+        ]},
+
     ),
     (
         'urgentie_aanvraag',
@@ -719,6 +723,9 @@ FORMS = (
             'client_last_name',
             'geboortedatum',
             'emailadres',
+        ], 'required_fields': [
+            'client_first_name',
+            'client_last_name',
         ]},
     ),
     (
@@ -735,6 +742,9 @@ FORMS = (
             'client_last_name',
             'geboortedatum',
             'emailadres',
+        ], 'required_fields': [
+            'client_first_name',
+            'client_last_name',
         ]},
     ),
 )
