@@ -478,7 +478,7 @@ ul.form-field__radiogroup,
     }
 
     &:checked + .form-field__checkboxlabel::before {
-        border-radius: 0;
+        @include checkbox;
     }
 
     &:checked:focus + .form-field__radiolabel::before,
@@ -521,6 +521,8 @@ ul.form-field__radiogroup,
 
     &.form-field__checkboxlabel::before {
         border-radius: 0;
+
+    border-color: $primary-black;
     }
 
     &:hover::before {
@@ -548,13 +550,11 @@ ul.form-field__radiogroup,
         margin: 0;
 
         &:checked + label::after  {
-            border-color: $primary-black;
-            box-shadow: inset 0 0 0 .3125em $primary-white;
-            background-color: $primary-black;
+            @include checkbox;
         }
 
         &:checked + .form-field__checkboxlabel::before {
-            border-radius: 0;
+            @include checkbox;
         }
 
         &:checked:focus + label::after,
@@ -779,6 +779,7 @@ select {
 
         label {
             margin-bottom: .475rem;
+            font-weight: normal;
 
             &:before {
                 float: left;
