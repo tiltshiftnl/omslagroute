@@ -146,4 +146,7 @@ body {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
+
+    transition: margin-top .3s ease-in-out;
+
 }
