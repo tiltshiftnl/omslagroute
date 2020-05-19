@@ -11,7 +11,5 @@
                 stickyNav.style.marginTop = last_known_scroll_position  + "px";
             });
         }
-        
     }
-
 })();
