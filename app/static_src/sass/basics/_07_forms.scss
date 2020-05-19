@@ -31,7 +31,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 .sub-section {
     padding: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
     border: .063rem solid $neutral-grey3;
 
     .form-field:first-child {
@@ -233,6 +233,20 @@ body:not(:-moz-handler-blocked) fieldset {
     bottom: 1rem;
     background-color: $primary-white;
     outline: 1rem solid rgba($primary-white, 1);
+
+    &:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        top: -4rem;
+        left: 0;
+        right: 0;
+        bottom: calc(100% + 1rem);
+        background: rgba(255,255,255,0);
+
+background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 90%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+    }
 
     @media all and (min-width: $large) {
         min-width: 680px; //IE11
