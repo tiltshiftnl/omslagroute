@@ -97,12 +97,9 @@
             <div class="dot dot--large"></div>
                 {% client_status object 'basis-gegevens' as status %}
                 <strong class="h4">
-                    {{ moment.name }} 
+                    {% if moment.form %}<a href="{% url 'update_case' object.id moment.form %}">{% endif %}{{ moment.name }}{% if moment.form %}</a>{% endif %}
                 </strong>
                 <div class="form-link--statuscontainer">
-                {% if moment.form %}
-                    <a href="{% url 'update_case' object.id moment.form %}" class="form-link form-link--change">Wijzigen</a>
-                {% endif %}
                 
                 {% if moment.form %}
                     {% client_submitted_form object moment.form as case_version %}
