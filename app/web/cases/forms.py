@@ -6,7 +6,8 @@ from .statics import GESLACHT
 from web.forms.statics import FORMS_PROCESSTAP_CHOICES
 from django.utils.translation import ugettext_lazy as _
 from web.forms.fields import MultiSelectFormField
-
+from web.users.models import User
+from web.users.statics import BEGELEIDER
 
 class CaseForm(forms.ModelForm):
     geslacht = forms.ChoiceField(
@@ -19,6 +20,49 @@ class CaseForm(forms.ModelForm):
     class Meta:
         model = Case
         exclude = []
+
+class CaseInviteUsersForm(forms.Form):
+    user = None
+    instance = None
+    user_list = forms.ModelMultipleChoiceField(
+        label=_('Gebruiker'),
+        help_text=_('Select één of meer gebruikers om je cliënt mee te delen.'),
+        queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
+        widget=CheckboxSelectMultiple(),
+        required=True,
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        self.instance = kwargs.pop('instance')
+        super().__init__(*args, **kwargs)
+        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all()).values('id')
+        self.fields['user_list'].queryset = self.fields['user_list'].queryset.exclude(id__in=linked_users)
+
+    class Meta:
+        model = Case
+        fields = []
+
+class CaseInviteUsersConfirmForm(forms.Form):
+    message = forms.CharField(
+        label=_('Bericht (optioneel)'),
+        help_text=_('Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.'),
+        widget=forms.Textarea(
+            attrs={
+                'rows': 4,
+            }
+        ),
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        self.instance = kwargs.pop('instance')
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Case
+        fields = []
 
 
 class CaseGenericModelForm(GenericModelForm):

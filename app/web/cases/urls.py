@@ -6,6 +6,10 @@ urlpatterns = [
     path('', UserCaseListAll.as_view(), name='case_list'),
     path('mijn-clienten/', UserCaseList.as_view(), name='cases_by_profile'),
     path('<int:pk>/', CaseDetailView.as_view(), name='case'),
+
+    # invite
+    path('<int:pk>/uitnodigen/', CaseInviteUsers.as_view(), name='case_invite_users'),
+
     path('<int:pk>/alle-velden/', CaseDetailAllDataView.as_view(), name='case_all_data'),
     path('verwijder/<int:pk>/', CaseDeleteView.as_view(), name='delete_case'),
     path('nieuw/<str:slug>/', GenericCaseCreateFormView.as_view(), name='create_case'),
@@ -20,6 +24,7 @@ urlpatterns = [
 
     path('<int:case_pk>/download-bijlage/<int:document_pk>', download_document, name='download_case_document'),
     path('<int:case_pk>/download-bijlage/<int:document_pk>', download_document_wonen, name='download_case_document_wonen'),
+
     # v2
     path('v2/<int:pk>/<str:slug>/', GenericCaseUpdateV2FormView.as_view(), name='update_case_v2'),
 ]

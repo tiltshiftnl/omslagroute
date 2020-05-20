@@ -13,6 +13,7 @@ db/
 .idea
 python
 .idea/*
+.vscode/*
 pip-log.txt
 .sass-cache
 .bundle

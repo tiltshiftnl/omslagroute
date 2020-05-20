@@ -16,6 +16,11 @@
 {% block main %}
 <section class="section section--client">
     <h1>{{ object.client_name }}</h1>
+        <div class="details-admin screen-only">
+            <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" title="ga naar het beheer van organisaties">
+                Delen ({{ object.profile_set.all|length|add:"-1" }})
+            </a>
+        </div>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}

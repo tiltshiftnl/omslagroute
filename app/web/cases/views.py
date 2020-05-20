@@ -23,6 +23,7 @@ from django.http import HttpResponseRedirect
 from web.users.auth import user_passes_test
 from django.core.paginator import Paginator
 from web.timeline.models import Moment
+from formtools.wizard.views import SessionWizardView
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -342,6 +343,54 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
+    model = Case
+    template_name = 'cases/case_invite.html'
+    form_class = CaseInviteUsersForm
+    success_url = reverse_lazy('cases_by_profile')
+    instance = None
+    form_list = [
+        CaseInviteUsersForm,
+        CaseInviteUsersConfirmForm,
+    ]
+
+    def get_success_url(self):
+        return reverse('case', kwargs={'pk': self.instance.id})
+
+    def get_form_kwargs(self, step=None):
+        kwargs = super().get_form_kwargs(step=step)
+        self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        kwargs.update({
+            'user': self.request.user,
+            'instance': self.instance,
+        })
+        return kwargs
+
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'linked_users': User.objects.filter(profile__in=self.instance.profile_set.all()).exclude(id=self.request.user.id),
+            'instance': self.instance,
+        })
+        return super().get_context_data(**kwargs)
+
+    def done(self, form_list, **kwargs):
+        form_data = {}
+        for f in form_list:
+            form_data.update(f.cleaned_data)
+
+        user_list = form_data.get('user_list', [])
+        for user in user_list:
+            user.profile.cases.add(self.instance)
+        messages.add_message(self.request, messages.INFO, "De nieuwe gebruikers hebben een email gekregen van hun uitnodiging.")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DocumentCreate(UserPassesTestMixin, CreateView):
