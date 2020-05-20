@@ -4,9 +4,20 @@
     if(stickyNav !== undefined){
         var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
         if(isIE11){
-            window.addEventListener('scroll', function(e) {
+            var viewportOffsetTop = 0;
+        
+            function setMarginTop(){
                 var last_known_scroll_position = window.pageYOffset;
-                stickyNav.style.marginTop = last_known_scroll_position  + "px";
+                        var marginTop = (viewportOffsetTop-last_known_scroll_position) < 0 ? -(viewportOffsetTop-last_known_scroll_position) : 0;
+                        stickyNav.style.marginTop =  marginTop+78+ "px";
+            }
+            
+            viewportOffsetTop = stickyNav.getBoundingClientRect().top + window.pageYOffset;
+            window.addEventListener('load', function(e) {
+                setMarginTop();
+            });
+            window.addEventListener('scroll', function(e) {
+                setMarginTop();
             });
         }
     }
