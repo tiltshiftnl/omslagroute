@@ -84,12 +84,10 @@
 
     {% block processtappen %}
     <!-- START PROCESSTAPPEN -->
-    <!-- TODO: interactie uitzoeken knoppen 'per stap' 'alle gegevens' -->
     <section class="section section--forms">
         <h2 class="h3">Overige gegevens</h2>
         <div class="tab-container">
             <span class="button button--tertiary selected">Per stap</span>
-            <a href="{% url 'case_all_data' object.id %}"class="button button--tertiary">Alle gegevens</a>
         </div>
         <ul>
         {% for moment in moment_list %}
