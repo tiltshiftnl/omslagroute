@@ -99,6 +99,9 @@ body:not(:-moz-handler-blocked) fieldset {
         margin: 0;
         list-style-position: inside;
     }
+    td * {
+        margin: 0;
+    }
 }
 
 .section--form__navigation {
