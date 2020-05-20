@@ -8,12 +8,10 @@
     .check__icon {
         color: $support-valid;
     }
-
     .close__icon {
         color: $support-invalid;
     }
 }
-
 
 .prompt-container {
     display: none;
@@ -29,6 +27,7 @@
     .prompt-disapprove {
         display: none;
     }
+
     &.show-prompt-approve {
         display: block;
 
