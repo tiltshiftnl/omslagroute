@@ -89,6 +89,23 @@
 .u-margin-none{
     margin: 0;
 }
+
+.u-margin-top{
+    display: block;
+    margin-top: 1rem !important;
+}
+.u-margin-top-2x{
+    display: block;
+    margin-top: 2rem !important;
+}
+.u-margin-top-3x{
+    display: block;
+    margin-top: 3rem !important;
+}
+.u-margin-top-4x{
+    display: block;
+    margin-top: 4rem !important;
+}
 .u-margin-bottom{
     display: block;
     margin-bottom: 1rem;
@@ -119,10 +136,9 @@
 
 .u-list-style-none {
     list-style: none;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
 }
-
 
 .list-as-table {
     list-style: none;
@@ -139,6 +155,12 @@
         }
 
     }
+}
+
+.scroll-list-container {
+    max-height: 12rem;
+    overflow-y: auto;
+    margin-bottom: 1rem;
 }
 
 // ********************

@@ -25,10 +25,10 @@ class CaseInviteUsersForm(forms.Form):
     user = None
     instance = None
     user_list = forms.ModelMultipleChoiceField(
-        label=_('Gebruiker'),
-        help_text=_('Select één of meer gebruikers om je cliënt mee te delen.'),
+        label=_('Met wie wil je deze cliënt delen?'),
+        help_text=_('Selecteer één of meer gebruikers om je cliënt mee te delen.'),
         queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
-        widget=CheckboxSelectMultiple(),
+        widget=CheckboxSelectMultiple(attrs={'class': 'u-list-style-none scroll-list-container'}),
         required=True,
     )
 
