@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from web.users.statics import BEGELEIDER, WONEN
 from web.profiles.models import Profile
-from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS
+from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS, FORM_TITLE_BY_SLUG
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
 from web.forms.utils import get_fields
 import sendgrid
@@ -316,22 +316,31 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        self.object.create_version(self.kwargs.get('slug'))
+        version = self.object.create_version(self.kwargs.get('slug'))
 
         organization_list = Organization.objects.filter(main_email__isnull=False)
         for organization in organization_list:
-            body = render_to_string('cases/mail/case.txt', {
-                'case': self.object.to_dict(organization.field_restrictions)
-            })
             current_site = get_current_site(self.request)
+            body = render_to_string('cases/mail/case_link.txt', {
+                'case': self.object.to_dict(organization.field_restrictions),
+                'form_name': FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
+                'case_url': 'https://%s%s' % (
+                    current_site.domain,
+                    reverse('case_version_form', kwargs={
+                        'pk': version.id,
+                        'slug': self.kwargs.get('slug'),
+                    })
+                ),
+                'user': self.request.user,
+            })
             if settings.SENDGRID_KEY:
                 sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,
                     to_emails=organization.main_email,
-                    subject='Omslagroute - %s' % self.kwargs.get('title'),
+                    subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
                     plain_text_content=body
-                )
+                ),
                 sg.send(email)
             messages.add_message(
                 self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
