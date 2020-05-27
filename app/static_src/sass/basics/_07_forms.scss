@@ -262,7 +262,8 @@ body:not(:-moz-handler-blocked) fieldset {
 // HELPFUL INFORMATION
 // ********************
 
-.help-text {
+.help-text,
+.helptext {
     font-size: .9rem;
     color: $neutral-grey4;
     margin-top: .313rem;
