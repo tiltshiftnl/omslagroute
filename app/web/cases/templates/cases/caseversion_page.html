@@ -29,15 +29,15 @@
         {% endlanguage %}
     </p>
 
-    <section class="section-details-client section-details-client--vertical">
+    <section class="section-details-client">
 
         <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix">
+        <div class="details-client details-client--appendix u-width-50 u-padding-right-3x">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
             </header>
 
-            <ul role="list" class="list-as-table u-width-60">
+            <ul role="list" class="list-as-table">
             {% for document in object.case.document_set.all %}
                 <!-- <li>
                     <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>
@@ -51,6 +51,120 @@
             </ul>
         </div>
         <!-- END BIJLAGE -->
+        <!-- START APPROVE/DISAPPROVE -->
+        <div class="details-client details-client--approve u-width-50">
+            <header>
+                <h2 class="h3">Status aanvraag</h2>
+            </header>
+<!-- status pending -->
+            <p>Ingediend</p>
+            <div class="form-field">
+                <button data-handler="form-approve" class="button button--success">
+                    <svg class="check__icon" width="20" height="16">
+                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
+                    </svg>
+                    Goedkeuren
+                </button>
+                <button data-handler="form-disapprove" class="button button--danger">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                    </svg>
+                    Afkeuren
+                </button>
+                <button data-handler="form-pending" class="button button--warning">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
+                    </svg>
+                    Wacht op GGD
+                </button>
+            </div>
+            <ul>
+                <li><span>Wacht op goedkeuring</span><small>12 mei 2020</small><small>j.devos@hvoquerido.nl</small></li>
+            </ul>
+
+<!-- status goedgekeurd -->
+            <p>
+                <svg class="check__icon" width="20" height="16">
+                    <use href="#check" xlink:href="#alert" width="20" height="18"></use>
+                </svg>
+                Goedgekeurd
+            </p>
+            <div class="form-field">
+                <button data-handler="form-disapprove" class="button button--secondary button--danger">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                    </svg>
+                    Afkeuren
+                </button>
+                <button data-handler="form-pending" class="button  button--secondary button--warning">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
+                    </svg>
+                    Wacht op GGD
+                </button>
+            </div>
+
+<!-- status afgekeurd -->
+            <p>
+                <svg class="close__icon" width="16" height="16">
+                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                </svg>
+                Afgekeurd
+
+            </p>
+            <div class="form-field">
+                <button data-handler="form-approve" class="button button--secondary button--success">
+                    <svg class="check__icon" width="20" height="16">
+                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
+                    </svg>
+                    Goedkeuren
+                </button>
+                <button data-handler="form-pending" class="button  button--secondary button--warning">
+                    <svg class="pause__icon" width="16" height="16">
+                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
+                    </svg>
+                    Wacht op GGD
+                </button>
+            </div>
+        </div>
+
+        <!-- start prompt approve-->
+        <div class="prompt-container" data-handler="prompt-approve">
+            <div class="prompt-approve">
+                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt goedkeuren?</p>
+                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                <form>
+                    <input type="hidden" value="goedgekeurd">
+                    <input type="submit" value="Aanvraag goedkeuren" class="button">
+                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
+                </form>
+            </div>
+            <div class="prompt-disapprove">
+                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt afkeuren?</p>
+                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                <form>
+                    <input type="hidden" value="afgekeurd">
+                    <input type="submit" value="Aanvraag afkeuren" class="button">
+                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
+                </form>
+            </div>
+            <div class="prompt-pending">
+                <p>Weet je zeker dat je de status van deze <strong>{{ form_data.title }}</strong> op 'Wacht op GGD' wilt zetten?</p>
+                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                <form>
+                    <input type="hidden" value="pending">
+                    <input type="submit" value="Wachten op GGD" class="button">
+                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
+                </form>
+            </div>    
+        </div>
+        <!--end prompt approve-->
+
+            
+        <!-- END APPROVE/DISAPPROVE -->
+
+    </section>
+    <section class="section section--forms">
         <!-- START Client basis gegevens -->
         <div class="details-client">
             <header>

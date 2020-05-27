@@ -72,6 +72,10 @@
     border-color: $primary-black;
 }
 
+.u-width-50 {
+    width: 50%;
+}
+
 .u-width-60 {
     width: 60%;
 }
@@ -128,6 +132,18 @@
 
 .u-margin-bottom-sticky{
     margin-bottom: 4rem;
+}
+
+
+
+// ********************
+// PADDINGS
+// ********************
+.u-padding-right {
+    padding-right: 1rem;
+}
+.u-padding-right-3x {
+    padding-right: 3rem;
 }
 
 // ********************

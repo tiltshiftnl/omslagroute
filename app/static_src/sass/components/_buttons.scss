@@ -15,7 +15,8 @@
 }
 
 .button,
-[type="submit"] {
+[type="submit"],
+[type="cancel"] {
     border: .063rem solid transparent;
     border-radius: 0;
     font-family: inherit;
@@ -35,6 +36,9 @@
     display: inline-block;
     vertical-align: middle;
     text-align: center;
+    user-select: none;
+
+    transition: all .2s ease-in-out;
 
     @media all and (min-width: $tablets) {
         font-size: inherit;
@@ -164,6 +168,72 @@
         margin-top: 1.875rem;
         margin-bottom: 1.25rem;
     }
+}
+
+.button--success,
+.button--danger,
+.button--warning {
+    svg {
+        color: currentColor;
+        vertical-align: text-top;
+    }
+}
+
+.button--success {
+    border: .063rem solid $support-valid;
+    background-color: $support-valid;
+    color: $primary-white;
+
+    
+    &.button--secondary {
+        background-color: $primary-white;
+        color: $support-valid;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken($support-valid, 10);
+        border-color: darken($support-valid, 10);
+        color: $primary-white;
+    }
+}
+
+.button--danger {
+    border: .063rem solid $support-invalid;
+    background-color: $support-invalid;
+    color: $primary-white;
+
+    &.button--secondary {
+        background-color: $primary-white;
+        color: $support-invalid;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken($support-invalid, 10);
+        border-color: darken($support-invalid, 10);
+        color: $primary-white;
+    }
+}
+
+
+.button--warning {
+    border: .063rem solid $supplement-orange;
+    background-color: $supplement-orange;
+    color: $primary-white;
+
+    &.button--secondary {
+        background-color: $primary-white;
+        color: $supplement-orange;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken($supplement-orange, 10);
+        border-color: darken($supplement-orange, 10);
+        color: $primary-white;
+    }
+
 }
 
 

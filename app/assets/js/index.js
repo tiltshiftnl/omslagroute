@@ -99,6 +99,31 @@ Array.prototype.sortOnData = function (key) {
         modal.parentNode.removeChild(modal);
       }
     },
+    "form-approve": function (e) {
+      var prompt = parent.document.querySelector('[data-handler="prompt-approve"]');
+      prompt.classList.remove("show-prompt-disapprove");
+      prompt.classList.remove("show-prompt-pending");
+      prompt.classList.add("show-prompt-approve");
+    },
+    "form-disapprove": function (e) {
+      var prompt = parent.document.querySelector('[data-handler="prompt-approve"]');
+      prompt.classList.remove("show-prompt-approve");
+      prompt.classList.remove("show-prompt-pending");
+      prompt.classList.add("show-prompt-disapprove");
+    },
+    "form-pending": function (e) {
+      var prompt = parent.document.querySelector('[data-handler="prompt-approve"]');
+      prompt.classList.remove("show-prompt-approve");
+      prompt.classList.remove("show-prompt-disapprove");
+      prompt.classList.add("show-prompt-pending");
+    },
+    "form-approve-cancel": function (e) {
+      var prompt = parent.document.querySelector('[data-handler="prompt-approve"]');
+      prompt.classList.remove("show-prompt-approve");
+      prompt.classList.remove("show-prompt-disapprove");
+      prompt.classList.remove("show-prompt-pending");
+    },
+    
     "moment-up": function (e) {
       e.preventDefault();
       var moment = _closest(e.target, "[data-moment]");
