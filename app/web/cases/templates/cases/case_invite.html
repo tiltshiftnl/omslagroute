@@ -27,6 +27,12 @@
                 <li>{{ u.username }}</li>
             {% endfor %}
             </ul>
+            {% else %}
+            <ul class="u-margin-bottom-2x scroll-list-container">
+            {% for u in selected_users %}
+                <li>{{ u.username }}</li>
+            {% endfor %}
+            </ul>
             {% endif %}
 
             {{ wizard.management_form }}

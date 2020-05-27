@@ -389,8 +389,10 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
             'linked_users': linked_users,
             'unlinked_users': User.objects.filter(user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id).exclude(id__in=linked_users.values('id')),
             'instance': self.instance,
+            'selected_users': self.get_all_cleaned_data().get('user_list', []),
         })
-        return super().get_context_data(**kwargs)
+        kwargs = super().get_context_data(**kwargs)
+        return kwargs
 
     def done(self, form_list, **kwargs):
         form_data = {}
