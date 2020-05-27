@@ -25,7 +25,49 @@
         <div class="grid__wrapper">
             <div class="grid__main">
 
-                <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+                <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+                <div class="section--client">
+                    <section class="section-details-client">
+                        <!-- START Client persoonsgegevens -->
+                        
+                        <div class="details-client details-client--basic">
+                            <header>
+                                <h2 class="h3">Persoonsgegevens</h2>
+                            </header>
+                
+                            <dl>
+                                <div>
+                                    <dt>Client voornaam: </dt>
+                                    <dd>Jan</dd>
+                                </div>
+                                <div>
+                                    <dt>Client achternaam: </dt>
+                                    <dd>Jansen</dd>
+                                </div>
+                                <div>
+                                    <dt>Geboortedatum: </dt>
+                                    <dd>1 jan 1990</dd>
+                                </div>
+                                <div>
+                                    <dt>E-mailadres: </dt>
+                                    <dd>jan@jansen.nl</dd>
+                                </div>
+                            </dl>
+                        </div>
+                        <!-- END Client persoonsgegevens -->
+                
+                
+                        <!-- START STATUS -->
+                        <div class="details-client details-client--appendix">
+                            <header>
+                                <h2 class="h3">Status aanvraag</h2>
+                            </header>
+                            ...
+                        </div>
+                    </section>
+                </div>
+                    <!-- END STATUS -->
+            
 
                 {% csrf_token %}
                 {{ form.as_sections.errors }}
