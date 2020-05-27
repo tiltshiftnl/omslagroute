@@ -132,7 +132,7 @@
         <div class="prompt-container" data-handler="prompt-approve">
             <div class="prompt-approve">
                 <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt goedkeuren?</p>
-                <p>Wanneer je deze aanvraag goedkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
+                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="goedgekeurd">
                     <input type="submit" value="Aanvraag goedkeuren" class="button">
@@ -141,7 +141,7 @@
             </div>
             <div class="prompt-disapprove">
                 <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt afkeuren?</p>
-                <p>Wanneer je deze aanvraag afkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
+                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="afgekeurd">
                     <input type="submit" value="Aanvraag afkeuren" class="button">
@@ -149,8 +149,8 @@
                 </form>
             </div>
             <div class="prompt-pending">
-                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt [PENDING]?</p>
-                <p>Wanneer je deze aanvraag [PENDING] ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
+                <p>Weet je zeker dat je de status van deze <strong>{{ form_data.title }}</strong> op 'Wacht op GGD' wilt zetten?</p>
+                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="pending">
                     <input type="submit" value="Wachten op GGD" class="button">
