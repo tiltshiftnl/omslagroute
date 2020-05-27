@@ -23,6 +23,7 @@ from django.http import HttpResponseRedirect
 from web.users.auth import user_passes_test
 from django.core.paginator import Paginator
 from web.timeline.models import Moment
+from formtools.wizard.views import SessionWizardView
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -342,6 +343,80 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
+    model = Case
+    template_name = 'cases/case_invite.html'
+    form_class = CaseInviteUsersForm
+    success_url = reverse_lazy('cases_by_profile')
+    instance = None
+    form_list = [
+        CaseInviteUsersForm,
+        CaseInviteUsersConfirmForm,
+    ]
+
+    def get_success_url(self):
+        return '%s?iframe=true' % reverse('case', kwargs={'pk': self.instance.id})
+
+    def get_form_kwargs(self, step=None):
+        kwargs = super().get_form_kwargs(step=step)
+        self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        kwargs.update({
+            'user': self.request.user,
+            'instance': self.instance,
+        })
+        return kwargs
+
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_context_data(self, **kwargs):
+        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all(), user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id)
+        kwargs.update({
+            'linked_users': linked_users,
+            'unlinked_users': User.objects.filter(user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id).exclude(id__in=linked_users.values('id')),
+            'instance': self.instance,
+        })
+        return super().get_context_data(**kwargs)
+
+    def done(self, form_list, **kwargs):
+        form_data = {}
+        for f in form_list:
+            form_data.update(f.cleaned_data)
+
+        user_list = form_data.get('user_list', [])
+        for user in user_list:
+            user.profile.cases.add(self.instance)
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            current_site = get_current_site(self.request)
+            for invited in user_list:
+                context = {}
+                context.update(form_data)
+                context.update({
+                    'case': self.instance,
+                    'user': self.request.user,
+                    'invited': invited,
+                    'case_url': 'https://%s%s' % (
+                        current_site.domain, 
+                        reverse('case', kwargs={'pk':self.instance.id})
+                    ),
+                })
+                body = render_to_string('cases/mail/invite.txt', context)
+                email = Mail(
+                    from_email='noreply@%s' % current_site.domain,
+                    to_emails=invited.username,
+                    subject='Omslagroute - je bent toegevoegd aan een team',
+                    plain_text_content=body
+                )
+                sg.send(email)
+
+        messages.add_message(self.request, messages.INFO, "De nieuwe gebruikers hebben een email gekregen van hun uitnodiging.")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DocumentCreate(UserPassesTestMixin, CreateView):

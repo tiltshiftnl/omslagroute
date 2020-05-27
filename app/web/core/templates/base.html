@@ -1,8 +1,23 @@
 {% load static %}
 {% load auth_tags %}
-
+{% if request.GET.iframe %}
+    <script>
+        function inIframe () {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+      if (inIframe()) {
+          window.parent.location.reload(false);
+      }else{
+        window.location = window.location.href.split('?')[0];
+      }
+    </script>
+{% else %}
 <!DOCTYPE html>
-<html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}" class="no-js">
+<html lang="nl" data-commit="{{ SOURCE_COMMIT }}"  data-branch="{{ BRANCH_NAME }}" class="no-js"{% if request.GET.iframe %} data-decorator="force-parent-reload"{% endif %}>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -120,3 +135,4 @@
 <script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
 </body>
 </html>
+{% endif %}

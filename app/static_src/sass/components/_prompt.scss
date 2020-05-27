@@ -1,0 +1,77 @@
+.details-client--approve {
+    p{
+        .check__icon,
+        .close__icon {
+            display: inline-block;
+            margin-right: .5rem;
+        }
+        .check__icon {
+            color: $support-valid;
+        }
+        .close__icon {
+            color: $support-invalid;
+        }
+    }
+}
+
+.prompt-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 3rem;
+    border: 1px solid $neutral-grey3;
+    background-color: $primary-white;
+
+    .prompt-approve,
+    .prompt-disapprove,
+    .prompt-pending {
+        display: none;
+    }
+
+    &.show-prompt-approve {
+        display: block;
+
+        .prompt-approve {
+            display: block;
+            
+        }
+        .prompt-disapprove,
+        .prompt-pending {
+            display: none;
+        }
+    }
+
+    &.show-prompt-disapprove {
+        display: block;
+
+        .prompt-approve,
+        .prompt-pending {
+            display: none;
+            
+        }
+        .prompt-disapprove {
+            display: block;
+        }
+    }
+    
+    &.show-prompt-pending {
+        display: block;
+
+        .prompt-approve,
+        .prompt-disapprove {
+            display: none;
+            
+        }
+        .prompt-pending {
+            display: block;
+        }
+    }
+
+    form {
+        > * {
+            margin: 1rem 1rem 0 0;
+        }
+    }
+}

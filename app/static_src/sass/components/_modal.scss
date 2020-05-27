@@ -26,9 +26,78 @@
 body.isInIframe {
   background-color: #fff;
 
+  main {
+    padding-bottom: 0;
+  }
   .site-container {
     min-height: auto;
   }
+
+
+  .content-container {
+    background-color: white;
+    padding: 15px;
+    margin: 0 -15px;
+    position: relative;
+    
+    h2 {
+      margin: 0 0 15px;
+    }
+    hr {
+      margin: 15px -15px;
+  
+    }
+  
+    label {
+      small {
+        font-weight: 400;
+      }
+    }
+
+  
+  // FEEDBACK
+  
+  // INVITE
+
+  &.form-invite-container {
+    input[type="hidden"]+label {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      font-weight: 500;
+    }
+    
+    .button--previous {
+      min-width: 0;
+      display: inline;
+
+      &:hover {
+        background-color: transparent;
+        border-color: transparent;
+      }
+    }
+    .button__icon {
+      
+      margin-right: .3rem;
+      vertical-align: text-top;
+    }
+  }
+
+    @media screen and (max-width: $tablets) {
+      margin: -15px;
+    }
+  }
+  
+  .button--close {
+    width: 20px;
+    height: 20px;
+    min-width: auto;
+    padding: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $primary-black;
+  }
+
 }
 
 .modal-active {
@@ -112,38 +181,3 @@ body.isInIframe {
   bottom: 0;
 }
 
-.feedback-container {
-  background-color: white;
-  padding: 15px;
-  margin: 0 -15px;
-  position: relative;
-  
-  h2 {
-    margin: 0 0 15px;
-  }
-  hr {
-    margin: 15px -15px;
-
-  }
-
-  label {
-    small {
-      font-weight: 400;
-    }
-  }
-
-  .button--close {
-    width: 20px;
-    height: 20px;
-    min-width: auto;
-    padding: 15px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: $primary-black;
-  }
-
-  @media screen and (max-width: $tablets) {
-    margin: -15px;
-  }
-}
