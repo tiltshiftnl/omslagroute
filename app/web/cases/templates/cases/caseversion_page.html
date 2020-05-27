@@ -59,8 +59,24 @@
 <!-- status pending -->
             <p>Wacht op goedkeuring</p>
             <div class="form-field">
-                <button data-handler="form-approve" class="button button--success">Goedkeuren</button>
-                <button data-handler="form-disapprove" class="button button--danger">Afkeuren</button>
+                <button data-handler="form-approve" class="button button--success">
+                    <svg class="check__icon" width="20" height="16">
+                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
+                    </svg>
+                    Goedkeuren
+                </button>
+                <button data-handler="form-disapprove" class="button button--danger">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                    </svg>
+                    Afkeuren
+                </button>
+                <button data-handler="form-pending" class="button button--warning">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                    </svg>
+                    Wacht op GGD
+                </button>
             </div>
             <ul>
                 <li><span>Wacht op goedkeuring</span><small>12 mei 2020</small><small>j.devos@hvoquerido.nl</small></li>

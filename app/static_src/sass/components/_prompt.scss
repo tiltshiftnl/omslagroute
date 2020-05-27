@@ -1,15 +1,16 @@
 .details-client--approve {
-
-    .check__icon,
-    .close__icon {
-        display: inline-block;
-        margin-right: .5rem;
-    }
-    .check__icon {
-        color: $support-valid;
-    }
-    .close__icon {
-        color: $support-invalid;
+    p{
+        .check__icon,
+        .close__icon {
+            display: inline-block;
+            margin-right: .5rem;
+        }
+        .check__icon {
+            color: $support-valid;
+        }
+        .close__icon {
+            color: $support-invalid;
+        }
     }
 }
 
