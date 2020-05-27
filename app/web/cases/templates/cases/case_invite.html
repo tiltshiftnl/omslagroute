@@ -17,7 +17,7 @@
     </button>
         <h2>Deel client {{instance.client_name}} met een collega</h2>
         <hr class="" />
-
+        {% if unlinked_users %}
         <form method="post">
             {% csrf_token %}
             {% if wizard.steps.next %}
@@ -50,5 +50,16 @@
                 <a data-handler="modal-close" href="#" class="button button--secondary">Annuleer</a>
             </div>
         </form>
+        {% elif not unlinked_users and linked_users %}
+        <p>Je hebt al alle persoonlijk begeleiders uitgenodigd.</p>
+        <div class="form-field form-field--buttons screen-only u-margin-top-2x">
+            <a data-handler="modal-close" href="#" class="button button--primary">Sluiten</a>
+        </div>
+        {% elif not unlinked_users and not linked_users %}
+        <p>Je bent momenteel de enige persoonlijk begeleider op de omslagroute site.</p>
+        <div class="form-field form-field--buttons screen-only u-margin-top-2x">
+            <a data-handler="modal-close" href="#" class="button button--primary">Sluiten</a>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

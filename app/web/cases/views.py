@@ -357,7 +357,7 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
     ]
 
     def get_success_url(self):
-        return reverse('case', kwargs={'pk': self.instance.id})
+        return '%s?iframe=true' % reverse('case', kwargs={'pk': self.instance.id})
 
     def get_form_kwargs(self, step=None):
         kwargs = super().get_form_kwargs(step=step)
@@ -375,8 +375,10 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
+        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all(), user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id)
         kwargs.update({
-            'linked_users': User.objects.filter(profile__in=self.instance.profile_set.all()).exclude(id=self.request.user.id),
+            'linked_users': linked_users,
+            'unlinked_users': User.objects.filter(user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id).exclude(id__in=linked_users.values('id')),
             'instance': self.instance,
         })
         return super().get_context_data(**kwargs)
@@ -389,6 +391,30 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
         user_list = form_data.get('user_list', [])
         for user in user_list:
             user.profile.cases.add(self.instance)
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            current_site = get_current_site(self.request)
+            for invited in user_list:
+                context = {}
+                context.update(form_data)
+                context.update({
+                    'case': self.instance,
+                    'user': self.request.user,
+                    'invited': invited,
+                    'case_url': 'https://%s%s' % (
+                        current_site.domain, 
+                        reverse('case', kwargs={'pk':self.instance.id})
+                    ),
+                })
+                body = render_to_string('cases/mail/invite.txt', context)
+                email = Mail(
+                    from_email='noreply@%s' % current_site.domain,
+                    to_emails=invited.username,
+                    subject='Omslagroute - je bent toegevoegd aan een team',
+                    plain_text_content=body
+                )
+                sg.send(email)
+
         messages.add_message(self.request, messages.INFO, "De nieuwe gebruikers hebben een email gekregen van hun uitnodiging.")
         return HttpResponseRedirect(self.get_success_url())
 
