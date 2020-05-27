@@ -21,7 +21,7 @@
         <form method="post">
             {% csrf_token %}
             {% if wizard.steps.next %}
-            <h3>Met wie is de client al gedeeld?</h3>
+            <h3>Met wie is deze client al gedeeld?</h3>
             <ul class="u-margin-bottom-2x scroll-list-container">
             {% for u in linked_users %}
                 <li>{{ u.username }}</li>
