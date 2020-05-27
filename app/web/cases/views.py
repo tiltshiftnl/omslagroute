@@ -105,8 +105,8 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
 
 
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
-    model = CaseVersion
-    template_name_suffix = '_page'
+    model = Case
+    template_name_suffix = '_form_status'
 
     def get_context_data(self, **kwargs):
         form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))

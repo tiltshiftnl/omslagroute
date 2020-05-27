@@ -23,6 +23,16 @@ class CaseVersionAdmin(CaseAdmin):
         'client_last_name',
     )
 
+@admin.register(CaseStatus)
+class CaseStatusAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'case',
+        'status',
+        'created',
+        'form',
+    )
+
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):

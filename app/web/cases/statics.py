@@ -26,6 +26,14 @@ DEFAULT_YES_OR_NO = (
     (1, 'Ja'),
     (2, 'Nee'),
 )
+CASE_STATUS = (
+    (1, 'ingediend', 'indienen'),
+    (2, 'afgekeurd', 'afkeuren'),
+    (3, 'goedgekeurd', 'goedkeuren'),
+    (4, 'wachten op GGD', 'wachten op GGD'),
+)
+
+CASE_STATUS_CHOICES = list((s[0], s[1]) for s in CASE_STATUS)
 
 GESLACHT_DICT = dict((s[0], s[1]) for s in GESLACHT)
 CENTRALE_TOEGANG_DICT = dict((s[0], s[1]) for s in CENTRALE_TOEGANG)

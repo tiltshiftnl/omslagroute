@@ -22,7 +22,7 @@
 {% block main %}
 <section class="section section--client">
     <h1>{{ object.client_name }}</h1>
-    <h2 class="h3">{{ form_data.title }} - versie {{ object.created|date:"j b Y" }}</h2>
+    <h2 class="h3">{{ form_data.title }}</h2>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}
@@ -32,7 +32,7 @@
     <section class="section-details-client">
 
         <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix u-width-50 u-padding-right-3x">
+        <div class="details-client details-client--appendix u-width-50">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
             </header>
@@ -43,15 +43,19 @@
                     <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>
                 </li> -->
                 <li>
-                    <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
+                    <div><a href="{% url 'download_case_document' object.id document.id %}
+                    " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
                     
                 </li>
             {% endfor %}
 
             </ul>
         </div>
+        {% csrf_token %}
+        <div id="app"></div>
         <!-- END BIJLAGE -->
         <!-- START APPROVE/DISAPPROVE -->
+
         <div class="details-client details-client--approve u-width-50" 
         data-decorator="case-status" 
         data-profile-id="{{ request.user.profile.id }}" 
@@ -61,33 +65,16 @@
             <header>
                 <h2 class="h3">Status aanvraag</h2>
             </header>
-            
 <!-- status pending -->
-            <p>Ingediend</p>
+            <p>Wacht op goedkeuring</p>
             <div class="form-field">
-                <button data-handler="form-approve" class="button button--success">
-                    <svg class="check__icon" width="20" height="16">
-                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                    </svg>
-                    Goedkeuren
-                </button>
-                <button data-handler="form-disapprove" class="button button--danger">
-                    <svg class="close__icon" width="16" height="16">
-                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                    </svg>
-                    Afkeuren
-                </button>
-                <button data-handler="form-pending" class="button button--warning">
-                    <svg class="close__icon" width="16" height="16">
-                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                    </svg>
-                    Wacht op GGD
-                </button>
+                <button data-handler="form-approve" class="button button--success">Goedkeuren</button>
+                <button data-handler="form-disapprove" class="button button--danger">Afkeuren</button>
             </div>
             <ul>
                 <li><span>Wacht op goedkeuring</span><small>12 mei 2020</small><small>j.devos@hvoquerido.nl</small></li>
             </ul>
-{% comment %}
+
 <!-- status goedgekeurd -->
             <p>
                 <svg class="check__icon" width="20" height="16">
@@ -96,18 +83,7 @@
                 Goedgekeurd
             </p>
             <div class="form-field">
-                <button data-handler="form-disapprove" class="button button--secondary button--danger">
-                    <svg class="close__icon" width="16" height="16">
-                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                    </svg>
-                    Afkeuren
-                </button>
-                <button data-handler="form-pending" class="button  button--secondary button--warning">
-                    <svg class="close__icon" width="16" height="16">
-                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                    </svg>
-                    Wacht op GGD
-                </button>
+                <button data-handler="form-disapprove" class="button button--secondary button--danger">Afkeuren</button>
             </div>
 
 <!-- status afgekeurd -->
@@ -119,18 +95,7 @@
 
             </p>
             <div class="form-field">
-                <button data-handler="form-approve" class="button button--secondary button--success">
-                    <svg class="check__icon" width="20" height="16">
-                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                    </svg>
-                    Goedkeuren
-                </button>
-                <button data-handler="form-pending" class="button  button--secondary button--warning">
-                    <svg class="pause__icon" width="16" height="16">
-                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                    </svg>
-                    Wacht op GGD
-                </button>
+                <button data-handler="form-approve" class="button button--secondary button--success">Goedkeuren</button>
             </div>
         </div>
 
@@ -138,34 +103,25 @@
         <div class="prompt-container" data-handler="prompt-approve">
             <div class="prompt-approve">
                 <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt goedkeuren?</p>
-                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                <p>Wanneer je deze aanvraag goedkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="goedgekeurd">
-                    <input type="submit" value="Aanvraag goedkeuren" class="button">
                     <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
+                    <input type="submit" value="Goedkeuren" class="button button--success">
                 </form>
             </div>
             <div class="prompt-disapprove">
                 <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt afkeuren?</p>
-                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                <p>Wanneer je deze aanvraag afkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="afgekeurd">
-                    <input type="submit" value="Aanvraag afkeuren" class="button">
                     <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                </form>
-            </div>
-            <div class="prompt-pending">
-                <p>Weet je zeker dat je de status van deze <strong>{{ form_data.title }}</strong> op 'Wacht op GGD' wilt zetten?</p>
-                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
-                <form>
-                    <input type="hidden" value="pending">
-                    <input type="submit" value="Wachten op GGD" class="button">
-                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
+                    <input type="submit" value="Afkeuren" class="button button--danger">
                 </form>
             </div>    
         </div>
         <!--end prompt approve-->
-{% endcomment %}
+
             
         <!-- END APPROVE/DISAPPROVE -->
 
@@ -198,6 +154,14 @@
 
     </section>
 </section>
+
+{% endblock %}
+
+{% block js %}
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+
+ <script src="{% static "bundles/bundle.js" %}"></script>
 
 {% endblock %}
 
