@@ -59,6 +59,74 @@
             }
         }
 
+        &--status{
+
+            svg {
+                vertical-align: text-top;
+            }
+
+            .status-container,
+            .status-history-container {
+                small {
+                    color: $neutral-grey4;
+
+                    &.facts {
+                        display: inline-block;
+                        width: 70%;
+                        line-height: 1.1;
+                    }
+
+                    &.status {
+                        vertical-align: top;
+                    }
+                }
+
+
+                &.form-field-history {
+                    margin: 0;
+                    position: relative;
+
+                    details {
+                        margin: 1rem 0;
+
+                        summary{
+                            outline: 0;
+                            color: $neutral-grey4;
+                            text-decoration: underline;
+                            cursor: pointer;
+
+                            svg {
+                                vertical-align: baseline;
+                                margin-left: .5rem;
+                            }
+                        }
+
+                        &[open]{
+                            .content {
+                                position: absolute;
+                                left: -10px;
+                                width: calc(100% + 20px);
+                                background-color: $primary-white;
+                                border-color: $neutral-grey2;
+                                max-height: 10.2rem;
+                                overflow: scroll;
+                                padding: 0;
+                            }
+                        }
+
+                        ul {
+                            padding: 0;
+                            li {
+                                padding: .475rem;
+                                margin: 0;
+                                border-bottom: 1px solid $neutral-grey2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         &--basic{
             dl {

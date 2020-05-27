@@ -27,7 +27,7 @@
 
                 <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
                 <div class="section--client">
-                    <section class="section-details-client">
+                    <section class="section-details-client u-margin-none">
                         <!-- START Client persoonsgegevens -->
                         
                         <div class="details-client details-client--basic">
@@ -58,11 +58,64 @@
                 
                 
                         <!-- START STATUS -->
-                        <div class="details-client details-client--appendix">
-                            <header>
-                                <h2 class="h3">Status aanvraag</h2>
-                            </header>
-                            ...
+                        <div class="details-client details-client--status">
+                            <h2 class="h3">Status aanvraag</h2>
+                            <p>
+                                <svg class="check__icon" width="20" height="16">
+                                    <use href="#check" xlink:href="#check" width="20" height="18"></use>
+                                </svg>
+                                Goedgekeurd
+                            </p>
+                            <p>
+                                <svg class="close__icon" width="16" height="16">
+                                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                                </svg>
+                                Afgekeurd
+                            </p>
+                            <p>
+                                <svg class="pause__icon" width="16" height="16">
+                                    <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
+                                </svg>
+                                Wachten op GGD
+                            </p>
+                            <div class="status-container">
+                                <small class="facts">
+                                    21 mei 2020<br/>I.Reijn@amsterdam.nl
+                                </small>
+                            </div>
+                            <div class="status-history-container form-field-history">
+                                
+                                <details>
+                                    <summary>Statushistorie<svg class="icon-details--closed" width="14" height="9">
+                                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                        </svg><svg class="icon-details--open" width="14" height="9">
+                                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                        </svg>
+                                    </summary>
+                                    <div class="content">
+                                        <ul class="u-list-style-none">
+                                            <li>
+                                                <div><small class="facts">17 mei 2020<br/>j.devos@hvoquerido.nl</small><small class="status">Ingediend</small></div>
+                                                
+                                            </li>
+                                            <li>
+                                                <div><small class="facts">15 mei 2020<br/>I.Reijn@amsterdam.nl</small><small class="status">Afgekeurd</small></div>
+                                                <div><small>Korte omschrijving waarom deze aanvraag is afgekeurd</small></div>
+                                            </li>
+                                            <li>
+                                                <div><small class="facts">12 mei 2020<br/>j.devos@hvoquerido.nl</small><small class="status">Ingediend</small></div>
+                                            </li>
+                                            <li>
+                                                <div><small class="facts">15 mei 2020<br/>I.Reijn@amsterdam.nl</small><small class="status">Afgekeurd</small></div>
+                                                <div><small>Korte omschrijving waarom deze aanvraag is afgekeurd</small></div>
+                                            </li>
+                                            <li>
+                                                <div><small class="facts">12 mei 2020<br/>j.devos@hvoquerido.nl</small><small class="status">Ingediend</small></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </details>
+                            </div>
                         </div>
                     </section>
                 </div>
