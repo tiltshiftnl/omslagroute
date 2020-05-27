@@ -513,7 +513,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen voor indienen Aanvraag omslag en Urgentie</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen voor indienen Aanvraag urgentie onder voorwaarden</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -681,7 +681,7 @@ OMKLAP_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen voor indienen Aanvraag omslag en Urgentie</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen voor indienen Aanvraag urgentie onder voorwaarden</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -713,8 +713,8 @@ FORMS = (
         'urgentie_aanvraag',
         URGENTIE_AANVRAAG,
         'aanvraag-omslag-en-urgentie',
-        'Aanvraag omslag en urgentie',
-        'Nieuwe aanvraag omslag en urgentie',
+        'Aanvraag urgentie onder voorwaarden',
+        'Nieuwe aanvraag urgentie onder voorwaarden',
         True,
         True,
         True,
