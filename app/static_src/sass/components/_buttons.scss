@@ -170,15 +170,21 @@
     }
 }
 
+.button--success,
+.button--danger,
+.button--warning {
+    svg {
+        color: currentColor;
+        vertical-align: text-top;
+    }
+}
+
 .button--success {
     border: .063rem solid $support-valid;
     background-color: $support-valid;
     color: $primary-white;
 
-    svg {
-        color: currentColor;
-    }
-
+    
     &.button--secondary {
         background-color: $primary-white;
         color: $support-valid;
@@ -190,7 +196,6 @@
         border-color: darken($support-valid, 10);
         color: $primary-white;
     }
-
 }
 
 .button--danger {
@@ -198,9 +203,6 @@
     background-color: $support-invalid;
     color: $primary-white;
 
-    svg {
-        color: currentColor;
-    }
     &.button--secondary {
         background-color: $primary-white;
         color: $support-invalid;
@@ -212,7 +214,6 @@
         border-color: darken($support-invalid, 10);
         color: $primary-white;
     }
-
 }
 
 
@@ -220,10 +221,6 @@
     border: .063rem solid $supplement-orange;
     background-color: $supplement-orange;
     color: $primary-white;
-
-    svg {
-        color: currentColor;
-    }
 
     &.button--secondary {
         background-color: $primary-white;
