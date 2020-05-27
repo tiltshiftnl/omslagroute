@@ -32,7 +32,7 @@
     <section class="section-details-client">
 
         <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix u-width-50">
+        <div class="details-client details-client--appendix u-width-50 u-padding-right-3x">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
             </header>
@@ -57,7 +57,7 @@
                 <h2 class="h3">Status aanvraag</h2>
             </header>
 <!-- status pending -->
-            <p>Wacht op goedkeuring</p>
+            <p>Ingediend</p>
             <div class="form-field">
                 <button data-handler="form-approve" class="button button--success">
                     <svg class="check__icon" width="20" height="16">
@@ -73,7 +73,7 @@
                 </button>
                 <button data-handler="form-pending" class="button button--warning">
                     <svg class="close__icon" width="16" height="16">
-                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                        <use href="#edit-document" xlink:href="#edit-document" width="16" height="16"></use>
                     </svg>
                     Wacht op GGD
                 </button>
@@ -90,7 +90,18 @@
                 Goedgekeurd
             </p>
             <div class="form-field">
-                <button data-handler="form-disapprove" class="button button--secondary button--danger">Afkeuren</button>
+                <button data-handler="form-disapprove" class="button button--secondary button--danger">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                    </svg>
+                    Afkeuren
+                </button>
+                <button data-handler="form-pending" class="button  button--secondary button--warning">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#edit-document" xlink:href="#edit-document" width="16" height="16"></use>
+                    </svg>
+                    Wacht op GGD
+                </button>
             </div>
 
 <!-- status afgekeurd -->
@@ -102,7 +113,18 @@
 
             </p>
             <div class="form-field">
-                <button data-handler="form-approve" class="button button--secondary button--success">Goedkeuren</button>
+                <button data-handler="form-approve" class="button button--secondary button--success">
+                    <svg class="check__icon" width="20" height="16">
+                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
+                    </svg>
+                    Goedkeuren
+                </button>
+                <button data-handler="form-pending" class="button  button--secondary button--warning">
+                    <svg class="pause__icon" width="16" height="16">
+                        <use href="#edit-document" xlink:href="#edit-document" width="16" height="16"></use>
+                    </svg>
+                    Wacht op GGD
+                </button>
             </div>
         </div>
 
@@ -113,8 +135,8 @@
                 <p>Wanneer je deze aanvraag goedkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="goedgekeurd">
+                    <input type="submit" value="Aanvraag goedkeuren" class="button">
                     <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                    <input type="submit" value="Goedkeuren" class="button button--success">
                 </form>
             </div>
             <div class="prompt-disapprove">
@@ -122,8 +144,17 @@
                 <p>Wanneer je deze aanvraag afkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
                 <form>
                     <input type="hidden" value="afgekeurd">
+                    <input type="submit" value="Aanvraag afkeuren" class="button">
                     <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                    <input type="submit" value="Afkeuren" class="button button--danger">
+                </form>
+            </div>
+            <div class="prompt-pending">
+                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt [PENDING]?</p>
+                <p>Wanneer je deze aanvraag [PENDING] ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
+                <form>
+                    <input type="hidden" value="pending">
+                    <input type="submit" value="Wachten op GGD" class="button">
+                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
                 </form>
             </div>    
         </div>

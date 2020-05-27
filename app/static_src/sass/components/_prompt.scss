@@ -25,7 +25,8 @@
     background-color: $primary-white;
 
     .prompt-approve,
-    .prompt-disapprove {
+    .prompt-disapprove,
+    .prompt-pending {
         display: none;
     }
 
@@ -36,7 +37,8 @@
             display: block;
             
         }
-        .prompt-disapprove {
+        .prompt-disapprove,
+        .prompt-pending {
             display: none;
         }
     }
@@ -44,7 +46,8 @@
     &.show-prompt-disapprove {
         display: block;
 
-        .prompt-approve {
+        .prompt-approve,
+        .prompt-pending {
             display: none;
             
         }
@@ -52,11 +55,23 @@
             display: block;
         }
     }
+    
+    &.show-prompt-pending {
+        display: block;
+
+        .prompt-approve,
+        .prompt-disapprove {
+            display: none;
+            
+        }
+        .prompt-pending {
+            display: block;
+        }
+    }
 
     form {
-        text-align: center;
         > * {
-            margin: 1rem;
+            margin: 1rem 1rem 0 0;
         }
     }
 }
