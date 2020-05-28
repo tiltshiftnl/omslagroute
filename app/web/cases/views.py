@@ -340,7 +340,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                     to_emails=organization.main_email,
                     subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
                     plain_text_content=body
-                ),
+                )
                 sg.send(email)
             messages.add_message(
                 self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
