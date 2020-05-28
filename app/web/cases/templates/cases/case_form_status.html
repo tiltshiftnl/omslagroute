@@ -37,6 +37,7 @@
             data-form="{{ form_data.slug }}" 
             data-case-status-options="{{ CASE_STATUS_DICT_JSON }}" 
             data-title="{{ form_data.title }}" 
+            data-email-list="{{ user_list }}" 
             >
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>

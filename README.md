@@ -22,6 +22,12 @@ Start watching static files changes scss:
 docker-compose exec web ./node_modules/.bin/node-sass -o ./assets/bundles/ static_src/sass --watch
 ```
 
+Start watching static files changes js, vue:
+
+```bash
+docker-compose exec web ./node_modules/.bin/webpack --config webpack.config.js --watch
+```
+
 Migrate database without restarting containers:
 
 ```bash

@@ -113,6 +113,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         kwargs.update({
             'form_fields': get_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
+            'user_list': ', '.join(list(self.object.profile_set.all().values_list('user__username', flat=True))),
         })
         return super().get_context_data(**kwargs)
 
