@@ -25,7 +25,97 @@
         <div class="grid__wrapper">
             <div class="grid__main">
 
-                <h2>{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+                <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+                <div class="section--client">
+                    <section class="section-details-client u-margin-none">
+                        <!-- START Client persoonsgegevens -->
+                        
+                        <div class="details-client details-client--basic">
+                            <header>
+                                <h2 class="h3">Persoonsgegevens</h2>
+                            </header>
+                
+                            <dl>
+                                <div>
+                                    <dt>Client voornaam: </dt>
+                                    <dd>{{ form.instance.client_first_name }}</dd>
+                                </div>
+                                <div>
+                                    <dt>Client achternaam: </dt>
+                                    <dd>{{ form.instance.client_last_name }}</dd>
+                                </div>
+                                <div>
+                                    <dt>Geboortedatum: </dt>
+                                    <dd>{% if form.instance.geboortedatum %}{{ form.instance.geboortedatum|date:'j b Y' }}{% else %}—{% endif %}</dd>
+                                </div>
+                                <div>
+                                    <dt>E-mailadres: </dt>
+                                    <dd>{% if form.instance.emailadres %}{{ form.instance.emailadres }}{% else %}—{% endif %}</dd>
+                                </div>
+                            </dl>
+                        </div>
+                        <!-- END Client persoonsgegevens -->
+                
+                
+                        <!-- START STATUS -->
+                        <div class="details-client details-client--status">
+                            <h2 class="h3">Status aanvraag</h2>
+                            {% if case_status_list %}
+                            <p>
+                                {% if case_status_list.0.status == 3 %}
+                                <svg class="check__icon" width="20" height="16">
+                                    <use href="#check" xlink:href="#check" width="20" height="18"></use>
+                                </svg>
+                                Goedgekeurd
+                                {% elif case_status_list.0.status == 2 %}
+                                <svg class="close__icon" width="16" height="16">
+                                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                                </svg>
+                                Afgekeurd
+                                {% elif case_status_list.0.status == 4 %}
+                                <svg class="pause__icon" width="16" height="16">
+                                    <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
+                                </svg>
+                                Wachten op GGD
+                                {% endif %}
+                            </p>
+                            <div class="status-container">
+                                <small class="facts">
+                                    {{ case_status_list.0.created|date:"j b Y H:i" }}<br/>{{ case_status_list.0.profile.user.username }}
+                                </small>
+                            </div>
+                            {% if case_status_list|length > 1 %}
+                            <div class="status-history-container form-field-history">
+                                
+                                <details>
+                                    <summary>Statushistorie<svg class="icon-details--closed" width="14" height="9">
+                                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                        </svg><svg class="icon-details--open" width="14" height="9">
+                                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                        </svg>
+                                    </summary>
+                                    <div class="content">
+                                        <ul class="u-list-style-none">
+                                            {% for case_status in case_status_list %}
+                                            {% if forloop.counter0 > 0 %}
+                                            <li>
+                                                <div><small class="facts">{{ case_status.created|date:"j b Y H:i" }}<br/>{{ case_status.profile.user.username }}</small><small class="status">{{ case_status.status|status_verbose|capfirst }}</small></div>
+                                            </li>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </details>
+                             {% endif %}
+                            </div>
+                            {% else %}
+                            <p>De aanvraag is nog niet verstuurd.</p>
+                            {% endif %}
+                        </div>
+                    </section>
+                </div>
+                    <!-- END STATUS -->
+            
 
                 {% csrf_token %}
                 {{ form.as_sections.errors }}

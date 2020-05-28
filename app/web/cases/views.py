@@ -233,6 +233,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         ] for k, v in dl.items()}
         kwargs.update({
             'case_versions': dl,
+            'case_status_list': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('slug')).order_by('-created')
         })
         return kwargs
 
