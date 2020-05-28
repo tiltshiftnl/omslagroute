@@ -8,9 +8,10 @@
 {% block main %}
 <div class="content-container feedback-container">
     <button data-handler="modal-close" class="button button--close">
-    <svg width="20" height="20" title="Sluit feedback venster">
+    <svg width="20" height="20" title="Sluit venster">
         <use href="#close" xlink:href="#close" width="20" height="20"></use>
     </svg>
+    <span class="sr-only">Sluit venster</span>
 </button>
 {% if request.GET.send %}
     <h2>Bedankt voor je feedback</h2>

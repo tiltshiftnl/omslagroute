@@ -24,7 +24,7 @@
 
         {% if form.errors %}
             <div class="errors" aria-live="polite">
-                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                <ul class="errorlist list-vertical" aria-live="polite">
                     {% for field in form %}
                         {% for error in field.errors %}
                             <li>
@@ -75,7 +75,7 @@
             {% if form.document_type.help_text %}
                 <div class="help-text">{{ form.document_type.help_text|safe }}</div>
             {% endif %}
-            <ul role="list" class="form-field__radiogroup">
+            <ul class="form-field__radiogroup">
                 {% for radio in form.document_type %}
                     <li>
                         {{ radio.tag }}

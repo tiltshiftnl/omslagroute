@@ -37,7 +37,7 @@
                 <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
             </header>
 
-            <ul role="list" class="list-as-table">
+            <ul class="list-as-table">
             {% for document in object.case.document_set.all %}
                 <!-- <li>
                     <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>

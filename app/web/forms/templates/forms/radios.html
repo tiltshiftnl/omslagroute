@@ -1,5 +1,5 @@
 {% with id=widget.attrs.id %}
-<ul role="list" 
+<ul 
   {% if id %}id="{{ id }}"{% endif %}
   {% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}
 >
@@ -7,7 +7,7 @@
         {% if group %}
         <li>
             {{ group }}
-            <ul role="list" {% if id %}id="{{ id }}_{{ index }}"{% endif %}>
+            <ul {% if id %}id="{{ id }}_{{ index }}"{% endif %}>
         {% endif %}
 
             {% for option in options %}

@@ -122,7 +122,7 @@
 
                 {% if form.errors %}
                     <div class="generic-form-errors" aria-live="polite">
-                        <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                        <ul class="errorlist list-vertical" aria-live="polite">
                             {% for field in form %}
                                 {% for error in field.errors %}
                                     <li>

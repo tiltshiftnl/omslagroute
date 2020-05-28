@@ -74,7 +74,7 @@
         </header>
         {% include 'users/user_type_menus.html' %}
         {% block messages %}
-            <ul role="list" class="alert-container">
+            <ul class="alert-container">
             {% if messages %}
                     {% for message in messages %}
                         <li class="alert alert{% if message.tags %}--{{ message.tags }}{% endif %}">
@@ -122,11 +122,12 @@
 
         {% block main %}
         {% endblock %}
-    </main>
-    {% block feedback %}
+        {% block feedback %}
     {% include 'feedback/feedback_context.html' %}
     {% endblock %}
 
+    </main>
+    
 </div>
 {% block js %}
 <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>

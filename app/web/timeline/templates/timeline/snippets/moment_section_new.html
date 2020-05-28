@@ -75,7 +75,7 @@
                  data-static-mode>
                 <h4>Betrokken organisaties</h4>
 
-                <ul role="list" class="tag-list">
+                <ul class="tag-list">
                     {% for organisation in organization_list %}
                     <li class="tag-list__item" style="display: none" data-listitem-id="{{ organisation.id }}">
                         <span class="button button--tinytag" title="{{ organisation.name }}">
@@ -138,7 +138,7 @@
 
             <div class="form-field data-edit-mode">
                 <label for="{{ moment.organizations.id_for_label }}">{{ moment.organizations.label }}</label>
-                <ul role="list" class="form-field__checkboxgroup">
+                <ul class="form-field__checkboxgroup">
                     {% for checkbox in moment.organizations %}
                         <li>
                             {{ checkbox.tag }}
