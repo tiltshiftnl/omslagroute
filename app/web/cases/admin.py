@@ -31,6 +31,8 @@ class CaseStatusAdmin(admin.ModelAdmin):
         'status',
         'created',
         'form',
+        'profile',
+        'case_version',
     )
 
 

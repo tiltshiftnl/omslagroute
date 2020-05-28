@@ -318,6 +318,15 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         version = self.object.create_version(self.kwargs.get('slug'))
 
+        case_status_dict = {
+            'form': self.kwargs.get('slug'),
+            'case': self.object,
+            'case_version': version,
+            'profile': self.request.user.profile,
+        }
+        case_status = CaseStatus(**case_status_dict)
+        case_status.save()
+
         organization_list = Organization.objects.filter(main_email__isnull=False)
         for organization in organization_list:
             current_site = get_current_site(self.request)

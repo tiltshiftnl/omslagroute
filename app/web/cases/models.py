@@ -497,7 +497,7 @@ class CaseStatus(models.Model):
     class Meta:
         verbose_name = _('Cliënt status')
         verbose_name_plural = _('Cliënt statussen')
-        ordering = ('created', 'case', 'form')
+        ordering = ('-created', 'case', 'form')
 
 
 class Document(models.Model):

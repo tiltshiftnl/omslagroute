@@ -32,7 +32,12 @@
     <section class="section-details-client">
 
         <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix u-width-50">
+        <div class="details-client details-client--appendix u-width-50"
+            data-case-id="{{ object.id }}" 
+            data-form="{{ form_data.slug }}" 
+            data-case-status-options="{{ CASE_STATUS_DICT_JSON }}" 
+            data-title="{{ form_data.title }}" 
+            >
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
             </header>
@@ -52,78 +57,11 @@
             </ul>
         </div>
         {% csrf_token %}
+        <div class="details-client details-client--approve u-width-50">
         <div id="app"></div>
+        </div>
         <!-- END BIJLAGE -->
-        <!-- START APPROVE/DISAPPROVE -->
-
-        <div class="details-client details-client--approve u-width-50" 
-        data-decorator="case-status" 
-        data-profile-id="{{ request.user.profile.id }}" 
-        data-case-id="{{ object.case.id }}" 
-        data-caseversion-id="{{ object.id }}" 
-        data-status="">
-            <header>
-                <h2 class="h3">Status aanvraag</h2>
-            </header>
-<!-- status pending -->
-            <p>Wacht op goedkeuring</p>
-            <div class="form-field">
-                <button data-handler="form-approve" class="button button--success">Goedkeuren</button>
-                <button data-handler="form-disapprove" class="button button--danger">Afkeuren</button>
-            </div>
-            <ul>
-                <li><span>Wacht op goedkeuring</span><small>12 mei 2020</small><small>j.devos@hvoquerido.nl</small></li>
-            </ul>
-
-<!-- status goedgekeurd -->
-            <p>
-                <svg class="check__icon" width="20" height="16">
-                    <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                </svg>
-                Goedgekeurd
-            </p>
-            <div class="form-field">
-                <button data-handler="form-disapprove" class="button button--secondary button--danger">Afkeuren</button>
-            </div>
-
-<!-- status afgekeurd -->
-            <p>
-                <svg class="close__icon" width="16" height="16">
-                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                </svg>
-                Afgekeurd
-
-            </p>
-            <div class="form-field">
-                <button data-handler="form-approve" class="button button--secondary button--success">Goedkeuren</button>
-            </div>
-        </div>
-
-        <!-- start prompt approve-->
-        <div class="prompt-container" data-handler="prompt-approve">
-            <div class="prompt-approve">
-                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt goedkeuren?</p>
-                <p>Wanneer je deze aanvraag goedkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
-                <form>
-                    <input type="hidden" value="goedgekeurd">
-                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                    <input type="submit" value="Goedkeuren" class="button button--success">
-                </form>
-            </div>
-            <div class="prompt-disapprove">
-                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt afkeuren?</p>
-                <p>Wanneer je deze aanvraag afkeurt ontvangt <strong>[e-mail]</strong> een bevestiging per e-mail.</p>
-                <form>
-                    <input type="hidden" value="afgekeurd">
-                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                    <input type="submit" value="Afkeuren" class="button button--danger">
-                </form>
-            </div>    
-        </div>
-        <!--end prompt approve-->
-
-            
-        <!-- END APPROVE/DISAPPROVE -->
+        
 
     </section>
     <section class="section section--forms">
