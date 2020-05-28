@@ -12,7 +12,7 @@
             {% endif %}
             {% if request.user|is_begeleider %}
                 <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
-                <li class="breadcrumb-step"><a href="{% url 'case' object.case.id %}">Cliënt: {{ object.case.client_name }}</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.case.client_name }}</a></li>
             {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
@@ -45,9 +45,6 @@
 
             <ul role="list" class="list-as-table">
             {% for document in object.case.document_set.all %}
-                <!-- <li>
-                    <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>
-                </li> -->
                 <li>
                     <div><a href="{% url 'download_case_document' object.id document.id %}
                     " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>

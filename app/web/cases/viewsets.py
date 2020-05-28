@@ -29,21 +29,3 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class ListUsers(APIView):
-    """
-    View to list all users in the system.
-
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    """
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAdminUser]
-
-    def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
-        usernames = [user.username for user in User.objects.all()]
-        return Response(usernames)

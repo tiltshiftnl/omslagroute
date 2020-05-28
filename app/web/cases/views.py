@@ -119,7 +119,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
 
     def get_queryset(self):
         if self.request.user.user_type == BEGELEIDER:
-            return CaseVersion.objects.filter(case__in=self.request.user.profile.cases.all())
+            return Case.objects.filter(id__in=self.request.user.profile.cases.all().values_list('id', flat=True))
         return super().get_queryset()
 
     def get_object(self, queryset=None):
