@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static i18n html_tags client_status_tags auth_tags %}
+
+{% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            {% if request.user|is_wonen_medewerker %}
+                <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+            {% endif %}
+            {% if request.user|is_begeleider %}
+                <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.case.id %}">Cliënt: {{ object.case.client_name }}</a></li>
+            {% endif %}
+            <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+<section class="section section--client">
+    <h1>{{ object.client_name }}</h1>
+    <h2 class="h3">{{ form_data.title }}</h2>
+    <p class="print-only">
+        {% language 'nl' %}
+            Printdatum: {% now "j F Y H:i" %}
+        {% endlanguage %}
+    </p>
+
+    <section class="section-details-client">
+
+        <!-- START BIJLAGE -->
+        <div class="details-client details-client--appendix u-width-50"
+            data-case-id="{{ object.id }}" 
+            data-form="{{ form_data.slug }}" 
+            data-case-status-options="{{ CASE_STATUS_DICT_JSON }}" 
+            data-title="{{ form_data.title }}" 
+            data-email-list="{{ user_list }}" 
+            >
+            <header>
+                <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
+            </header>
+
+            <ul role="list" class="list-as-table">
+            {% for document in object.case.document_set.all %}
+                <!-- <li>
+                    <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|date:"j b Y" }} - {{ document.extension }}</a>
+                </li> -->
+                <li>
+                    <div><a href="{% url 'download_case_document' object.id document.id %}
+                    " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
+                    
+                </li>
+            {% endfor %}
+
+            </ul>
+        </div>
+        {% csrf_token %}
+        <div class="details-client details-client--approve u-width-50">
+        <div id="app"></div>
+        </div>
+        <!-- END BIJLAGE -->
+        
+
+    </section>
+    <section class="section section--forms">
+        <!-- START Client basis gegevens -->
+        <div class="details-client">
+            <header>
+                <h2 class="h3">Gegevens</h2>
+            </header>
+
+            <dl>
+                {% for k, client_info in object.to_dict.items %}
+                {% if not forloop.first and k in form_fields %}
+                <div>
+                    <dt>{{ client_info.label }}: </dt>
+                    <dd>
+                        {% if client_info.value|is_date %}
+                            {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                        {% else %}
+                            {{ client_info.value }}
+                        {% endif %}
+                    </dd>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </dl>
+        </div>
+        <!-- END Client basis gegevens -->
+
+    </section>
+</section>
+
+{% endblock %}
+
+{% block js %}
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+
+ <script src="{% static "bundles/bundle.js" %}"></script>
+
+{% endblock %}
+

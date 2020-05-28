@@ -444,6 +444,62 @@ class CaseVersion(CaseBase):
         abstract = False
 
 
+class CaseStatus(models.Model):
+    status = models.SmallIntegerField(
+        verbose_name=_('Status'),
+        choices=CASE_STATUS_CHOICES,
+        default=CASE_STATUS_CHOICES[0][0],
+    )
+    status_comment = models.TextField(
+        verbose_name=_('Opmerking'),
+        blank=True,
+        null=True,
+    )
+    created = models.DateTimeField(
+        verbose_name=_('Initieel opgeslagen datum/tijd'),
+        auto_now_add=True,
+    )
+    form = models.CharField(
+        verbose_name=_('Formulier'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    case = models.ForeignKey(
+        to='Case',
+        verbose_name=_('Cliënt'),
+        on_delete=models.CASCADE,
+    )
+    case_version = models.ForeignKey(
+        to='CaseVersion',
+        verbose_name=_('Cliënt versie'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    profile = models.ForeignKey(
+        to='profiles.Profile',
+        on_delete=models.CASCADE,
+        verbose_name=_('Profiel'),
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
+        return mark_safe('<div><span>%s</span><small>%s</small><small>%s</small></div>' % (
+                self.case.id,
+                self.form,
+                self.created.strftime('%d %b %Y %H:%M:%S').lower()
+            )
+        )
+        
+    class Meta:
+        verbose_name = _('Cliënt status')
+        verbose_name_plural = _('Cliënt statussen')
+        ordering = ('-created', 'case', 'form')
+
+
 class Document(models.Model):
     name = models.CharField(
         verbose_name=_('Titel van het document'),

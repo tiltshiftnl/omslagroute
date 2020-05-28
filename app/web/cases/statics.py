@@ -1,4 +1,4 @@
-
+import json
 
 GESLACHT = (
     (1, 'Man'),
@@ -26,6 +26,23 @@ DEFAULT_YES_OR_NO = (
     (1, 'Ja'),
     (2, 'Nee'),
 )
+CASE_STATUS = (
+    (1, 'ingediend', 'indienen'),
+    (2, 'afgekeurd', 'afkeuren'),
+    (3, 'goedgekeurd', 'goedkeuren'),
+    (4, 'wachten op GGD', 'wachten op GGD'),
+)
+
+def map_case_status_keys(f):
+    return {
+        'id': f[0],
+        'current': f[1],
+        'verb': f[2],
+    }
+
+CASE_STATUS_CHOICES = list((s[0], s[1]) for s in CASE_STATUS)
+CASE_STATUS_DICT = dict((s[0], map_case_status_keys(s)) for s in CASE_STATUS)
+CASE_STATUS_DICT_JSON = json.dumps(CASE_STATUS_DICT)
 
 GESLACHT_DICT = dict((s[0], s[1]) for s in GESLACHT)
 CENTRALE_TOEGANG_DICT = dict((s[0], s[1]) for s in CENTRALE_TOEGANG)

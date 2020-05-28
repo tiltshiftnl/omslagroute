@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (
 from constance import config
 import os.path
 from web.forms.statics import FORMS_PROCESSTAP_CHOICES
+from web.cases.statics import CASE_STATUS_DICT, CASE_STATUS_DICT_JSON
 
 SOURCE_COMMIT = settings.SOURCE_COMMIT
 BRANCH_NAME = settings.BRANCH_NAME
@@ -26,6 +27,8 @@ def app_settings(request=None):
         'SOURCE_COMMIT': SOURCE_COMMIT,
         'LOGIN_URL_NAME': settings.LOGIN_URL_NAME,
         'LOGOUT_URL_NAME': settings.LOGOUT_URL_NAME,
+        'CASE_STATUS_DICT': CASE_STATUS_DICT,
+        'CASE_STATUS_DICT_JSON': CASE_STATUS_DICT_JSON,
         'LOGIN_URL': settings.LOGIN_URL,
         'BRANCH_NAME': BRANCH_NAME,
         'HOMEPAGE_INTRO': config.HOMEPAGE_INTRO,

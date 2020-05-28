@@ -6,11 +6,35 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compilecss": "node-sass -o ./assets/bundles/ static_src/sass",
-    "compile-css-watch": "node-sass -o ../static_compiled/css sass --watch"
+    "compile-css-watch": "node-sass -o ../static_compiled/css sass --watch",
+    "compile:js": "./node_modules/.bin/webpack --config webpack.config.js",
+    "compile:js:watch": "./node_modules/.bin/webpack --config webpack.config.js --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "node-sass": "^4.12.0"
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.5.3",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "vue-loader": "^15.9.2",
+    "vue-resource": "^1.5.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.41.5",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "vue": "^2.6.11",
+    "vue-cli": "^2.9.6"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }

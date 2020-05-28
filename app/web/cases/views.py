@@ -105,14 +105,15 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
 
 
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
-    model = CaseVersion
-    template_name_suffix = '_page'
+    model = Case
+    template_name_suffix = '_form_status'
 
     def get_context_data(self, **kwargs):
         form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
         kwargs.update({
             'form_fields': get_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
+            'user_list': ', '.join(list(self.object.profile_set.all().values_list('user__username', flat=True))),
         })
         return super().get_context_data(**kwargs)
 
@@ -317,6 +318,15 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
         version = self.object.create_version(self.kwargs.get('slug'))
+
+        case_status_dict = {
+            'form': self.kwargs.get('slug'),
+            'case': self.object,
+            'case_version': version,
+            'profile': self.request.user.profile,
+        }
+        case_status = CaseStatus(**case_status_dict)
+        case_status.save()
 
         organization_list = Organization.objects.filter(main_email__isnull=False)
         for organization in organization_list:

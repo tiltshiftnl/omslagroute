@@ -52,7 +52,12 @@
         </div>
         <!-- END BIJLAGE -->
         <!-- START APPROVE/DISAPPROVE -->
-        <div class="details-client details-client--approve u-width-50">
+        <div class="details-client details-client--approve u-width-50" 
+        data-decorator="case-status" 
+        data-profile-id="{{ request.user.profile.id }}" 
+        data-case-id="{{ object.case.id }}" 
+        data-caseversion-id="{{ object.id }}" 
+        data-status="">
             <header>
                 <h2 class="h3">Status aanvraag</h2>
             </header>
