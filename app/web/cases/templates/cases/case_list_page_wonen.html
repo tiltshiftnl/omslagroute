@@ -22,7 +22,7 @@
             <tr>
                 <th width="200">Naam</th>
                 {% for form in FORMS_PROCESSTAP_CHOICES %}
-                <th>{{ form.1 }} ingediend</th>
+                <th>{{ form.1 }} status</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -39,10 +39,10 @@
                     {% for form in FORMS_PROCESSTAP_CHOICES %}
 
                     <td>
-                        {% client_submitted_form object form.0 as case_version %}
-                        {% if case_version %}
-                            <a href="{% url 'case_version_form' case_version.id form.0 %}">
-                                Ja ({{ case_version.created|date:"j b Y" }})
+                        {% client_submitted_form object form.0 as case_status %}
+                        {% if case_status %}
+                            <a href="{% url 'case_version_form' object.id form.0 %}">
+                                {{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})
                             </a>
                         {% else %}
                             <a href="#">

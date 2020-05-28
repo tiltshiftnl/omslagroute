@@ -109,11 +109,11 @@
                 <div class="form-link--statuscontainer">
                 
                 {% if moment.form %}
-                    {% client_submitted_form object moment.form as case_version %}
-                    {% if case_version %}
-                        <a href="{% url 'case_version_form' case_version.id moment.form %}" class="form-link form-link--added">
-                            Ingediend {{ case_version.created|date:"d-m-y" }}
-                        </a>
+                    {% client_submitted_form object moment.form as case_status %}
+                    {% if case_status %}
+                        <span class="form-link form-link--added">
+                            {{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})
+                        </span>
                     {% else %}
                         <span class="form-link form-link--added">
                         Nog niet ingediend
