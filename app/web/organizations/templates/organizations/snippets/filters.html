@@ -1,7 +1,7 @@
 <section class="section section--tags">
     <h3>Bekijk welke stappen voor jouw organisatie relevant zijn</h3>
 
-    <ul role="list" class="tag-list">
+    <ul class="tag-list">
         {% for object in object_list %}
             <li class="tag-list__item">
                 <button class="button button--tag" data-highlight-org="{{ object.name|slugify }}">

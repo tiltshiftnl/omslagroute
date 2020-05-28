@@ -46,7 +46,7 @@
                 {% endif %}
 
                 {% if request.user|is_redactie and object %}
-                    <ul role="list">
+                    <ul>
                         <li>
                             <a href="{% url 'add_document_version_to_document' object.id %}" class="document__version-update button button--primary button--icon" title="Vervang dit {{ object.document_type_value }}">
                                 <svg class="button__icon"  width="20" height="20" >

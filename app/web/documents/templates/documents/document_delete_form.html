@@ -19,7 +19,7 @@
     <form method="post">{% csrf_token %}
         {% if form.errors %}
             <div class="errors" aria-live="polite">
-                <ul role="list" class="errorlist list-vertical" aria-live="polite">
+                <ul class="errorlist list-vertical" aria-live="polite">
                     {% for field in form %}
                         {% for error in field.errors %}
                             <li>
@@ -44,7 +44,7 @@
 
         {% if object.document_to_document_version.all|length %}
             <h3>Versies:</h3>
-            <ul role="list">
+            <ul>
                 {% for document_version in object.document_to_document_version.all %}
                     {% language 'nl' %}
                     <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>

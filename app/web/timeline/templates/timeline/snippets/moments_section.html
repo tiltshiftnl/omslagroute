@@ -29,7 +29,7 @@
                         </span>
 
                         {% if moment.organizations %}
-                        <ul role="list" class="tag-list">
+                        <ul class="tag-list">
                             {% for organisation in moment.organizations.all %}
                             <li class="tag-list__item">
                                 <button class="button--tinytag" data-highlight-org="{{ organisation.name|slugify }}" title="{{ organisation.name }}">
@@ -46,7 +46,7 @@
                     <div class="details__content">
                         <div>{{ moment.description|textile }}</div>
 
-                        <ul role="list" class="downloads {% if request.user|is_redactie %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
+                        <ul class="downloads {% if request.user|is_redactie %}downloads--logged_in{% endif %} {% if class %}downloads--{{ class }}{% endif %}">
                             {% if moment.documents.all %}
                                 {% include 'documents/snippets/document_list.html' with class='timeline' document_list=moment.documents.all  %}
                             {% endif %}
