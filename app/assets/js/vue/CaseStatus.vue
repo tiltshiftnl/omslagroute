@@ -42,11 +42,12 @@
          <div v-if="nextCaseStatus.status">
             <div class="prompt-container show-prompt-approve" data-handler="prompt-approve">
                 <div class="prompt-approve">
-                    <p v-if="nextCaseStatus.status === 2">Weet je zeker dat je deze <strong>{{ title }}</strong> wilt afkeuren?</p>
-                    <p v-if="nextCaseStatus.status === 3">Weet je zeker dat je deze <strong>{{ title }}</strong> wilt goedkeuren?</p>
-                    <p v-if="nextCaseStatus.status === 4">Weet je zeker dat je de status van deze <strong>{{ title }}</strong> op 'Wacht op GGD' wilt zetten?</p>
+                    <p>Weet je zeker dat je de status voor <strong>{{ title }}</strong> wilt wijzigen naar <strong>{{ statusText[nextCaseStatus.status] }}</strong>?</p>
                     <p><strong>{{ emailList }}</strong> ontvangt hiervan een bevestiging per e-mail.</p>
                     <form>
+                        <label for="status-message">Bericht (optioneel)</label>
+                        <textarea id="status-message" name="status-message" cols="40" rows="4"></textarea>
+                        <span class="helptext">Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.</span>
                         <button type="button" class="button button--primary"  v-on:click="addCaseStatus()">{{ buttonText[nextCaseStatus.status] }}</button>
                         <button type="button" class="button button--secondary" v-on:click="setNextStatus(null)">Annuleren</button>
                     </form>
@@ -84,6 +85,11 @@ export default {
             'caseversion': null,
             'profile': null,
         },
+        statusText: {
+            2: "Afkeuren",
+            3: "Goedkeuren",
+            4: "Wachten op GGD",
+        },
         buttonText: {
             2: "Aanvraag afkeuren",
             3: "Aanvraag goedkeuren",
@@ -94,7 +100,7 @@ export default {
             3: "button button--success",
             4: "button button--warning",
         }
-        
+
     }),
     computed: {
     },
