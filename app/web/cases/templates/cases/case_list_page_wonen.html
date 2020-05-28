@@ -14,9 +14,76 @@
 
 {% block main %}
 <section class="section section--mijn-clienten">
-    <h2>Alle cli&euml;nten</h2>
+    <h2 class="u-margin-bottom-4x">Aanvragen</h2>
 
+    <div class="tab-list-container">
+        <ul class="u-list-style-none tab-list">
+            <li class="list-label">
+                <span>Status:</span>
+            </li>
+            <li class="tab selected">
+                <a href="#" role="button" class="button button--tertiary">Ingediend (2)</a>
+            </li>
+            <li class="tab">
+                <a href="#" role="button" class="button button--tertiary">Wacht op GGD</a>
+            </li>
+            <li class="tab">
+                <a href="#" role="button" class="button button--tertiary">Goedgekeurd</a>
+            </li>
+            <li class="tab">
+                <a href="#" role="button" class="button button--tertiary">Afgekeurd</a>
+            </li>
+            <li class="tab">
+                <a href="#" role="button" class="button button--tertiary">Alle ({{ object_list.paginator.count }})</a>
+            </li>
+        </ul>
+    </div>
+    <table class="case-list">
+        <thead>
+            <tr>
+                <th width="200">Client</th>
+                <th>Stap in omslagroute</th>
+                <th>Aanvraag door</th>
+                <th>Actuele status</th>
+                <th><span class="sr-only">Laatste statuswijziging</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>
+                        <span class="show-on-mobile">Naam:</span>
+                        {{ object.client_name }}
+                    </td>
+
+                    <td>
+                        <span class="show-on-mobile">Stap in omslagroute:</span>
+                        <a href="#">Aanvraag omslagroute en urgentie</a>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Aanvraag door:</span>
+                        HVO Querido
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Actuele status:</span>
+                        Ingediend
+                    </td>
+                    <td class="u-no-wrap">21-05-2020</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    
     <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
+    
     <table class="case-list table--interactive">
         <thead>
             <tr>

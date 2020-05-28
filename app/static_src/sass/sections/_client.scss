@@ -276,3 +276,42 @@
         
     }
 }
+
+.section--mijn-clienten {
+    .tab-list-container {
+        .tab-list {
+            margin-bottom: -2px;
+        }
+        .list-label {
+            span {
+                font-weight: bold;
+                padding: .75rem .938rem .5rem 2rem;
+                vertical-align: middle;
+            }
+        }
+        li {
+            display: inline;
+        }
+        .button--tertiary {
+            background-color: $neutral-grey1;
+            border: 2px solid $neutral-grey1;
+            border-bottom: 2px solid $neutral-grey2;
+            font-weight: normal;
+
+            &:hover{
+                background-color: $primary-white;
+                font-weight: bold;
+            }
+        }
+        .tab {
+            margin-right: 0.25rem;
+            &.selected {
+                .button--tertiary{
+                    background-color: $primary-white;
+                    border-bottom: 2px solid $primary-white;
+                    font-weight: bold;
+                }                
+            }
+        }
+    }
+}

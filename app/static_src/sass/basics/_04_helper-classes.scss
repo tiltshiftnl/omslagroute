@@ -27,10 +27,13 @@
 }
 
 .show-on-mobile { 
+    display: block;
+    font-weight: 500;
     @media screen and (min-width: $tablets) {
         display: none;
     }
 }
+
 .show-mobile-only {
     display: block;
 
@@ -83,6 +86,11 @@
 .u-border-bottom {
     border-bottom: 2px solid $neutral-grey2;
 }
+
+.u-no-wrap {
+    white-space: nowrap;
+}
+
 // ********************
 // MARGINS
 // ********************
