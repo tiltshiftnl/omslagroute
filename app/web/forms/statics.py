@@ -422,16 +422,13 @@ BASIS_GEGEVENS = [
 
 URGENTIE_AANVRAAG = [
     {
-        'title': 'Persoonsgegevens',
-        'description': 'In deze stap vult u eenmalig informatie over uw cliënt in. Deze informatie wordt in uw browser opgeslagen zodat u na invullen op een later moment van deze informatie gebruik kunt maken.',
+        'title': 'Basisgegevens',
+        'description': '',
         'section_list': [
             {
-                'title': 'Basisgegevens',
-                'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
+                'title': '',
+                'description': '',
                 'fields': [
-                    'client_first_name',
-                    'client_last_name',
-                    'geboortedatum',
                     'centrale_toegang_naam',
                 ],
             },
@@ -531,15 +528,6 @@ OMKLAP_AANVRAAG = [
         'title': 'Basisgegevens',
         'description': '',
         'section_list': [
-            {
-                'title': 'Persoonsgegevens',
-                'description': 'Controleer deze gegevens eventueel samen met uw cliënt!',
-                'fields': [
-                    'client_first_name',
-                    'client_last_name',
-                    'geboortedatum',
-                ],
-            },
             {
                 'title': 'Woningnet',
                 'description': '',

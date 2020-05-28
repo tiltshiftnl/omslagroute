@@ -38,19 +38,19 @@
                             <dl>
                                 <div>
                                     <dt>Client voornaam: </dt>
-                                    <dd>Jan</dd>
+                                    <dd>{{ form.instance.client_first_name }}</dd>
                                 </div>
                                 <div>
                                     <dt>Client achternaam: </dt>
-                                    <dd>Jansen</dd>
+                                    <dd>{{ form.instance.client_last_name }}</dd>
                                 </div>
                                 <div>
                                     <dt>Geboortedatum: </dt>
-                                    <dd>1 jan 1990</dd>
+                                    <dd>{% if form.instance.geboortedatum %}{{ form.instance.geboortedatum|date:'j b Y' }}{% else %}—{% endif %}</dd>
                                 </div>
                                 <div>
                                     <dt>E-mailadres: </dt>
-                                    <dd>jan@jansen.nl</dd>
+                                    <dd>{% if form.instance.emailadres %}{{ form.instance.emailadres }}{% else %}—{% endif %}</dd>
                                 </div>
                             </dl>
                         </div>
@@ -60,29 +60,31 @@
                         <!-- START STATUS -->
                         <div class="details-client details-client--status">
                             <h2 class="h3">Status aanvraag</h2>
+                            {% if case_status_list %}
                             <p>
+                                {% if case_status_list.0.status == 3 %}
                                 <svg class="check__icon" width="20" height="16">
                                     <use href="#check" xlink:href="#check" width="20" height="18"></use>
                                 </svg>
                                 Goedgekeurd
-                            </p>
-                            <p>
+                                {% elif case_status_list.0.status == 2 %}
                                 <svg class="close__icon" width="16" height="16">
                                     <use href="#close" xlink:href="#close" width="16" height="16"></use>
                                 </svg>
                                 Afgekeurd
-                            </p>
-                            <p>
+                                {% elif case_status_list.0.status == 4 %}
                                 <svg class="pause__icon" width="16" height="16">
                                     <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
                                 </svg>
                                 Wachten op GGD
+                                {% endif %}
                             </p>
                             <div class="status-container">
                                 <small class="facts">
-                                    21 mei 2020<br/>I.Reijn@amsterdam.nl
+                                    {{ case_status_list.0.created|date:"j b Y H:i" }}<br/>{{ case_status_list.0.profile.user.username }}
                                 </small>
                             </div>
+                            {% if case_status_list|length > 1 %}
                             <div class="status-history-container form-field-history">
                                 
                                 <details>
@@ -94,28 +96,21 @@
                                     </summary>
                                     <div class="content">
                                         <ul class="u-list-style-none">
+                                            {% for case_status in case_status_list %}
+                                            {% if forloop.counter0 > 0 %}
                                             <li>
-                                                <div><small class="facts">17 mei 2020<br/>j.devos@hvoquerido.nl</small><small class="status">Ingediend</small></div>
-                                                
+                                                <div><small class="facts">{{ case_status.created|date:"j b Y H:i" }}<br/>{{ case_status.profile.user.username }}</small><small class="status">{{ case_status.status|status_verbose|capfirst }}</small></div>
                                             </li>
-                                            <li>
-                                                <div><small class="facts">15 mei 2020<br/>I.Reijn@amsterdam.nl</small><small class="status">Afgekeurd</small></div>
-                                                <div><small>Korte omschrijving waarom deze aanvraag is afgekeurd</small></div>
-                                            </li>
-                                            <li>
-                                                <div><small class="facts">12 mei 2020<br/>j.devos@hvoquerido.nl</small><small class="status">Ingediend</small></div>
-                                            </li>
-                                            <li>
-                                                <div><small class="facts">15 mei 2020<br/>I.Reijn@amsterdam.nl</small><small class="status">Afgekeurd</small></div>
-                                                <div><small>Korte omschrijving waarom deze aanvraag is afgekeurd</small></div>
-                                            </li>
-                                            <li>
-                                                <div><small class="facts">12 mei 2020<br/>j.devos@hvoquerido.nl</small><small class="status">Ingediend</small></div>
-                                            </li>
+                                            {% endif %}
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </details>
+                             {% endif %}
                             </div>
+                            {% else %}
+                            <p>De aanvraag is nog niet verstuurd.</p>
+                            {% endif %}
                         </div>
                     </section>
                 </div>
