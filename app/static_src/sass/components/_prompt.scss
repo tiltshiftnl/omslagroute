@@ -1,15 +1,11 @@
 .details-client--approve {
     p{
         .check__icon,
-        .close__icon {
+        .close__icon,
+        .pause__icon {
             display: inline-block;
             margin-right: .5rem;
-        }
-        .check__icon {
-            color: $support-valid;
-        }
-        .close__icon {
-            color: $support-invalid;
+            vertical-align: text-top;
         }
     }
 }
