@@ -14,43 +14,50 @@
 
 {% block main %}
 <section class="section section--mijn-clienten">
-    <h2>Alle cli&euml;nten</h2>
+    <h2 class="u-margin-bottom-4x">Aanvragen</h2>
 
-    <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
-    <table class="case-list table--interactive">
+    <div class="tab-list-container">
+        <ul class="u-list-style-none tab-list">
+            <li class="list-label">
+                <span>Status:</span>
+            </li>
+            {% for tab in tabs %}
+            <li class="tab{% if request.GET.f|stringformat:"s" == forloop.counter0|stringformat:"s" %} selected{% elif request.GET.f == None and forloop.counter0|stringformat:"s" == "0" %} selected{% endif %}">
+                <a href="./?f={{ forloop.counter0 }}" role="button" class="button button--tertiary">{{ tab.title }} ({{ tab.queryset|length }})</a>
+            </li>
+            {% endfor%}
+        </ul>
+    </div>
+    <table class="case-list">
         <thead>
             <tr>
-                <th width="200">Naam</th>
-                {% for form in FORMS_PROCESSTAP_CHOICES %}
-                <th>{{ form.1 }} status</th>
-                {% endfor %}
+                <th width="200">Client</th>
+                <th>Stap in omslagroute</th>
+                <th>Aanvraag door</th>
+                <th>Actuele status</th>
+                <th><span class="sr-only">Laatste statuswijziging</span></th>
             </tr>
         </thead>
         <tbody>
             {% for object in object_list %}
                 <tr>
                     <td>
-                        <a href="#">
-
-                            <span class="show-on-mobile">Naam:</span>
-                            {{ object.client_name }}
-                        </a>
+                        <span class="show-on-mobile">Naam:</span>
+                        <a href="{% url 'case' object.case.id  %}">{{ object.case.client_name }}</a>
                     </td>
-                    {% for form in FORMS_PROCESSTAP_CHOICES %}
-
                     <td>
-                        {% client_submitted_form object form.0 as case_status %}
-                        {% if case_status %}
-                            <a href="{% url 'case_version_form' object.id form.0 %}">
-                                {{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})
-                            </a>
-                        {% else %}
-                            <a href="#">
-                            Nee
-                            </a>
-                        {% endif %}
+                        <span class="show-on-mobile">Stap in omslagroute:</span>
+                        <a href="{% url 'case_version_form' object.case.id object.form %}">{{ object.form|form_verbose }}</a>
                     </td>
-                    {% endfor %}
+                    <td>
+                        <span class="show-on-mobile">Aanvraag door:</span>
+                        {{ object.profile.user.username }}
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Actuele status:</span>
+                        {{ object.status|status_verbose }}
+                    </td>
+                    <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
                 </tr>
             {% endfor %}
         </tbody>

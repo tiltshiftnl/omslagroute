@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags client_status_tags %}
+{% load static i18n html_tags client_status_tags auth_tags %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -7,7 +7,12 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            {% if request.user|is_begeleider %}
             <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+            {% endif %}
+            {% if request.user|is_wonen_medewerker %}
+            <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+            {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
     </nav>
@@ -16,11 +21,13 @@
 {% block main %}
 <section class="section section--client">
     <h1>{{ object.client_name }}</h1>
+        {% if request.user|is_begeleider %}
         <div class="details-admin screen-only">
             <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" title="Deel deze cliënt" data-handler="modal" data-contentid="modalInvite">
                 Delen ({{ object.profile_set.all|length|add:"-1" }})
             </a>
         </div>
+        {% endif %}
 
 
         <div role="dialog" class="modal" id="modalInvite">
@@ -39,12 +46,11 @@
         <div class="details-client details-client--basic">
             <header>
                 <h2 class="h3">Basisgegevens</h2>
+                {% if request.user|is_begeleider %}
                 <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
                     Wijzigen
                 </a>
-{#                <a href="{% url 'delete_case' object.id %}" class="" title="Verwijder cli&euml;ntgegevens">#}
-{#                    Verwijderen#}
-{#                </a>#}
+                {% endif %}
             </header>
 
             <dl>
@@ -71,9 +77,11 @@
         <div class="details-client details-client--appendix">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
+                {% if request.user|is_begeleider %}
                 <a href="{% url 'add_case_document' object.id %}" class="" title="Voeg een nieuwe bijlage toe">
                     Uploaden
                 </a>
+                {% endif %}
             </header>
 
             <ul class="downloads">
@@ -81,7 +89,9 @@
                 {% if forloop.counter0 < 4 %}
                     <li>
                         <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
+                        {% if request.user|is_begeleider %}
                         <div><a href="{% url 'update_case_document' object.id document.id %}"><span>Wijzigen</span></a></div>
+                        {% endif %}
                     </li>
                 {% endif %}
             {% endfor %}
@@ -104,7 +114,16 @@
             <div class="dot dot--large"></div>
                 {% client_status object 'basis-gegevens' as status %}
                 <strong class="h4">
-                    {% if moment.form %}<a href="{% url 'update_case' object.id moment.form %}">{% endif %}{{ moment.name }}{% if moment.form %}</a>{% endif %}
+                {% if moment.form %}
+                    {% if request.user|is_begeleider %}
+                    <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
+                    {% endif %}
+                    {% if request.user|is_wonen_medewerker %}
+                    <a href="{% url 'case_version_form' object.id moment.form %}">{{ moment.name }}</a>
+                    {% endif %}
+                {% else %}
+                {{ moment.name }}
+                {% endif %}
                 </strong>
                 <div class="form-link--statuscontainer">
                 

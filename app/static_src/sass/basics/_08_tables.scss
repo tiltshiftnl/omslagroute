@@ -37,15 +37,15 @@ tbody td {
         width: 100%; 
     }
 
-    &:first-child {
-        font-weight: bold;
-    }
+    // &:first-child {
+    //     font-weight: bold;
+    // }
  
-    @media all and (min-width: $tablets) {
-        &:first-child {
-            font-weight: bold;
-        }
-    }
+    // @media all and (min-width: $tablets) {
+    //     &:first-child {
+    //         font-weight: bold;
+    //     }
+    // }
 }
 
 tr {
@@ -97,5 +97,11 @@ tr:nth-of-type(even) {
                 }
             }
         }
+    }
+}
+
+.case-list {
+    thead {
+        border-bottom: 0.125rem solid #e6e6e6;
     }
 }
