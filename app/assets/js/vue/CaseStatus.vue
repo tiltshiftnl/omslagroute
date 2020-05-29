@@ -23,28 +23,28 @@
         </p>
         <div class="form-field">
             <button v-if="currentCaseStatus.status !== 3" 
-            v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)">
+            v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)" data-handler="modal" data-contentid="modalStatus">
                 <svg class="check__icon" width="20" height="16">
                     <use href="#check" xlink:href="#alert" width="20" height="18"></use>
                 </svg>
                 Goedkeuren
             </button>
             <button v-if="currentCaseStatus.status !== 2" 
-                v-on:click="setNextStatus(2)" v-bind:class="setButtonClass(2)">
+                v-on:click="setNextStatus(2)" v-bind:class="setButtonClass(2)" data-handler="modal" data-contentid="modalStatus">
                 <svg class="close__icon" width="16" height="16">
                     <use href="#close" xlink:href="#close" width="16" height="16"></use>
                 </svg>
                 Afkeuren
             </button>
             <button v-if="currentCaseStatus.status !== 4" 
-                v-on:click="setNextStatus(4)" v-bind:class="setButtonClass(4)">
+                v-on:click="setNextStatus(4)" v-bind:class="setButtonClass(4)" data-handler="modal" data-contentid="modalStatus">
                 <svg class="close__icon" width="12" height="16">
                     <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
                 </svg>
                 Wacht op GGD
             </button>
         </div>
-       
+        <div role="dialog" class="modal" id="modalStatus">
             <div v-if="nextCaseStatus.status">
                 <div class="prompt-container show-prompt-approve" data-handler="prompt-approve">
                     <div class="prompt-approve">
@@ -65,7 +65,9 @@
 
                 </div>
             </div>
-        
+            <!-- <iframe class="modal--feedback" id="iframeFeedback" src="{% url 'feedback' %}" title="Geef uw mening">
+            </iframe> -->
+        </div>
     </div>
 </template>
 
