@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 {% load static i18n html_tags client_status_tags auth_tags %}
 
-{% block title %} - Cliënt: {{ object.client_name }} -{{ form_data.title }}{% endblock %}
+{% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
 {% block breadcrumb %}
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.client_name }}</a></li>
-            <li class="breadcrumb-step sr-only" aria-current="location">Cliënt: {{ object.client_name }} -{{ form_data.title }}</li>
+            {% if request.user|is_wonen_medewerker %}
+                <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+            {% endif %}
+            {% if request.user|is_begeleider %}
+                <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.case.client_name }}</a></li>
+            {% endif %}
+            <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
     </nav>
 {% endblock %}
@@ -89,14 +94,14 @@
 {% endblock %}
 
 {% block js %}
- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>
+<script type="text/javascript" src="{% static "js/sticky-navigation-polyfill.js" %}"></script>
+<script type="text/javascript" src="{% static "js/filter-organisations.js" %}"></script>
+<script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
  <script src="{% static "bundles/bundle.js" %}"></script>
-
- <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>
- <script type="text/javascript" src="{% static "js/sticky-navigation-polyfill.js" %}"></script>
- <script type="text/javascript" src="{% static "js/filter-organisations.js" %}"></script>
- <script type="text/javascript" src="{% static "js/index.js" %}?v={{ SOURCE_COMMIT }}"></script>
 
 {% endblock %}
 

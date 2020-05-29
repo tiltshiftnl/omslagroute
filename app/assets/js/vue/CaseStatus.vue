@@ -58,15 +58,13 @@
                             <span class="helptext">Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.</span>
                             <div class="form-field form-field--buttons screen-only u-margin-top-2x">
                                 <button type="button" class="button button--primary"  v-on:click="addCaseStatus()">{{ buttonText[nextCaseStatus.status] }}</button>
-                                <button type="button" class="button button--secondary" v-on:click="setNextStatus(null)">Annuleren</button>
+                                <button type="button" class="button button--secondary" v-on:click="setNextStatus(null)" data-handler="modal-close">Annuleren</button>
                             </div>
                         </form>
                     </div>
 
                 </div>
             </div>
-            <!-- <iframe class="modal--feedback" id="iframeFeedback" src="{% url 'feedback' %}" title="Geef uw mening">
-            </iframe> -->
         </div>
     </div>
 </template>
@@ -118,9 +116,11 @@ export default {
     computed: {
     },
     beforeMount(){
+        console.log("beforeMount");
         this.getInitialData();
     },
     created() {
+        console.log("created");
         this.getCaseStatusList();
     },
     methods: {
@@ -129,6 +129,7 @@ export default {
         },
         setNextStatus: function(status){
             this.nextCaseStatus.status = status;
+
         },
         getInitialData: function(){
             this.caseId = document.querySelector('[data-case-id]').dataset.caseId;
@@ -158,7 +159,7 @@ export default {
         },
         addCaseStatus: function () {
             this.loading = true;
-            console.log(this.nextCaseStatus);
+            console.log("nextCaseStatus", this.nextCaseStatus);
             axios.post(`/api/casestatus/`, this.nextCaseStatus)
                 .then((response) => {
                     this.loading = false;
