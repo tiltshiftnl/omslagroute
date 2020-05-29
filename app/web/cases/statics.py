@@ -44,6 +44,11 @@ CASE_STATUS_CHOICES = list((s[0], s[1]) for s in CASE_STATUS)
 CASE_STATUS_DICT = dict((s[0], map_case_status_keys(s)) for s in CASE_STATUS)
 CASE_STATUS_DICT_JSON = json.dumps(CASE_STATUS_DICT)
 
+CASE_STATUS_INGEDIEND = 1
+CASE_STATUS_AFGEKEURD = 2
+CASE_STATUS_GOEDGEKEURD = 3
+CASE_STATUS_GGD = 4
+
 GESLACHT_DICT = dict((s[0], s[1]) for s in GESLACHT)
 CENTRALE_TOEGANG_DICT = dict((s[0], s[1]) for s in CENTRALE_TOEGANG)
 JONGER_DAN_26_DICT = dict((s[0], s[1]) for s in JONGER_DAN_26)
