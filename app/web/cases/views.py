@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView, FormView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView, FormView, TemplateView
 from .models import *
 from django.urls import reverse_lazy, reverse
 from .forms import *
@@ -24,6 +24,9 @@ from web.users.auth import user_passes_test
 from django.core.paginator import Paginator
 from web.timeline.models import Moment
 from formtools.wizard.views import SessionWizardView
+from django.db.models import Count
+from django.db.models.functions import Concat
+from django.db.models import TextField, DateTimeField
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -49,22 +52,51 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return kwargs
 
 
-class UserCaseListAll(UserPassesTestMixin, ListView):
-    model = Case
-    template_name_suffix = '_list_page_wonen'
+class UserCaseListAll(UserPassesTestMixin, TemplateView):
+    template_name = 'cases/case_list_page_wonen.html'
 
     def test_func(self):
         return auth_test(self.request.user, WONEN) and hasattr(self.request.user, 'profile')
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        kwargs = super().get_context_data(object_list=object_list, **kwargs)
-        # pagination
-        object_list = kwargs.pop('object_list')
-        paginator = Paginator(object_list, 20)
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+
+        # qs = CaseStatus.objects.filter(status=1)
+        qs = CaseStatus.objects.all()
+        qs = qs.order_by('-created')
+        qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
+        qs = qs.order_by('distinct_name', '-created')
+        qs = qs.distinct('distinct_name')
+        final_set = CaseStatus.objects.all().order_by('-created')
+
+        # bug: annotate alias with value_list
+        # final_set = final_set.filter(id__in=qs.values_list('id', flat=True))
+
+        # workaround
+        final_set = final_set.filter(id__in=[s.id for s in qs])
+
+        tabs = [
+            [1, 'Ingediend'],
+            [4, 'Wacht op GGD'],
+            [3, 'Goedgekeurd'],
+            [2, 'Afgekeurd'],
+            [0, 'Alle'],
+        ]
+        tabs = [{
+            'filter':t[0],  
+            'title':t[1],  
+            'queryset':final_set.filter(status=t[0]) if t[0] else final_set,  
+        } for t in tabs]
+
+
+
+        paginator = Paginator(tabs[int(self.request.GET.get('f', 1))].get('queryset'), 20)
         page = self.request.GET.get('page', 1)
         object_list = paginator.get_page(page)
+
         kwargs.update({
-            'object_list': object_list,
+            'object_list': paginator.get_page(page),
+            'tabs': tabs,
         })
         return kwargs
 
@@ -98,10 +130,12 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return super().get_context_data(**kwargs)
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, BEGELEIDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        if self.request.user.user_type == BEGELEIDER:
+            return self.request.user.profile.cases.all()
+        return super().get_queryset()
 
 
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
@@ -126,7 +160,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         return super().get_object(queryset)
 
     def test_func(self):
-        return auth_test(self.request.user, [WONEN, BEGELEIDER]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
 
 
 class CaseDetailAllDataView(CaseDetailView):

@@ -21,21 +21,11 @@
             <li class="list-label">
                 <span>Status:</span>
             </li>
-            <li class="tab selected">
-                <a href="#" role="button" class="button button--tertiary">Ingediend (2)</a>
+            {% for tab in tabs %}
+            <li class="tab{% if request.GET.f|stringformat:"s" == forloop.counter0|stringformat:"s" %} selected{% elif request.GET.f == None and forloop.counter0|stringformat:"s" == "0" %} selected{% endif %}">
+                <a href="./?f={{ forloop.counter0 }}" role="button" class="button button--tertiary">{{ tab.title }} ({{ tab.queryset|length }})</a>
             </li>
-            <li class="tab">
-                <a href="#" role="button" class="button button--tertiary">Wacht op GGD</a>
-            </li>
-            <li class="tab">
-                <a href="#" role="button" class="button button--tertiary">Goedgekeurd</a>
-            </li>
-            <li class="tab">
-                <a href="#" role="button" class="button button--tertiary">Afgekeurd</a>
-            </li>
-            <li class="tab">
-                <a href="#" role="button" class="button button--tertiary">Alle ({{ object_list.paginator.count }})</a>
-            </li>
+            {% endfor%}
         </ul>
     </div>
     <table class="case-list">
@@ -53,71 +43,21 @@
                 <tr>
                     <td>
                         <span class="show-on-mobile">Naam:</span>
-                        <a href="#">{{ object.client_name }}</a>
+                        <a href="{% url 'case' object.case.id  %}">{{ object.case.client_name }}</a>
                     </td>
-
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
-                        <a href="#">Aanvraag omslagroute en urgentie</a>
+                        <a href="{% url 'case_version_form' object.case.id object.form %}">{{ object.form|form_verbose }}</a>
                     </td>
                     <td>
                         <span class="show-on-mobile">Aanvraag door:</span>
-                        HVO Querido
+                        {{ object.profile.user.username }}
                     </td>
                     <td>
                         <span class="show-on-mobile">Actuele status:</span>
-                        Ingediend
+                        {{ object.status|status_verbose }}
                     </td>
-                    <td class="u-no-wrap">21-05-2020</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    
-    <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
-    
-    <table class="case-list table--interactive">
-        <thead>
-            <tr>
-                <th width="200">Naam</th>
-                {% for form in FORMS_PROCESSTAP_CHOICES %}
-                <th>{{ form.1 }} status</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
-                <tr>
-                    <td>
-                        <a href="#">
-
-                            <span class="show-on-mobile">Naam:</span>
-                            {{ object.client_name }}
-                        </a>
-                    </td>
-                    {% for form in FORMS_PROCESSTAP_CHOICES %}
-
-                    <td>
-                        {% client_submitted_form object form.0 as case_status %}
-                        {% if case_status %}
-                            <a href="{% url 'case_version_form' object.id form.0 %}">
-                                {{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})
-                            </a>
-                        {% else %}
-                            <a href="#">
-                            Nee
-                            </a>
-                        {% endif %}
-                    </td>
-                    {% endfor %}
+                    <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
                 </tr>
             {% endfor %}
         </tbody>
