@@ -90,7 +90,7 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
 
 
 
-        paginator = Paginator(tabs[int(self.request.GET.get('f', 1))].get('queryset'), 20)
+        paginator = Paginator(tabs[int(self.request.GET.get('f', 0))].get('queryset'), 20)
         page = self.request.GET.get('page', 1)
         object_list = paginator.get_page(page)
 
