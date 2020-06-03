@@ -1,6 +1,6 @@
 from rest_framework import viewsets, mixins
 from .models import CaseStatus
-from .statics import CASE_STATUS_INGEDIEND
+from .statics import CASE_STATUS_INGEDIEND, CASE_STATUS_DICT
 from .serializers import CaseStatusSerializer
 from django.contrib.auth.mixins import UserPassesTestMixin
 from web.users.statics import BEGELEIDER, WONEN
@@ -55,7 +55,10 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,
                     to_emails=email_adresses,
-                    subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(serializer.instance.form),
+                    subject='Omslagroute - %s, status: %s' % (
+                        FORM_TITLE_BY_SLUG.get(serializer.instance.form),
+                        CASE_STATUS_DICT.get(serializer.instance.status).get('current'),
+                    ),
                     plain_text_content=body
                 )
                 sg.send(email)
