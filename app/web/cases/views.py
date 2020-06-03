@@ -373,7 +373,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                 'case_url': 'https://%s%s' % (
                     current_site.domain,
                     reverse('case_version_form', kwargs={
-                        'pk': version.id,
+                        'pk': self.object.id,
                         'slug': self.kwargs.get('slug'),
                     })
                 ),
