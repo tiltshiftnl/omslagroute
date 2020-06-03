@@ -72,16 +72,14 @@
         </div>
         <!-- END Client basis gegevens -->
 
-
+        {% if request.user|is_begeleider %}
         <!-- START BIJLAGE -->
         <div class="details-client details-client--appendix">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
-                {% if request.user|is_begeleider %}
                 <a href="{% url 'add_case_document' object.id %}" class="" title="Voeg een nieuwe bijlage toe">
                     Uploaden
                 </a>
-                {% endif %}
             </header>
 
             <ul class="downloads">
@@ -89,9 +87,7 @@
                 {% if forloop.counter0 < 4 %}
                     <li>
                         <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
-                        {% if request.user|is_begeleider %}
                         <div><a href="{% url 'update_case_document' object.id document.id %}"><span>Wijzigen</span></a></div>
-                        {% endif %}
                     </li>
                 {% endif %}
             {% endfor %}
@@ -101,8 +97,9 @@
             <a href="{% url 'case_document_list' object.id %}" class="">Alle bijlages</a>
             {% endif %}
         </div>
-    </section>
         <!-- END BIJLAGE -->
+        {% endif %}
+    </section>
 
     {% block processtappen %}
     <!-- START PROCESSTAPPEN -->
