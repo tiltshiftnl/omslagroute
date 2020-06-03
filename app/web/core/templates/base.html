@@ -32,7 +32,7 @@
     <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/t/1.css?apiType=css&amp;projectid=3680cf49-2b05-4b8a-af28-fa9e27d2bed0">
 </head>
 <body>
-
+|{% block root %}
 <div class="site-container">
     {% include 'svg-sprite.html' %}
     {% block skiplinks %}
@@ -129,6 +129,7 @@
     </main>
     
 </div>
+{% endblock %}
 {% block js %}
 <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>
 <script type="text/javascript" src="{% static "js/sticky-navigation-polyfill.js" %}"></script>

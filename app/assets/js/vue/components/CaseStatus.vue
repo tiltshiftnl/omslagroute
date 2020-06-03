@@ -23,37 +23,37 @@
         </p>
         <div class="form-field">
             <button v-if="currentCaseStatus.status !== 3" 
-            v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)" data-handler="modal" data-contentid="modalStatus">
+            v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)">
                 <svg class="check__icon" width="20" height="16">
                     <use href="#check" xlink:href="#alert" width="20" height="18"></use>
                 </svg>
                 Goedkeuren
             </button>
             <button v-if="currentCaseStatus.status !== 2" 
-                v-on:click="setNextStatus(2)" v-bind:class="setButtonClass(2)" data-handler="modal" data-contentid="modalStatus">
+                v-on:click="setNextStatus(2)" v-bind:class="setButtonClass(2)">
                 <svg class="close__icon" width="16" height="16">
                     <use href="#close" xlink:href="#close" width="16" height="16"></use>
                 </svg>
                 Afkeuren
             </button>
             <button v-if="currentCaseStatus.status !== 4" 
-                v-on:click="setNextStatus(4)" v-bind:class="setButtonClass(4)" data-handler="modal" data-contentid="modalStatus">
+                v-on:click="setNextStatus(4)" v-bind:class="setButtonClass(4)">
                 <svg class="close__icon" width="12" height="16">
                     <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
                 </svg>
                 Wacht op GGD
             </button>
         </div>
-        <div role="dialog" class="modal" id="modalStatus">
+        <!-- <div role="dialog" class="modal" id="modalStatus"> -->
             <div v-if="nextCaseStatus.status">
-                <div class="prompt-container show-prompt-approve" data-handler="prompt-approve">
+                <div class="prompt-container show-prompt-approve">
                     <div class="prompt-approve">
                         <p>Weet je zeker dat je de status voor <strong>{{ title }}</strong> wilt wijzigen naar <strong>{{ statusText[nextCaseStatus.status] }}</strong>?</p>
                         <p><strong>{{ emailList }}</strong> ontvangt hiervan een bevestiging per e-mail.</p>
                         <form>
                             <div class="form-field form-field--textarea screen-only u-margin-top-2x">
                                 <label for="status-message">Bericht (optioneel)</label>
-                                <textarea id="status-message" name="status-message" cols="40" rows="4"></textarea>
+                                <textarea v-model="nextCaseStatus.status_comment" id="status-message" name="status-message" cols="40" rows="4"></textarea>
                             </div>
                             <span class="helptext">Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.</span>
                             <div class="form-field form-field--buttons screen-only u-margin-top-2x">
@@ -65,7 +65,7 @@
 
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </template>
 
@@ -73,6 +73,7 @@
 import axios from "axios";
 
 export default {
+    delimiters: ['[[', ']]'],
     name: "CaseStatus",
     data: () => ({
         loading: false,

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static i18n html_tags client_status_tags auth_tags %}
-
+{% block root %}
+{% csrf_token %}
+<div id="app"></div>
+{% endblock %}
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
 {% block breadcrumb %}
