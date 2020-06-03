@@ -308,7 +308,7 @@
                 .button--tertiary{
                     background-color: $primary-white;
                     border-bottom: 2px solid $primary-white;
-                    font-weight: bold;
+                    text-shadow: 0 0 .65px #000, 0 0 .65px #000;
                 }                
             }
         }
