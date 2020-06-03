@@ -91,6 +91,12 @@
     white-space: nowrap;
 }
 
+.u-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 // ********************
 // MARGINS
 // ********************
@@ -166,6 +172,9 @@
     li {
         list-style-type: disc;
         margin-bottom: .475rem;
+        @media all and (-ms-high-contrast:none) {
+            display: block;
+        }
         div{
             display: flex;
             justify-content: space-between;
