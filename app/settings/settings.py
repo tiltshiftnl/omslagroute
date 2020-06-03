@@ -317,7 +317,7 @@ if os.environ.get("SWIFT_AUTH_URL"):
     SWIFT_TEMP_URL_DURATION = os.environ.get("SWIFT_TEMP_URL_DURATION", 30)
 
     SWIFT_USE_TEMP_URLS = os.environ.get("SWIFT_USE_TEMP_URLS", 'True') == 'True'
-    SWIFT_CONTAINER_NAME = os.environ.get("SWIFT_CONTAINER_NAME", 'media')
+    SWIFT_CONTAINER_NAME = os.environ.get("SWIFT_CONTAINER_NAME", 'media_private')
     DEFAULT_FILE_STORAGE = 'web.core.storage.SwiftStorage'
     THUMBNAIL_DEFAULT_STORAGE = 'web.core.storage.SwiftStorage'
 
