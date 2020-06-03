@@ -148,6 +148,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
             'form_fields': get_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
             'user_list': ', '.join(list(self.object.profile_set.all().values_list('user__username', flat=True))),
+            'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('slug')),
         })
         return super().get_context_data(**kwargs)
 
@@ -539,7 +540,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 
-@user_passes_test(auth_test, user_type=BEGELEIDER)
+@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER])
 def download_document(request, case_pk, document_pk):
     try:
         case = request.user.profile.cases.get(id=case_pk)

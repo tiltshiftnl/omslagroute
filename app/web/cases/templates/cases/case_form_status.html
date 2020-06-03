@@ -9,10 +9,11 @@
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
             {% if request.user|is_wonen_medewerker %}
                 <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.client_name }}</a></li>
             {% endif %}
             {% if request.user|is_begeleider %}
                 <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
-                <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.case.client_name }}</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.client_name }}</a></li>
             {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
@@ -40,18 +41,23 @@
             data-email-list="{{ user_list }}" 
             >
             <header>
-                <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
+                <h2 class="h3">Bijlagen <small>({{ document_list|length }})</small></h2>
             </header>
 
             <ul class="list-as-table">
-            {% for document in object.case.document_set.all %}
+            {% if document_list %}
+            {% for document in document_list %}
                 <li>
                     <div><a href="{% url 'download_case_document' object.id document.id %}
                     " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
                     
                 </li>
             {% endfor %}
-
+            {% else %}
+                <li>
+                    <div><span>Er zijn geen bijlages toegevoegd aan deze stap.</span></div>
+                </li>
+            {% endif %}
             </ul>
         </div>
         {% csrf_token %}
