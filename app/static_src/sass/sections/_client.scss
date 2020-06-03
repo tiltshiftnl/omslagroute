@@ -299,7 +299,7 @@
 
             &:hover{
                 background-color: $primary-white;
-                font-weight: bold;
+                text-shadow: 0 0 .65px #000, 0 0 .65px #000;
             }
         }
         .tab {

@@ -52,13 +52,13 @@
                 {% if request.user.is_authenticated %}
                     <div class="site-userinfo">
                         {% if request.user.is_superuser %}
-                            Ingelogd als: <a href="{% url 'admin:users_user_change' request.user.id %}" class="site-userinfo__username">{{ request.user.username }}({{ request.user.user_type_value }})</a> |
+                            <p><a href="{% url 'admin:users_user_change' request.user.id %}" class="site-userinfo__username">{{ request.user.username }} <small>({{ request.user.user_type_value }})</small></a></p>
                         {% elif request.user.first_name %}
-                            Ingelogd als: <span class="site-userinfo__username">{{ request.user.first_name }}</span> |
+                            <p class="site-userinfo__username">{{ request.user.first_name }}</p>
                         {% else %}
-                            Ingelogd als: <span class="site-userinfo__username">{{ request.user.username }}</span> |
+                            <p class="site-userinfo__username">{{ request.user.username }}</p>
                         {% endif %}
-                        <a href="{% url LOGOUT_URL_NAME %}">Uitloggen</a>
+                        <a href="{% url LOGOUT_URL_NAME %}"><small>Uitloggen</small></a>
                     </div>
                 {% else %}
                     <div class="site-userinfo">
