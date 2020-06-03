@@ -92,6 +92,14 @@ body {
     grid-column: span 2;
     max-width: 260px;
 
+    p {
+        margin-bottom: 0;
+    }
+
+    a {
+        color: $neutral-grey4;
+    }
+
     @media all and (min-width: $tablets) {
         grid-column: span 1;
         margin-top: 0;
