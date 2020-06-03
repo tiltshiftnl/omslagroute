@@ -35,6 +35,7 @@ Array.prototype.sortOnData = function (key) {
 !(function (w, d) {
   var handlers = {
     'modal': function (e) {
+      
       e.preventDefault();
       var el =
           (this.hash && document.getElementById(this.hash.substring(1))) ||
@@ -55,7 +56,8 @@ Array.prototype.sortOnData = function (key) {
         rootElem.appendChild(modal);
         
         var iframe = modal.querySelector('iframe');
-        if(iframe !== undefined) {
+        console.log("iframe", iframe);
+        if(iframe !== null) {
           iframe.onload = function() {
             modal.classList.add("active");
             var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;

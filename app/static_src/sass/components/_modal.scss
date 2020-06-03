@@ -1,5 +1,5 @@
 .container-button--feedback {
-  z-index: 999999;
+  z-index: 100;
   right: 0;
   top: 50%;
   margin-top: -58.5px;
@@ -23,7 +23,8 @@
 }
 
 
-body.isInIframe {
+body.isInIframe,
+.container-modal--vue {
   background-color: #fff;
 
   main {
@@ -109,7 +110,6 @@ body.isInIframe {
 .modal {
   display: flex;
   position: fixed;
-  opacity: 1;
   pointer-events: none;
   z-index: 3000;
   left: 0;
@@ -143,7 +143,7 @@ body.isInIframe {
 .modal-inner {
   position: absolute;
   opacity: 0;
-  z-index: 2;
+  z-index: 300;
   //margin: 100px auto 20px auto;
   top: 25%;
   left: 50%;
@@ -173,11 +173,15 @@ body.isInIframe {
 }
 
 .modal-close--bg {
-  z-index: 1;
+  z-index: 200;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+
+  .container-modal--vue &{
+    background-color: $overlay-black70;;
+  }
 }
 
