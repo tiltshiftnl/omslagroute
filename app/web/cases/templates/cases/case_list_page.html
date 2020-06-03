@@ -28,9 +28,9 @@
         <thead>
             <tr>
                 <th width="200">Naam</th>
-                <th>Voortgang basisgegevens</th>
-                <th>Voortgang aanvraag urgentie onder voorwaarden</th>
-                <th>Aanvraag omklap</th>
+                {% for form in FORMS_PROCESSTAP_CHOICES %}
+                <th>{{ form.1 }}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
@@ -38,37 +38,25 @@
                 <tr>
                     <td>
                         <a href="{% url 'case' object.id %}">
-
                             <span class="show-on-mobile">Naam:</span>
                             {{ object.client_name }}
                         </a>
                     </td>
+                    {% for form in FORMS_PROCESSTAP_CHOICES %}
                     <td>
-                        {% client_status object 'basis-gegevens' as status %}
+                        {% client_submitted_form object form.0 as case_status %}
+                        {% if case_status %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            <span class="show-on-mobile">Basisgegevens:</span>
-                            {{ status.percentage }}% ingevuld
+                            {{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})
                         </a>
-                        <!-- hide the above and show only the text in the span here; otherwise screenreaders
-                            will read the link three times and tabbing through the page becomes annoying -->
-                        <span class="sr-only">{{ status.percentage }}% ingevuld</span>
-                    </td>
-                    <td>
-                        {% client_status object 'aanvraag-omslag-en-urgentie' as status %}
+                        <span class="sr-only">{{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})</span>
+                        {% else %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            <span class="show-on-mobile">Aanvraag urgentie onder voorwaarden:</span>
-                            {{ status.percentage }}% ingevuld
+                            <span>Deze stap is nog niet ingediend</span>
                         </a>
-                        <span class="sr-only">{{ status.percentage }}% ingevuld</span>
+                        {% endif %}
                     </td>
-                    <td>
-                        {% client_status object 'aanvraag-omklap' as status %}
-                        <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            <span class="show-on-mobile">Aanvraag omklap:</span>
-                            {{ status.percentage }}% ingevuld
-                        </a>
-                        <span class="sr-only">{{ status.percentage }}% ingevuld</span>
-                    </td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
