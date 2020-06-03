@@ -60,7 +60,7 @@
                     <form>
                         <div class="form-field form-field--textarea screen-only u-margin-top-2x">
                             <label for="status-message">Bericht (optioneel)</label>
-                            <textarea id="status-message" name="status-message" cols="40" rows="4"></textarea>
+                            <textarea v-model="nextCaseStatus.status_comment" id="status-message" name="status-message" cols="40" rows="4"></textarea>
                         </div>
                         <span class="helptext">Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.</span>
                         <div class="form-field form-field--buttons screen-only u-margin-top-2x">
@@ -87,6 +87,8 @@ export default {
             'status': 0,
             'form': null,
             'case': null,
+            'status_comment': null,
+            'caseversion': null,
         },
         caseStatusOptions: {},
         title: null,
@@ -94,14 +96,6 @@ export default {
         form: null,
         message: null,
         emailList: null,
-        newCaseStatus: {
-            'status': null,
-            'status_comment': null,
-            'form': null,
-            'case': null,
-            'caseversion': null,
-            'profile': null,
-        },
         statusText: {
             2: "Afkeuren",
             3: "Goedkeuren",
@@ -168,6 +162,7 @@ export default {
             axios.post(`/api/casestatus/`, this.nextCaseStatus)
                 .then((response) => {
                     this.loading = false;
+                    this.nextCaseStatus.status_comment = null;
                     this.getCaseStatusList();
                 })
                 .catch((err) => {
