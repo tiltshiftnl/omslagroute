@@ -371,12 +371,12 @@ FIELDS = (
         required=False,
      ), {}),
      ('omklap_beoordeeld_door', forms.CharField(
-        label=_('Dit is beoordeeld door *'),
+        label=_('Dit is beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
              required = False,
-    ), {'step_required': True}),
+    ), {}),
     ('omklap_datum_evaluatiemoment', forms.DateField(
-        label=_('Datum evaluatiemoment *'),
+        label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -384,7 +384,7 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('omklap_toelichting', forms.CharField(
         label=_('Toelichting'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
