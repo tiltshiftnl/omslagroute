@@ -11,7 +11,7 @@ from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER
+from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 from mozilla_django_oidc.utils import (
@@ -85,7 +85,43 @@ class UserList(UserPassesTestMixin, FormView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [REDACTIE, GEBRUIKERS_BEHEERDER])
+        return auth_test(self.request.user, [GEBRUIKERS_BEHEERDER])
+
+
+class FederationUserList(UserPassesTestMixin, FormView):
+    template_name = 'users/federation_user_list_page.html'
+    form_class = FilterListFederationForm
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+
+        # filter
+        filter_list = [f for f in self.request.GET.getlist('filter', []) if f]
+        filter = filter_list if filter_list else USER_TYPES_FEDERATIE
+        filter_params = '&filter='.join(filter_list)
+        filter_params = '&filter=%s' % filter_params if filter_params else ''
+        object_list = User.objects.filter(user_type__in=filter, federation=self.request.user.federation)
+
+        # default sort on user_type by custom list
+        object_list = [[o, USER_TYPES_FEDERATIE.index(o.user_type)] for o in object_list]
+        object_list = sorted(object_list, key=lambda o: o[1])
+        object_list = [o[0] for o in object_list]
+
+        # pagination
+        paginator = Paginator(object_list, 20)
+        page = self.request.GET.get('page', 1)
+        object_list = paginator.get_page(page)
+
+        form = FilterListFederationForm(self.request.GET)
+        kwargs.update({
+            'object_list': object_list,
+            'form': form,
+            'filter_params': filter_params,
+        })
+        return kwargs
+
+    def test_func(self):
+        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, GEBRUIKERS_BEHEERDER])
 
 
 class UserUpdateView(UserPassesTestMixin, UpdateView):
@@ -96,6 +132,25 @@ class UserUpdateView(UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangepast" % self.object.username)
+        return super().form_valid(form)
+
+
+class FederationUserUpdateView(UserPassesTestMixin, UpdateView):
+    model = User
+    template_name_suffix = '_federation_update_form'
+    form_class = FederationUserUpdateForm
+    success_url = reverse_lazy('federation_user_list')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(federation=self.request.user.federation)
+        return queryset
+
+    def test_func(self):
+        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, GEBRUIKERS_BEHEERDER])
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangepast" % self.object.username)
