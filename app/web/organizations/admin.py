@@ -3,5 +3,10 @@ from .models import *
 
 
 @admin.register(Organization)
-class MomentAdmin(admin.ModelAdmin):
+class OrganizationAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
+@admin.register(Federation)
+class FederationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'federation_id')

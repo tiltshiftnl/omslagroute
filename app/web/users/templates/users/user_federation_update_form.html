@@ -6,7 +6,7 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'user_list' %}">Alle gebruikers</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'federation_user_list' %}">Al je federatie gebruikers</a></li>
             <li class="breadcrumb-step sr-only" aria-current="location">Gebuiker '{{ form.instance.name }}' aanpassen</li>
         </ol>
     </nav>
@@ -61,29 +61,12 @@
             {% endif %}
         </div>
 
-        <div class="form-field">
-            <label for="{{ form.federation.id_for_label }}">{{ form.federation.label }}</label>
-            {% if form.federation.help_text %}
-                <div class="help-text">{{ form.federation.help_text|safe }}</div>
-            {% endif %}
-            {{ form.federation }}
-            {% if form.federation.errors %}
-                <ol class="error-text">
-                {% for error in form.federation.errors %}
-                    <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-                </ol>
-            {% endif %}
-        </div>
-
-
-
         <input type="hidden" name="{{ form.user.id_for_label }}" id="{{ form.user.id_for_label }}">
         <input type="hidden" name="{{ form.id.id_for_label }}" id="{{ form.id.id_for_label }}">
 
         <div class="form-field form-field--buttons screen-only">
             <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'federation_user_list' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
 {% endblock %}

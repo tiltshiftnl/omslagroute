@@ -35,6 +35,11 @@ def is_wonen_medewerker(user):
     return auth_test(user, WONEN)
 
 
+@register.filter(name='is_federatie_beheerder')
+def is_federatie_beheerder(user):
+    return auth_test(user, FEDERATIE_BEHEERDER)
+
+
 @register.filter(name='is_onbekent')
 def is_onbekent(user):
     return auth_test(user, ONBEKEND)

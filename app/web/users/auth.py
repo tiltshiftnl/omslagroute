@@ -12,6 +12,7 @@ from mozilla_django_oidc.utils import absolutify
 import logging
 from .statics import GEBRUIKERS_BEHEERDER
 from web.core.utils import validate_email_wrapper
+from web.organizations.models import Federation
 import sendgrid
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
@@ -63,6 +64,8 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
 
     def create_user(self, claims):
         user = super().create_user(claims)
+        user = self.update_user_federation(user, claims)
+
         profile = Profile()
         profile.user = user
         profile.save()
@@ -86,6 +89,20 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
             )
             sg.send(email)
 
+        return user
+
+    def update_user_federation(self, user, claims):
+        federation_id = claims.get(settings.OIDC_FEDERATION_KEY, settings.OIDC_FEDERATION_DEFAULT)
+        user.federation, created = Federation.objects.get_or_create(
+            federation_id=federation_id,
+            defaults={'name': federation_id},
+        )
+        user.save()
+        return user
+
+    def update_user(self, user, claims):
+        user = super().update_user(user, claims)
+        self.update_user_federation(user, claims)
         return user
 
     def get_userinfo(self, access_token, id_token, payload):

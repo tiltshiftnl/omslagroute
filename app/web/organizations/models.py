@@ -52,3 +52,48 @@ class Organization(models.Model):
         verbose_name = _('Organisatie')
         verbose_name_plural = _('Organisaties')
         ordering = ('name',)
+
+
+class Federation(models.Model):
+    name = models.CharField(
+        verbose_name=_('Naam'),
+        max_length=100,
+    )
+    federation_id = models.CharField(
+        verbose_name=_('Federatie id'),
+        max_length=100,
+        unique=True,
+    )
+    name_abbreviation = models.CharField(
+        verbose_name=_('Naam afkorting'),
+        max_length=4,
+        blank=True,
+        null=True,
+    )
+    main_email = models.EmailField(
+        verbose_name=('Standaard e-mailadres'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    organization = models.ForeignKey(
+        to='Organization',
+        verbose_name=('Organisatie'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    @property
+    def abbreviation(self):
+        if self.name_abbreviation:
+            return self.name_abbreviation
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Federatie')
+        verbose_name_plural = _('Federaties')
+        ordering = ('name',)

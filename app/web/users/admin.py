@@ -8,11 +8,11 @@ from django.urls import reverse
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'profile_link', 'is_staff', 'is_superuser', 'user_type')
+    list_display = ('username', 'email', 'profile_link', 'is_staff', 'is_superuser', 'user_type', 'federation')
     save_on_top = True
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (_('Omslagroute instellingen'), {'fields': ('user_type',)}),
+        (_('Omslagroute instellingen'), {'fields': ('user_type', 'federation')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser'),
