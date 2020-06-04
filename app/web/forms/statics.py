@@ -500,7 +500,6 @@ URGENTIE_AANVRAAG = [
                 'fields': [
                     'medische_problemen_mbt_traplopen',
                     'medische_problemen_wooneisen',
-                    'medische_problemen_bewijslast',
                     'uitsluiting_stadsdeel_argumentatie',
                 ],
             },
