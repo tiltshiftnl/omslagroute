@@ -25,8 +25,8 @@ class CaseInviteUsersForm(forms.Form):
     user = None
     instance = None
     user_list = forms.ModelMultipleChoiceField(
-        label=_('Met wie wil je deze cliënt delen?'),
-        help_text=_('Selecteer één of meerdere collega’s. Wanneer je een client met een collega deelt kan deze collega:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
+        label=_('Met wie wil je samenwerken aan deze cliënt?'),
+        help_text=_('Selecteer één of meerdere collega’s. Wanneer je kiest voor samenwerken met een collega kan deze:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
         queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
         widget=CheckboxSelectMultiple(attrs={'class': 'u-list-style-none scroll-list-container'}),
         required=True,

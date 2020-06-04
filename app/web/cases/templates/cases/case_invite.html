@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} - Cliënt delen{% endblock %}
+{% block title %} - Samenwerken aan cliënt{% endblock %}
 
 {% block skiplinks %}{% endblock %}
 {% block header %}{% endblock %}
@@ -16,20 +16,25 @@
         </svg>
         <span class="sr-only">Sluit venster</span>
     </button>
-        <h2>Deel client {{instance.client_name}} met een collega</h2>
+        <h2>Nodig collega's uit om samen te werken aan {{instance.client_name}}</h2>
         <hr class="" />
         {% if unlinked_users %}
         <form method="post">
             {% csrf_token %}
             {% if wizard.steps.next %}
-            <h3>Met wie is deze client al gedeeld?</h3>
+            <h3 class="u-margin-bottom-none">Je werkt samen aan deze client met:</h3>
+            {% if linked_users %}
             <ul class="u-margin-bottom-2x scroll-list-container">
-            {% for u in linked_users %}
+            
+                {% for u in linked_users %}
                 <li>{{ u.username }}</li>
-            {% endfor %}
+                {% endfor %}
             </ul>
             {% else %}
-            <h3>Je deelt deze client met:</h3>
+            <p>Je werkt nog niet samen aan deze cliënt met collega's</p>
+            {% endif %}
+            {% else %}
+            <h3>Je werkt samen aan deze client met:</h3>
             <ul class="u-margin-bottom-2x scroll-list-container">
             {% for u in selected_users %}
                 <li>{{ u.username }}</li>
@@ -54,8 +59,8 @@
             <button name="wizard_goto_step" role="link" value="{{ wizard.steps.prev }}" class="button button--secondary button--previous"><svg class="button__icon" width="12" height="18"><use href="#chevron-left" xlink:href="#chevron-left" width="12" height="18"></use></svg>Terug</button>
             {% endif %}
 
-                <input type="submit" value="Deel" class="button button--primary">
-                <a data-handler="modal-close" href="#" class="button button--secondary">Annuleer</a>
+                <input type="submit" value="Samenwerken" class="button button--primary">
+                <a data-handler="modal-close" href="#" class="button button--secondary">Annuleren</a>
             </div>
         </form>
         {% elif not unlinked_users and linked_users %}
