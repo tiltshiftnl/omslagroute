@@ -472,7 +472,6 @@ URGENTIE_AANVRAAG = [
                 'title': 'Toegang',
                 'description': '',
                 'fields': [
-                    'centrale_toegang_trajectwijziging_ed',
                     'trajecthouder_naam',
                     'aanvraag_datum',
                     'omslagwoning_zorgaanbieder',
