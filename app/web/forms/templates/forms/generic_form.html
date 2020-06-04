@@ -26,6 +26,7 @@
             <div class="grid__main">
 
                 <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+                {% if form.enable_ajax %}
                 <div class="section--client">
                     <section class="section-details-client u-margin-none">
                         <!-- START Client persoonsgegevens -->
@@ -117,6 +118,7 @@
                     </section>
                 </div>
                     <!-- END STATUS -->
+                {% endif %}
             
 
                 {% csrf_token %}
@@ -236,6 +238,8 @@
                                             <span class="dot dot--large"></span>
                                             {{ section.title }}
                                         </a>
+                                        {% if section.section_list|length == 1 and not section.section_list.0.title %}
+                                        {% else %}
                                         <ul>
                                             {% for sub_section in section.section_list %}
                                                 {% if sub_section.title %}
@@ -248,6 +252,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </ul>
+                                        {% endif %}
                                     </li>
                                 {% endfor %}
                             </ul>
