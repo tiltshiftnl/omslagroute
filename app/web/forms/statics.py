@@ -689,6 +689,7 @@ FORMS = (
         'Nieuwe cliënt',
         False,
         False,
+        False,
         {'readonly_fields': [], 'required_fields': [
             'client_first_name',
             'client_last_name',
