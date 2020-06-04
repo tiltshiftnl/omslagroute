@@ -172,8 +172,15 @@
     li {
         list-style-type: disc;
         margin-bottom: .475rem;
+        position: relative;
         @media all and (-ms-high-contrast:none) {
             display: block;
+            &:before {
+                content: "\2022";
+                position: absolute;
+                top: 0;
+                left: -18px;
+            }
         }
         div{
             display: flex;
