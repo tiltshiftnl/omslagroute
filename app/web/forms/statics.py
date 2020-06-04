@@ -26,14 +26,14 @@ FIELDS = (
     ), {}),
     ('geboortedatum', forms.DateField(
         label=_('Geboortedatum'),
-        required=False,
+        required=True,
         localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
-    ), {}),
+    ), {'step_required': True}),
     ('emailadres', forms.EmailField(
         label=_('E-mailadres'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
@@ -693,6 +693,7 @@ FORMS = (
         {'readonly_fields': [], 'required_fields': [
             'client_first_name',
             'client_last_name',
+            'geboortedatum',
         ]},
 
     ),
