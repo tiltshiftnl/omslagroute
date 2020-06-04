@@ -143,25 +143,25 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding', forms.CharField(
-        label=_('De cliënt heeft passende zinvolle dagbesteding. Dat betekent voor deze cliënt het volgende: *'),
+        label=_('De cliënt heeft passende zinvolle dagbesteding. Dat betekent voor deze cliënt het volgende *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: cliënt wil een betaalde baan die zij kan combineren met de zorg voor haar kinderen',
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_stabiel', forms.CharField(
-        label=_('De cliënt functioneert sociaal stabiel. Dat betekent voor deze cliënt het volgende: *'),
+        label=_('De cliënt functioneert sociaal stabiel. Dat betekent voor deze cliënt het volgende *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: Het doel is om het huidige netwerk te behouden en het contact met haar ex-man te stabiliseren.',
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_stabiel', forms.CharField(
-        label=_('De cliënt functioneert psychisch stabiel. Dat betekent voor deze cliënt het volgende: *'),
+        label=_('De cliënt functioneert psychisch stabiel. Dat betekent voor deze cliënt het volgende *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: cliënt functioneert psychisch stabiel en heeft als doel dit voort te zetten. <br /><strong>Let op! Leg geen medische informatie vast.</strong>',
     ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel', forms.CharField(
-        label=_('De cliënt is financieel stabiel. Dat betekent voor deze cliënt het volgende: *'),
+        label=_('De cliënt is financieel stabiel. Dat betekent voor deze cliënt het volgende *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Met financieel stabiel wordt bedoeld dat deze een stabiel inkomen heeft inzage heeft gegeven in eventuele schulden op basis van informatie van Bureau KredietRegistratie.<br /><br />In het geval er schulden zijn is de cliënt financieel stabiel wanneer de cliënt aan een of meerdere van deze zaken voldoet: <ul><li>een overzicht heeft gegeven van alle schulden en betalingsverplichtingen</li><li>inzicht heeft gegeven in eventuele openstaande CJIB-boetes en heeft aangetoond dat er geen kans is op detentie vanwege openstaande boetes</li><li>in inkomensbeheer zit</li><li>een stabiel werkend budgetplan heeft</li><li>een overeenkomst heeft met een schuldhulpverleningsbureau waarbij het schuldhulpverleningstraject voorspoedig loopt</li></ul>Bijvoorbeeld: cliënt wil zelfstandig haar administratie bijhouden en haar schulden regelen.',
@@ -508,7 +508,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -667,7 +667,7 @@ OMKLAP_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>Meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
