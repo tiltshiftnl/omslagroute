@@ -45,7 +45,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woningnet_geldigheid', forms.DateField(
-        label=_('Geldigheid woninget *'),
+        label=_('Geldigheid woningnet *'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -53,7 +53,7 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-        help_text=_('Tot wanneer is de inschrijving bij Woningnet geldig?')
+        help_text=_('Deze moet in de toekomst liggen')
     ), {'step_required': True}),
     ('centrale_toegang_naam', forms.IntegerField(
         label=_('Naam centrale toegang *'),
@@ -63,7 +63,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('jonger_dan_26', forms.IntegerField(
-        label=_('Plaatsing jonger dan 26 jaar *'),
+        label=_('Plaatsing jonger dan 27 jaar *'),
         widget=RadioSelect(
             choices=JONGER_DAN_26,
         ),
@@ -75,11 +75,11 @@ FIELDS = (
         required=False,
     ), {}),
     ('jonger_dan_26_motivatie_contract_onbepaalde', forms.CharField(
-        label=_('Motivatie voor contract onbepaalde tijd jongere *'),
+        label=_('Motivatie voor contract onbepaalde tijd jongere'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
-    ), {'step_required': True}),
+    ), {}),
     ('partner_naam', forms.CharField(
         label=_('Naam partner'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
@@ -123,12 +123,12 @@ FIELDS = (
         required=False,
     ), {}),
     ('trajecthouder_naam', forms.CharField(
-        label=_('Naam instroomfunctionaris of trajecthouder'),
+        label=_('Naam instroomfunctionaris of trajecthouder *'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('aanvraag_datum', forms.DateField(
-        label=_('Datum aanvraag'),
+        label=_('Datum aanvraag *'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -136,36 +136,36 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('omslagwoning_zorgaanbieder', forms.CharField(
-        label=_('Zorgaanbieder omslagwoning'),
+        label=_('Zorgaanbieder omslagwoning *'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding', forms.CharField(
-        label=_('De cliënt heeft passende zinvolle dagbesteding. Dat betekent voor deze cliënt het volgende:'),
+        label=_('De cliënt heeft passende zinvolle dagbesteding. Dat betekent voor deze cliënt het volgende: *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: cliënt wil een betaalde baan die zij kan combineren met de zorg voor haar kinderen',
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_stabiel', forms.CharField(
-        label=_('De cliënt functioneert sociaal stabiel. Dat betekent voor deze cliënt het volgende:'),
+        label=_('De cliënt functioneert sociaal stabiel. Dat betekent voor deze cliënt het volgende: *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: Het doel is om het huidige netwerk te behouden en het contact met haar ex-man te stabiliseren.',
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_stabiel', forms.CharField(
-        label=_('De cliënt functioneert psychisch stabiel. Dat betekent voor deze cliënt het volgende:'),
+        label=_('De cliënt functioneert psychisch stabiel. Dat betekent voor deze cliënt het volgende: *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: cliënt functioneert psychisch stabiel en heeft als doel dit voort te zetten. <br /><strong>Let op! Leg geen medische informatie vast.</strong>',
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel', forms.CharField(
-        label=_('De cliënt is financieel stabiel. Dat betekent voor deze cliënt het volgende:'),
+        label=_('De cliënt is financieel stabiel. Dat betekent voor deze cliënt het volgende: *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Met financieel stabiel wordt bedoeld dat deze een stabiel inkomen heeft inzage heeft gegeven in eventuele schulden op basis van informatie van Bureau KredietRegistratie.<br /><br />In het geval er schulden zijn is de cliënt financieel stabiel wanneer de cliënt aan een of meerdere van deze zaken voldoet: <ul><li>een overzicht heeft gegeven van alle schulden en betalingsverplichtingen</li><li>inzicht heeft gegeven in eventuele openstaande CJIB-boetes en heeft aangetoond dat er geen kans is op detentie vanwege openstaande boetes</li><li>in inkomensbeheer zit</li><li>een stabiel werkend budgetplan heeft</li><li>een overeenkomst heeft met een schuldhulpverleningsbureau waarbij het schuldhulpverleningstraject voorspoedig loopt</li></ul>Bijvoorbeeld: cliënt wil zelfstandig haar administratie bijhouden en haar schulden regelen.',
-    ), {}),
+    ), {'step_required': True}),
     ('urgentiecriteria_kinderen_gezonde_omgeving', forms.CharField(
         label=_('De betrokken kinderen hebben een gezonde omgeving. Dat betekent voor deze cliënt het volgende:'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
@@ -441,7 +441,7 @@ URGENTIE_AANVRAAG = [
                 ],
             },
             {
-                'title': 'Jonger dan 26 jaar?',
+                'title': 'Jonger dan 27 jaar?',
                 'description': '',
                 'fields': [
                     'jonger_dan_26',
@@ -472,7 +472,6 @@ URGENTIE_AANVRAAG = [
                 'title': 'Toegang',
                 'description': '',
                 'fields': [
-                    'centrale_toegang_trajectwijziging_ed',
                     'trajecthouder_naam',
                     'aanvraag_datum',
                     'omslagwoning_zorgaanbieder',
@@ -501,7 +500,6 @@ URGENTIE_AANVRAAG = [
                 'fields': [
                     'medische_problemen_mbt_traplopen',
                     'medische_problemen_wooneisen',
-                    'medische_problemen_bewijslast',
                     'uitsluiting_stadsdeel_argumentatie',
                 ],
             },
@@ -510,7 +508,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen voor indienen Aanvraag urgentie onder voorwaarden</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -563,7 +561,7 @@ OMKLAP_AANVRAAG = [
         ]
     },
     {
-        'title': 'Jonger dan 26 jaar?',
+        'title': 'Jonger dan 27 jaar?',
         'description': '',
         'section_list': [
             {
@@ -669,7 +667,7 @@ OMKLAP_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen voor indienen Aanvraag urgentie onder voorwaarden</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>Meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
