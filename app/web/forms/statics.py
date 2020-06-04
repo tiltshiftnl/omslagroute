@@ -667,7 +667,7 @@ OMKLAP_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul>",
         'section_list': [
             {
                 'title': '',
@@ -700,8 +700,8 @@ FORMS = (
         'urgentie_aanvraag',
         URGENTIE_AANVRAAG,
         'aanvraag-omslag-en-urgentie',
-        'Aanvraag urgentie onder voorwaarden',
-        'Nieuwe aanvraag urgentie onder voorwaarden',
+        'Aanvraag Urgentie onder voorwaarden',
+        'Nieuwe aanvraag Urgentie onder voorwaarden',
         True,
         True,
         True,
@@ -719,8 +719,8 @@ FORMS = (
         'omklap_aanvraag',
         OMKLAP_AANVRAAG,
         'aanvraag-omklap',
-        'Aanvraag omklap',
-        'Nieuwe aanvraag omklap',
+        'Aanvraag Voordracht omklap',
+        'Nieuwe aanvraag Voordracht omklap',
         True,
         True,
         True,
