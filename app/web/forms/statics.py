@@ -45,7 +45,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woningnet_geldigheid', forms.DateField(
-        label=_('Geldigheid woninget *'),
+        label=_('Geldigheid woningnet *'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -53,7 +53,7 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-        help_text=_('Tot wanneer is de inschrijving bij Woningnet geldig?')
+        help_text=_('Deze moet in de toekomst liggen')
     ), {'step_required': True}),
     ('centrale_toegang_naam', forms.IntegerField(
         label=_('Naam centrale toegang *'),
@@ -63,7 +63,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('jonger_dan_26', forms.IntegerField(
-        label=_('Plaatsing jonger dan 26 jaar *'),
+        label=_('Plaatsing jonger dan 27 jaar *'),
         widget=RadioSelect(
             choices=JONGER_DAN_26,
         ),
@@ -441,7 +441,7 @@ URGENTIE_AANVRAAG = [
                 ],
             },
             {
-                'title': 'Jonger dan 26 jaar?',
+                'title': 'Jonger dan 27 jaar?',
                 'description': '',
                 'fields': [
                     'jonger_dan_26',
@@ -508,7 +508,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen voor indienen Aanvraag urgentie onder voorwaarden</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -561,7 +561,7 @@ OMKLAP_AANVRAAG = [
         ]
     },
     {
-        'title': 'Jonger dan 26 jaar?',
+        'title': 'Jonger dan 27 jaar?',
         'description': '',
         'section_list': [
             {
@@ -667,7 +667,7 @@ OMKLAP_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen voor indienen Aanvraag urgentie onder voorwaarden</strong><ul><li>Kopie indentiteitsbewijs</li><li>Bewijs inkomen</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>Meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
