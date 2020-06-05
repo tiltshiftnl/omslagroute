@@ -29,7 +29,7 @@
     <table class="case-list">
         <thead>
             <tr>
-                <th width="200">Cliënt</th>
+                <th width="150">Cliënt</th>
                 <th>Laatste opgeslagen</th>
                 <th>Stap in omslagroute</th>
                 <th>Status</th>
@@ -45,33 +45,33 @@
                         <span class="show-on-mobile">Naam:</span>
                         <a href="{% url 'case' object.id %}">{{ object.client_name }}</a>
                     </td>
-                    <td>
+                    <td class="help-text">
                         <span class="show-on-mobile">Laatste opgeslagen:</span>
-                        {{ object.saved|date:"j b Y H:i" }}
+                        {{ object.saved|date:"d-m-y H:i" }}
                     </td>
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
                         {% if case_status_list %}
                         <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
                         {% else %}
-                        Er is nog geen aanvraag versuurd voor deze cliënt
+                        <span class="u-text-color-grey4">Er is nog geen aanvraag verstuurd voor deze cliënt</span>
                         {% endif %}
                     </td>
                     <td>
                         <span class="show-on-mobile">Status:</span>
                         {% if case_status_list %}
-                        {{ case_status_list.0.status|status_verbose }}
+                        <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">{{ case_status_list.0.status|status_verbose }}</span>
                         {% else %}
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="help-text">
                         <span class="show-on-mobile">Status datum:</span>
                         {% if case_status_list %}
-                        {{ case_status_list.0.created|date:"j b Y H:i" }}
+                        {{ case_status_list.0.created|date:"d-m-y H:i" }}
                         {% else %}
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="help-text">
                         <span class="show-on-mobile">Status door:</span>
                         {% if case_status_list %}
                         {{ case_status_list.0.profile.user.username }}
