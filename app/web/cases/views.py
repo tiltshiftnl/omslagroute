@@ -27,6 +27,10 @@ from formtools.wizard.views import SessionWizardView
 from django.db.models import Count
 from django.db.models.functions import Concat
 from django.db.models import TextField, DateTimeField
+import json
+from django.forms.models import model_to_dict
+from django.core.serializers.json import DjangoJSONEncoder
+import datetime
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -138,6 +142,10 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return super().get_queryset()
 
 
+def default(o):
+    if isinstance(o, (datetime.date, datetime.datetime)):
+        return o.isoformat()
+
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
     model = Case
     template_name_suffix = '_form_status'
@@ -148,6 +156,12 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
             'form_fields': get_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
             'user_list': ', '.join(list(self.object.profile_set.all().values_list('user__username', flat=True))),
+            'user_json': json.dumps(
+                model_to_dict(self.request.user),
+                sort_keys=True,
+                indent=1,
+                default=default
+            ),
         })
         return super().get_context_data(**kwargs)
 

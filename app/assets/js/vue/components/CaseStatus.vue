@@ -71,9 +71,9 @@
 
 <script>
 import axios from "axios";
+import { mapState } from 'vuex';
 
 export default {
-    delimiters: ['[[', ']]'],
     name: "CaseStatus",
     data: () => ({
         loading: false,
@@ -112,9 +112,15 @@ export default {
             3: "u-margin-bottom button button--success",
             4: "u-margin-bottom button button--warning",
         }
-
     }),
     computed: {
+        ...mapState([
+            'case',
+            'form',
+            'title',
+            'caseStatusOptions',
+            'emailList',
+        ])
     },
     beforeMount(){
         console.log("beforeMount");
@@ -130,24 +136,18 @@ export default {
         },
         setNextStatus: function(status){
             this.nextCaseStatus.status = status;
-
         },
         getInitialData: function(){
-            this.caseId = document.querySelector('[data-case-id]').dataset.caseId;
-            this.form = document.querySelector('[data-form]').dataset.form;
-            this.title = document.querySelector('[data-title]').dataset.title;
-            this.emailList = document.querySelector('[data-email-list]').dataset.emailList;
-            this.caseStatusOptions = JSON.parse(document.querySelector('[data-case-status-options]').dataset.caseStatusOptions);
-            this.nextCaseStatus.case = this.caseId;
-            this.nextCaseStatus.form = this.form;
+            this.nextCaseStatus.case = this.$store.state.case.id;
+            this.nextCaseStatus.form = this.$store.state.form;
         },
-        getCaseStatusList: function (caseId, form) {
+        getCaseStatusList: function () {
             this.loading = true;
             this.nextCaseStatus.status = null;
             axios.get(`/api/casestatus/`)
                 .then((response) => {
                     let filtered = response.data.results.filter(status => 
-                        Number(status.case) === Number(this.caseId) && 
+                        Number(status.case) === Number(this.case.id) && 
                         status.form === this.form
                     )
                     this.currentCaseStatus = filtered[0] || {'status': 1};
@@ -174,7 +174,3 @@ export default {
     }
 };
 </script>
-
-<style lang="css">
-
-</style>

@@ -1,6 +1,7 @@
 <template>
     <Main>
-       <Header slot="header">bgfjhg</Header>
+       <Header slot="header"></Header>
+       <case-status slot="body"></case-status>
     </Main>
 </template>
 
@@ -8,14 +9,18 @@
 import axios from "axios";
 import Main from './components/Main.vue'
 import Header from './components/Header.vue'
+import CaseStatus from './components/CaseStatus.vue'
 
 export default {
     name: "CaseWonen",
-    data: () => ({ }),  
+    data: () => ({
+        'user': {},
+    }),  
     methods: {},
     components: {
         Main,
         Header,
+        'case-status': CaseStatus,
     },
 };
 </script>

@@ -2,6 +2,15 @@
 {% load static i18n html_tags client_status_tags auth_tags %}
 {% block root %}
 {% csrf_token %}
+<script>
+    var data2 = {
+        user: {{ user_json|safe }},
+        case: {id: {{ object.id }}},
+        caseStatusOptions: {{ CASE_STATUS_DICT_JSON|safe }},
+        form: "{{ form_data.slug }}",
+        emailList: "{{ user_list }}",
+    };
+</script>
 <div id="app"></div>
 {% endblock %}
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}

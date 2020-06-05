@@ -3,8 +3,8 @@ import ComponentA from './ComponentA.vue'
 <template>
 <div class="site-container">
     <slot name="header"/>
-    <menu></menu>
-    <messages></messages>
+    <!-- <menu></menu> -->
+    <!-- <messages></messages> -->
 
 
 
@@ -12,10 +12,12 @@ import ComponentA from './ComponentA.vue'
         <div class="print-only print-header" aria-hidden="true">
             <img src="{% static 'images/logo.svg' %}" class="print-logo">
         </div>
-        <breadcrumb></breadcrumb>
+        <!-- <breadcrumb></breadcrumb> -->
+        <slot name="breadcrumb"/>
+        <slot name="body"/>
+        <slot name="feedback"/>
 
-
-        <feedback></feedback>
+        <!-- <feedback></feedback> -->
 
     </main>
     
@@ -24,10 +26,16 @@ import ComponentA from './ComponentA.vue'
 
 <script>
 import axios from "axios";
+import { mapGetters } from 'vuex';
 
 export default {
     name: "Main",
     data: () => ({ }),
+    computed: {
+        ...mapGetters([
+        // 'user'
+        ])
+    },
     methods: {}
 };
 </script>
