@@ -15,7 +15,7 @@
 }
 
 .button,
-[type="submit"],
+[type="submit"]:not(.text-link),
 [type="cancel"] {
     border: .063rem solid transparent;
     border-radius: 0;
@@ -95,7 +95,7 @@
 // ********************
     
 .button--primary,
-[type="submit"] {
+[type="submit"]:not(.text-link) {
     border: .063rem solid $primary-darkblue;
     background-color: $primary-darkblue;
     color: $primary-white;
@@ -154,7 +154,32 @@
 // ********************
 // OTHER BUTTON VARIANTS
 // ********************
+
+//button that looks like a text-link
+.text-link {
+    background-color: transparent;
+    border: 0;
+    text-decoration: underline;
+    font-size: inherit;
+    margin: .625rem 0;
+    color: $neutral-grey3;
+    cursor: not-allowed;
     
+    svg {
+        vertical-align: text-top;
+    }
+
+}
+
+button.text-link {
+    color: $link-content;
+    cursor: pointer;
+    &:hover {
+        background-color: transparent;
+        color: $link-content;
+    }
+}
+
 // button with only an icon in it, no text
 .button--icon {
     min-width: inherit;

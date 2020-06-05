@@ -97,6 +97,9 @@
     text-overflow: ellipsis;
 }
 
+.u-float-right {
+    float: right;
+}
 // ********************
 // MARGINS
 // ********************
@@ -107,6 +110,12 @@
 .u-margin-top{
     display: block;
     margin-top: 1rem !important;
+}
+.u-margin-right{
+    margin-right: 1rem !important;
+}
+.u-margin-right-half{
+    margin-right: .5rem !important;
 }
 .u-margin-top-2x{
     display: block;

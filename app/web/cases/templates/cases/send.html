@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block main %}
-<section class="section section--form">
+<section class="section section--form u-margin-bottom-sticky">
     <h2>Controleer de gegevens '{{ title }}'</h2>
     <form method="post" novalidate>
         {% csrf_token %}
@@ -60,7 +60,7 @@
             </div>
             {% endfor %}
             <div data-submit-container class="form-field form-field--buttons form-field--buttons-sticky screen-only">
-                <input type="submit" value="Verstuur" class="button button--primary">
+                <input type="submit" value="Versturen" class="button button--primary">
                 <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleren</a>
             </div>
         {% else %}
