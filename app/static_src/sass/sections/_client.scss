@@ -313,4 +313,24 @@
             }
         }
     }
+
+    .label {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: -5px -10px;
+        min-width: 125px;
+        text-align: center;
+        &--status-approved {
+            background-color: $supplement-darkgreen;
+            color: $primary-white;
+        }
+        &--status-disapproved {
+            background-color: $support-invalid;
+            color: $primary-white;
+        }
+        &--status-pending {
+            background-color: $supplement-orange;
+            color: $primary-white;
+        }
+    }
 }

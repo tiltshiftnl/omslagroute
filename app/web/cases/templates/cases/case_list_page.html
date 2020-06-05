@@ -24,7 +24,66 @@
 {#        <a href="{% url 'create_case' 'aanvraag-omklap' %}" class="button button--secondary">Nieuwe aanvraag Voordracht omklap</a>#}
 {#    </div>#}
     <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
-    <table class="case-list table--interactive">
+
+
+    <table class="case-list">
+        <thead>
+            <tr>
+                <th width="150">Cliënt</th>
+                <th>Laatste opgeslagen</th>
+                <th>Stap in omslagroute</th>
+                <th>Status</th>
+                <th>Status datum</th>
+                <th>Status door</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                {% case_status_list_latest object as case_status_list %}
+                <tr>
+                    <td>
+                        <span class="show-on-mobile">Naam:</span>
+                        <a href="{% url 'case' object.id %}">{{ object.client_name }}</a>
+                    </td>
+                    <td class="help-text">
+                        <span class="show-on-mobile">Laatste opgeslagen:</span>
+                        {{ object.saved|date:"d-m-y H:i" }}
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Stap in omslagroute:</span>
+                        {% if case_status_list %}
+                        <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
+                        {% else %}
+                        <span class="u-text-color-grey4">Er is nog geen aanvraag verstuurd voor deze cliënt</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Status:</span>
+                        {% if case_status_list %}
+                        <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">{{ case_status_list.0.status|status_verbose }}</span>
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td class="help-text">
+                        <span class="show-on-mobile">Status datum:</span>
+                        {% if case_status_list %}
+                        {{ case_status_list.0.created|date:"d-m-y H:i" }}
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td class="help-text">
+                        <span class="show-on-mobile">Status door:</span>
+                        {% if case_status_list %}
+                        {{ case_status_list.0.profile.user.username }}
+                        {% else %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- <table class="case-list table--interactive">
         <thead>
             <tr>
                 <th width="200">Naam</th>
@@ -60,7 +119,7 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table> -->
     {% include 'core/pagination.html' with object_list=object_list filter_params='' %}
 </section>
 {% endblock %}

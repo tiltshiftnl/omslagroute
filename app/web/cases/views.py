@@ -37,7 +37,7 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.request.user.profile.cases.all().order_by('-saved')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         kwargs = super().get_context_data(object_list=object_list, **kwargs)

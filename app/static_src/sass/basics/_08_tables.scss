@@ -102,6 +102,10 @@ tr:nth-of-type(even) {
 
 .case-list {
     thead {
-        border-bottom: 0.125rem solid #e6e6e6;
+        border-bottom: 0.125rem solid $neutral-grey2;
+    }
+
+    td {
+        max-width: 200px;
     }
 }

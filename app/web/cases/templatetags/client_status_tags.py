@@ -1,7 +1,7 @@
 from django import template
 from web.forms.statics import FORMS_BY_KEY, FORMS_BY_SLUG
 from ..models import CaseVersion, CaseStatus
-from ..statics import CASE_STATUS_DICT
+from ..statics import * 
 register = template.Library()
 
 
@@ -18,6 +18,20 @@ def client_submitted_form(client, form_key, *args, **kwargs):
     if case_status:
         return case_status[0]
     return None
+
+
+@register.simple_tag()
+def case_status_list_latest(case, *args, **kwargs):
+    case_status_list = CaseStatus.objects.filter(
+        case=case,
+        status__in=[
+            CASE_STATUS_INGEDIEND,
+            CASE_STATUS_AFGEKEURD,
+            CASE_STATUS_GGD,
+            CASE_STATUS_GOEDGEKEURD,
+        ]
+    ).order_by('-created')
+    return case_status_list
 
 
 @register.filter()
