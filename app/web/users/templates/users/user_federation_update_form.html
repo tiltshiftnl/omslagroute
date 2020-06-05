@@ -6,7 +6,7 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'federation_user_list' %}">Al je federatie gebruikers</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'federation_user_list' %}">Alle gebruikers voor '{{ request.user.federation.name }}'</a></li>
             <li class="breadcrumb-step sr-only" aria-current="location">Gebuiker '{{ form.instance.name }}' aanpassen</li>
         </ol>
     </nav>

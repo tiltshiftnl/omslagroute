@@ -24,13 +24,16 @@ class FilterListForm(forms.Form):
     )
 
 class FilterListFederationForm(forms.Form):
-    filter = forms.CharField(
+    filter = forms.MultipleChoiceField(
         label='Filter lijst',
-        widget=CheckboxSelectMultiple(
-            choices=User.federation_user_types,
-        ),
+        choices=User.user_types,
+        widget=CheckboxSelectMultiple(),
         required=False,
     )
+    def __init__(self, *args, **kwargs):
+        user_type_choices = kwargs.pop('user_type_choices', ())
+        super().__init__(*args, **kwargs)
+        self.fields['filter'].choices = user_type_choices
 
 
 class AuthenticationForm(DefaultAuthenticationForm):
@@ -42,11 +45,6 @@ class AuthenticationForm(DefaultAuthenticationForm):
             self.user_cache = authenticate(self.request, username=username, password=password)
             if self.user_cache is None:
                 pass
-                # raise forms.ValidationError(
-                #     self.error_messages['invalid_login'],
-                #     code='invalid_login',
-                #     params={'username': self.username_field.verbose_name},
-                # )
             else:
                 self.confirm_login_allowed(self.user_cache)
 
@@ -63,25 +61,16 @@ class UserUpdateForm(forms.ModelForm):
         )
 
 class FederationUserUpdateForm(forms.ModelForm):
-
+    
     class Meta:
         model = User
         fields = (
             'user_type',
         )
-
-    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
-                 initial=None, error_class=ErrorList, label_suffix=None,
-                 empty_permitted=False, instance=None, use_required_attribute=None,
-                 renderer=None):
-        
-
-        super().__init__(data=data, files=files, auto_id=auto_id, prefix=prefix,
-                 initial=initial, error_class=error_class, label_suffix=label_suffix,
-                 empty_permitted=empty_permitted, instance=instance, use_required_attribute=use_required_attribute,
-                 renderer=renderer)
-
-        self.fields['user_type'].choices = User.federation_user_types
+    def __init__(self, *args, **kwargs):
+        user_type_choices = kwargs.pop('user_type_choices', ())
+        super().__init__(*args, **kwargs)
+        self.fields['user_type'].choices = user_type_choices
 
 
 class UserCreationForm(DefaultUserCreationForm):

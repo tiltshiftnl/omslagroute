@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from multiselectfield import MultiSelectField
 from web.cases.models import Case
+from web.users.models import User
 
 
 def get_fields():
@@ -32,6 +33,12 @@ class Organization(models.Model):
         verbose_name=_('Cliënt gegevens velden'),
         help_text=_('De inhoud van een geselecteerd veld wordt zichtbaar voor deze organisatie.'),
         choices=get_fields(),
+        blank=True,
+        null=True,
+    )
+    rol_restrictions = MultiSelectField(
+        verbose_name=_('Rol opties voor federatie beheerder'),
+        choices=User.user_types,
         blank=True,
         null=True,
     )

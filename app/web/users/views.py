@@ -5,13 +5,13 @@ from django.contrib.auth.forms import (
 )
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import CreateView, ListView, UpdateView, FormView
+from django.views.generic import CreateView, ListView, UpdateView, FormView, TemplateView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER
+from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER, ONBEKEND, USER_TYPES_DICT
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 from mozilla_django_oidc.utils import (
@@ -51,10 +51,9 @@ def generic_login(request):
     return HttpResponseRedirect('%s#login' % (request.POST.get('next', '/')))
 
 
-class UserList(UserPassesTestMixin, FormView):
-    template_name_suffix = '_list_page'
+class UserList(UserPassesTestMixin, TemplateView):
     template_name = 'users/user_list_page.html'
-    form_class = FilterListForm
+    http_method_names = ['get']
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -88,9 +87,10 @@ class UserList(UserPassesTestMixin, FormView):
         return auth_test(self.request.user, [GEBRUIKERS_BEHEERDER])
 
 
-class FederationUserList(UserPassesTestMixin, FormView):
+class FederationUserList(UserPassesTestMixin, TemplateView):
     template_name = 'users/federation_user_list_page.html'
     form_class = FilterListFederationForm
+    http_method_names = ['get']
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
@@ -112,7 +112,12 @@ class FederationUserList(UserPassesTestMixin, FormView):
         page = self.request.GET.get('page', 1)
         object_list = paginator.get_page(page)
 
-        form = FilterListFederationForm(self.request.GET)
+        # form context
+        user_type_choices = [ut for ut in User.user_types if ut[0] in [ONBEKEND, FEDERATIE_BEHEERDER]]
+        if self.request.user.federation.organization:
+            user_type_choices = [[ut, USER_TYPES_DICT[int(ut)]] for ut in self.request.user.federation.organization.rol_restrictions]
+
+        form = FilterListFederationForm(self.request.GET, user_type_choices=user_type_choices)
         kwargs.update({
             'object_list': object_list,
             'form': form,
@@ -143,6 +148,16 @@ class FederationUserUpdateView(UserPassesTestMixin, UpdateView):
     template_name_suffix = '_federation_update_form'
     form_class = FederationUserUpdateForm
     success_url = reverse_lazy('federation_user_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        user_type_choices = [ut for ut in User.user_types if ut[0] in [ONBEKEND, FEDERATIE_BEHEERDER]]
+        if self.request.user.federation.organization:
+            user_type_choices = [[ut, USER_TYPES_DICT[int(ut)]] for ut in self.request.user.federation.organization.rol_restrictions]
+        kwargs.update({
+            'user_type_choices': user_type_choices
+        })
+        return kwargs
 
     def get_queryset(self):
         queryset = super().get_queryset()
