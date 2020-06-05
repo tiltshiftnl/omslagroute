@@ -30,31 +30,53 @@
         <thead>
             <tr>
                 <th width="200">Cliënt</th>
+                <th>Laatste opgeslagen</th>
                 <th>Stap in omslagroute</th>
                 <th>Status</th>
-                <th><span class="sr-only">Laatste statuswijziging</span></th>
-                <th>Door</th>
+                <th>Status datum</th>
+                <th>Status door</th>
             </tr>
         </thead>
         <tbody>
             {% for object in object_list %}
+                {% case_status_list_latest object as case_status_list %}
                 <tr>
                     <td>
                         <span class="show-on-mobile">Naam:</span>
-                        <a href="#">{{ object.client_name }}</a>
+                        <a href="{% url 'case' object.id %}">{{ object.client_name }}</a>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Laatste opgeslagen:</span>
+                        {{ object.saved|date:"j b Y H:i" }}
                     </td>
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
-                        <a href="#">[ naam formulier ]</a>
+                        {% if case_status_list %}
+                        <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
+                        {% else %}
+                        Er is nog geen aanvraag versuurd voor deze cliënt
+                        {% endif %}
                     </td>
                     <td>
                         <span class="show-on-mobile">Status:</span>
-                        [ status van het formulier ]
+                        {% if case_status_list %}
+                        {{ case_status_list.0.status|status_verbose }}
+                        {% else %}
+                        {% endif %}
                     </td>
-                    <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
                     <td>
-                        <span class="show-on-mobile">Door:</span>
-                        [ naam laatste nehandelaar ]
+                        <span class="show-on-mobile">Status datum:</span>
+                        {% if case_status_list %}
+                        {{ case_status_list.0.created|date:"j b Y H:i" }}
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Status door:</span>
+                        {% if case_status_list %}
+                        {{ case_status_list.0.profile.user.username }}
+                        {% else %}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
