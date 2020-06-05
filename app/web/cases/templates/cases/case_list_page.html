@@ -24,7 +24,44 @@
 {#        <a href="{% url 'create_case' 'aanvraag-omklap' %}" class="button button--secondary">Nieuwe aanvraag Voordracht omklap</a>#}
 {#    </div>#}
     <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
-    <table class="case-list table--interactive">
+
+
+    <table class="case-list">
+        <thead>
+            <tr>
+                <th width="200">Cliënt</th>
+                <th>Stap in omslagroute</th>
+                <th>Status</th>
+                <th><span class="sr-only">Laatste statuswijziging</span></th>
+                <th>Door</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>
+                        <span class="show-on-mobile">Naam:</span>
+                        <a href="#">{{ object.client_name }}</a>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Stap in omslagroute:</span>
+                        <a href="#">[ naam formulier ]</a>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Status:</span>
+                        [ status van het formulier ]
+                    </td>
+                    <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
+                    <td>
+                        <span class="show-on-mobile">Door:</span>
+                        [ naam laatste nehandelaar ]
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- <table class="case-list table--interactive">
         <thead>
             <tr>
                 <th width="200">Naam</th>
@@ -60,7 +97,7 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table> -->
     {% include 'core/pagination.html' with object_list=object_list filter_params='' %}
 </section>
 {% endblock %}

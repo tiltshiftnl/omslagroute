@@ -31,10 +31,10 @@
     <table class="case-list">
         <thead>
             <tr>
-                <th width="200">Client</th>
+                <th width="200">Cliënt</th>
                 <th>Stap in omslagroute</th>
                 <th>Aanvraag door</th>
-                <th>Actuele status</th>
+                <th>Status</th>
                 <th><span class="sr-only">Laatste statuswijziging</span></th>
             </tr>
         </thead>
@@ -54,7 +54,7 @@
                         {{ object.profile.user.username }}
                     </td>
                     <td>
-                        <span class="show-on-mobile">Actuele status:</span>
+                        <span class="show-on-mobile">Status:</span>
                         {{ object.status|status_verbose }}
                     </td>
                     <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
