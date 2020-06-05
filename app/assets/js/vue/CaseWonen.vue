@@ -1,6 +1,6 @@
 <template>
     <Main>
-       <Header>bgfjhg</Header>
+       <Header slot="header">bgfjhg</Header>
     </Main>
 </template>
 
@@ -14,7 +14,8 @@ export default {
     data: () => ({ }),  
     methods: {},
     components: {
-        Main
+        Main,
+        Header,
     },
 };
 </script>

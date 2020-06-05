@@ -2,7 +2,7 @@ import ComponentA from './ComponentA.vue'
 
 <template>
 <div class="site-container">
-    <header></header>
+    <slot name="header"/>
     <menu></menu>
     <messages></messages>
 
