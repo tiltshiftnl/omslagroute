@@ -224,7 +224,7 @@ OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')
 OIDC_RP_CLIENT_SECRET = os.environ.get('IAM_CLIENT_SECRET')
 
 OIDC_FEDERATION_KEY = os.environ.get('OIDC_FEDERATION_KEY', 'federation')
-OIDC_FEDERATION_DEFAULT = 'onbekent'
+OIDC_FEDERATION_DEFAULT = 'onbekend'
 
 IAM_URL = None
 if os.environ.get("IAM_URL"):
