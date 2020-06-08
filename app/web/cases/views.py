@@ -152,12 +152,26 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        def update_document(document):
+            return {
+                'id': document.id,
+                'name': document.name,
+                'extension': document.extension,
+                'uploaded': document.uploaded_str,
+                'url': reverse('download_case_document', args=[self.object.id, document.id]),
+            }
         kwargs.update({
             'form_fields': get_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
             'user_list': ', '.join(list(self.object.profile_set.all().values_list('user__username', flat=True))),
             'user_json': json.dumps(
                 model_to_dict(self.request.user),
+                sort_keys=True,
+                indent=1,
+                default=default
+            ),
+            'document_list': json.dumps(
+                [update_document(d) for d in self.object.document_set.all()],
                 sort_keys=True,
                 indent=1,
                 default=default

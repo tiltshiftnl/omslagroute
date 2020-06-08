@@ -24,17 +24,14 @@
 
 <script>
 import axios from "axios";
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     name: "Header",
-    data: () => ({ }),
+    // data: () => ({ }),
     computed: {
-        ...mapGetters([
+        ...mapState([
         'user'
-        ]),
-        ...mapActions([
-        'getUser'
         ]),
     },
     methods: {}

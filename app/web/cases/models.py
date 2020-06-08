@@ -545,7 +545,8 @@ class Document(models.Model):
 
     @property
     def uploaded_str(self):
-        return self.uploaded.strftime('%Y-%m-%d, %H:%M:%S')
+        locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
+        return self.uploaded.strftime('%d %b %Y %H:%M:%S')
 
     class Meta:
         verbose_name = _('Bijlage')

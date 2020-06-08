@@ -83,12 +83,8 @@ export default {
             'form': null,
             'case': null,
         },
-        caseStatusOptions: {},
-        title: null,
         caseId: null,
-        form: null,
         message: null,
-        emailList: null,
         newCaseStatus: {
             'status': null,
             'status_comment': null,
@@ -115,7 +111,7 @@ export default {
     }),
     computed: {
         ...mapState([
-            'case',
+            'caseObject',
             'form',
             'title',
             'caseStatusOptions',
@@ -138,7 +134,7 @@ export default {
             this.nextCaseStatus.status = status;
         },
         getInitialData: function(){
-            this.nextCaseStatus.case = this.$store.state.case.id;
+            this.nextCaseStatus.case = this.$store.state.caseObject.id;
             this.nextCaseStatus.form = this.$store.state.form;
         },
         getCaseStatusList: function () {
@@ -147,7 +143,7 @@ export default {
             axios.get(`/api/casestatus/`)
                 .then((response) => {
                     let filtered = response.data.results.filter(status => 
-                        Number(status.case) === Number(this.case.id) && 
+                        Number(status.case) === Number(this.caseObject.id) && 
                         status.form === this.form
                     )
                     this.currentCaseStatus = filtered[0] || {'status': 1};

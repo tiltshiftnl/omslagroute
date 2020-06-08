@@ -3,12 +3,17 @@
 {% block root %}
 {% csrf_token %}
 <script>
-    var data2 = {
+    // vuex state
+    var state = {
         user: {{ user_json|safe }},
-        case: {id: {{ object.id }}},
+        caseObject: {
+            id: {{ object.id }}, 
+            client_name: "{{ object.client_name }}",
+        },
         caseStatusOptions: {{ CASE_STATUS_DICT_JSON|safe }},
         form: "{{ form_data.slug }}",
         emailList: "{{ user_list }}",
+        documentList: {{ document_list|safe }},
     };
 </script>
 <div id="app"></div>
