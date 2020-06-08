@@ -72,6 +72,29 @@
 
             </div>
         </div>
+        <div class="status-history-container form-field-history">
+            <details>
+                <summary>Statushistorie<svg class="icon-details--closed" width="14" height="9">
+                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                    </svg><svg class="icon-details--open" width="14" height="9">
+                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                    </svg>
+                </summary>
+                <div class="content">
+                    <ul class="u-list-style-none">
+                        <li v-for="h in statusHistory" :key="h.id">
+                            <div>
+                                <small class="facts">
+                                    {{ h.created | luxon }}<br/>
+                                    {{ h.username }}
+                                </small>
+                                <small class="status">{{caseStatusOptions[h.status].current }}</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </details>
+        </div>
     </div>
 </template>
 
@@ -90,6 +113,7 @@ export default {
             'status_comment': null,
             'caseversion': null,
         },
+        statusHistory: [],
         caseStatusOptions: {},
         title: null,
         caseId: null,
@@ -110,8 +134,7 @@ export default {
             2: "u-margin-bottom button button--danger",
             3: "u-margin-bottom button button--success",
             4: "u-margin-bottom button button--warning",
-        }
-
+        },
     }),
     computed: {
     },
@@ -150,6 +173,8 @@ export default {
                         status.form === this.form
                     )
                     this.currentCaseStatus = filtered[0] || {'status': 1};
+                    filtered.shift();
+                    this.statusHistory = filtered;
                     this.loading = false;
                 })
                 .catch((err) => {

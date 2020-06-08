@@ -30,7 +30,8 @@
   "dependencies": {
     "axios": "^0.19.2",
     "vue": "^2.6.11",
-    "vue-cli": "^2.9.6"
+    "vue-cli": "^2.9.6",
+    "vue-luxon": "^0.7.3"
   },
   "babel": {
     "presets": [
