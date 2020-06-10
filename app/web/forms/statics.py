@@ -365,7 +365,7 @@ FIELDS = (
         required=False,
      ), {}),
      ('urgentiecriteria_kinderen_gezonde_datum_evaluatiemoment', forms.DateField(
-        label=_('Datum evaluatiemoment *'),
+        label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -373,7 +373,7 @@ FIELDS = (
         ),
         localize=True,
         required=False,
-     ), {'step_required': True}),
+     ), {}),
      ('omklap_client_openstaande_vragen', forms.CharField(
         label=_('Voor deze cliënt staan de volgende vragen nog open'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
