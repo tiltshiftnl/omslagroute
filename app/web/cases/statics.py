@@ -30,7 +30,7 @@ CASE_STATUS = (
     (1, 'ingediend', 'indienen'),
     (2, 'afgekeurd', 'afkeuren'),
     (3, 'goedgekeurd', 'goedkeuren'),
-    (4, 'wachten op GGD', 'wachten op GGD'),
+    (4, 'in behandeling', 'in behandeling'),
 )
 
 def map_case_status_keys(f):

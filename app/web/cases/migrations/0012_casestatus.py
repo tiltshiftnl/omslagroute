@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='CaseStatus',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.SmallIntegerField(choices=[(1, 'ingediend'), (2, 'afgekeurd'), (3, 'goedgekeurd'), (4, 'wachten op GGD')], default=1, verbose_name='Status')),
+                ('status', models.SmallIntegerField(choices=[(1, 'ingediend'), (2, 'afgekeurd'), (3, 'goedgekeurd'), (4, 'In behandeling')], default=1, verbose_name='Status')),
                 ('status_comment', models.TextField(blank=True, null=True, verbose_name='Opmerking')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Initieel opgeslagen datum/tijd')),
                 ('form', models.CharField(blank=True, max_length=100, null=True, verbose_name='Formulier')),

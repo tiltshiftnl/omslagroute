@@ -41,7 +41,7 @@
                 <svg class="close__icon" width="12" height="16">
                     <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
                 </svg>
-                Wacht op GGD
+                In behandeling
             </button>
         </div>
         <div v-if="nextCaseStatus.status" class="container-modal--vue">
@@ -123,12 +123,12 @@ export default {
         statusText: {
             2: "Afkeuren",
             3: "Goedkeuren",
-            4: "Wachten op GGD",
+            4: "In behandeling",
         },
         buttonText: {
             2: "Aanvraag afkeuren",
             3: "Aanvraag goedkeuren",
-            4: "Wachten op GGD",
+            4: "In behandeling",
         },
         buttonClass: {
             2: "u-margin-bottom button button--danger",
