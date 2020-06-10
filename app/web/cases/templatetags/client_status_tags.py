@@ -27,7 +27,7 @@ def case_status_list_latest(case, *args, **kwargs):
         status__in=[
             CASE_STATUS_INGEDIEND,
             CASE_STATUS_AFGEKEURD,
-            CASE_STATUS_GGD,
+            CASE_STATUS_IN_BEHANDELING,
             CASE_STATUS_GOEDGEKEURD,
         ]
     ).order_by('-created')

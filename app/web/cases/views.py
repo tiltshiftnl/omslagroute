@@ -77,7 +77,7 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
 
         tabs = [
             [1, 'Ingediend'],
-            [4, 'Wacht op GGD'],
+            [4, 'In behandeling'],
             [3, 'Goedgekeurd'],
             [2, 'Afgekeurd'],
             [0, 'Alle'],

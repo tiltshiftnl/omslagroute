@@ -30,7 +30,7 @@ CASE_STATUS = (
     (1, 'ingediend', 'indienen'),
     (2, 'afgekeurd', 'afkeuren'),
     (3, 'goedgekeurd', 'goedkeuren'),
-    (4, 'wachten op GGD', 'wachten op GGD'),
+    (4, 'in behandeling', 'in behandeling'),
 )
 
 def map_case_status_keys(f):
@@ -47,7 +47,7 @@ CASE_STATUS_DICT_JSON = json.dumps(CASE_STATUS_DICT)
 CASE_STATUS_INGEDIEND = 1
 CASE_STATUS_AFGEKEURD = 2
 CASE_STATUS_GOEDGEKEURD = 3
-CASE_STATUS_GGD = 4
+CASE_STATUS_IN_BEHANDELING = 4
 
 GESLACHT_DICT = dict((s[0], s[1]) for s in GESLACHT)
 CENTRALE_TOEGANG_DICT = dict((s[0], s[1]) for s in CENTRALE_TOEGANG)
