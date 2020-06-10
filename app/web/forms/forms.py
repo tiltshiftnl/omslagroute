@@ -65,11 +65,12 @@ class BaseGenericForm:
             else:
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
-                css_classes = bf.css_classes('form-field form-field--%s%s%s%s' % (
+                css_classes = bf.css_classes('form-field form-field--%s%s%s%s%s' % (
                     bf_type,
                     ' form-field--step-required' if FIELDS_REQUIRED_DICT.get(bf.name) else '',
                     ' form-field--error' if bf_errors else '',
                     ' form-field--empty' if bf_is_empty else '',
+                    ' hide' if bf_is_readonly else '',
                 ))
                 # css_classes += ' form-field form-field--%s' % bf_type
                 if css_classes:
