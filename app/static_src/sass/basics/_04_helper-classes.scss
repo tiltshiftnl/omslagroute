@@ -25,6 +25,9 @@
         display: inherit;
     }
 }
+.hide {
+    display: none !important;
+}
 
 .show-on-mobile { 
     display: block;

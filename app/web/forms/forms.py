@@ -21,9 +21,9 @@ class BaseGenericForm:
 
     def as_sections(self):
         return self._html_section_output(
-            normal_row='<div %(html_class_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
-            checkbox_row='<div %(html_class_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
-            clearablefileinput_row='<div %(html_class_attr)s>%(help_text)s %(field)s %(label)s %(errors)s <div id="file-upload-filename" class="form-field__uploaded"></div></div>',
+            normal_row='<div %(html_class_attr)s %(data_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
+            checkbox_row='<div %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
+            clearablefileinput_row='<div %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s <div id="file-upload-filename" class="form-field__uploaded"></div></div>',
             error_row='%s',
             row_ender='</div>',
             help_text_html=' <div class="help-text">%s</div>',
@@ -37,12 +37,20 @@ class BaseGenericForm:
 
         for name, field in self.fields.items():
             html_class_attr = ''
+            data_attr = ''
             row = normal_row
             bf = self[name]
             bf_type = bf.field.widget.__class__.__name__.lower()
             bf_is_empty = not bool(bf.value())
             bf_is_readonly = name in self.options.get('readonly_fields', [])
             bf_is_required = name in self.options.get('required_fields', [])
+            rules = self.options.get('rules', {}).get(name)
+            if rules:
+                data_attr = ' data-decorator="form-rule" data-rule-values="%s" data-rule-fields="%s" ' % (
+                    ','.join([str(r) for r in rules[0]]),
+                    ','.join(rules[1]),
+                )
+
             if bf_type == 'checkboxinput':
                 row = checkbox_row
             if bf_type == 'clearablefileinput':
@@ -94,6 +102,7 @@ class BaseGenericForm:
                     'name': name,
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
+                    'data_attr': data_attr,
                     'css_classes': css_classes,
                     'field_step_complete': not FIELDS_REQUIRED_DICT.get(bf.name) or not bf_is_empty,
                     'verbose_name': bf.label,
