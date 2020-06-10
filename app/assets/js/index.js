@@ -303,11 +303,17 @@ Array.prototype.sortOnData = function (key) {
             var f = document.querySelector('[name="'+ruleFields[i]+'"]');
             var s = document.querySelector('.section#'+ruleFields[i]);
             if (f) {
+<<<<<<< HEAD
               _closest(f, '.form-field').classList[show?'remove':'add']('hide-animated');
               _closest(f, '.form-field').classList[show?'add':'remove']('show-animated');
             }else if (s){
               s.classList[show?'remove':'add']('hide-animated');
               s.classList[show?'add':'remove']('show-animated');
+=======
+              _closest(f, '.form-field').classList[show?'remove':'add']('hide');
+            }else if (s){
+              s.classList[show?'remove':'add']('hide');
+>>>>>>> feat: case check fields added to db, feat: field checks for urgentie form
             }
           }
 
