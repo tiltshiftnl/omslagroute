@@ -774,7 +774,14 @@ FORMS = (
         ], 'required_fields': [
             'client_first_name',
             'client_last_name',
-        ]},
+        ],'rules': {
+            'jonger_dan_26': ([2,3,4], (
+                'jonger_dan_26_plaatsing_project',
+                'jonger_dan_26_motivatie_contract_onbepaalde',
+                )),
+            
+
+        }},
     ),
 )
 

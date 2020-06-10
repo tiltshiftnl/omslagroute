@@ -303,9 +303,11 @@ Array.prototype.sortOnData = function (key) {
             var f = document.querySelector('[name="'+ruleFields[i]+'"]');
             var s = document.querySelector('.section#'+ruleFields[i]);
             if (f) {
-              _closest(f, '.form-field').classList[show?'remove':'add']('hide');
+              _closest(f, '.form-field').classList[show?'remove':'add']('hide-animated');
+              _closest(f, '.form-field').classList[show?'add':'remove']('show-animated');
             }else if (s){
-              s.classList[show?'remove':'add']('hide');
+              s.classList[show?'remove':'add']('hide-animated');
+              s.classList[show?'add':'remove']('show-animated');
             }
           }
 
