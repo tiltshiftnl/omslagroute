@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags client_status_tags auth_tags %}
+{% load static i18n html_tags client_status_tags auth_tags client_data_tags %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -76,19 +76,18 @@
             </header>
 
             <dl>
-                {% for k, client_info in object.to_dict.items %}
-                {% if not forloop.first and k in form_fields %}
+                {% case_form_data object request.user.federation.organization form_data.slug as data %}
+                {% for k, field in data.items  %}
                 <div>
-                    <dt>{{ client_info.label }}: </dt>
+                    <dt>{{ field.label }}: </dt>
                     <dd>
-                        {% if client_info.value|is_date %}
-                            {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                        {% if field.value|is_date %}
+                            {{ field.value|str_date_to_date|date:"j b Y" }}
                         {% else %}
-                            {{ client_info.value }}
+                            {{ field.value }}
                         {% endif %}
                     </dd>
                 </div>
-                {% endif %}
                 {% endfor %}
             </dl>
         </div>

@@ -33,7 +33,7 @@ FIELDS = (
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
-    ), {'step_required': True}),
+    ), {}),
     ('emailadres', forms.EmailField(
         label=_('E-mailadres'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
@@ -429,6 +429,10 @@ URGENTIE_AANVRAAG = [
                 'title': '',
                 'description': '',
                 'fields': [
+                    'client_first_name',
+                    'client_last_name',
+                    'geboortedatum',
+                    'emailadres',
                     'centrale_toegang_naam',
                 ],
             },
@@ -530,6 +534,10 @@ OMKLAP_AANVRAAG = [
                 'title': 'Woningnet',
                 'description': '',
                 'fields': [
+                    'client_first_name',
+                    'client_last_name',
+                    'geboortedatum',
+                    'emailadres',
                     'woningnet_nummer',
                     'woningnet_geldigheid',
                 ],

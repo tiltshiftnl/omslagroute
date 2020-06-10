@@ -30,7 +30,7 @@
                     <h3>Informatie</h3>
                     <div class="details-client">
                         <dl>
-                        {% case_data form.instance organization.field_restrictions as data %}
+                        {% case_form_data form.instance organization slug as data %}
                         {% for k, field in data.items  %}
                         <div>
                             <dt>{{ field.label }}: </dt>

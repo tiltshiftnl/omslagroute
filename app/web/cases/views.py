@@ -9,7 +9,7 @@ from web.users.statics import BEGELEIDER, WONEN
 from web.profiles.models import Profile
 from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS, FORM_TITLE_BY_SLUG
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
-from web.forms.utils import get_fields
+from web.forms.utils import get_sections_fields
 import sendgrid
 from sendgrid.helpers.mail import Mail
 from django.contrib.sites.shortcuts import get_current_site
@@ -125,7 +125,7 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         kwargs.update({
             'moment_list': Moment.objects.all(),
-            'basis_gegevens_fields': get_fields(BASIS_GEGEVENS),
+            'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
         })
         return super().get_context_data(**kwargs)
 
@@ -145,7 +145,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
         kwargs.update({
-            'form_fields': get_fields(form_data.get('sections')),
+            'form_fields': get_sections_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
             'user_list': ', '.join(list(self.object.profile_set.all().values_list('user__username', flat=True))),
             'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('slug')),
