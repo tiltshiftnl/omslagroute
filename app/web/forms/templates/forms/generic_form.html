@@ -159,7 +159,7 @@
 
                         {% for sub_section in section.section_list %}
                             {% block subsection %}
-                            <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}">
+                            <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}" id="{% if sub_section.id %}{{ sub_section.id }}{% else %}section_{{ sub_section.title|slugify }}{% endif %}">
                                 {% if sub_section.title %}
                                 <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
                                     {{ sub_section.title }}

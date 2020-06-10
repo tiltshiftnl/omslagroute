@@ -82,6 +82,12 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    partner_check = models.PositiveSmallIntegerField(
+        verbose_name=_('Heeft de cliënt een partner?'),
+        choices=DEFAULT_NO_OR_YES,
+        blank=True,
+        null=True,
+    )
     partner_naam = models.CharField(
         verbose_name=_('Partner naam'),
         max_length=100,
@@ -105,6 +111,12 @@ class CaseBase(PrintableModel):
     )
     partner_woonsituatie = models.TextField(
         verbose_name=_('Woonsituatie partner'),
+        blank=True,
+        null=True,
+    )
+    kinderen_check = models.PositiveSmallIntegerField(
+        verbose_name=_('Heeft de cliënt kinderen?'),
+        choices=DEFAULT_NO_OR_YES,
         blank=True,
         null=True,
     )

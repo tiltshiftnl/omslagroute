@@ -284,6 +284,42 @@ Array.prototype.sortOnData = function (key) {
     },
   };
   var decorators = {
+    "form-rule": function () {
+      var self = this,
+        ruleValues = self.dataset.ruleValues.split(','),
+        ruleFields = self.dataset.ruleFields.split(','),
+        fields = self.querySelectorAll('input[type="radio"]'),
+        _getValue = function() {
+          if (self.querySelector('input[type="radio"]:checked')){
+            return self.querySelector('input[type="radio"]:checked').value;
+          }
+          return null;
+        }
+        _change = function(e){
+          e && e.preventDefault();
+          var i = 0,
+            show = ruleValues.includes(String(_getValue()));
+          for (i = 0; i < ruleFields.length; i++){
+            var f = document.querySelector('[name="'+ruleFields[i]+'"]');
+            var s = document.querySelector('.section#'+ruleFields[i]);
+            if (f) {
+              _closest(f, '.form-field').classList[show?'remove':'add']('hide-animated');
+              _closest(f, '.form-field').classList[show?'add':'remove']('show-animated');
+            }else if (s){
+              s.classList[show?'remove':'add']('hide-animated');
+              s.classList[show?'add':'remove']('show-animated');
+            }
+          }
+
+        },
+        _init = function(){
+          _getValue
+        };
+      _change();
+      Array.prototype.forEach.call(fields, function(radio) {
+        radio.addEventListener('change', _change);
+     });
+    },
     "document-name-exists": function () {
       var self = this,
         input = self.querySelector('input[name$="name"]'),
