@@ -26,6 +26,10 @@ DEFAULT_YES_OR_NO = (
     (1, 'Ja'),
     (2, 'Nee'),
 )
+DEFAULT_NO_OR_YES = (
+    (2, 'Nee'),
+    (1, 'Ja'),
+)
 CASE_STATUS = (
     (1, 'ingediend', 'indienen'),
     (2, 'afgekeurd', 'afkeuren'),

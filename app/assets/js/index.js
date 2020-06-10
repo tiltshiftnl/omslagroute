@@ -299,12 +299,13 @@ Array.prototype.sortOnData = function (key) {
           e && e.preventDefault();
           var i = 0,
             show = ruleValues.includes(String(_getValue()));
-          console.log(ruleValues);
-          console.log(_getValue());
           for (i = 0; i < ruleFields.length; i++){
             var f = document.querySelector('[name="'+ruleFields[i]+'"]');
+            var s = document.querySelector('.section#'+ruleFields[i]);
             if (f) {
               _closest(f, '.form-field').classList[show?'remove':'add']('hide');
+            }else if (s){
+              s.classList[show?'remove':'add']('hide');
             }
           }
 
@@ -313,12 +314,9 @@ Array.prototype.sortOnData = function (key) {
           _getValue
         };
       _change();
-      console.log(fields);
       Array.prototype.forEach.call(fields, function(radio) {
         radio.addEventListener('change', _change);
      });
-      // field.addEventListener('onchange', function(){console.log(_getValue());});
-
     },
     "document-name-exists": function () {
       var self = this,

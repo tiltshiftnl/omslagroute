@@ -80,6 +80,13 @@ FIELDS = (
         required=False,
         help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
     ), {}),
+    ('partner_check', forms.IntegerField(
+        label=_('Heeft de cliënt een partner? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_NO_OR_YES,
+        ),
+        required=False,
+    ), {'step_required': True}),
     ('partner_naam', forms.CharField(
         label=_('Naam partner'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
@@ -109,6 +116,13 @@ FIELDS = (
         required=False,
         help_text='Waar/bij wie/hoe?'
     ), {}),
+    ('kinderen_check', forms.IntegerField(
+        label=_('Heeft de cliënt kinderen? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_NO_OR_YES,
+        ),
+        required=False,
+    ), {'step_required': True}),
     ('kinderen', forms.CharField(
         label=_('Kinderen'),
         help_text=_('Geef aan per kind: <ul><li>Naam + voorletters</li><li>Geboortedatum (dag-maand-jaar)</li><li>Ouderlijk gezag (ja of nee)</li><li>Mee aangemeld (ja of nee)</li></ul>'),
@@ -457,11 +471,13 @@ URGENTIE_AANVRAAG = [
                 'title': 'Gezinssamenstelling',
                 'description': '',
                 'fields': [
+                    'partner_check',
                     'partner_naam',
                     'partner_geboortedatum',
                     'partner_gehuwd',
                     'partner_echtscheiding_rond',
                     'partner_woonsituatie',
+                    'kinderen_check',
                     'kinderen',
                 ],
             },
@@ -493,6 +509,7 @@ URGENTIE_AANVRAAG = [
             },
             {
                 'title': 'Indien er kinderen gebruik maken van de opvang',
+                'id': 'section_kinderen_opvang',
                 'description': 'NB: Voor de toewijzing van een woning is de juiste samenstelling van het huishouden in WoningNet relevant. let hierop bij kinderen!',
                 'fields': [
                     'urgentiecriteria_kinderen_gezonde_omgeving',
@@ -726,6 +743,18 @@ FORMS = (
                 'jonger_dan_26_plaatsing_project',
                 'jonger_dan_26_motivatie_contract_onbepaalde',
                 )),
+            'partner_check': ([1], (
+                'partner_naam',
+                'partner_geboortedatum',
+                'partner_gehuwd',
+                'partner_echtscheiding_rond',
+                'partner_woonsituatie',
+                )),
+            'kinderen_check': ([1], (
+                'kinderen',
+                'section_kinderen_opvang',
+                )),
+
         }},
     ),
     (
