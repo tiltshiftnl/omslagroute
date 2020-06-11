@@ -18,6 +18,11 @@ class CheckboxSelectMultiple(DefaultCheckboxSelectMultiple):
     option_template_name = 'forms/checkbox_option.html'
 
 
+class CheckboxSelectMultipleUser(DefaultCheckboxSelectMultiple):
+    template_name = 'forms/checkbox_select_user.html'
+    option_template_name = 'forms/checkbox_option_user.html'
+
+
 class CheckboxSelectMultipleDocument(DefaultCheckboxSelectMultiple):
     template_name = 'forms/checkbox_select_document.html'
     option_template_name = 'forms/checkbox_option_document.html'

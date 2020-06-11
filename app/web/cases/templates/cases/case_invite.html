@@ -19,6 +19,8 @@
     <!-- START content uitnodigen -->
     <div>
         <h2>Nodig collega's uit om samen te werken aan {{instance.client_name}}</h2>
+        <a href="{% url 'case_remove_invited_users' instance.id %}">verwijder uitnodigen</a>
+
         <hr class="" />
         {% if unlinked_users %}
         
