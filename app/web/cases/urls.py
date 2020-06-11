@@ -9,6 +9,7 @@ urlpatterns = [
 
     # invite
     path('<int:pk>/uitnodigen/', CaseInviteUsers.as_view(), name='case_invite_users'),
+    path('<int:pk>/uitgenodigingen-intrekken/', CaseRemoveInvitedUsers.as_view(), name='case_remove_invited_users'),
 
     path('<int:pk>/alle-velden/', CaseDetailAllDataView.as_view(), name='case_all_data'),
     path('verwijder/<int:pk>/', CaseDeleteView.as_view(), name='delete_case'),

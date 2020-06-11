@@ -123,9 +123,17 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
     template_name_suffix = '_page'
 
     def get_context_data(self, **kwargs):
+        linked_users = User.objects.filter(
+            profile__in=self.object.profile_set.filter(
+                user__user_type=BEGELEIDER
+            ).exclude(
+                user=self.request.user
+            )
+        )
         kwargs.update({
             'moment_list': Moment.objects.all(),
             'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
+            'linked_users':  linked_users,
         })
         return super().get_context_data(**kwargs)
 
@@ -474,6 +482,59 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
 
         messages.add_message(self.request, messages.INFO, "De nieuwe gebruikers hebben een email gekregen van hun uitnodiging.")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
+    model = Case
+    template_name = 'cases/case_remove_invited.html'
+    form_class = CaseRemoveInvitedUsersForm
+    success_url = reverse_lazy('cases_by_profile')
+
+    def get_success_url(self):
+        return '%s?iframe=true' % reverse('case', kwargs={'pk': self.instance.id})
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        kwargs.update({
+            'user': self.request.user,
+            'instance': self.instance,
+        })
+        return kwargs
+
+    def form_valid(self, form):
+        for user in form.cleaned_data.get('user_list'):
+            user.profile.cases.remove(self.instance)
+
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            current_site = get_current_site(self.request)
+            for user in form.cleaned_data.get('user_list'):
+                context = {}
+                context.update({
+                    'case': self.instance,
+                    'user': self.request.user,
+                    'removed_user': user,
+                    'case_url': 'https://%s%s' % (
+                        current_site.domain, 
+                        reverse('case', kwargs={'pk':self.instance.id})
+                    ),
+                })
+                body = render_to_string('cases/mail/invated_removed.txt', context)
+                email = Mail(
+                    from_email='noreply@%s' % current_site.domain,
+                    to_emails=user.username,
+                    subject='Omslagroute - je bent uit een team verwijderd',
+                    plain_text_content=body
+                )
+                sg.send(email)
+
+        messages.add_message(self.request, messages.INFO, "De gebruikers hebben een mail ontvangen van het verbreken van de samenwerking.")
+        return super().form_valid(form)
+
 
 
 class DocumentCreate(UserPassesTestMixin, CreateView):

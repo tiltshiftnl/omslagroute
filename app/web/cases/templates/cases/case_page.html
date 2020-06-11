@@ -24,7 +24,7 @@
         {% if request.user|is_begeleider %}
         <div class="details-admin screen-only">
             <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                Samenwerken ({{ object.profile_set.all|length|add:"-1" }})
+                Samenwerken ({{ linked_users|length }})
             </a>
         </div>
         {% endif %}

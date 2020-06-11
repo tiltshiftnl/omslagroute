@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from web.forms.forms import GenericModelForm
-from web.forms.widgets import RadioSelect, CheckboxSelectMultipleDocument, CheckboxSelectMultiple
+from web.forms.widgets import RadioSelect, CheckboxSelectMultipleDocument, CheckboxSelectMultiple, CheckboxSelectMultipleUser
 from .statics import GESLACHT
 from web.forms.statics import FORMS_PROCESSTAP_CHOICES
 from django.utils.translation import ugettext_lazy as _
@@ -62,6 +62,34 @@ class CaseInviteUsersConfirmForm(forms.Form):
 
     class Meta:
         model = Case
+        fields = []
+
+
+class CaseRemoveInvitedUsersForm(forms.Form):
+    user = None
+    instance = None
+    user_list = forms.ModelMultipleChoiceField(
+        label=_('Met wie wil je samenwerken beëindigen voor deze cliënt?'),
+        help_text=_('Deze collega&rsquo;s kunnen:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
+        queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
+        widget=CheckboxSelectMultipleUser(attrs={'class': 'u-list-style-none scroll-list-container'}),
+        required=True,
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        self.instance = kwargs.pop('instance')
+        super().__init__(*args, **kwargs)
+        linked_users = User.objects.filter(
+            profile__in=self.instance.profile_set.filter(
+                user__user_type=BEGELEIDER
+            ).exclude(
+                user=self.user
+            )
+        )
+        self.fields['user_list'].queryset = linked_users
+
+    class Meta:
         fields = []
 
 
