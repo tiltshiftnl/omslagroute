@@ -13,6 +13,10 @@
 
 {% block main %}
     <h2>Alle gebruikers</h2>
+    <div class="details-admin screen-only">
+        <a href="{% url 'create_user' %}" class="button button--primary">Nieuwe gebruiker</a>
+    </div>
+
     <form method="get" class="u-margin-bottom-2x">
         <div class="form-field form-field--checkboxselectmultiple">
             <label>Filter op gebruiker rol</label>
@@ -24,7 +28,7 @@
     <table class="case-list table--interactive">
         <thead>
             <tr>
-                <th>E-mailadres (username)</th>
+                <th>E-mailadres (gebruikersnaam)</th>
                 <th>Voornaam</th>
                 <th>Achternaam</th>
                 <th>Gebruiker rol</th>

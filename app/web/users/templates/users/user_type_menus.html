@@ -62,7 +62,7 @@
                             <a href="{% url 'user_list' %}">Gebruikers beheer</a>
                         </li>
                     {% endif %}
-                    {% if request.user|is_federatie_beheerder %}
+                    {% if request.user|is_federatie_beheerder or request.user|is_wonen_medewerker %}
                         <li class="admin-settings">
                             <a href="{% url 'federation_user_list' %}">Gebruikers beheer</a>
                         </li>

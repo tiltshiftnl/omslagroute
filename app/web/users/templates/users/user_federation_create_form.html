@@ -1,23 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %} - Gebruiker aanpassen{% endblock %}
+{% block title %} - Nieuwe gebruiker toevoegen{% endblock %}
 
 {% block breadcrumb %}
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'user_list' %}">Alle gebruikers</a></li>
-            <li class="breadcrumb-step sr-only" aria-current="location">Gebuiker '{{ form.instance.name }}' aanpassen</li>
+            <li class="breadcrumb-step"><a href="{% url 'federation_user_list' %}">Alle gebruikers van {{ request.user.federation.name }}</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Nieuwe gebruiker toevoegen</li>
         </ol>
     </nav>
 {% endblock %}
 
 {% block main %}
-    <h2>Gebuiker '{{ form.instance.name }}' aanpassen</h2>
-
-    <div class="details-admin screen-only">
-        <a href="{% url 'delete_user' object.id %}" class="button button--secondary">Gebruiker verwijderen</a>
-    </div>
+    <h2>Nieuwe gebruiker toevoegen</h2>
 
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
         {% if form.errors %}
@@ -26,7 +22,7 @@
                     {% for field in form %}
                         {% for error in field.errors %}
                             <li>
-                                <a href="#{{field.id_for_label }}">{{field.label}}</a>:
+                                <a href="#{{field.id_for_label }}">{{field.label}}</a>: 
                                 {{ error|escape }}
                             </li>
                         {% endfor %}
@@ -39,8 +35,11 @@
         {% endif %}
 
         <div class="form-field">
-            <label for="id_username">E-mailadres (username)</label>
-            <input id="id_username" type="text" disabled value="{{ form.instance.username }}">
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {% if form.username.help_text %}
+                <div class="help-text">{{ form.username.help_text|safe }}</div>
+            {% endif %}
+            {{ form.username }}
             {% if form.username.errors %}
                 <ol class="error-text">
                 {% for error in form.username.errors %}
@@ -49,10 +48,10 @@
                 </ol>
             {% endif %}
         </div>
-
+ 
         <div class="form-field">
             <label for="{{ form.user_type.id_for_label }}">{{ form.user_type.label }}</label>
-            {% if form.user_type.help_text %}
+            {% if form.name.help_text %}
                 <div class="help-text">{{ form.user_type.help_text|safe }}</div>
             {% endif %}
             {{ form.user_type }}
@@ -65,29 +64,12 @@
             {% endif %}
         </div>
 
-        <div class="form-field">
-            <label for="{{ form.federation.id_for_label }}">{{ form.federation.label }}</label>
-            {% if form.federation.help_text %}
-                <div class="help-text">{{ form.federation.help_text|safe }}</div>
-            {% endif %}
-            {{ form.federation }}
-            {% if form.federation.errors %}
-                <ol class="error-text">
-                {% for error in form.federation.errors %}
-                    <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-                </ol>
-            {% endif %}
-        </div>
-
-
-
         <input type="hidden" name="{{ form.user.id_for_label }}" id="{{ form.user.id_for_label }}">
         <input type="hidden" name="{{ form.id.id_for_label }}" id="{{ form.id.id_for_label }}">
 
         <div class="form-field form-field--buttons screen-only">
             <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'federation_user_list' %}" class="button button--secondary">Annuleer</a>
         </div>
     </form>
 {% endblock %}

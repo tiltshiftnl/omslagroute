@@ -15,6 +15,10 @@
 {% block main %}
     <h2>Gebuiker '{{ form.instance.name }}' aanpassen</h2>
 
+    <div class="details-admin screen-only">
+        <a href="{% url 'delete_federation_user' object.id %}" class="button button--secondary">Gebruiker verwijderen</a>
+    </div>
+
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
         {% if form.errors %}
             <div class="errors" aria-live="polite">

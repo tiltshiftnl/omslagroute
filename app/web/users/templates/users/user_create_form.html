@@ -6,6 +6,7 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'user_list' %}">Alle gebruikers</a></li>
             <li class="breadcrumb-step sr-only" aria-current="location">Nieuwe gebruiker toevoegen</li>
         </ol>
     </nav>
@@ -64,29 +65,14 @@
         </div>
 
         <div class="form-field">
-            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
-            {% if form.password1.help_text %}
-                <div class="help-text">{{ form.password1.help_text|safe }}</div>
+            <label for="{{ form.federation.id_for_label }}">{{ form.federation.label }}</label>
+            {% if form.federation.help_text %}
+                <div class="help-text">{{ form.federation.help_text|safe }}</div>
             {% endif %}
-            {{ form.password1 }}
-            {% if form.password1.errors %}
+            {{ form.federation }}
+            {% if form.federation.errors %}
                 <ol class="error-text">
-                {% for error in form.password1.errors %}
-                    <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-                </ol>
-            {% endif %}
-        </div>
-
-        <div class="form-field">
-            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
-            {% if form.password2.help_text %}
-                <div class="help-text">{{ form.password2.help_text|safe }}</div>
-            {% endif %}
-            {{ form.password2 }}
-            {% if form.password2.errors %}
-                <ol class="error-text">
-                {% for error in form.password2.errors %}
+                {% for error in form.federation.errors %}
                     <li><strong>{{ error|escape }}</strong></li>
                 {% endfor %}
                 </ol>

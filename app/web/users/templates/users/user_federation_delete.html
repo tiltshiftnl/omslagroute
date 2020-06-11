@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} - Gebruiker verwijderen{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'federation_user_list' %}">Alle gebruikers van {{ request.user.federation.name }}</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Gebruiker verwijderen</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Gebruiker verwijderen</h2>
+    <p class="u-margin-bottom-2x">Weet je zeker dat de gebruiker '{{ object.username }}' wilt verwijderen?</p>
+    {% if cases %}
+    <p>De onderstaande cliënten hebben na het verwijderen van deze gebruiker geen persoonlijk begeleider meer in de omslagroute.</p>
+    <ul>
+    {% for case in cases %}
+        <li>cliënt id: {{ case.id }}</li>
+    {% endfor %}
+    </ul>
+    <p class="u-margin-bottom-4x"><strong>Zorg ervoor dat deze cliënten beheerd kunnen worden door een andere persoonlijk begeleider in de omslagroute.</strong></p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
+
+        <div class="form-field form-field--buttons screen-only">
+            <input type="submit" value="Verwijderen" class="button button--primary">
+            <a href="{% url 'federation_user_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}
