@@ -16,13 +16,16 @@
         </svg>
         <span class="sr-only">Sluit venster</span>
     </button>
+    <!-- START content uitnodigen -->
+    <div>
         <h2>Nodig collega's uit om samen te werken aan {{instance.client_name}}</h2>
         <hr class="" />
         {% if unlinked_users %}
+        
         <form method="post">
             {% csrf_token %}
             {% if wizard.steps.next %}
-            <h3 class="u-margin-bottom-none">Je werkt samen aan deze client met:</h3>
+            <h3 class="u-margin-bottom-none u-width-60">Je werkt samen aan deze client met:</h3>
             {% if linked_users %}
             <ul class="u-margin-bottom-2x scroll-list-container">
             
@@ -34,7 +37,7 @@
             <p>Je werkt nog niet samen aan deze cliënt met collega's</p>
             {% endif %}
             {% else %}
-            <h3>Je werkt samen aan deze client met:</h3>
+            <h3>Aan:</h3>
             <ul class="u-margin-bottom-2x scroll-list-container">
             {% for u in selected_users %}
                 <li>{{ u.username }}</li>
@@ -74,5 +77,25 @@
             <a data-handler="modal-close" href="#" class="button button--primary">Sluiten</a>
         </div>
         {% endif %}
+    </div>    
+<!-- END content uitnodigen -->
+
+<!-- start content beheer samenwerking -->
+    <div>
+        <h2>Beheer samenwerking</h2>
+        <hr class="" />
+        
+        {% if linked_users %}
+        <ul class="u-margin-bottom-2x scroll-list-container">
+        
+            {% for u in linked_users %}
+            <li>{{ u.username }} Verwijderen</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
+
+<!-- end content beheer samenwerking -->
+
+</div>
 {% endblock %}
