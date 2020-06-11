@@ -103,7 +103,7 @@ else:
 
 # General
 APPEND_SLASH = True
-TIME_ZONE = 'Europe/Amsterdam'
+TIME_ZONE = 'Etc/GMT'
 LANGUAGE_CODE = 'nl-nl'
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
