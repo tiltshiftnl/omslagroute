@@ -102,7 +102,6 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
 
     def update_user(self, user, claims):
         user = super().update_user(user, claims)
-        self.update_user_federation(user, claims)
         return user
 
     def get_userinfo(self, access_token, id_token, payload):

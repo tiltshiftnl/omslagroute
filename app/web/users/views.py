@@ -11,7 +11,7 @@ from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER, ONBEKEND, USER_TYPES_DICT, WONEN
+from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER, ONBEKEND, USER_TYPES_DICT, WONEN, USER_TYPES_DICT
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 from mozilla_django_oidc.utils import (
@@ -19,6 +19,11 @@ from mozilla_django_oidc.utils import (
 )
 from web.cases.models import Case
 from django.db.models import Count
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+import sendgrid
+from sendgrid.helpers.mail import Mail
+from django.template.loader import render_to_string
 
 try:
     from urllib.parse import urlencode
@@ -184,10 +189,31 @@ class UserCreationView(UserPassesTestMixin, CreateView):
         return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
 
     def form_valid(self, form):
-        user = form.save(commit=True)
+        user = form.save(commit=False)
+        user.email = user.username
+        user.save()
         profile = Profile()
         profile.user = user
         profile.save()
+
+        if settings.SENDGRID_KEY:
+            current_site = get_current_site(self.request)
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            data = {
+                'creator': self.request.user,
+                'user': user,
+                'user_type': USER_TYPES_DICT.get(user.user_type, ''),
+                'url': 'https://%s' % current_site.domain,
+            }
+            body = render_to_string('users/mail/to_new_user.txt', data)
+            email = Mail(
+                from_email='no-reply@%s' % current_site.domain,
+                to_emails=user.username,
+                subject='Omslagroute - je account aangemaakt',
+                plain_text_content=body
+            )
+            sg.send(email)
+
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
         return super().form_valid(form)
 
@@ -213,11 +239,30 @@ class UserCreationFederationView(UserPassesTestMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
+        user.email = user.username
         user.federation = self.request.user.federation
         user.save()
         profile = Profile()
         profile.user = user
         profile.save()
+        if settings.SENDGRID_KEY:
+            current_site = get_current_site(self.request)
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            data = {
+                'creator': self.request.user,
+                'user': user,
+                'user_type': USER_TYPES_DICT.get(user.user_type, ''),
+                'url': 'https://%s' % current_site.domain,
+            }
+            body = render_to_string('users/mail/to_new_user.txt', data)
+            email = Mail(
+                from_email='no-reply@%s' % current_site.domain,
+                to_emails=user.username,
+                subject='Omslagroute - je account aangemaakt',
+                plain_text_content=body
+            )
+            sg.send(email)
+
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
         return super().form_valid(form)
 
