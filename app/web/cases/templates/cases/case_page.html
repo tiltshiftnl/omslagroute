@@ -77,8 +77,8 @@
         <div class="details-client details-client--appendix">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
-                <a href="{% url 'add_case_document' object.id %}" class="" title="Voeg een nieuwe bijlage toe">
-                    Uploaden
+                <a href="{% url 'add_case_document' object.id %}" class="u-float-right u-underline--none u-margin-top-2x" title="Voeg een nieuwe bijlage toe">
+                    + <span class="u-underline">Nieuw bijlage</span>
                 </a>
             </header>
 
@@ -87,7 +87,18 @@
                 {% if forloop.counter0 < 4 %}
                     <li>
                         <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
-                        <div><a href="{% url 'update_case_document' object.id document.id %}"><span>Wijzigen</span></a></div>
+                        <div>
+                            <a href="{% url 'update_case_document' object.id document.id %}" title="Bijlage aanpassen" class="u-margin-right u-color-black">
+                                <svg class="button__icon"  width="20" height="20" >
+                                    <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20"></use>
+                                </svg>
+                            </a>
+                            <a href="#" title="Bijlage verwijderen" class="u-color-black">
+                                <svg class="button__icon"  width="20" height="20" >
+                                    <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
+                                </svg>
+                            </a>    
+                        </div>
                     </li>
                 {% endif %}
             {% endfor %}

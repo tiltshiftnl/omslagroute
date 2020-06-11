@@ -223,7 +223,7 @@
         div{
             display: flex;
             justify-content: space-between;
-            *:first-child {
+            >*:first-child {
                 width: 50%;
             }
         }
@@ -237,6 +237,23 @@
     margin-bottom: 1rem;
 }
 
+.u-underline {
+    text-decoration: underline;
+    &--none {
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    
+}
+
+// ********************
+// COLORS
+// ********************
+.u-color-black {
+    color: $primary-black;
+}
 // ********************
 // TO IMPLEMENT: SKIP LINKS
 // ********************
