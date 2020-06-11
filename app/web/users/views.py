@@ -5,18 +5,20 @@ from django.contrib.auth.forms import (
 )
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import CreateView, ListView, UpdateView, FormView, TemplateView
+from django.views.generic import CreateView, ListView, UpdateView, FormView, TemplateView, DeleteView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER, ONBEKEND, USER_TYPES_DICT
+from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER, ONBEKEND, USER_TYPES_DICT, WONEN
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 from mozilla_django_oidc.utils import (
     absolutify
 )
+from web.cases.models import Case
+from django.db.models import Count
 
 try:
     from urllib.parse import urlencode
@@ -126,7 +128,7 @@ class FederationUserList(UserPassesTestMixin, TemplateView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, GEBRUIKERS_BEHEERDER])
+        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
 
 
 class UserUpdateView(UserPassesTestMixin, UpdateView):
@@ -165,7 +167,7 @@ class FederationUserUpdateView(UserPassesTestMixin, UpdateView):
         return queryset
 
     def test_func(self):
-        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, GEBRUIKERS_BEHEERDER])
+        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangepast" % self.object.username)
@@ -181,35 +183,93 @@ class UserCreationView(UserPassesTestMixin, CreateView):
     def test_func(self):
         return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data['profile_form'] = ProfileForm(self.request.POST, self.request.FILES)
-        else:
-            data['profile_form'] = ProfileForm()
-        return data
-
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        context = self.get_context_data()
-        profile_form = context['profile_form']
-        form = self.get_form()
-
-        if form.is_valid() and profile_form.is_valid():
-            return self.form_valid(form, profile_form)
-        else:
-            return self.form_invalid(form, profile_form)
-
-    def form_invalid(self, form, profile_form):
-        return self.render_to_response(self.get_context_data(form=form, profile_form=profile_form))
-
-    def form_valid(self, form, profile_form):
+    def form_valid(self, form):
         user = form.save(commit=True)
-        profile = profile_form.save(commit=False)
+        profile = Profile()
         profile.user = user
         profile.save()
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
         return super().form_valid(form)
+
+
+class UserCreationFederationView(UserPassesTestMixin, CreateView):
+    model = User
+    template_name_suffix = '_federation_create_form'
+    form_class = UserCreationFederationForm
+    success_url = reverse_lazy('federation_user_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        user_type_choices = [ut for ut in User.user_types if ut[0] in [ONBEKEND, FEDERATIE_BEHEERDER]]
+        if self.request.user.federation.organization:
+            user_type_choices = [[ut, USER_TYPES_DICT[int(ut)]] for ut in self.request.user.federation.organization.rol_restrictions]
+        kwargs.update({
+            'user_type_choices': user_type_choices
+        })
+        return kwargs
+
+    def test_func(self):
+        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.federation = self.request.user.federation
+        user.save()
+        profile = Profile()
+        profile.user = user
+        profile.save()
+        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
+        return super().form_valid(form)
+
+
+class UserDelete(UserPassesTestMixin, DeleteView):
+    model = User
+    template_name_suffix = '_delete'
+    success_url = reverse_lazy('user_list')
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        cases = Case.objects.all()
+        cases = cases.annotate(num_profiles=Count('profile'))
+        cases = cases.filter(num_profiles=1)
+        cases = cases.filter(profile=self.object.profile)
+        kwargs.update({
+            'cases': cases,
+        })
+        return kwargs
+
+    def test_func(self):
+        return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
+
+    def delete(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.profile.delete()
+        return super().delete(request, *args, **kwargs)
+
+
+class UserFederationDelete(UserPassesTestMixin, DeleteView):
+    model = User
+    template_name_suffix = '_federation_delete'
+    success_url = reverse_lazy('federation_user_list')
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        cases = Case.objects.all()
+        cases = cases.annotate(num_profiles=Count('profile'))
+        cases = cases.filter(num_profiles=1)
+        cases = cases.filter(profile=self.object.profile)
+        kwargs.update({
+            'cases': cases,
+        })
+        return kwargs
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(federation=self.request.user.federation)
+        return queryset
+
+    def test_func(self):
+        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
 
 
 class OIDCAuthenticationRequestView(DatapuntOIDCAuthenticationRequestView):

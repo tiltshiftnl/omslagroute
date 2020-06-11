@@ -12,6 +12,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm as DefaultUserCreationForm
 from web.forms.widgets import CheckboxSelectMultiple
 from django.forms.utils import ErrorList
+from django.utils.translation import ugettext_lazy as _
 
 
 class FilterListForm(forms.Form):
@@ -73,20 +74,40 @@ class FederationUserUpdateForm(forms.ModelForm):
         self.fields['user_type'].choices = user_type_choices
 
 
-class UserCreationForm(DefaultUserCreationForm):
-    username = forms.CharField(
-        widget=forms.TextInput(
-            attrs={'disabled': 'disabled'}
-        ),
-        required=False
+class UserCreationForm(forms.ModelForm):
+    username = forms.EmailField(
+        label=_('E-mailadres (gebruikersnaam)'),
+        required=True
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['federation'].label = 'Organisatie'
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'federation',
+            'user_type',
+        )
+
+class UserCreationFederationForm(forms.ModelForm):
+    username = forms.EmailField(
+        label=_('E-mailadres (gebruikersnaam)'),
+        required=True
+    )
     class Meta:
         model = User
         fields = (
             'username',
             'user_type',
         )
+
+    def __init__(self, *args, **kwargs):
+        user_type_choices = kwargs.pop('user_type_choices', ())
+        super().__init__(*args, **kwargs)
+        self.fields['user_type'].choices = user_type_choices
 
 
 class ProfileForm(forms.ModelForm):

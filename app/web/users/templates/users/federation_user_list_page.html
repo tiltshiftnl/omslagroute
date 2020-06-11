@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %} - Alle gebruikers{% endblock %}
+{% block title %} - Alle gebruikers van {{ request.user.federation.name }}{% endblock %}
 
 {% block breadcrumb %}
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step sr-only" aria-current="location">Alle gebruikers</li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Alle gebruikers van {{ request.user.federation.name }}</li>
         </ol>
     </nav>
 {% endblock %}
 
 {% block main %}
-    <h2>Al je federatie gebruikers</h2>
+    <h2>Alle gebruikers van {{ request.user.federation.name }}</h2>
+    <div class="details-admin screen-only">
+        <a href="{% url 'create_user_federation' %}" class="button button--primary">Nieuwe gebruiker</a>
+    </div>
     <form method="get" class="u-margin-bottom-2x">
         <div class="form-field form-field--checkboxselectmultiple">
             <label>Filter op gebruiker rol</label>
@@ -24,7 +27,7 @@
     <table class="case-list table--interactive">
         <thead>
             <tr>
-                <th>E-mailadres (username)</th>
+                <th>E-mailadres (gebruikersnaam)</th>
                 <th>Voornaam</th>
                 <th>Achternaam</th>
                 <th>Gebruiker rol</th>

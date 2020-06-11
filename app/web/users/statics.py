@@ -6,7 +6,7 @@ USER_TYPES = (
     (5, 'Persoonlijk begeleider'),
     (6, 'Onbekend'),
     (7, 'Gebruikers beheerder'),
-    (8, 'Federatie beheerder'),
+    (8, 'Organisatie beheerder'),
 )
 USER_TYPES_DICT = dict((ut[0], ut[1]) for ut in USER_TYPES)
 
