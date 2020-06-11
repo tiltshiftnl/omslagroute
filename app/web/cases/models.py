@@ -370,6 +370,54 @@ class CaseBase(PrintableModel):
         return self.EMPTY_VALUE
 
     @property
+    def woningcorporatie_akkoord_met_omklap_value(self):
+        if self.woningcorporatie_akkoord_met_omklap:
+            return DEFAULT_YES_OR_NO_DICT[self.woningcorporatie_akkoord_met_omklap]
+        return self.EMPTY_VALUE
+
+    @property
+    def urgentiecriteria_zinvolle_dagbesteding_akkoord_value(self):
+        if self.urgentiecriteria_zinvolle_dagbesteding_akkoord:
+            return DEFAULT_YES_OR_NO_DICT[self.urgentiecriteria_zinvolle_dagbesteding_akkoord]
+        return self.EMPTY_VALUE
+
+    @property
+    def urgentiecriteria_functioneert_psychisch_akkoord_value(self):
+        if self.urgentiecriteria_functioneert_psychisch_akkoord:
+            return DEFAULT_YES_OR_NO_DICT[self.urgentiecriteria_functioneert_psychisch_akkoord]
+        return self.EMPTY_VALUE
+
+    @property
+    def urgentiecriteria_is_financieel_stabiel_akkoord_value(self):
+        if self.urgentiecriteria_is_financieel_stabiel_akkoord:
+            return DEFAULT_YES_OR_NO_DICT[self.urgentiecriteria_is_financieel_stabiel_akkoord]
+        return self.EMPTY_VALUE
+
+    @property
+    def urgentiecriteria_functioneert_sociaal_akkoord_value(self):
+        if self.urgentiecriteria_functioneert_sociaal_akkoord:
+            return DEFAULT_YES_OR_NO_DICT[self.urgentiecriteria_functioneert_sociaal_akkoord]
+        return self.EMPTY_VALUE
+
+    @property
+    def urgentiecriteria_kinderen_gezonde_akkoord_value(self):
+        if self.urgentiecriteria_kinderen_gezonde_akkoord:
+            return DEFAULT_YES_OR_NO_DICT[self.urgentiecriteria_kinderen_gezonde_akkoord]
+        return self.EMPTY_VALUE
+
+    @property
+    def partner_check_value(self):
+        if self.partner_check:
+            return DEFAULT_NO_OR_YES_DICT[self.partner_check]
+        return self.EMPTY_VALUE
+
+    @property
+    def kinderen_check_value(self):
+        if self.kinderen_check:
+            return DEFAULT_NO_OR_YES_DICT[self.kinderen_check]
+        return self.EMPTY_VALUE
+
+    @property
     def jonger_dan_26_value(self):
         if self.jonger_dan_26:
             return JONGER_DAN_26_DICT[self.jonger_dan_26]
