@@ -178,6 +178,12 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    medische_problemen_mbt_traplopen_check = models.PositiveSmallIntegerField(
+        verbose_name=_('Zijn er medische problemen m.b.t. traplopen?'),
+        choices=DEFAULT_NO_OR_YES,
+        blank=True,
+        null=True,
+    )
     medische_problemen_wooneisen = models.TextField(
         verbose_name=_('Zo ja, benedenwoning of woning met lift? Anders?'),
         blank=True,
