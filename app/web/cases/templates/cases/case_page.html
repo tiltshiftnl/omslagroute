@@ -117,51 +117,12 @@
 
     {% block processtappen %}
     <!-- START PROCESSTAPPEN -->
-    <section class="section section--forms">
-        <h2 class="h3">Stappen Omslagroute</h2>
-        <ul>
-        {% for moment in moment_list %}
-        <li>
-            <div class="dot dot--large"></div>
-                {% client_status object 'basis-gegevens' as status %}
-                <strong class="h4">
-                {% if moment.form %}
-                    {% if request.user|is_begeleider %}
-                    <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
-                    {% endif %}
-                    {% if request.user|is_wonen_medewerker %}
-                    <a href="{% url 'case_version_form' object.id moment.form %}">{{ moment.name }}</a>
-                    {% endif %}
-                {% else %}
-                {{ moment.name }}
-                {% endif %}
-                </strong>
-                <div class="form-link--statuscontainer">
-                
-                {% if moment.form %}
-                    {% client_submitted_form object moment.form as case_status %}
-                    {% if case_status %}
-                        {{case_status}}
-                        <span class="form-link form-link--added label {% if object.status == 2 %}label--status-disapproved{% elif object.status == 3 %}label--status-approved{% elif object.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
-                        <span class="form-link form-link--added">{{ case_status.created|date:"j b Y H:i" }}</span>
-                    {% else %}
-                        <span class="form-link form-link--added">
-                        Nog niet ingediend
-                        </span>
-                    {% endif %}
-                {% endif %}
-
-                <span class="form-link form-link--added">{% if moment.form %}{% client_status object moment.form as status %}{{ status.percentage }}%{% endif %}</span>
-            </div>
-        </li>
-        {% endfor %}
-        </ul>
-
+    <section class="section section--forms section--mijn-clienten">
+        
         <table class="moment-list">
             <thead>
                 <tr>
-                    <th colspan="2" width="250">Stap in omslagroute</th>
-                    <th>Laatst opgeslagen</th>
+                    <th colspan="2">Stap in omslagroute</th>
                     <th>Status</th>
                     <th>Status datum</th>
                     <th>Status door</th>
@@ -187,15 +148,11 @@
                             </strong>
                         </td>
                         <td>
-                            <span class="show-on-mobile">Laatst opgeslagen:</span>
-                            
-                        </td>
-                        <td>
                             <span class="show-on-mobile">Status:</span>
                             {% if moment.form %}
                                 {% client_submitted_form object moment.form as case_status %}
                                 {% if case_status %}
-                                    <span class="label {% if object.status == 2 %}label--status-disapproved{% elif object.status == 3 %}label--status-approved{% elif object.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
+                                    <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
                                 {% else %}
                                     <span class="form-link form-link--added">
                                     Nog niet ingediend
