@@ -22,7 +22,7 @@
     <hr class="" />
     {% if unlinked_users %}
     <div class="content-wrapper">
-        <a href="{% url 'case_remove_invited_users' instance.id %}" class="link-manage">Beëindig samenwerking</a>
+        <a href="{% url 'case_remove_invited_users' instance.id %}" class="link-manage">Beheer samenwerking</a>
     </div>
     <form method="post">
         {% csrf_token %}
