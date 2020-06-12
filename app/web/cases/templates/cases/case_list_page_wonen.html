@@ -55,7 +55,7 @@
                     </td>
                     <td>
                         <span class="show-on-mobile">Status:</span>
-                        {{ object.status|status_verbose }}
+                        <span class="label {% if object.status == 2 %}label--status-disapproved{% elif object.status == 3 %}label--status-approved{% elif object.status == 4 %}label--status-pending{% endif %}">{{ object.status|status_verbose }}</span>
                     </td>
                     <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
                 </tr>
