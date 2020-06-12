@@ -19,30 +19,53 @@
 <section class="section section--mijn-clienten">
     <h2>Alle bijlagen bij cliënt: {{ case.client_name }}</h2>
 
-    <ul class="list-as-table u-width-60">
+    <table class="case-list">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Bestandstype</th>
+                <th>Datum</th>
+                <th>Bewerk</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in document_list %}
+                <tr>
+                    <td>
+                        <span class="show-on-mobile">Naam:</span>
+                        <a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Bestandstype:</span>
+                        <span>{{ document.extension }}</span>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Datum:</span>
+                        <span> {{ document.uploaded|date:"d-m-y H:i" }} </span>
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Bewerk:</span>
+                        <a href="{% url 'update_case_document' object.id document.id %}" title="Bijlage aanpassen" class="u-color-black u-margin-right">
+                            <svg class="button__icon"  width="20" height="20" >
+                                <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20"></use>
+                            </svg></a><a href="#" title="Bijlage verwijderen" class="u-color-black"><svg class="button__icon"  width="20" height="20" >
+                                <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    {% for document in document_list %}
-        <li>
-            <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span>
-                <a href="{% url 'update_case_document' object.id document.id %}" title="Bijlage aanpassen" class="u-color-black">
-                    <svg class="button__icon"  width="20" height="20" >
-                        <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20"></use>
-                    </svg>
-                </a>
-                <a href="#" title="Bijlage verwijderen" class="u-color-black">
-                    <svg class="button__icon"  width="20" height="20" >
-                        <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
-                    </svg>
-                </a>    
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="u-margin-top-3x">
+
     <a href="{% url 'add_case_document' case.id %}" class="button button--primary" title="Voeg een nieuwe bijlage toe">
         Nieuwe bijlage
     </a>
     <a href="{% url 'case' case.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
         Terug naar cliënt
     </a>
+</div>
 </section>
 {% endblock %}
