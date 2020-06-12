@@ -69,8 +69,8 @@ class CaseRemoveInvitedUsersForm(forms.Form):
     user = None
     instance = None
     user_list = forms.ModelMultipleChoiceField(
-        label=_('Met wie wil je samenwerken beëindigen voor deze cliënt?'),
-        help_text=_('Deze collega&rsquo;s kunnen:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
+        label=_('Met wie wil je níet meer samenwerken aan deze cliënt?'),
+        help_text=_('Wanneer je de samenwerking beëindigt kunnen deze collega’s géén:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
         queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
         widget=CheckboxSelectMultipleUser(attrs={'class': 'u-list-style-none scroll-list-container'}),
         required=True,
