@@ -191,6 +191,14 @@ FIELDS = (
         required=False,
         help_text='',
     ), {}),
+     ('medische_problemen_mbt_traplopen_check', forms.IntegerField(
+        label=_('Zijn er medische problemen met betrekking tot traplopen?'),
+        widget=RadioSelect(
+            choices=DEFAULT_NO_OR_YES,
+        ),
+        required=False,
+        help_text='',
+    ), {}),
     ('medische_problemen_wooneisen', forms.CharField(
         label=_('Zo ja, benedenwoning of woning met lift? Anders?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
@@ -519,7 +527,7 @@ URGENTIE_AANVRAAG = [
                 'title': 'Toelichting Wooneisen',
                 'description': '',
                 'fields': [
-                    'medische_problemen_mbt_traplopen',
+                    'medische_problemen_mbt_traplopen_check',
                     'medische_problemen_wooneisen',
                     'uitsluiting_stadsdeel_argumentatie',
                 ],
@@ -754,6 +762,9 @@ FORMS = (
                 'kinderen',
                 'section_kinderen_opvang',
                 )),
+            'medische_problemen_mbt_traplopen_check': ([1], (
+                'medische_problemen_wooneisen',
+            ))
 
         }},
     ),
