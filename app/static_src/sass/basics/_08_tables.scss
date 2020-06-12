@@ -100,12 +100,43 @@ tr:nth-of-type(even) {
     }
 }
 
-.case-list {
+.case-list,
+.moment-list {
     thead {
         border-bottom: 0.125rem solid $neutral-grey2;
     }
 
     td {
         max-width: 200px;
+        position: relative;
+    }
+}
+
+.moment-list {
+
+    td{
+        &:first-of-type {
+            padding-left: 55px;
+            &:before {
+                content: '';
+                position: absolute;
+                z-index: 2;
+                left: 1.75rem;
+                top: 1.25rem;
+                bottom: -1.5rem;
+                width: 2px;
+                margin-left: -1px;
+                background-color: #767676;
+                pointer-events: none;
+            }
+        }
+    }
+    .dot {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-.75rem);
+        z-index: 2;
     }
 }
