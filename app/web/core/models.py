@@ -3,6 +3,7 @@ from django.db.models.fields.related import ManyToManyField
 import datetime
 from textile import textile
 import json
+from django.core.files import File
 
 
 class PrintableModel(models.Model):
@@ -28,6 +29,12 @@ class PrintableModel(models.Model):
                     data[f.name] = 'Ja' if f.value_from_object(self) else 'Nee'
                 else:
                     data[f.name] = f.value_from_object(self)
+                if isinstance(data[f.name], File):
+                    try:
+                        data[f.name] = data[f.name].url
+                    except:
+                        data[f.name] = '-'
+
                 if isinstance(data[f.name], datetime.date):
                     data[f.name] = datetime.datetime.strftime(data[f.name], '%d-%m-%Y')
                 if isinstance(data[f.name], datetime.datetime):

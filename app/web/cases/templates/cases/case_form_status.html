@@ -6,10 +6,7 @@
     // vuex state
     var state = {
         user: {{ user_json|safe }},
-        caseObject: {
-            id: {{ object.id }}, 
-            client_name: "{{ object.client_name }}",
-        },
+        caseObject: {{ case_json|safe }},
         caseStatusOptions: {{ CASE_STATUS_DICT_JSON|safe }},
         form: "{{ form_data.slug }}",
         emailList: "{{ user_list }}",

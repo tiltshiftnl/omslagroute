@@ -176,6 +176,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
                 indent=1,
                 default=default
             ),
+            'case_json': json.dumps(self.object.to_dict()),
         })
         return super().get_context_data(**kwargs)
 

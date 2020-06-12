@@ -28,7 +28,12 @@
             </header>
 
             <dl>
-
+                <div v-for="(value, name) in caseObject">
+                    <dt>{{ name }}: </dt>
+                    <dd>
+                        {{ value.value }}
+                    </dd>
+                </div>
             </dl>
         </div>
         <!-- END Client basis gegevens -->
