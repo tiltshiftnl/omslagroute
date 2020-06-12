@@ -601,6 +601,42 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 
+class DocumentDelete(UserPassesTestMixin, DeleteView):
+    model = Document
+    form_class = DocumentForm
+    template_name_suffix = '_delete_form'
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return '%s?iframe=true' % reverse(
+            'case', 
+            kwargs={'pk': self.kwargs.get('case_pk')}
+        )
+
+    def test_func(self):
+        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+
+    def get_context_data(self, **kwargs):
+        try:
+            case = self.request.user.profile.cases.get(id=self.kwargs.get('case_pk'))
+        except:
+            raise Http404
+
+        form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
+
+        kwargs.update({
+            'case': case,
+            'shared_in_forms': [f for f in self.object.forms if f in form_status_list],
+        })
+        return super().get_context_data(**kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        document_name = self.get_object().name
+        response = super().delete(self, request, *args, **kwargs)
+        messages.add_message(self.request, messages.INFO, "De bijlage '%s' is verwijderd." % document_name)
+        return response
+
+
 @user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER])
 def download_document(request, case_pk, document_pk):
     try:

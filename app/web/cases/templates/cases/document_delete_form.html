@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load client_status_tags %}
+{% block title %}- Bijlage verwijderen{% endblock %}
+
+{% block skiplinks %}{% endblock %}
+{% block header %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block messages %}{% endblock %}
+{% block feedback %}{% endblock %}
+
+{% block main %}
+<div class="content-container form-delete-document-container">
+    <button data-handler="modal-close" class="button button--close">
+        <svg width="20" height="20" title="Sluit venster">
+            <use href="#close" xlink:href="#close" width="20" height="20"></use>
+        </svg>
+        <span class="sr-only">Sluit venster</span>
+    </button>
+    <div>
+        <h2>Bijlage verwijderen</h2>
+        <hr class="" />
+
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-field">
+            <p>Wil je de bijlage <strong>{{ object.name }}</strong> verwijderen?</p>
+            {% if shared_in_forms %}
+            <p>De bijlage wordt gedeeld met <strong>Wonen (gemeente)</strong> in {% if shared_in_forms|length == 1 %}het volgende formulier{% else %}de volgende formulieren{% endif %}:</p>
+            <ul>
+            {% for f in shared_in_forms %}
+                <li>{{ f|form_verbose }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>Deze bijlage is niet gedeeld.</p>
+            {% endif %}
+            </div>
+
+            <div class="form-field form-field--buttons screen-only">
+                <input type="submit" value="Verwijderen" class="button button--primary">
+                <a data-handler="modal-close" href="#" class="button button--secondary">Annuleren</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
