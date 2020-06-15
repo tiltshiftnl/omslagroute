@@ -143,7 +143,8 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
     def get_queryset(self):
         if self.request.user.user_type == BEGELEIDER:
             return self.request.user.profile.cases.all()
-        return super().get_queryset()
+        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
+        return super().get_queryset().filter(id__in=case_list)
 
 
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):

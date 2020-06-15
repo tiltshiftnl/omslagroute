@@ -139,7 +139,11 @@
                                 <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
                                 {% endif %}
                                 {% if request.user|is_wonen_medewerker %}
+                                {% if case_status %}
                                 <a href="{% url 'case_version_form' object.id moment.form %}">{{ moment.name }}</a>
+                                {% else %}
+                                <span>{{ moment.name }}</span>
+                                {% endif %}
                                 {% endif %}
                             {% else %}
                             {{ moment.name }}
