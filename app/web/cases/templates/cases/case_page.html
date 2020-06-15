@@ -23,7 +23,7 @@
     <div class="flex-container">
         <div class="flex-item u-margin-top-half">
             <h1>{{ object.client_name }}</h1>
-            <p class="u-font-size-small">Laatst opgeslagen: {{ object.saved|date:"j b Y H:i" }}</p>
+            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|date:"d-m-Y H:i" }}</small>
         </div>
         <div class="flex-item">
             {% if request.user|is_begeleider %}
