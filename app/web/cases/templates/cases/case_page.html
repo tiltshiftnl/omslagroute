@@ -21,6 +21,7 @@
 {% block main %}
 <section class="section section--client">
     <h1>{{ object.client_name }}</h1>
+    <P>Laatst opgeslagen: {{ object.saved|date:"j b Y H:i" }}</P>
         {% if request.user|is_begeleider %}
         <div class="details-admin screen-only">
             <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
