@@ -130,6 +130,7 @@
             </thead>
             <tbody>
                 {% for moment in moment_list %}
+                    {% client_submitted_form object moment.form as case_status %}
                     <tr>
                         <td colspan="2">
                             <div class="dot dot--large"></div>
@@ -149,30 +150,25 @@
                         </td>
                         <td>
                             <span class="show-on-mobile">Status:</span>
-                            {% if moment.form %}
-                                {% client_submitted_form object moment.form as case_status %}
-                                {% if case_status %}
-                                    <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
-                                {% else %}
-                                    <span class="form-link form-link--added">
-                                    Nog niet ingediend
-                                    </span>
-                                {% endif %}
+                            {% if case_status %}
+                                <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
+                            {% elif moment.form %}
+                                <span class="form-link form-link--added">
+                                Nog niet ingediend
+                                </span>
                             {% endif %}
                         </td>
                         <td>
-                            {% if moment.form %}
-                            {% client_submitted_form object moment.form as case_status %}
-                            {% if case_status %}
+                        {% if case_status %}
                             <span class="show-on-mobile">Status datum:</span>
                             <span class="form-link form-link--added">{{ case_status.created|date:"j b Y H:i" }}</span>
-
-                            {% endif %}
-                            {% endif %}
+                        {% endif %}
                         </td>
                         <td>
+                        {% if case_status %}
                             <span class="show-on-mobile">Status door:</span>
-                            
+                            <span class="form-link form-link--added">{{ case_status.profile.user.username }}</span>
+                        {% endif %}
                         </td>
                         <td class="u-no-wrap"></td>
                     </tr>
