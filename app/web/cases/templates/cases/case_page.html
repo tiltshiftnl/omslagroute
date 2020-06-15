@@ -152,7 +152,7 @@
                                 {% if case_status %}
                                     <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
                                 {% else %}
-                                    <span class="form-link form-link--added">
+                                    <span class="u-font-size-small">
                                     Nog niet ingediend
                                     </span>
                                 {% endif %}
@@ -163,16 +163,17 @@
                             {% client_submitted_form object moment.form as case_status %}
                             {% if case_status %}
                             <span class="show-on-mobile">Status datum:</span>
-                            <span class="form-link form-link--added">{{ case_status.created|date:"j b Y H:i" }}</span>
+                            <span class="u-font-size-small">{{ case_status.created|date:"j b Y H:i" }}</span>
 
                             {% endif %}
                             {% endif %}
                         </td>
                         <td>
                             <span class="show-on-mobile">Status door:</span>
-                            
+                            <span class="u-font-size-small">
+                                pber@zorginstelling.nl
+                                </span>
                         </td>
-                        <td class="u-no-wrap"></td>
                     </tr>
                 {% endfor %}
             </tbody>
