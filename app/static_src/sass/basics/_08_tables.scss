@@ -100,6 +100,14 @@ tr:nth-of-type(even) {
     }
 }
 
+.case-list,
+.moment-list {
+    
+    td {
+        position: relative;
+    }
+}
+
 .case-list {
     thead {
         border-bottom: 0.125rem solid $neutral-grey2;
@@ -107,5 +115,55 @@ tr:nth-of-type(even) {
 
     td {
         max-width: 200px;
+     }
+}
+.moment-list {
+    border-collapse: collapse;
+    border-top: 0;
+    tr {
+        position: relative;
+        background-color: #f5f5f5;
+        padding: 1rem 1rem 1rem 0;
+        
+    }
+    td{
+        padding-top: 1.1rem;
+        padding-bottom: 1.1rem;
+        &:first-of-type {
+            padding-left: 55px;
+            &:before {
+                content: '';
+                position: absolute;
+                z-index: 2;
+                left: 1.75rem;
+                top: 1.25rem;
+                bottom: -1.5rem;
+                width: 2px;
+                margin-left: -1px;
+                background-color: #767676;
+                pointer-events: none;
+            }
+        }
+    }
+
+    thead {
+        tr {
+            display: table-row;
+            background-color: transparent;
+        }
+    }
+    tbody {
+        tr {
+
+        border-bottom: .25rem solid $primary-white;
+        }
+    }
+    .dot {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-.75rem);
+        z-index: 2;
     }
 }
