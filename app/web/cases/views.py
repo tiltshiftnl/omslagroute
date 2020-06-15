@@ -332,7 +332,9 @@ class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        case = form.save(commit=True)
+        case = form.save(commit=False)
+        case.saved_by = self.request.user.profile
+        case.save()
         self.request.user.profile.cases.add(case)
         messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangemaakt." % case.client_name)
         return response
