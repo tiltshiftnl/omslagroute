@@ -20,16 +20,24 @@
 
 {% block main %}
 <section class="section section--client">
-    <h1>{{ object.client_name }}</h1>
-    <P>Laatst opgeslagen: {{ object.saved|date:"j b Y H:i" }}</P>
-        {% if request.user|is_begeleider %}
-        <div class="details-admin screen-only">
-            <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                Samenwerken ({{ linked_users|length }})
-            </a>
+    <div class="flex-container">
+        <div class="flex-item u-margin-top-half">
+            <h1>{{ object.client_name }}</h1>
+            <p class="u-font-size-small">Laatst opgeslagen: {{ object.saved|date:"j b Y H:i" }}</p>
         </div>
-        {% endif %}
-
+        <div class="flex-item">
+            {% if request.user|is_begeleider %}
+            <div class="details-admin screen-only">
+                <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                    Samenwerken ({{ linked_users|length }})
+                </a>
+            </div>
+            {% endif %}
+    
+        </div>
+    </div>
+    
+        
 
         <div role="dialog" class="modal" id="modalInvite">
             <iframe class="modal--invite" id="iframeInvite" src="{% url 'case_invite_users' object.id  %}">
