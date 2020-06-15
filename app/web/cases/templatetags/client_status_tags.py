@@ -41,4 +41,4 @@ def status_verbose(status):
 
 @register.filter()
 def form_verbose(form):
-    return FORMS_BY_SLUG.get(form).get('title')
+    return FORMS_BY_SLUG.get(form, {}).get('title')

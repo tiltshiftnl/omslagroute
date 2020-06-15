@@ -23,7 +23,7 @@
     <div class="flex-container">
         <div class="flex-item u-margin-top-half">
             <h1>{{ object.client_name }}</h1>
-            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|date:"d-m-Y H:i" }}</small>
+            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, '{{ object.saved_form|form_verbose }}'{% endif %}</small>
         </div>
         <div class="flex-item">
             {% if request.user|is_begeleider %}

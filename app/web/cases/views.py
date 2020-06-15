@@ -290,8 +290,11 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        document_list = form.cleaned_data.get('document_list')
         slug = self.kwargs.get('slug')
+        self.object.saved_by = self.request.user.profile
+        self.object.saved_form = slug
+        self.object.save()
+        document_list = form.cleaned_data.get('document_list')
         for doc in form.fields['document_list'].queryset:
             if doc in document_list and slug not in doc.forms:
                 doc.forms.append(slug)

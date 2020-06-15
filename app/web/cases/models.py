@@ -21,6 +21,19 @@ class CaseBase(PrintableModel):
         verbose_name=_('Opgeslagen datum/tijd'),
         auto_now=True,
     )
+    saved_by = models.ForeignKey(
+        to='profiles.Profile',
+        verbose_name=_('Opgeslagen door'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    saved_form = models.CharField(
+        verbose_name=_('Formulier'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
     client_first_name = models.CharField(
         verbose_name=_('Client voornaam'),
         max_length=100,
