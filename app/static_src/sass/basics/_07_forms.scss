@@ -330,6 +330,10 @@ textarea {
     &[disabled] {
         color: $neutral-grey3;
     }
+
+    .form-field--empty & {
+        border: 2px solid $primary-red;
+    }
 }
 textarea {
     line-height: 1.4;
@@ -557,6 +561,12 @@ ul.form-field__radiogroup,
         // box-shadow: 0 0 0 .3125em orange; #Amsterdam.nl style
         outline: .063rem dotted #212121;
         outline: .313rem auto -webkit-focus-ring-color;
+    }
+
+    .form-field--empty & {
+        &::before {
+            border-color: $primary-red;
+        }
     }
 }
 
@@ -835,4 +845,34 @@ select {
      label + ul {
         margin-top: .475rem;
     }
+ }
+
+// ********************
+// CHECKBOX MULTIPLESELECT DOCUMENTS
+// ********************
+
+.section--step-required-fields {
+    color: $primary-red;
+    border: 2px solid $primary-red;
+    padding: 15px;
+    margin: 2rem 0;
+    * {
+        color: inherit;
+    }
+
+    *:first-child {
+        margin-top: 0;
+    }
+ }
+
+ .form-field-error-message {
+    margin: -1.5rem 0 1.5rem;
+    color: $primary-red;
+    display: none;
+ }
+ .form-field--empty:not(.hide-animated) {
+
+     + .form-field-error-message {
+        display: block;
+     }
  }
