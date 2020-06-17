@@ -23,7 +23,7 @@
     <div class="flex-container">
         <div class="flex-item u-margin-top-half">
             <h1>{{ object.client_name }}</h1>
-            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, '{{ object.saved_form|form_verbose }}'{% endif %}</small>
+            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, <br>'{{ object.saved_form|form_verbose }}'{% endif %}</small>
         </div>
         <div class="flex-item">
             {% if request.user|is_begeleider %}
@@ -87,7 +87,7 @@
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
                 <a href="{% url 'add_case_document' object.id %}" class="u-float-right u-underline--none u-margin-top-2x" title="Voeg een nieuwe bijlage toe">
-                    + <span class="u-underline">Nieuw bijlage</span>
+                    + <span class="u-underline">Nieuwe bijlage</span>
                 </a>
             </header>
 
@@ -114,9 +114,8 @@
             {% endfor %}
 
             </ul>
-            {% if object.document_set.all|length > 3 %}
-            <a href="{% url 'case_document_list' object.id %}" class="">Alle bijlages</a>
-            {% endif %}
+            <a href="{% url 'case_document_list' object.id %}" class="u-underline--none"><span class="u-underline">Overzicht alle bijlagen</span> ></a>
+            
         </div>
         <!-- END BIJLAGE -->
         {% endif %}
