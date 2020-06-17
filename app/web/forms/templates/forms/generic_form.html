@@ -244,7 +244,7 @@
                         <div class="section--form__navigation">
                             <ul>
                                 {% for section in form.as_sections.sections %}
-                                    <li>
+                                    <li class="{% if section.step_complete %}section-complete{% endif %}">
                                         <a href="#{{ section.title|slugify }}">
                                             <span class="dot dot--large"></span>
                                             {{ section.title }}
@@ -254,7 +254,7 @@
                                         <ul>
                                             {% for sub_section in section.section_list %}
                                                 {% if sub_section.title %}
-                                                <li>
+                                                <li class="{% if sub_section.step_complete %}section-complete{% endif %}">
                                                     <a href="#{{ sub_section.title|slugify }}">
                                                         <span class="dot dot--small"></span>
                                                         {{ sub_section.title }}
