@@ -55,6 +55,10 @@
                 }
                 dt {
                     font-weight: bold;
+                    flex-basis: 35%;
+                }
+                dd {
+                    flex-basis: 65%;
                 }
             }
         }
