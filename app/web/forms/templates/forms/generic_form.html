@@ -22,6 +22,25 @@
     {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
 
+                        <!-- START step required fields -->
+                        <div class="section--step-required-fields">
+                            <ul>
+                            {% for section in form.as_sections.sections %}
+                            {% for sub_section in section.section_list %}
+                            {% for field in sub_section.fields %}
+                            {% if not field.object.field_step_complete %}
+                                <li id="step-required-{{ field.object.name }}">
+                                    {{ field.object.verbose_name }}
+                                </li>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            {% endfor %}
+                            </ul>
+                        </div>
+                        <!-- END step required fields -->
+
+
         <div class="grid__wrapper">
             <div class="grid__main">
 
