@@ -19,7 +19,7 @@
                     <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
                 </svg>
             </span>
-            <span>{{ caseStatusOptions[currentCaseStatus.status].current }}</span>
+            <span>{{ caseStatusPrefix }}{{ caseStatusOptions[currentCaseStatus.status].current }}</span>
         </p>
         <div class="form-field">
             <button v-if="currentCaseStatus.status !== 3" 
@@ -115,6 +115,7 @@ export default {
         },
         statusHistory: [],
         caseStatusOptions: {},
+        caseStatusPrefix: '',
         title: null,
         caseId: null,
         form: null,
@@ -172,6 +173,9 @@ export default {
                         Number(status.case) === Number(this.caseId) && 
                         status.form === this.form
                     )
+                    if (filtered.length > 1 && filtered[0].status === 1){
+                        this.caseStatusPrefix = 'Opnieuw ';
+                    }
                     this.currentCaseStatus = filtered[0] || {'status': 1};
                     filtered.shift();
                     this.statusHistory = filtered;
@@ -187,6 +191,7 @@ export default {
             axios.post(`/api/casestatus/`, this.nextCaseStatus)
                 .then((response) => {
                     this.loading = false;
+                    this.caseStatusPrefix = '';
                     this.nextCaseStatus.status_comment = null;
                     this.getCaseStatusList();
                 })

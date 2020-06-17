@@ -74,7 +74,7 @@
                                 </svg>
                                 Afgekeurd
                                 {% elif case_status_list.0.status == 1 %}
-                                Ingediend
+                                {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw ingediend{% else %}Ingediend{% endif %}
                                 {% elif case_status_list.0.status == 4 %}
                                 <svg class="pause__icon" width="16" height="16">
                                     <use href="#pause" xlink:href="#pause" width="16" height="16"></use>

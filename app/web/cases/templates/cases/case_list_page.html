@@ -60,7 +60,9 @@
                     <td>
                         <span class="show-on-mobile">Status:</span>
                         {% if case_status_list %}
-                        <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">{{ case_status_list.0.status|status_verbose }}</span>
+                        <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">
+                            {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw {% endif %}{{ case_status_list.0.status|status_verbose }}
+                        </span>
                         {% else %}
                         {% endif %}
                     </td>

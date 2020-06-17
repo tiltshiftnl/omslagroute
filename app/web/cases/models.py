@@ -564,6 +564,14 @@ class CaseStatus(models.Model):
         null=True,
     )
 
+    @property
+    def is_first_of_statustype(self):
+        return CaseStatus.objects.filter(
+            case=self.case, 
+            status=self.status, 
+            form=self.form, 
+        ).count() <= 1
+
     def __str__(self):
         locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
         return mark_safe('<div><span>%s</span><small>%s</small><small>%s</small></div>' % (
