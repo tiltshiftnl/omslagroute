@@ -21,7 +21,7 @@ class BaseGenericForm:
 
     def as_sections(self):
         return self._html_section_output(
-            normal_row='<div %(html_class_attr)s %(data_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
+            normal_row='<div %(wrapper_id_attr)s %(html_class_attr)s %(data_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
             checkbox_row='<div %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
             clearablefileinput_row='<div %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s <div id="file-upload-filename" class="form-field__uploaded"></div></div>',
             error_row='%s',
@@ -40,6 +40,7 @@ class BaseGenericForm:
             data_attr = ''
             row = normal_row
             bf = self[name]
+            wrapper_id = ' id="form-field-%s"' % name
             bf_type = bf.field.widget.__class__.__name__.lower()
             bf_is_empty = not bool(bf.value())
             bf_is_readonly = name in self.options.get('readonly_fields', [])
@@ -104,6 +105,7 @@ class BaseGenericForm:
                     'help_text': help_text,
                     'html_class_attr': html_class_attr,
                     'data_attr': data_attr,
+                    'wrapper_id_attr': wrapper_id,
                     'css_classes': css_classes,
                     'field_step_complete': not FIELDS_REQUIRED_DICT.get(bf.name) or not bf_is_empty,
                     'verbose_name': bf.label,

@@ -252,9 +252,13 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def get_success_url(self):
         next = self.request.POST.get('next')
+        default_url = reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
+        percentage = self.object.status(FORMS_BY_SLUG.get(self.kwargs.get('slug'), {}).get('sections')).get('percentage')
+        if percentage < 100 and next:
+            return '%s?control=1' % default_url
         if next:
             return next
-        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
+        return default_url
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
