@@ -55,6 +55,11 @@
                     </td>
                     <td>
                         <span class="show-on-mobile">Status:</span>
+                        {% if object.status != 1 and object.case_form_is_opnieuw_ingediend %} 
+                        <span class="label">
+                            Opnieuw ingediend
+                        </span>
+                        {% endif %}
                         <span class="label {% if object.status == 2 %}label--status-disapproved{% elif object.status == 3 %}label--status-approved{% elif object.status == 4 %}label--status-pending{% endif %}">
                             {% if object.status == 1 and not object.is_first_of_statustype %}Opnieuw {% endif %}{{ object.status|status_verbose }}
                         </span>

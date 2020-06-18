@@ -573,6 +573,9 @@ class CaseStatus(models.Model):
         ).count() <= 1
 
     def __str__(self):
+        return self.html()
+
+    def html(self):
         locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
         return mark_safe('<div><span>%s</span><small>%s</small><small>%s</small></div>' % (
                 self.case.id,
@@ -580,6 +583,16 @@ class CaseStatus(models.Model):
                 self.created.strftime('%d %b %Y %H:%M:%S').lower()
             )
         )
+
+    @property
+    def case_form_is_opnieuw_ingediend(self):
+        status_list = CaseStatus.objects.order_by('-created')
+        status_list = status_list.filter(
+                form=self.form, 
+                case=self.case
+        )
+        first = status_list.first()
+        return first.status == 1 if first else False
         
     class Meta:
         verbose_name = _('Cliënt status')
