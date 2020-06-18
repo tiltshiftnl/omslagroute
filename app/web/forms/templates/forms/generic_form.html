@@ -180,8 +180,8 @@
                 {% if request.GET.control %}
                 <!-- START step required fields -->
                 <div class="section--step-required-fields" aria-live="polite">
-                    <h2 class="h5">De volgende velden moeten nog ingevuld worden</h2>
-                    <ul>
+                    <h2 class="h3">Het formulier kan niet verstuurd worden. Controleer de volgende velden:</h2>
+                    <ul class="u-list-style-none">
                     {% for section in form.as_sections.sections %}
                     {% for sub_section in section.section_list %}
                     {% for field in sub_section.fields %}

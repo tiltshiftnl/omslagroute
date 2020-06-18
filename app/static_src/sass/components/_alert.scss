@@ -112,3 +112,17 @@
         animation-delay: (($i - 1) * 3.5s);
     }
 }
+
+.alert-box {
+    border: 2px solid $primary-red;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+     > *:last-child {
+         margin-bottom: 0;
+     }
+
+     .form-field & {
+         max-width: 38.75rem;
+     }
+}
