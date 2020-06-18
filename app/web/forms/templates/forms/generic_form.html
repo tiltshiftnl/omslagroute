@@ -22,25 +22,6 @@
     {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
 
-                        <!-- START step required fields -->
-                        <div class="section--step-required-fields">
-                            <ul>
-                            {% for section in form.as_sections.sections %}
-                            {% for sub_section in section.section_list %}
-                            {% for field in sub_section.fields %}
-                            {% if not field.object.field_step_complete %}
-                                <li id="step-required-{{ field.object.name }}">
-                                    {{ field.object.verbose_name }}
-                                </li>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
-                            {% endfor %}
-                            </ul>
-                        </div>
-                        <!-- END step required fields -->
-
-
         <div class="grid__wrapper">
             <div class="grid__main">
 
@@ -140,6 +121,7 @@
                 {% endif %}
             
 
+
                 {% csrf_token %}
                 {{ form.as_sections.errors }}
 
@@ -160,6 +142,27 @@
                         </ul>
                     </div>
                 {% endif %}
+
+                <!-- START step required fields -->
+                <div class="section--step-required-fields" aria-live="polite">
+                    <h2 class="h5">De volgende velden moeten nog ingevuld worden</h2>
+                    <ul>
+                    {% for section in form.as_sections.sections %}
+                    {% for sub_section in section.section_list %}
+                    {% for field in sub_section.fields %}
+                    {% if not field.object.field_step_complete %}
+                        <li id="step-required-{{ field.object.name }}">
+                            <a href="#{{field.object.name }}">{{ field.object.verbose_name }}</a>
+                            
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
+                    </ul>
+                </div>
+                <!-- END step required fields -->
+
 
                 {% block all_sections %}
                 {% for section in form.as_sections.sections %}
@@ -191,7 +194,7 @@
 
                                 {% for field in sub_section.fields %}
                                     {{ field.rendered|safe }}
-
+                                    <span class="form-field-error-message">Vul dit veld goed in</span>
                                     {% get_case_versions case_versions field.object.name as history %}
                                     {% if history %}
                                     <div class="form-field form-field-history">
@@ -238,17 +241,10 @@
                     {% endif %}
                     <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
                     {% if form.instance.id and share %}
-                    {% if status.percentage < 100 %}
-                    <p class="text-link u-float-right" title=" Vul eerst alle verplichte velden in">
-                        <svg class="u-margin-right-half" width="16" height="20">
-                            <use href="#email" xlink:href="#email" width="16" height="20"></use>
-                        </svg><span>Controleren en versturen naar Wonen (gemeente)</span>
-                    </p>
-                    {% else %}
                     <button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="text-link u-float-right" >
                         <svg class="u-margin-right-half" width="16" height="20">
                             <use href="#email" xlink:href="#email" width="16" height="20"></use>
-                        </svg><span>Controleren en versturen naar Wonen (gemeente)</span></button>{% endif %}<small>&nbsp;{{ status.percentage }}%</small>{% endif %}
+                        </svg><span>Controleren en versturen naar Wonen (gemeente)</span></button>{% endif %}
 
                 </div>
 
