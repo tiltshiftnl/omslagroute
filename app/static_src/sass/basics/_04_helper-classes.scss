@@ -97,6 +97,10 @@
     border-color: $primary-black;
 }
 
+.u-clearfix {
+    @include clearfix;
+}
+
 .u-width-50 {
     width: 50%;
 }

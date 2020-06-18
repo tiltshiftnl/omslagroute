@@ -61,59 +61,93 @@
                         <!-- START STATUS -->
                         <div class="details-client details-client--status">
                             <h2 class="h3">Status aanvraag</h2>
-                            {% if case_status_list %}
-                            <p data-test>
-                                {% if case_status_list.0.status == 3 %}
-                                <svg class="check__icon" width="20" height="16">
-                                    <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                                </svg>
-                                Goedgekeurd
-                                {% elif case_status_list.0.status == 2 %}
-                                <svg class="close__icon" width="16" height="16">
-                                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                                </svg>
-                                Afgekeurd
-                                {% elif case_status_list.0.status == 1 %}
-                                {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw ingediend{% else %}Ingediend{% endif %}
-                                {% elif case_status_list.0.status == 4 %}
-                                <svg class="pause__icon" width="16" height="16">
-                                    <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                                </svg>
-                                In behandeling
-                                {% endif %}
-                            </p>
-                            <div class="status-container">
-                                <small class="facts">
-                                    {{ case_status_list.0.created|date:"j b Y H:i" }}<br/>{{ case_status_list.0.profile.user.username }}
-                                </small>
-                            </div>
-                            {% if case_status_list|length > 1 %}
-                                <div class="status-history-container form-field-history">
-                                    
-                                    <details>
-                                        <summary>Statushistorie<svg class="icon-details--closed" width="14" height="9">
-                                                <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                                            </svg><svg class="icon-details--open" width="14" height="9">
-                                                <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                                            </svg>
-                                        </summary>
-                                        <div class="content">
-                                            <ul class="u-list-style-none">
-                                                {% for case_status in case_status_list %}
-                                                {% if forloop.counter0 > 0 %}
-                                                <li>
-                                                    <div><small class="facts">{{ case_status.created|date:"j b Y H:i" }}<br/>{{ case_status.profile.user.username }}</small><small class="status">{{ case_status.status|status_verbose|capfirst }}</small></div>
-                                                </li>
-                                                {% endif %}
-                                                {% endfor %}
-                                            </ul>
+                            <div class="status--wrapper">
+                                {% if case_status_list %}
+                                <p data-test>
+                                    {% if case_status_list.0.status == 3 %}
+                                    <span class="icon-circle icon-circle--status-approved">
+                                        <svg class="icon check__icon" width="16" height="14">
+                                            <use href="#check" xlink:href="#check" width="16" height="14"></use>
+                                        </svg>
+                                    </span>
+                                    <strong>Goedgekeurd</strong>
+                                    {% elif case_status_list.0.status == 2 %}
+                                    <span class="icon-circle icon-circle--status-disapproved">
+                                        <svg class="icon close__icon" width="12" height="12">
+                                            <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                        </svg>
+                                    </span>
+                                    <strong>Afgekeurd</strong>
+                                    {% elif case_status_list.0.status == 1 %}
+                                    {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw ingediend{% else %}Ingediend{% endif %}
+                                    {% elif case_status_list.0.status == 4 %}
+                                    <span class="icon-circle icon-circle--status-pending">
+                                        <svg class="icon pause__icon" width="12" height="12">
+                                            <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
+                                        </svg>
+                                    </span>
+                                    <strong>In behandeling</strong>
+                                    {% endif %}
+                                </p>
+                                <div class="status-container">
+                                    <div class="facts">
+                                        <div class="u-clearfix">
+                                            <small>{{ case_status_list.0.created|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
                                         </div>
-                                    </details>
+                                        <p>{{ case_status_list.0.status_comment }}</p>
+                                    </div>
                                 </div>
-                            {% endif %}
-                            {% else %}
-                            <p>De aanvraag is nog niet verstuurd.</p>
-                            {% endif %}
+                                {% if case_status_list|length > 1 %}
+                                    <div class="status-history-container form-field-history">
+                                        
+                                        <details>
+                                            <summary>Historie<svg class="icon-details--closed" width="14" height="9">
+                                                    <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                                </svg><svg class="icon-details--open" width="14" height="9">
+                                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                                </svg>
+                                            </summary>
+                                            <div class="content">
+                                                <ul class="u-list-style-none">
+                                                    {% for case_status in case_status_list %}
+                                                    {% if forloop.counter0 > 0 %}
+                                                    <li>
+                                                        {% if case_status.status == 2 %}
+                                                        <span class="icon-circle icon-circle--status-disapproved">
+                                                            <svg class="icon close__icon" width="12" height="12">
+                                                                <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                                            </svg>
+                                                        </span>
+                                                        {% elif case_status.status == 3 %}
+                                                        <span class="icon-circle icon-circle--status-approved">
+                                                            <svg class="icon check__icon" width="16" height="14">
+                                                                <use href="#check" xlink:href="#check" width="16" height="14"></use>
+                                                            </svg>
+                                                        </span>
+                                                        {% elif case_status.status == 4 %}
+                                                        <span class="icon-circle icon-circle--status-pending">
+                                                            <svg class="icon pause__icon" width="12" height="12">
+                                                                <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
+                                                            </svg>
+                                                        </span>
+                                                        {% endif %}
+                                                        <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
+                                                        <div class="facts">
+                                                            <small>{{ case_status.created|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
+                                                            {% if case_status.status_comment %}<p>{{ case_status.status_comment }}</p>{% endif %}
+                                                        </div>
+                                                    </li>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </details>
+                                    </div>
+                                {% endif %}
+                                {% else %}
+                                <p>De aanvraag is nog niet verstuurd.</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </section>
                 </div>

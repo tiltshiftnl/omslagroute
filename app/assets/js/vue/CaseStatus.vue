@@ -1,99 +1,125 @@
 <template>
     <div>
-            <header>
-                <h2 class="h3">Status aanvraag</h2>
-            </header>
-        <p>
-            <span v-if="currentCaseStatus.status === 2">
-                <svg class="close__icon" width="16" height="16">
-                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                </svg>
-            </span>
-            <span v-if="currentCaseStatus.status === 3">
-                <svg class="check__icon" width="20" height="16">
-                    <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                </svg>
-            </span>
-            <span v-if="currentCaseStatus.status === 4">
-                <svg class="pause__icon" width="12" height="16">
-                    <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
-                </svg>
-            </span>
-            <span>{{ caseStatusPrefix }}{{ caseStatusOptions[currentCaseStatus.status].current }}</span>
-        </p>
-        <div class="form-field">
-            <button v-if="currentCaseStatus.status !== 3" 
-            v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)">
-                <svg class="check__icon" width="20" height="16">
-                    <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                </svg>
-                Goedkeuren
-            </button>
-            <button v-if="currentCaseStatus.status !== 2" 
-                v-on:click="setNextStatus(2)" v-bind:class="setButtonClass(2)">
-                <svg class="close__icon" width="16" height="16">
-                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                </svg>
-                Afkeuren
-            </button>
-            <button v-if="currentCaseStatus.status !== 4" 
-                v-on:click="setNextStatus(4)" v-bind:class="setButtonClass(4)">
-                <svg class="close__icon" width="12" height="16">
-                    <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
-                </svg>
-                In behandeling
-            </button>
-        </div>
-        <div v-if="nextCaseStatus.status" class="container-modal--vue">
-            <a href="#" class="modal-close--bg" v-on:click="setNextStatus(null)" ></a>
-            <div class="prompt-container show-prompt-approve" data-handler="prompt-approve">
-                <button v-on:click="setNextStatus(null)" class="button button--close">
-                    <svg width="20" height="20" title="Sluit venster">
-                        <use href="#close" xlink:href="#close" width="20" height="20"></use>
+        <header>
+            <h2 class="h3">Status aanvraag</h2>
+        </header>
+        <div class="status--wrapper">
+            <div>
+                <span v-if="currentCaseStatus.status === 2" class="icon-circle icon-circle--status-disapproved">
+                    <svg class="icon close__icon" width="12" height="12">
+                        <use href="#close" xlink:href="#close" width="12" height="12"></use>
                     </svg>
-                    <span class="sr-only">Sluit venster</span>
-                </button>
-                <h2>Status wijzigen</h2>
-                <div class="prompt-approve">
-                    <p>Weet je zeker dat je de status voor <strong>{{ title }}</strong> wilt wijzigen naar <strong>{{ statusText[nextCaseStatus.status] }}</strong>?</p>
-                    <p><strong>{{ emailList }}</strong> ontvangt hiervan een bevestiging per e-mail.</p>
-                    <form>
-                        <div class="form-field form-field--textarea screen-only u-margin-top-2x">
-                            <label for="status-message">Bericht (optioneel)</label>
-                            <textarea v-model="nextCaseStatus.status_comment" id="status-message" name="status-message" cols="40" rows="4"></textarea>
-                        </div>
-                        <span class="helptext">Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.</span>
-                        <div class="form-field form-field--buttons screen-only u-margin-top-2x">
-                            <button type="button" class="button button--primary"  v-on:click="addCaseStatus()">{{ buttonText[nextCaseStatus.status] }}</button>
-                            <button type="button" class="button button--secondary" v-on:click="setNextStatus(null)" data-handler="modal-close">Annuleren</button>
-                        </div>
-                    </form>
+                </span>
+                <span v-if="currentCaseStatus.status === 3" class="icon-circle icon-circle--status-approved">
+                    <svg class="icon check__icon" width="16" height="14">
+                        <use href="#check" xlink:href="#check" width="16" height="14"></use>
+                    </svg>
+                </span>
+                <span v-if="currentCaseStatus.status === 4" class="icon-circle icon-circle--status-pending">
+                    <svg class="icon pause__icon" width="12" height="12">
+                        <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
+                    </svg>
+                </span>
+                <span>{{ caseStatusPrefix }}{{ caseStatusOptions[currentCaseStatus.status].current }}</span>
+                <div class="status-container">
+                    <div class="facts">
+                        <small>{{ currentCaseStatus.created | luxon }} </small><small class="u-float-right">{{ currentCaseStatus.username }}</small>
+                        <p>{{ currentCaseStatus.status_comment}}</p>
+                    </div>
                 </div>
-
+                
             </div>
-        </div>
-        <div class="status-history-container form-field-history">
-            <details>
-                <summary>Statushistorie<svg class="icon-details--closed" width="14" height="9">
-                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                    </svg><svg class="icon-details--open" width="14" height="9">
-                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+            <div class="form-field u-margin-bottom-none">
+                <button v-if="currentCaseStatus.status !== 3" 
+                v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)">
+                    <svg class="check__icon" width="20" height="16">
+                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
                     </svg>
-                </summary>
-                <div class="content">
-                    <ul class="u-list-style-none">
-                        <li v-for="h in statusHistory" :key="h.id">
-                            <div>
-                                <small class="facts">
-                                    {{ h.created | luxon }}<br/>
-                                    {{ h.username }}
-                                </small>
-                                <small class="status">{{caseStatusOptions[h.status].current }}</small>
+                    Goedkeuren
+                </button>
+                <button v-if="currentCaseStatus.status !== 2" 
+                    v-on:click="setNextStatus(2)" v-bind:class="setButtonClass(2)">
+                    <svg class="close__icon" width="16" height="16">
+                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
+                    </svg>
+                    Afkeuren
+                </button>
+                <button v-if="currentCaseStatus.status !== 4" 
+                    v-on:click="setNextStatus(4)" v-bind:class="setButtonClass(4)">
+                    <svg class="close__icon" width="12" height="16">
+                        <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
+                    </svg>
+                    In behandeling
+                </button>
+            </div>
+        
+            <div v-if="nextCaseStatus.status" class="container-modal--vue">
+                <a href="#" class="modal-close--bg" v-on:click="setNextStatus(null)" ></a>
+                <div class="prompt-container show-prompt-approve" data-handler="prompt-approve">
+                    <button v-on:click="setNextStatus(null)" class="button button--close">
+                        <svg width="20" height="20" title="Sluit venster">
+                            <use href="#close" xlink:href="#close" width="20" height="20"></use>
+                        </svg>
+                        <span class="sr-only">Sluit venster</span>
+                    </button>
+                    <h2>Status wijzigen</h2>
+                    <div class="prompt-approve">
+                        <p>Weet je zeker dat je de status voor <strong>{{ title }}</strong> wilt wijzigen naar <strong>{{ statusText[nextCaseStatus.status] }}</strong>?</p>
+                        <p><strong>{{ emailList }}</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                        <form>
+                            <div class="form-field form-field--textarea screen-only u-margin-top-2x">
+                                <label for="status-message">Bericht (optioneel)</label>
+                                <textarea v-model="nextCaseStatus.status_comment" id="status-message" name="status-message" cols="40" rows="4"></textarea>
                             </div>
-                        </li>
-                    </ul>
+                            <span class="helptext">Als je een bericht wil meesturen met in de bevestings e-mail, dan kun je dat hier doen.</span>
+                            <div class="form-field form-field--buttons screen-only u-margin-top-2x">
+                                <button type="button" class="button button--primary"  v-on:click="addCaseStatus()">{{ buttonText[nextCaseStatus.status] }}</button>
+                                <button type="button" class="button button--secondary" v-on:click="setNextStatus(null)" data-handler="modal-close">Annuleren</button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-            </details>
+            </div>
+            <div class="status-history-container form-field-history">
+                <details>
+                    <summary>Historie<svg class="icon-details--closed" width="14" height="9">
+                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                        </svg><svg class="icon-details--open" width="14" height="9">
+                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                        </svg>
+                    </summary>
+                    <div class="content">
+                        <ul class="u-list-style-none">
+                            <li v-for="h in statusHistory" :key="h.id">
+                                
+                                 <span v-if="caseStatusOptions[h.status].id === 2" class="icon-circle icon-circle--status-disapproved">
+                                    <svg class="icon close__icon" width="12" height="12">
+                                        <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                    </svg>
+                                </span>
+                                <span v-if="caseStatusOptions[h.status].id === 3" class="icon-circle icon-circle--status-approved">
+                                    <svg class="icon check__icon" width="16" height="14">
+                                        <use href="#check" xlink:href="#check" width="16" height="14"></use>
+                                    </svg>
+                                </span>
+                                <span v-if="caseStatusOptions[h.status].id === 4" class="icon-circle icon-circle--status-pending">
+                                    <svg class="icon pause__icon" width="12" height="12">
+                                        <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
+                                    </svg>
+                                </span>
+                                <small class="status">{{caseStatusOptions[h.status].current }}</small>
+                                <div class="facts">
+                                     <div class="u-clearfix">
+                                         <small>{{ h.created | luxon }} </small><small class="u-float-right">{{ h.username }}</small>
+                                     </div>
+                                    <p>{{ h.status_comment}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
         </div>
     </div>
 </template>
