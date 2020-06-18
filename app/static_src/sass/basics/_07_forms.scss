@@ -331,7 +331,7 @@ textarea {
         color: $neutral-grey3;
     }
 
-    .form-field--empty & {
+    .section--form--control .form-field--step-required.form-field--empty & {
         border: 2px solid $primary-red;
     }
 }
@@ -563,7 +563,7 @@ ul.form-field__radiogroup,
         outline: .313rem auto -webkit-focus-ring-color;
     }
 
-    .form-field--empty & {
+    .section--form--control .form-field--step-required.form-field--empty & {
         &::before {
             border-color: $primary-red;
         }
@@ -870,7 +870,7 @@ select {
     color: $primary-red;
     display: none;
  }
- .form-field--empty:not(.hide-animated) {
+ .section--form--control .form-field--step-required.form-field--empty:not(.hide-animated) {
 
      + .form-field-error-message {
         display: block;

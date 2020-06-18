@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block main %}
-<section class="section section--form section--form-{{ title|slugify }} u-margin-bottom-sticky">
+<section class="section section--form section--form-{{ title|slugify }}{% if request.GET.control %} section--form--control{% endif %} u-margin-bottom-sticky">
     {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
 
@@ -143,6 +143,7 @@
                     </div>
                 {% endif %}
 
+                {% if request.GET.control %}
                 <!-- START step required fields -->
                 <div class="section--step-required-fields" aria-live="polite">
                     <h2 class="h5">De volgende velden moeten nog ingevuld worden</h2>
@@ -152,8 +153,7 @@
                     {% for field in sub_section.fields %}
                     {% if not field.object.field_step_complete %}
                         <li id="step-required-{{ field.object.name }}">
-                            <a href="#{{field.object.name }}">{{ field.object.verbose_name }}</a>
-                            
+                            <a href="#form-field-{{field.object.name }}">{{ field.object.verbose_name }}</a>
                         </li>
                     {% endif %}
                     {% endfor %}
@@ -162,6 +162,7 @@
                     </ul>
                 </div>
                 <!-- END step required fields -->
+                {% endif %}
 
 
                 {% block all_sections %}
