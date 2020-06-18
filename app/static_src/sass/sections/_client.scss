@@ -71,18 +71,23 @@
 
             .status-container,
             .status-history-container {
-                small {
+                z-index: 5;
+
+                .status {
+                    vertical-align: text-top;
+                }
+                .facts {
+                    @include clearfix;
+
+                    p {
+                        font-style: italic;
+                        font-size: smaller;
+                        margin: .25rem 0;
+                    }
+                }
+                small:not(.label) {
                     color: $neutral-grey4;
-
-                    &.facts {
-                        display: inline-block;
-                        width: 70%;
-                        line-height: 1.1;
-                    }
-
-                    &.status {
-                        vertical-align: top;
-                    }
+                    
                 }
 
 
@@ -91,28 +96,32 @@
                     position: relative;
 
                     details {
-                        margin: 1rem 0;
+                        margin: .25rem 0 0;
 
                         summary{
                             outline: 0;
-                            color: $neutral-grey4;
+                            color: $link-content;
                             text-decoration: underline;
+                            font-weight: bold;
                             cursor: pointer;
 
                             svg {
                                 vertical-align: baseline;
                                 margin-left: .5rem;
+                                color: $primary-black;
                             }
                         }
 
                         &[open]{
                             .content {
                                 position: absolute;
+                                top: 24px;
                                 left: -10px;
                                 width: calc(100% + 20px);
                                 background-color: $primary-white;
                                 border-color: $neutral-grey2;
-                                max-height: 10.2rem;
+                                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+                                max-height: 15rem;
                                 overflow: scroll;
                                 padding: 0;
                             }
@@ -129,6 +138,15 @@
                     }
                 }
             }
+                .status--wrapper {
+                    border: 2px solid $neutral-grey3;
+                    background-color: $neutral-grey1;
+                    padding: .5rem;
+
+                    .h3 {
+                        font-weight: bold;
+                    }
+                }
         }
 
 
@@ -280,7 +298,8 @@
     }
 }
 
-.section--mijn-clienten {
+.section--mijn-clienten,
+.status-history-container {
     .tab-list-container {
         .tab-list {
             margin-bottom: -2px;
@@ -336,6 +355,38 @@
         &--status-pending {
             background-color: $supplement-orange;
             color: $primary-black;
+        }
+    }
+}
+
+.icon-circle {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: $primary-white;
+    text-align: center;
+    
+
+    .icon { 
+        color: $primary-white;
+        vertical-align: initial !important;
+        margin-top: 5px;
+    }
+
+    &--status-approved {
+        background-color: $supplement-darkgreen;
+    }
+    &--status-disapproved {
+        background-color: $support-invalid;
+        .icon { 
+            margin-top: 6px;
+        }
+    }
+    &--status-pending {
+        background-color: $supplement-orange;
+        .icon { 
+            margin-top: 6px;
         }
     }
 }
