@@ -110,7 +110,9 @@
                                 </span>
                                 <small class="status">{{caseStatusOptions[h.status].current }}</small>
                                 <div class="facts">
-                                    <small>{{ h.created | luxon }} </small><small class="u-float-right">{{ h.username }}</small>
+                                     <div class="u-clearfix">
+                                         <small>{{ h.created | luxon }} </small><small class="u-float-right">{{ h.username }}</small>
+                                     </div>
                                     <p>{{ h.status_comment}}</p>
                                 </div>
                             </li>

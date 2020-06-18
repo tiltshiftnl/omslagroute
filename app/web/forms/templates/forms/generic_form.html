@@ -91,8 +91,10 @@
                                 </p>
                                 <div class="status-container">
                                     <div class="facts">
-                                        <small>{{ case_status_list.0.created|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
-                                        <p>De IB60 bijlage is niet actueel, de laatste loonstrook ontbreekt.</p>
+                                        <div class="u-clearfix">
+                                            <small>{{ case_status_list.0.created|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
+                                        </div>
+                                        <p>{{ case_status_list.0.status_comment }}</p>
                                     </div>
                                 </div>
                                 {% if case_status_list|length > 1 %}
@@ -132,7 +134,7 @@
                                                         <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
                                                         <div class="facts">
                                                             <small>{{ case_status.created|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
-                                                            <p>De IB60 bijlage is niet actueel, de laatste loonstrook ontbreekt.</p>
+                                                            {% if case_status.status_comment %}<p>{{ case_status.status_comment }}</p>{% endif %}
                                                         </div>
                                                     </li>
                                                     {% endif %}
