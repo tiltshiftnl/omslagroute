@@ -229,7 +229,7 @@
 
                                 {% for field in sub_section.fields %}
                                     {{ field.rendered|safe }}
-                                    <span class="form-field-error-message">Vul dit veld goed in</span>
+                                    <span class="form-field-error-message u-font-size-small">Dit veld is niet (goed) ingevuld.</span>
                                     {% get_case_versions case_versions field.object.name as history %}
                                     {% if history %}
                                     <div class="form-field form-field-history">
