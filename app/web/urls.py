@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from web.users.views import OIDCAuthenticationRequestView
 from .routers import router
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
@@ -18,6 +19,7 @@ urlpatterns = [
     path('admin/dumpdata', dumpdata, name='dumpdata'),
     path('admin/objectstore', ObjectStoreView.as_view(), name='objectstore'),
     path('admin/sendmail', SendMailView.as_view(), name='sendmail'),
+    path('admin/login/', RedirectView.as_view(url='/oidc/authenticate/'), name='disabled_login'),
 
     path('health', health_default),
     path('omslagroute/health', health_default),

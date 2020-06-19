@@ -101,16 +101,21 @@ class FederationUserList(UserPassesTestMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        user_type_choices = [ut for ut in User.user_types if ut[0] in [ONBEKEND, FEDERATIE_BEHEERDER]]
+        if self.request.user.federation.organization:
+            user_type_choices = [[ut, USER_TYPES_DICT[int(ut)]] for ut in self.request.user.federation.organization.rol_restrictions]
+
+        user_types_federatie = [int(ut[0]) for ut in user_type_choices]
 
         # filter
         filter_list = [f for f in self.request.GET.getlist('filter', []) if f]
-        filter = filter_list if filter_list else USER_TYPES_FEDERATIE
+        filter = filter_list if filter_list else user_types_federatie
         filter_params = '&filter='.join(filter_list)
         filter_params = '&filter=%s' % filter_params if filter_params else ''
         object_list = User.objects.filter(user_type__in=filter, federation=self.request.user.federation)
 
         # default sort on user_type by custom list
-        object_list = [[o, USER_TYPES_FEDERATIE.index(o.user_type)] for o in object_list]
+        object_list = [[o, user_types_federatie.index(o.user_type)] for o in object_list]
         object_list = sorted(object_list, key=lambda o: o[1])
         object_list = [o[0] for o in object_list]
 
@@ -120,10 +125,6 @@ class FederationUserList(UserPassesTestMixin, TemplateView):
         object_list = paginator.get_page(page)
 
         # form context
-        user_type_choices = [ut for ut in User.user_types if ut[0] in [ONBEKEND, FEDERATIE_BEHEERDER]]
-        if self.request.user.federation.organization:
-            user_type_choices = [[ut, USER_TYPES_DICT[int(ut)]] for ut in self.request.user.federation.organization.rol_restrictions]
-
         form = FilterListFederationForm(self.request.GET, user_type_choices=user_type_choices)
         kwargs.update({
             'object_list': object_list,
