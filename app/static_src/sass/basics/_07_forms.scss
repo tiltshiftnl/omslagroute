@@ -650,16 +650,7 @@ li:focus-within .form-field__checkboxlabel::before {
     display: flex;
 }
 
-// MULTISELECT CHECKBOX
 
-.form-field--checkboxselectmultiple {
-
-    @media all and (min-width: $tablets) {
-        ul {
-            columns: auto 2;
-        }
-    }
-}
 
 // ********************
 // SELECT/DROPDOWN
@@ -852,7 +843,6 @@ select {
 // ********************
 
 .section--step-required-fields {
-    color: $primary-red;
     border: 2px solid $primary-red;
     padding: 15px;
     margin: 2rem 0;
@@ -866,7 +856,7 @@ select {
  }
 
  .form-field-error-message {
-    margin: -1.5rem 0 1.5rem;
+    margin: -1.5rem 0 2.5rem;
     color: $primary-red;
     display: none;
  }

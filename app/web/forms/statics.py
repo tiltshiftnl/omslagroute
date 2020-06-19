@@ -537,7 +537,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Indien partner in zelfde woning zal wonen:</strong></p><ul><li>kopie ID partner (geen rijbewijs)</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst) partner</li><li>meest recente loonstrook partner</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Indien partner in zelfde woning zal wonen:</strong></p><ul><li>kopie ID partner (geen rijbewijs)</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst) partner</li><li>meest recente loonstrook partner</li></ul><div class='alert-box'><strong>Let op: </strong><ul><li>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</li><li>Voor kopie ID geldt: verberg altijd het BSN-nummer</li></ul></div>",
         'section_list': [
             {
                 'title': '',
