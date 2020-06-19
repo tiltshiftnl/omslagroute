@@ -146,6 +146,7 @@
     margin-top: 1rem !important;
 }
 .u-margin-top-half{
+    display: block;
     margin-top: .5rem !important;
 }
 .u-margin-right{
@@ -320,3 +321,7 @@
     }
 }
 
+//js-trick to scroll element in view with offset
+#target_generic-form-errors {
+    height: 30px;
+}

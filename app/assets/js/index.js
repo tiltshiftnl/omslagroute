@@ -5,11 +5,21 @@ if (fileUpload && fileUpload.addEventListener) {
   fileUpload.addEventListener("change", showFileName);
 }
 
+window.onload = function() {
+  
+  var target = document.getElementById("target_generic-form-errors");
+  var body = document.getElementsByTagName("body")[0];
+  if(target){
+    target.scrollIntoView();
+  }
+};
+
 function showFileName(event) {
   var input = event.srcElement;
   var fileName = input.files[0].name;
   filesUploaded.innerHTML = "Geselecteerd bestand: <i>" + fileName + "</i>";
 }
+
 
 if (document.addEventListener) {
   document.addEventListener(

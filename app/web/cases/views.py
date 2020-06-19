@@ -1,5 +1,6 @@
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView, FormView, TemplateView
 from .models import *
+from .statics import CASE_STATUS_AFGEKEURD, CASE_STATUS_GOEDGEKEURD, CASE_STATUS_IN_BEHANDELING, CASE_STATUS_INGEDIEND
 from django.urls import reverse_lazy, reverse
 from .forms import *
 from web.users.auth import auth_test
@@ -26,7 +27,7 @@ from web.timeline.models import Moment
 from formtools.wizard.views import SessionWizardView
 from django.db.models import Count
 from django.db.models.functions import Concat
-from django.db.models import TextField, DateTimeField
+from django.db.models import TextField, DateTimeField, IntegerField
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -61,25 +62,28 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
 
-        # qs = CaseStatus.objects.filter(status=1)
-        qs = CaseStatus.objects.all()
+        qs = CaseStatus.objects.all().exclude(status=CASE_STATUS_INGEDIEND)
         qs = qs.order_by('-created')
         qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
         qs = qs.order_by('distinct_name', '-created')
         qs = qs.distinct('distinct_name')
         final_set = CaseStatus.objects.all().order_by('-created')
-
-        # bug: annotate alias with value_list
-        # final_set = final_set.filter(id__in=qs.values_list('id', flat=True))
-
-        # workaround
         final_set = final_set.filter(id__in=[s.id for s in qs])
 
+        ingediend = CaseStatus.objects.all()
+        ingediend = ingediend.order_by('-created')
+        ingediend = ingediend.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
+        ingediend = ingediend.order_by('distinct_name', '-created')
+        ingediend = ingediend.distinct('distinct_name')
+        ingediend_final_set = CaseStatus.objects.all().order_by('-created')
+        ingediend_final_set = ingediend_final_set.filter(id__in=[s.id for s in ingediend])
+        ingediend_final_set = ingediend_final_set.filter(status=CASE_STATUS_INGEDIEND)
+
         tabs = [
-            [1, 'Ingediend'],
-            [4, 'In behandeling'],
-            [3, 'Goedgekeurd'],
-            [2, 'Afgekeurd'],
+            [CASE_STATUS_INGEDIEND, 'Ingediend'],
+            [CASE_STATUS_IN_BEHANDELING, 'In behandeling'],
+            [CASE_STATUS_GOEDGEKEURD, 'Goedgekeurd'],
+            [CASE_STATUS_AFGEKEURD, 'Afgekeurd'],
             [0, 'Alle'],
         ]
         tabs = [{
@@ -88,7 +92,7 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
             'queryset':final_set.filter(status=t[0]) if t[0] else final_set,  
         } for t in tabs]
 
-
+        tabs[0]['queryset'] = ingediend_final_set
 
         paginator = Paginator(tabs[int(self.request.GET.get('f', 0))].get('queryset'), 20)
         page = self.request.GET.get('page', 1)

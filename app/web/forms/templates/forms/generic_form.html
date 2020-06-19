@@ -154,11 +154,8 @@
                     <!-- END STATUS -->
                 {% endif %}
             
-
-
                 {% csrf_token %}
                 {{ form.as_sections.errors }}
-
                 {% if form.errors %}
                     <div class="generic-form-errors" aria-live="polite">
                         <ul class="errorlist list-vertical" aria-live="polite">
@@ -179,6 +176,7 @@
 
                 {% if request.GET.control %}
                 <!-- START step required fields -->
+                <div id="target_generic-form-errors"></div>
                 <div class="section--step-required-fields" aria-live="polite">
                     <h2 class="h3">Het formulier kan niet verstuurd worden. Controleer de volgende velden:</h2>
                     <ul class="u-list-style-none">
