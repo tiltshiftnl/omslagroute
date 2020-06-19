@@ -28,6 +28,7 @@ from formtools.wizard.views import SessionWizardView
 from django.db.models import Count
 from django.db.models.functions import Concat
 from django.db.models import TextField, DateTimeField, IntegerField
+from django.core.exceptions import PermissionDenied
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -654,23 +655,28 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
 
 @user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER])
 def download_document(request, case_pk, document_pk):
-    try:
-        case = request.user.profile.cases.get(id=case_pk)
-    except:
-        raise Http404
-    document = get_object_or_404(Document, id=document_pk)
-    if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
-        raise Http404()
-
-    return HttpResponseRedirect(document.uploaded_file.url)
-
-
-@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER])
-def download_document_wonen(request, case_pk, document_pk):
     if request.user.user_type == BEGELEIDER:
-        return get_object_or_404(Case, id=case_pk)#CaseVersion.objects.filter(case__in=request.user.profile.cases.all())
+        try:
+            case = request.user.profile.cases.get(id=case_pk)
+        except:
+            raise PermissionDenied
+        document = get_object_or_404(Document, id=document_pk)
 
-    document = get_object_or_404(Document, id=document_pk)
+    if request.user.user_type == WONEN:
+        try:
+            case = Case.objects.get(id=case_pk)
+        except:
+            raise PermissionDenied
+        document = get_object_or_404(Document, id=document_pk)
+
+        form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
+        shared_in_forms = [f for f in document.forms if f in form_status_list]
+        if not shared_in_forms:
+            raise PermissionDenied
+
+    if document.case != case:
+        raise PermissionDenied
+
     if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
         raise Http404()
 
