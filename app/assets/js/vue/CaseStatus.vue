@@ -111,7 +111,7 @@
                                 <small class="status">{{caseStatusOptions[h.status].current }}</small>
                                 <div class="facts">
                                      <div class="u-clearfix">
-                                         <small>{{ h.created | luxon }} </small><small class="u-float-right">{{ h.username }}</small>
+                                         <small>{{ h.created | moment("DD-MM-YYYY HH:mm") }} </small><small class="u-float-right">{{ h.username }}</small>
                                      </div>
                                     <p>{{ h.status_comment}}</p>
                                 </div>
