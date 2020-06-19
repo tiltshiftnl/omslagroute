@@ -94,7 +94,7 @@
                                         <div class="u-clearfix">
                                             <small>{{ case_status_list.0.created|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
                                         </div>
-                                        <p>{{ case_status_list.0.status_comment }}</p>
+                                        {% if case_status_list.0.status_comment %}<p>{{ case_status_list.0.status_comment }}</p>{% endif %}
                                     </div>
                                 </div>
                                 {% if case_status_list|length > 1 %}
@@ -229,7 +229,11 @@
 
                                 {% for field in sub_section.fields %}
                                     {{ field.rendered|safe }}
+                                    {% if field.object.field_type == 'radioselect' or field.object.field_type == 'checkboxselect' or field.object.field_type == 'checkboxselectmultipledocument' %}
+                                    <span class="form-field-error-message u-font-size-small">Vul in wat van toepassing is.</span>
+                                    {% else %}
                                     <span class="form-field-error-message u-font-size-small">Dit veld is niet (goed) ingevuld.</span>
+                                    {% endif %}
                                     {% get_case_versions case_versions field.object.name as history %}
                                     {% if history %}
                                     <div class="form-field form-field-history">

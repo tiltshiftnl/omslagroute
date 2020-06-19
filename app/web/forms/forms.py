@@ -107,6 +107,7 @@ class BaseGenericForm:
                     'data_attr': data_attr,
                     'wrapper_id_attr': wrapper_id,
                     'css_classes': css_classes,
+                    'field_type': bf_type,
                     'field_step_complete': not FIELDS_REQUIRED_DICT.get(bf.name) or not bf_is_empty,
                     'verbose_name': bf.label,
                 }
