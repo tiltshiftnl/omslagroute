@@ -63,7 +63,7 @@
                             <h2 class="h3">Status aanvraag</h2>
                             <div class="status--wrapper">
                                 {% if case_status_list %}
-                                <p data-test>
+                                <p class="u-margin-bottom-half">
                                     {% if case_status_list.0.status == 3 %}
                                     <span class="icon-circle icon-circle--status-approved">
                                         <svg class="icon check__icon" width="16" height="14">
@@ -90,7 +90,7 @@
                                     {% endif %}
                                 </p>
                                 <div class="status-container">
-                                    <div class="facts">
+                                    <div class="facts u-margin-bottom-half">
                                         <div class="u-clearfix">
                                             <small>{{ case_status_list.0.created|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
                                         </div>
@@ -132,7 +132,7 @@
                                                         </span>
                                                         {% endif %}
                                                         <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
-                                                        <div class="facts">
+                                                        <div class="facts u-margin-top-half">
                                                             <small>{{ case_status.created|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
                                                             {% if case_status.status_comment %}<p>{{ case_status.status_comment }}</p>{% endif %}
                                                         </div>
