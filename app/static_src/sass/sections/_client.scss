@@ -73,8 +73,12 @@
             .status-history-container {
                 z-index: 5;
 
+                .icon-circle {
+                    margin-right: 3px;
+                }
                 .status {
                     vertical-align: text-top;
+                    font-weight: bold;
                 }
                 .facts {
                     @include clearfix;
