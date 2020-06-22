@@ -227,9 +227,9 @@
 
                                 {% for field in sub_section.fields %}
                                     {{ field.rendered|safe }}
-                                    {% if field.object.field_type == 'radioselect' or field.object.field_type == 'checkboxselect' or field.object.field_type == 'checkboxselectmultipledocument' %}
+                                    {% if field.rendered and field.object.field_type == 'radioselect' or field.object.field_type == 'checkboxselect' or field.object.field_type == 'checkboxselectmultipledocument' %}
                                     <span class="form-field-error-message u-font-size-small">Vul in wat van toepassing is.</span>
-                                    {% else %}
+                                    {% elif field.rendered %}
                                     <span class="form-field-error-message u-font-size-small">Dit veld is niet (goed) ingevuld.</span>
                                     {% endif %}
                                     {% get_case_versions case_versions field.object.name as history %}
