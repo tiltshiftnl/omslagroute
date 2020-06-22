@@ -89,6 +89,21 @@
         }
     }
 
+    #form-field-document_list {
+        input {
+            display: none;
+            + label {
+                display: none;
+            }
+            &:checked {
+                display: block;
+                + label {
+                    display: block;
+                }
+            }
+        }
+    }
+
     // ********************
     // TABLES
     // ********************    

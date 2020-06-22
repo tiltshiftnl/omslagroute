@@ -23,7 +23,13 @@
 {% block main %}
 <section class="section section--client">
     <h1>{{ object.client_name }}</h1>
-    <h2 class="h3">{{ form_data.title }}</h2>
+    
+    <div class="form-title-wrapper">
+        <h2 class="h3">{{ form_data.title }}</h2>
+    <button type="button" data-handler="print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="32" height="32">
+        <use href="#print" xlink:href="#print" width="32" height="32"></use>
+    </svg></button>
+    </div>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% now "j F Y H:i" %}

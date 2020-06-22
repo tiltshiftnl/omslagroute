@@ -24,8 +24,13 @@
 
         <div class="grid__wrapper">
             <div class="grid__main">
-
-                <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h2>
+                <div class="form-title-wrapper">
+                    <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h1>
+                <button type="button" data-handler="print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="32" height="32">
+                    <use href="#print" xlink:href="#print" width="32" height="32"></use>
+                </svg></button>
+                </div>
+                
                 {% if form.enable_ajax %}
                 <div class="section--client">
                     <section class="section-details-client u-margin-none">
@@ -268,7 +273,7 @@
 
                 {{ form.as_sections.hidden_fields }}
                 {% if share %}
-                <p class="u-margin-bottom-4x">Vul alle verplichte velden in(*) om het formulier te kunnen versturen naar de afdeling Wonen van de Gemeente Amsterdam</p>
+                <p class="u-margin-bottom-4x">* Verplicht veld</p>
                 {% endif %}
                 <div class="form-field form-field--buttons-sticky screen-only">
                     {% if form.enable_ajax %}
@@ -282,7 +287,6 @@
                         <svg class="u-margin-right-half" width="16" height="20">
                             <use href="#email" xlink:href="#email" width="16" height="20"></use>
                         </svg><span>Controleren en versturen naar Wonen (gemeente)</span></button>{% endif %}
-
                 </div>
 
             </div>

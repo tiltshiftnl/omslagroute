@@ -20,6 +20,26 @@ body:not(:-moz-handler-blocked) fieldset {
     display: table-cell;
 }
 
+.form-title-wrapper {
+    display: flex;
+    h1,
+    h2 {
+        flex-grow: 1;
+        padding-right: 30px;
+    }
+    .text-link {
+        flex-grow: 0;
+        margin: 2rem 0 0;
+        padding: 0;
+
+        svg {
+            margin-left: .5rem;
+            transform: scale(.7);
+            fill: currentColor;
+        }
+
+    }
+}
 // ********************
 // GENERIC FORMS FIELD GROUP CONTAINERS
 // ********************
