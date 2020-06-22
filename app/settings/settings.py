@@ -110,6 +110,7 @@ LANGUAGE_CODE = 'nl-nl'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+FRONTEND_TIMEZONE = 'Europe/Amsterdam'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

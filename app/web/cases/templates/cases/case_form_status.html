@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags client_status_tags auth_tags client_data_tags %}
+{% load static i18n html_tags client_status_tags auth_tags client_data_tags tz %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -55,7 +55,7 @@
             {% for document in document_list %}
                 <li>
                     <div><a href="{% url 'download_case_document' object.id document.id %}
-                    " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
+                    " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
                     
                 </li>
             {% endfor %}
@@ -88,7 +88,7 @@
                     <dt>{{ field.label }}: </dt>
                     <dd>
                         {% if field.value|is_date %}
-                            {{ field.value|str_date_to_date|date:"j b Y" }}
+                            {{ field.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
                         {% else %}
                             {{ field.value }}
                         {% endif %}

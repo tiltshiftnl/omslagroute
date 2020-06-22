@@ -35,4 +35,5 @@ def app_settings(request=None):
         'NEW_USER_INTRO': config.NEW_USER_INTRO,
         'FORMS_PROCESSTAP_CHOICES': FORMS_PROCESSTAP_CHOICES,
         'login_form': AuthenticationForm(),
+        'FRONTEND_TIMEZONE': settings.FRONTEND_TIMEZONE,
     }

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static client_status_tags i18n %}
+{% load static client_status_tags i18n tz %}
 
 {% block title %} - Alle bijlagen bij cliënt: {{ case.client_name }}{% endblock %}
 
@@ -41,7 +41,7 @@
                     </td>
                     <td>
                         <span class="show-on-mobile">Datum:</span>
-                        <span> {{ document.uploaded|date:"d-m-y H:i" }} </span>
+                        <span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span>
                     </td>
                     <td>
                         <span class="show-on-mobile">Bewerk:</span>

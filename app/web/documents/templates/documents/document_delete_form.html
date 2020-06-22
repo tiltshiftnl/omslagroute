@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n tz %}
 
 {% block title %}- Verwijder document{% endblock %}
 
@@ -47,7 +47,7 @@
             <ul>
                 {% for document_version in object.document_to_document_version.all %}
                     {% language 'nl' %}
-                    <li>Document versie tijd: {{ document_version.uploaded|date:"H:i" }}, datum: {{ document_version.uploaded|date:"j b Y" }}</li>
+                    <li>Document versie tijd: {{ document_version.uploaded|timezone:FRONTEND_TIMEZONE|date:"H:i" }}, datum: {{ document_version.uploaded|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}</li>
                     {% endlanguage %}
                 {% endfor %}
             </ul>

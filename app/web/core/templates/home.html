@@ -21,7 +21,7 @@
         {% include 'timeline/snippets/moments_section.html' %}
 
         <hr />
-        {% include 'documents/snippets/document_section.html' with document_list=floating_document_list title='Overige documenten' request=request only %}
+        {% include 'documents/snippets/document_section.html' with document_list=floating_document_list title='Overige documenten' request=request FRONTEND_TIMEZONE=FRONTEND_TIMEZONE only %}
 
         <p>
             <a href="{% url 'document_list' %}" class="button button--primary button--readmore">Alle documenten</a>

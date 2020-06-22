@@ -1,5 +1,5 @@
 {% extends 'cases/case_page.html' %}
-{% load static i18n html_tags %}
+{% load static i18n html_tags tz %}
 
 {% block processtappen %}
 <!-- START PROCESSTAPPEN -->
@@ -18,7 +18,7 @@
                 <dt>{{ client_info.label }}: </dt>
                 <dd>
                     {% if client_info.value|is_date %}
-                        {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                        {{ client_info.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
                     {% else %}
                         {{ client_info.value }}
                     {% endif %}

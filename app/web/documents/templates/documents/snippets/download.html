@@ -1,5 +1,4 @@
-{% load staticfiles auth_tags %}
-{% load i18n %}
+{% load staticfiles auth_tags tz i18n  %}
 
 {% if request.user|is_redactie or object.document_to_document_version.all|length %}
     {% with document_version=object.document_to_document_version.all.0 %}
@@ -24,14 +23,12 @@
                 {% if document_version.uploaded %}
                     {% language 'nl' %}
                     <time timestamp="{{ document_version.uploaded|date }}" class="document__date">
-                        gewijzigd: {{ document_version.uploaded|date:"j b Y" }}
+                        gewijzigd: {{ document_version.uploaded|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
                     </time>
                     {% endlanguage %}
                 {% else %}
                     <span class="document__date">&nbsp;</span>
                 {% endif %}
-
-
             {% endif %}
         </a>
 

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load client_status_tags client_data_tags html_tags %}
+{% load client_status_tags client_data_tags html_tags tz %}
 {% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
 {% block breadcrumb %}
@@ -52,7 +52,7 @@
                                 </div>
                                 <div>
                                     <dt>Geboortedatum: </dt>
-                                    <dd>{% if form.instance.geboortedatum %}{{ form.instance.geboortedatum|date:'j b Y' }}{% else %}—{% endif %}</dd>
+                                    <dd>{% if form.instance.geboortedatum %}{{ form.instance.geboortedatum|timezone:FRONTEND_TIMEZONE|date:'j b Y' }}{% else %}—{% endif %}</dd>
                                 </div>
                                 <div>
                                     <dt>E-mailadres: </dt>
@@ -97,7 +97,7 @@
                                 <div class="status-container">
                                     <div class="facts u-margin-bottom-half">
                                         <div class="u-clearfix">
-                                            <small>{{ case_status_list.0.created|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
+                                            <small>{{ case_status_list.0.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }}</small> <small class="u-float-right">{{ case_status_list.0.profile.user.username }}</small>
                                         </div>
                                         {% if case_status_list.0.status_comment %}<p>{{ case_status_list.0.status_comment }}</p>{% endif %}
                                     </div>
@@ -138,7 +138,7 @@
                                                         {% endif %}
                                                         <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
                                                         <div class="facts u-margin-top-half">
-                                                            <small>{{ case_status.created|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
+                                                            <small>{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
                                                             {% if case_status.status_comment %}<p>{{ case_status.status_comment }}</p>{% endif %}
                                                         </div>
                                                     </li>
@@ -245,7 +245,7 @@
                                         {% for h in history %}
                                             <li>
                                                 <details>
-                                                    <summary>{{ h.version_verbose }} <small>({{ h.saved|timestamp_to_date|date:'j b Y H:i' }})</small>
+                                                    <summary>{{ h.version_verbose }} <small>({{ h.saved|timestamp_to_date|timezone:FRONTEND_TIMEZONE|date:'j b Y H:i' }})</small>
                                                         <svg class="icon-details--closed" width="14" height="9">
                                                             <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
                                                         </svg>

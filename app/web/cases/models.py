@@ -8,6 +8,9 @@ import os
 from multiselectfield import MultiSelectField
 from django.utils.safestring import mark_safe
 import locale
+from datetime import datetime
+from django.utils import timezone
+from django.conf import settings
 
 
 class CaseBase(PrintableModel):
@@ -630,13 +633,14 @@ class Document(models.Model):
     )
 
     def __str__(self):
-        locale.setlocale(locale.LC_TIME, "nl_NL.UTF-8")
+        timezone.activate(settings.FRONTEND_TIMEZONE)
         return mark_safe('<div><span>%s</span><small>%s</small><small>%s</small></div>' % (
                 self.name,
                 self.extension,
-                self.saved.strftime('%d %b %Y %H:%M:%S').lower()
+                timezone.localtime(self.uploaded).strftime('%d %b %Y %H:%M:%S').lower()
             )
         )
+        timezone.deactivate()
 
     @property
     def extension(self):
