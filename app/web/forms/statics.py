@@ -723,11 +723,7 @@ FORMS = (
         False,
         False,
         False,
-        {'readonly_fields': [], 'required_fields': [
-            'client_first_name',
-            'client_last_name',
-            'geboortedatum',
-        ]},
+        {'exclude_fields': []},
     ),
     (
         'urgentie_aanvraag',
@@ -738,14 +734,11 @@ FORMS = (
         True,
         True,
         True,
-        {'readonly_fields': [
+        {'exclude_fields': [
             'client_first_name',
             'client_last_name',
             'geboortedatum',
             'emailadres',
-        ], 'required_fields': [
-            'client_first_name',
-            'client_last_name',
         ], 'rules': {
             'jonger_dan_26': ([2,3,4], (
                 'jonger_dan_26_plaatsing_project',
@@ -777,14 +770,11 @@ FORMS = (
         True,
         True,
         True,
-        {'readonly_fields': [
+        {'exclude_fields': [
             'client_first_name',
             'client_last_name',
             'geboortedatum',
             'emailadres',
-        ], 'required_fields': [
-            'client_first_name',
-            'client_last_name',
         ],'rules': {
             'jonger_dan_26': ([2,3,4], (
                 'jonger_dan_26_plaatsing_project',

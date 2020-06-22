@@ -43,8 +43,6 @@ class BaseGenericForm:
             wrapper_id = ' id="form-field-%s"' % name
             bf_type = bf.field.widget.__class__.__name__.lower()
             bf_is_empty = not bool(bf.value())
-            bf_is_readonly = name in self.options.get('readonly_fields', [])
-            bf_is_required = name in self.options.get('required_fields', [])
             rules = self.options.get('rules', {}).get(name)
             if rules:
                 data_attr = ' data-decorator="form-rule" data-rule-values="%s" data-rule-fields="%s" ' % (
@@ -57,12 +55,6 @@ class BaseGenericForm:
             if bf_type == 'clearablefileinput':
                 row = clearablefileinput_row
 
-            bf.field.required = bf_is_required if not bf_is_readonly else False
-
-            bf.field.widget.attrs.update({
-                'readonly': bf_is_readonly,
-                'disabled': bf_is_readonly,
-            })
             # Escape and cache in local variable.
             bf_errors = self.error_class([conditional_escape(error) for error in bf.errors])
             if bf.is_hidden:
@@ -74,13 +66,12 @@ class BaseGenericForm:
             else:
                 # Create a 'class="..."' attribute if the row should have any
                 # CSS classes applied.
-                css_classes = bf.css_classes('form-field form-field--%s%s%s%s%s%s' % (
+                css_classes = bf.css_classes('form-field form-field--%s%s%s%s%s' % (
                     bf_type,
                     ' form-field--step-required' if FIELDS_REQUIRED_DICT.get(bf.name) else '',
                     ' form-field--complete' if not bf_is_empty else '',
                     ' form-field--error' if bf_errors else '',
                     ' form-field--empty' if bf_is_empty else '',
-                    ' hide' if bf_is_readonly else '',
                 ))
                 # css_classes += ' form-field form-field--%s' % bf_type
                 if css_classes:
@@ -161,13 +152,6 @@ class GenericForm(BaseGenericForm, forms.Form):
 
 class GenericModelForm(BaseGenericForm, forms.ModelForm):
 
-    def clean(self):
-        cleaned_data = super().clean()
-        for field_name in self.options.get('readonly_fields', []):
-            if hasattr(self.instance, field_name):
-                cleaned_data[field_name] = getattr(self.instance, field_name)
-        return
-
     def save(self, commit=True):
         return super().save(commit)
 
@@ -178,6 +162,8 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         self.fields = {}
         self.sections = form_context.get('sections', [])
         self.options = form_context.get('options', {})
+        exclude_fields = self.options.get('exclude_fields', [])
         self.enable_ajax = form_context.get('enable_ajax', False)
         for f in self._get_fields(self.sections):
-            self.fields[f] = FIELDS_DICT.get(f)
+            if f not in exclude_fields:
+                self.fields[f] = FIELDS_DICT.get(f)
