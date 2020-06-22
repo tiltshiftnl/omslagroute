@@ -69,7 +69,16 @@
         </div>
     </form>
     {% elif not unlinked_users and linked_users %}
+    <div class="content-wrapper">
+        <a href="{% url 'case_remove_invited_users' instance.id %}" class="link-manage">Beheer samenwerking</a>
+    </div>
     <p>Je hebt al alle persoonlijk begeleiders uitgenodigd.</p>
+    <ul class="u-margin-bottom-2x scroll-list-container">
+        {% for u in linked_users %}
+        <li>{{ u.username }}</li>
+        {% endfor %}
+    </ul>
+
     <div class="form-field form-field--buttons screen-only u-margin-top-2x">
         <a data-handler="modal-close" href="#" class="button button--primary">Sluiten</a>
     </div>
