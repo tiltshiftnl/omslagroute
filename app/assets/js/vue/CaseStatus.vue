@@ -23,7 +23,7 @@
                 <span>{{ caseStatusPrefix }}{{ caseStatusOptions[currentCaseStatus.status].current }}</span>
                 <div class="status-container">
                     <div class="facts">
-                        <small>{{ currentCaseStatus.created | luxon }} </small><small class="u-float-right">{{ currentCaseStatus.username }}</small>
+                        <small>{{ currentCaseStatus.created | moment("DD-MM-YYYY HH:mm") }} </small><small class="u-float-right">{{ currentCaseStatus.username }}</small>
                         <p>{{ currentCaseStatus.status_comment}}</p>
                     </div>
                 </div>
