@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static client_status_tags i18n %}
+{% load static client_status_tags i18n tz %}
 
 {% block title %} - Alle cli&euml;nten{% endblock %}
 
@@ -65,7 +65,7 @@
                         {% endif %}
                         
                     </td>
-                    <td class="u-no-wrap">{{ object.created|date:"j b Y H:i" }}</td>
+                    <td class="u-no-wrap">{{ object.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }}</td>
                 </tr>
             {% endfor %}
         </tbody>

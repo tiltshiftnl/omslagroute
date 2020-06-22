@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n tz %}
 
 {% comment %}
     This view is not currently in use!
@@ -25,7 +25,7 @@
             Weet u zeker dat u de versie geupload op 
                 {% language 'nl' %}
                     <time timestamp="{{ object.uploaded|date }}">
-                        {{ object.uploaded|date:"j b Y" }} om {{ object.uploaded|date:"H:i" }}
+                        {{ object.uploaded|timezone:FRONTEND_TIMEZONE|date:"j b Y" }} om {{ object.uploaded|timezone:FRONTEND_TIMEZONE|date:"H:i" }}
                     </time> 
                 {% endlanguage %}
                 voor het {{ document.document_type_value|lower }} {{ document|striptags }} 

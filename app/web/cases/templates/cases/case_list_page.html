@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static client_status_tags i18n %}
+{% load static client_status_tags i18n tz %}
 
 {% block title %} - Mijn cli&euml;nten{% endblock %}
 
@@ -47,7 +47,7 @@
                     </td>
                     <td class="help-text">
                         <span class="show-on-mobile">Laatste opgeslagen:</span>
-                        {{ object.saved|date:"d-m-y H:i" }}
+                        {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
                     </td>
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
@@ -69,7 +69,7 @@
                     <td class="help-text">
                         <span class="show-on-mobile">Status datum:</span>
                         {% if case_status_list %}
-                        {{ case_status_list.0.created|date:"d-m-y H:i" }}
+                        {{ case_status_list.0.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
                         {% else %}
                         {% endif %}
                     </td>
@@ -108,9 +108,9 @@
                         {% client_submitted_form object form.0 as case_status %}
                         {% if case_status %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            {{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})
+                            {{ case_status.status|status_verbose }} ({{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }})
                         </a>
-                        <span class="sr-only">{{ case_status.status|status_verbose }} ({{ case_status.created|date:"j b Y H:i" }})</span>
+                        <span class="sr-only">{{ case_status.status|status_verbose }} ({{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }})</span>
                         {% else %}
                         <a href="{% url 'case' object.id %}" aria-hidden="true">
                             <span>Deze stap is nog niet ingediend</span>

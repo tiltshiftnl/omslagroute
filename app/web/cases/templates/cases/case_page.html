@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags client_status_tags auth_tags %}
+{% load static i18n html_tags client_status_tags auth_tags tz %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -23,7 +23,7 @@
     <div class="flex-container">
         <div class="flex-item u-margin-top-half">
             <h1>{{ object.client_name }}</h1>
-            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, <br>'{{ object.saved_form|form_verbose }}'{% endif %}</small>
+            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, <br>'{{ object.saved_form|form_verbose }}'{% endif %}</small>
         </div>
         <div class="flex-item">
             {% if request.user|is_begeleider %}
@@ -69,7 +69,7 @@
                     <dt>{{ client_info.label }}: </dt>
                     <dd>
                         {% if client_info.value|is_date %}
-                            {{ client_info.value|str_date_to_date|date:"j b Y" }}
+                            {{ client_info.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
                         {% else %}
                             {{ client_info.value }}
                         {% endif %}
@@ -95,7 +95,7 @@
             {% for document in object.document_set.all %}
                 {% if forloop.counter0 < 4 %}
                     <li>
-                        <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|date:"d-m-y" }} </span></div>
+                        <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
                         <div>
                             <a href="{% url 'update_case_document' object.id document.id %}" title="Bijlage aanpassen" class="u-margin-right u-color-black">
                                 <svg class="button__icon"  width="20" height="20" >
@@ -161,7 +161,13 @@
                         <td>
                             <span class="show-on-mobile">Status:</span>
                             {% if case_status %}
-                                <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">{{ case_status.status|status_verbose }}</span>
+                                <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">
+                                    {% if case_status.case_form_is_opnieuw_ingediend %}
+                                    Opnieuw ingediend
+                                    {% else %}
+                                    {{ case_status.status|status_verbose }}
+                                    {% endif %}
+                                </span>
                             {% elif moment.form %}
                                 <span class="u-font-size-small">
                                 Nog niet ingediend
@@ -171,7 +177,7 @@
                         <td>
                         {% if case_status %}
                             <span class="show-on-mobile">Status datum:</span>
-                            <span class="u-font-size-small">{{ case_status.created|date:"d-m-y H:i" }}</span>
+                            <span class="u-font-size-small">{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}</span>
                         {% endif %}
                         </td>
                         <td>

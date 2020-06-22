@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load client_data_tags html_tags client_status_tags %}
+{% load client_data_tags html_tags client_status_tags tz %}
 
 {% block title %} - Deel cliënt gegevens{% endblock %}
 
@@ -36,7 +36,7 @@
                             <dt>{{ field.label }}: </dt>
                             <dd>
                                 {% if field.value|is_date %}
-                                    {{ field.value|str_date_to_date|date:"j b Y" }}
+                                    {{ field.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
                                 {% else %}
                                     {{ field.value }}
                                 {% endif %}
