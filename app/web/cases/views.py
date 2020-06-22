@@ -68,8 +68,10 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
         qs = qs.order_by('distinct_name', '-created')
         qs = qs.distinct('distinct_name')
-        final_set = CaseStatus.objects.all().order_by('-created')
-        final_set = final_set.filter(id__in=[s.id for s in qs])
+        all_objects = CaseStatus.objects.all().order_by('-created')
+        tabs_ids = [s.id for s in qs]
+        final_set = all_objects.filter(id__in=tabs_ids)
+
 
         ingediend = CaseStatus.objects.all()
         ingediend = ingediend.order_by('-created')
@@ -94,6 +96,10 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         } for t in tabs]
 
         tabs[0]['queryset'] = ingediend_final_set
+
+        tab_all_ids = [s.id for s in ingediend_final_set if s.is_first_of_statustype] + tabs_ids
+
+        tabs[4]['queryset'] = all_objects.filter(id__in=set(tab_all_ids))
 
         paginator = Paginator(tabs[int(self.request.GET.get('f', 0))].get('queryset'), 20)
         page = self.request.GET.get('page', 1)
