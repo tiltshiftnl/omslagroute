@@ -7,10 +7,18 @@ if (fileUpload && fileUpload.addEventListener) {
 
 window.onload = function() {
   
-  var target = document.getElementById("target_generic-form-errors");
-  var body = document.getElementsByTagName("body")[0];
-  if(target){
-    target.scrollIntoView();
+  var genericFormErrors = document.getElementById("target_generic-form-errors");
+  if(genericFormErrors){
+    genericFormErrors.scrollIntoView();
+  }
+
+  var textAreas = document.querySelectorAll('textarea');
+  for (var i = 0; i < textAreas.length; i++) {
+    (function() {
+      var area = textAreas[i];
+      area.addEventListener('keyup', function() { autoGrow(area);});
+    }());
+    
   }
 };
 
@@ -20,6 +28,11 @@ function showFileName(event) {
   filesUploaded.innerHTML = "Geselecteerd bestand: <i>" + fileName + "</i>";
 }
 
+function autoGrow (oField) {
+  if (oField.scrollHeight > oField.clientHeight) {
+    oField.style.height = oField.scrollHeight + "px";
+  }
+}
 
 if (document.addEventListener) {
   document.addEventListener(
@@ -135,7 +148,10 @@ Array.prototype.sortOnData = function (key) {
       prompt.classList.remove("show-prompt-disapprove");
       prompt.classList.remove("show-prompt-pending");
     },
-    
+    "print-page": function(e) {
+      console.log("print-page", e)
+      window.print();
+    },
     "moment-up": function (e) {
       e.preventDefault();
       var moment = _closest(e.target, "[data-moment]");

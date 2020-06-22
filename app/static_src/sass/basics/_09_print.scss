@@ -26,7 +26,10 @@
         content: " (" attr(href) ")";
     }
 
-    p a[href^="#"]::after {
+    p a[href^="#"]::after,
+    .container-button--feedback,
+    .sr-only,
+    .show-on-mobile {
         display: none;
     }
 
@@ -86,6 +89,21 @@
         }
     }
 
+    #form-field-document_list {
+        input {
+            display: none;
+            + label {
+                display: none;
+            }
+            &:checked {
+                display: block;
+                + label {
+                    display: block;
+                }
+            }
+        }
+    }
+
     // ********************
     // TABLES
     // ********************    
@@ -118,6 +136,7 @@
     // ********************
     // PRINT-ONLY STYLES
     // ********************  
+
 
     @page {
         padding-top: 6cm;

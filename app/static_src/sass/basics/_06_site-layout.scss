@@ -147,7 +147,7 @@ body {
     flex-grow: 0;
     margin-right: 2rem;
 
-@media all and (min-width: $tablets) {
+@media screen and (min-width: $tablets) {
     display: block;
 }
 }

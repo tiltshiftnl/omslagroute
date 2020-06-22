@@ -178,6 +178,11 @@ button.text-link {
         background-color: transparent;
         color: $link-content;
     }
+
+    &--small {
+        font-size: .9rem;
+        font-weight: normal;
+    }
 }
 
 // button with only an icon in it, no text
