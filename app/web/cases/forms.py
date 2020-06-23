@@ -7,7 +7,7 @@ from web.forms.statics import FORMS_PROCESSTAP_CHOICES
 from django.utils.translation import ugettext_lazy as _
 from web.forms.fields import MultiSelectFormField
 from web.users.models import User
-from web.users.statics import BEGELEIDER
+from web.users.statics import BEGELEIDER, PB_FEDERATIE_BEHEERDER
 
 class CaseForm(forms.ModelForm):
     geslacht = forms.ChoiceField(
@@ -27,7 +27,7 @@ class CaseInviteUsersForm(forms.Form):
     user_list = forms.ModelMultipleChoiceField(
         label=_('Met wie wil je samenwerken aan deze cliënt?'),
         help_text=_('Selecteer één of meerdere collega’s. Wanneer je kiest voor samenwerken met een collega kan deze:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
-        queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
+        queryset=User.objects.filter(user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]),
         widget=CheckboxSelectMultiple(attrs={'class': 'u-list-style-none scroll-list-container'}),
         required=True,
     )
@@ -71,7 +71,7 @@ class CaseRemoveInvitedUsersForm(forms.Form):
     user_list = forms.ModelMultipleChoiceField(
         label=_('Met wie wil je níet meer samenwerken aan deze cliënt?'),
         help_text=_('Wanneer je de samenwerking beëindigt kunnen deze collega’s géén:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
-        queryset=User.objects.filter(user_type__in=[BEGELEIDER]),
+        queryset=User.objects.filter(user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]),
         widget=CheckboxSelectMultipleUser(attrs={'class': 'u-list-style-none scroll-list-container'}),
         required=True,
     )
@@ -82,7 +82,7 @@ class CaseRemoveInvitedUsersForm(forms.Form):
         super().__init__(*args, **kwargs)
         linked_users = User.objects.filter(
             profile__in=self.instance.profile_set.filter(
-                user__user_type=BEGELEIDER
+                user__user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
             ).exclude(
                 user=self.user
             )

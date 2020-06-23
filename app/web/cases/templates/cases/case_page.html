@@ -7,7 +7,7 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            {% if request.user|is_begeleider %}
+            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
             <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
             {% endif %}
             {% if request.user|is_wonen_medewerker %}
@@ -26,7 +26,7 @@
             <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, <br>'{{ object.saved_form|form_verbose }}'{% endif %}</small>
         </div>
         <div class="flex-item">
-            {% if request.user|is_begeleider %}
+            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
             <div class="details-admin screen-only">
                 <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
                     Samenwerken ({{ linked_users|length }})
@@ -55,7 +55,7 @@
         <div class="details-client details-client--basic">
             <header>
                 <h2 class="h3">Basisgegevens</h2>
-                {% if request.user|is_begeleider %}
+                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                 <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
                     Wijzigen
                 </a>
@@ -81,7 +81,7 @@
         </div>
         <!-- END Client basis gegevens -->
 
-        {% if request.user|is_begeleider %}
+        {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
         <!-- START BIJLAGE -->
         <div class="details-client details-client--appendix">
             <header>
@@ -143,7 +143,7 @@
                             {% client_status object 'basis-gegevens' as status %}
                             <strong>
                             {% if moment.form %}
-                                {% if request.user|is_begeleider %}
+                                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                                 <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
                                 {% endif %}
                                 {% if request.user|is_wonen_medewerker %}

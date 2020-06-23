@@ -11,7 +11,7 @@ from .forms import *
 from django.urls import reverse_lazy, reverse
 from web.users.auth import auth_test
 from django.db import transaction
-from .statics import BEGELEIDER, REDACTIE, USER_TYPES_ACTIVE, GEBRUIKERS_BEHEERDER, USER_TYPES_FEDERATIE, FEDERATIE_BEHEERDER, ONBEKEND, USER_TYPES_DICT, WONEN, USER_TYPES_DICT
+from .statics import *
 from mozilla_django_oidc.views import OIDCAuthenticationRequestView as DatapuntOIDCAuthenticationRequestView
 from django.core.paginator import Paginator
 from mozilla_django_oidc.utils import (
@@ -51,7 +51,7 @@ def generic_login(request):
 
             if user:
                 login(request, user)
-                if user.user_type == BEGELEIDER:
+                if user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
                     return HttpResponseRedirect(reverse('cases_by_profile'))
                 return HttpResponseRedirect(request.POST.get('next', '/'))
     messages.add_message(request, messages.ERROR, 'Er is iets mis gegaan met het inloggen')
@@ -134,7 +134,7 @@ class FederationUserList(UserPassesTestMixin, TemplateView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
+        return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN])
 
 
 class UserUpdateView(UserPassesTestMixin, UpdateView):
@@ -173,7 +173,7 @@ class FederationUserUpdateView(UserPassesTestMixin, UpdateView):
         return queryset
 
     def test_func(self):
-        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
+        return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN])
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangepast" % self.object.username)
@@ -236,7 +236,7 @@ class UserCreationFederationView(UserPassesTestMixin, CreateView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
+        return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN])
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -315,7 +315,7 @@ class UserFederationDelete(UserPassesTestMixin, DeleteView):
         return queryset
 
     def test_func(self):
-        return auth_test(self.request.user, [FEDERATIE_BEHEERDER, WONEN])
+        return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN])
 
 
 class OIDCAuthenticationRequestView(DatapuntOIDCAuthenticationRequestView):

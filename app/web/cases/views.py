@@ -6,7 +6,7 @@ from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
-from web.users.statics import BEGELEIDER, WONEN
+from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER
 from web.profiles.models import Profile
 from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS, FORM_TITLE_BY_SLUG
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
@@ -36,7 +36,7 @@ class UserCaseList(UserPassesTestMixin, ListView):
     template_name_suffix = '_list_page'
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, BEGELEIDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all().order_by('-saved')
@@ -117,7 +117,7 @@ class CaseDocumentList(UserPassesTestMixin, DetailView):
     template_name_suffix = '_document_list_page'
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, BEGELEIDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
@@ -136,7 +136,7 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         linked_users = User.objects.filter(
             profile__in=self.object.profile_set.filter(
-                user__user_type=BEGELEIDER
+                user__user_type__in=[PB_FEDERATIE_BEHEERDER, BEGELEIDER]
             ).exclude(
                 user=self.request.user
             )
@@ -149,10 +149,10 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return super().get_context_data(**kwargs)
 
     def test_func(self):
-        return auth_test(self.request.user, [WONEN, BEGELEIDER]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        if self.request.user.user_type == BEGELEIDER:
+        if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
             return self.request.user.profile.cases.all()
         case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
         return super().get_queryset().filter(id__in=case_list)
@@ -174,7 +174,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
 
     def get_queryset(self):
         case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
-        if self.request.user.user_type == BEGELEIDER:
+        if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
             return Case.objects.filter(id__in=self.request.user.profile.cases.all().values_list('id', flat=True))
         return super().get_queryset().filter(id__in=case_list)
 
@@ -196,7 +196,7 @@ class CaseCreateView(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('cases_by_profile')
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
@@ -218,7 +218,7 @@ class CaseUpdateView(UserPassesTestMixin, UpdateView):
         return self.request.user.profile.cases.all()
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangepast." % self.object.client_name)
@@ -235,7 +235,7 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         return self.request.user.profile.cases.all()
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def delete(self, request, *args, **kwargs):
         response = super().delete(self, request, *args, **kwargs)
@@ -256,7 +256,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         return super().get_initial()
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
@@ -331,7 +331,7 @@ class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
     form_class = CaseGenericModelForm
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
@@ -361,7 +361,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     form_class = SendCaseForm
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return self.request.user.profile.cases.all()
@@ -457,13 +457,13 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
         return self.request.user.profile.cases.all()
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
-        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all(), user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id)
+        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all(), user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]).exclude(id=self.request.user.id)
         kwargs.update({
             'linked_users': linked_users,
-            'unlinked_users': User.objects.filter(user_type__in=[BEGELEIDER]).exclude(id=self.request.user.id).exclude(id__in=linked_users.values('id')),
+            'unlinked_users': User.objects.filter(user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]).exclude(id=self.request.user.id).exclude(id__in=linked_users.values('id')),
             'instance': self.instance,
             'selected_users': self.get_all_cleaned_data().get('user_list', []),
         })
@@ -516,7 +516,7 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
         return '%s?iframe=true' % reverse('case', kwargs={'pk': self.instance.id})
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -571,7 +571,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
         return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
         try:
@@ -602,7 +602,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
         return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
         try:
@@ -636,7 +636,7 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
         )
 
     def test_func(self):
-        return auth_test(self.request.user, BEGELEIDER) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
         try:
@@ -659,9 +659,9 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
         return response
 
 
-@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER])
+@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER])
 def download_document(request, case_pk, document_pk):
-    if request.user.user_type == BEGELEIDER:
+    if request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
         try:
             case = request.user.profile.cases.get(id=case_pk)
         except:
