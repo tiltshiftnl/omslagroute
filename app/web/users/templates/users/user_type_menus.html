@@ -26,7 +26,7 @@
                             </ul>
                             {% endif %}
                         </li>
-                    {% if request.user|is_begeleider %}
+                    {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                         <li>
                             <a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a>
                         </li>
@@ -36,7 +36,7 @@
                             <a href="{% url 'case_list' %}">Alle cli&euml;nten</a>
                         </li>
                     {% endif %}
-                    {% if request.user|is_redactie %}
+                    {% if request.user|is_gebruikers_beheerder %}
                         <li class="admin-settings">
                             <button class="navigation__open"><span>Beheer</span></button>
                             <ul>
@@ -45,7 +45,8 @@
                                         <svg width="8" height="12">
                                             <use href="#chevron-right" xlink:href="#chevron-right" width="8" height="12"></use>
                                         </svg>
-                                        Bewerk gebruikers</a>
+                                        Gebruikers beheer
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{% url 'manage_organizations' %}">
@@ -57,12 +58,7 @@
                             </ul>
                         </li>
                     {% endif %}
-                    {% if request.user|is_gebruikers_beheerder %}
-                        <li class="admin-settings">
-                            <a href="{% url 'user_list' %}">Gebruikers beheer</a>
-                        </li>
-                    {% endif %}
-                    {% if request.user|is_federatie_beheerder or request.user|is_wonen_medewerker %}
+                    {% if request.user|is_federatie_beheerder or request.user|is_wonen_medewerker or request.user|is_pb_federatie_beheerder %}
                         <li class="admin-settings">
                             <a href="{% url 'federation_user_list' %}">Gebruikers beheer</a>
                         </li>

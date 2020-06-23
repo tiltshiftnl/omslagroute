@@ -3,7 +3,7 @@ from .models import CaseStatus
 from .statics import CASE_STATUS_INGEDIEND, CASE_STATUS_DICT
 from .serializers import CaseStatusSerializer
 from django.contrib.auth.mixins import UserPassesTestMixin
-from web.users.statics import BEGELEIDER, WONEN
+from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER
 from web.forms.statics import FORM_TITLE_BY_SLUG
 from web.users.auth import auth_test
 from rest_framework.views import APIView
@@ -24,7 +24,7 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
     serializer_class = CaseStatusSerializer
 
     def test_func(self):
-        return auth_test(self.request.user, [BEGELEIDER, WONEN]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         return CaseStatus.objects.all().order_by('-created')
