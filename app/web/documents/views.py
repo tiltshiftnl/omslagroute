@@ -28,6 +28,13 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
     template_name_suffix = '_delete_form'
     success_url = reverse_lazy('home')
 
+    def get_success_url(self):
+        return '%s?m=%s#processtap-%s' % (
+            self.success_url,
+            self.request.GET.get('moment_id'),
+            self.request.GET.get('moment_id'),
+        )
+
     def test_func(self):
         return auth_test(self.request.user, REDACTIE)
 
@@ -58,6 +65,13 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('home')
 
+    def get_success_url(self):
+        return '%s?m=%s#processtap-%s' % (
+            self.success_url,
+            self.request.GET.get('moment_id'),
+            self.request.GET.get('moment_id'),
+        )
+
     def test_func(self):
         return auth_test(self.request.user, REDACTIE)
 
@@ -83,6 +97,13 @@ class DocumentVersionCreate(UserPassesTestMixin, CreateView):
     form_class = DocumentVersionForm
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return '%s?m=%s#processtap-%s' % (
+            self.success_url,
+            self.request.GET.get('moment_id'),
+            self.request.GET.get('moment_id'),
+        )
 
     def test_func(self):
         return auth_test(self.request.user, REDACTIE)
