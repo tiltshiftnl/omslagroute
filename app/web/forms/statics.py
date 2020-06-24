@@ -73,9 +73,10 @@ FIELDS = (
         label=_('In geval van plaatsing in een project'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
+        help_text='Vul naam van project in'
     ), {}),
     ('jonger_dan_26_motivatie_contract_onbepaalde', forms.CharField(
-        label=_('Motivatie voor contract onbepaalde tijd jongere'),
+        label=_('In geval van plaatsing reguliere woning'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
@@ -444,7 +445,7 @@ BASIS_GEGEVENS = [
 
 URGENTIE_AANVRAAG = [
     {
-        'title': 'Basisgegevens',
+        'title': 'Centrale toegang',
         'description': '',
         'section_list': [
             {
@@ -537,7 +538,7 @@ URGENTIE_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul><p><strong>Indien partner in zelfde woning zal wonen:</strong></p><ul><li>kopie ID partner (geen rijbewijs)</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst) partner</li><li>meest recente loonstrook partner</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente plaatsingsbesluit veldtafel, WMO beschikking of SPIC</li></ul><p><strong>Indien partner in zelfde woning zal wonen:</strong></p><ul><li>kopie ID partner (geen rijbewijs)</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst) partner</li><li>meest recente loonstrook partner</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
             {
                 'title': '',
@@ -706,7 +707,7 @@ OMKLAP_AANVRAAG = [
     },
     {
         'title': 'Bijlagen',
-        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente beschikking van GGD</li></ul>",
+        'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente plaatsingsbesluit veldtafel, WMO beschikking of SPIC</li></ul>",
         'section_list': [
             {
                 'title': '',
@@ -746,7 +747,7 @@ FORMS = (
             'geboortedatum',
             'emailadres',
         ], 'rules': {
-            'jonger_dan_26': ([2,3,4], (
+            'jonger_dan_26': ([3,4], (
                 'jonger_dan_26_plaatsing_project',
                 'jonger_dan_26_motivatie_contract_onbepaalde',
                 )),
@@ -782,7 +783,7 @@ FORMS = (
             'geboortedatum',
             'emailadres',
         ],'rules': {
-            'jonger_dan_26': ([2,3,4], (
+            'jonger_dan_26': ([3,4], (
                 'jonger_dan_26_plaatsing_project',
                 'jonger_dan_26_motivatie_contract_onbepaalde',
                 )),
