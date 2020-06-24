@@ -552,7 +552,7 @@ URGENTIE_AANVRAAG = [
 
 OMKLAP_AANVRAAG = [
     {
-        'title': 'Basisgegevens',
+        'title': ' ',
         'description': '',
         'section_list': [
             {
@@ -567,6 +567,12 @@ OMKLAP_AANVRAAG = [
                     'woningnet_geldigheid',
                 ],
             },
+        ]
+    },
+    {
+        'title': 'Organisatie en voordracht',
+        'description': '',
+        'section_list': [
             {
                 'title': '',
                 'description': '',
