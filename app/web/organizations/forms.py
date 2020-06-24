@@ -20,3 +20,9 @@ class OrganizationForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': 'Naam organisatie','aria-label': 'Naam organisatie'}),
             'name_abbreviation': forms.TextInput(attrs={'placeholder': 'NIEUW','aria-label': 'Afkorting naam organisatie'}),
         }
+
+
+class FederationForm(forms.ModelForm):
+    class Meta:
+        model = Federation
+        exclude = []

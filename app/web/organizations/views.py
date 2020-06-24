@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from .forms import *
 from web.users.auth import auth_test
@@ -6,6 +6,8 @@ from django.forms import modelformset_factory
 from django.shortcuts import render
 from web.users.auth import user_passes_test
 from web.users.statics import GEBRUIKERS_BEHEERDER
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 
 @user_passes_test(auth_test, user_type=GEBRUIKERS_BEHEERDER)
@@ -27,3 +29,20 @@ def manage_organizations(request):
     return render(request, 'organizations/manage_organizations.html', {
         'formset': formset,
     })
+
+
+class FederationListView(ListView):
+    model = Federation
+    template_name_suffix = '_list_page'
+
+
+class FederationCreateView(CreateView):
+    model = Federation
+    template_name_suffix = '_create_form'
+    success_url = reverse_lazy('federation_list')
+
+
+class FederationUpdateView(UpdateView):
+    model = Federation
+    template_name_suffix = '_update_form'
+    success_url = '.'
