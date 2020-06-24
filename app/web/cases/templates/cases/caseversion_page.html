@@ -25,7 +25,9 @@
     <h2 class="h3">{{ form_data.title }} - versie {{ object.created|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}</h2>
     <p class="print-only">
         {% language 'nl' %}
-            Printdatum: {% now "j F Y H:i" %}
+            Printdatum: {% timezone FRONTEND_TIMEZONE %}
+            {% now "j F Y H:i" %}
+        {% endtimezone %}
         {% endlanguage %}
     </p>
 
@@ -59,7 +61,7 @@
         data-caseversion-id="{{ object.id }}" 
         data-status="">
             <header>
-                <h2 class="h3">Status aanvraaggg</h2>
+                <h2 class="h3">Status aanvraag</h2>
             </header>
             
 <!-- status pending -->

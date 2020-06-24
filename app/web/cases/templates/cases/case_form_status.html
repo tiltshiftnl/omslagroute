@@ -32,7 +32,9 @@
     </div>
     <p class="print-only">
         {% language 'nl' %}
-            Printdatum: {% now "j F Y H:i" %}
+            Printdatum: {% timezone FRONTEND_TIMEZONE %}
+            {% now "j F Y H:i" %}
+        {% endtimezone %}
         {% endlanguage %}
     </p>
 
