@@ -11,6 +11,7 @@ import locale
 from datetime import datetime
 from django.utils import timezone
 from django.conf import settings
+from django.urls import reverse_lazy, reverse
 
 
 class CaseBase(PrintableModel):
@@ -634,7 +635,8 @@ class Document(models.Model):
 
     def __str__(self):
         timezone.activate(settings.FRONTEND_TIMEZONE)
-        return mark_safe('<div><span>%s</span><small>%s</small><small>%s</small></div>' % (
+        return mark_safe('<div><span><a href=%s target="_blank">%s</a></span><small>%s</small><small>%s</small></div>' % (
+                reverse('download_case_document', args=[self.case.id, self.id]),
                 self.name,
                 self.extension,
                 timezone.localtime(self.uploaded).strftime('%d %b %Y %H:%M:%S').lower()
