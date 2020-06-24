@@ -16,6 +16,7 @@ window.onload = function() {
   for (var i = 0; i < textAreas.length; i++) {
     (function() {
       var area = textAreas[i];
+      autoGrow(area);
       area.addEventListener('keyup', function() { autoGrow(area);});
     }());
     
@@ -29,6 +30,7 @@ function showFileName(event) {
 }
 
 function autoGrow (oField) {
+  console.log("autoGrow", oField)
   if (oField.scrollHeight > oField.clientHeight) {
     oField.style.height = oField.scrollHeight + "px";
   }

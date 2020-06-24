@@ -16,14 +16,14 @@
 {% block main %}
 <section class="section section--form u-margin-bottom-sticky">
     <h2>Controleer de gegevens '{{ title }}'</h2>
-    <form method="post" novalidate>
+    <form method="post" novalidate class="u-padding-bottom-4x">
         {% csrf_token %}
         {% client_status form.instance slug as status %}
         {% if status.percentage >= 100 %}
         {% if organization_list %}
 
             {% for organization in organization_list  %}
-            <div class="u-margin-bottom-2x u-border-bottom">
+            <div class="u-margin-bottom-4x u-border-bottom">
                 <p class="u-margin-bottom-2x">De volgende informatie van <strong>{{ form.instance.client_name }}</strong> wordt per mail verstuurd naar <strong>{{ organization.main_email }}</strong> van <strong>{{ organization.name }}</strong>.</p>
                 
                 <section class="section section--client u-margin-bottom-2x">
@@ -59,9 +59,11 @@
                 {% endif %}
             </div>
             {% endfor %}
-            <div data-submit-container class="form-field form-field--buttons form-field--buttons-sticky screen-only">
-                <input type="submit" value="Versturen" class="button button--primary">
-                <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleren</a>
+            <div data-submit-container class="form-field form-field--buttons-sticky screen-only">
+                <div class="button-wrapper">
+                    <input type="submit" value="Versturen" class="button button--primary">
+                    <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleren</a>
+                </div>    
             </div>
         {% else %}
         {% endif %}
