@@ -29,7 +29,7 @@
                 </div>
                 
             </div>
-            <div class="form-field u-margin-bottom-none">
+            <div class="form-field u-margin-bottom-none screen-only">
                 <button v-if="currentCaseStatus.status !== 3" 
                 v-on:click="setNextStatus(3)"  v-bind:class="setButtonClass(3)">
                     <svg class="check__icon" width="20" height="16">
@@ -81,7 +81,7 @@
 
                 </div>
             </div>
-            <div class="status-history-container form-field-history">
+            <div class="status-history-container form-field-history screen-only">
                 <details>
                     <summary>Historie<svg class="icon-details--closed" width="14" height="9">
                             <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>

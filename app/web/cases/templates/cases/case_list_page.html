@@ -85,43 +85,7 @@
         </tbody>
     </table>
 
-    <!-- <table class="case-list table--interactive">
-        <thead>
-            <tr>
-                <th width="200">Naam</th>
-                {% for form in FORMS_PROCESSTAP_CHOICES %}
-                <th>{{ form.1 }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
-                <tr>
-                    <td>
-                        <a href="{% url 'case' object.id %}">
-                            <span class="show-on-mobile">Naam:</span>
-                            {{ object.client_name }}
-                        </a>
-                    </td>
-                    {% for form in FORMS_PROCESSTAP_CHOICES %}
-                    <td>
-                        {% client_submitted_form object form.0 as case_status %}
-                        {% if case_status %}
-                        <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            {{ case_status.status|status_verbose }} ({{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }})
-                        </a>
-                        <span class="sr-only">{{ case_status.status|status_verbose }} ({{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }})</span>
-                        {% else %}
-                        <a href="{% url 'case' object.id %}" aria-hidden="true">
-                            <span>Deze stap is nog niet ingediend</span>
-                        </a>
-                        {% endif %}
-                    </td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table> -->
+    
     {% include 'core/pagination.html' with object_list=object_list filter_params='' %}
 </section>
 {% endblock %}

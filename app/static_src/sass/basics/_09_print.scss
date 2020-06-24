@@ -48,7 +48,7 @@
     }
 
     .site-main {
-        padding: 0 0 0 1cm;
+        padding: 0 1cm;
         margin: 0;
         max-width: 100%;
         border: 0;
@@ -108,7 +108,7 @@
     // TABLES
     // ********************    
 
-    table { page-break-inside:auto; border-collapse: none; border: 0 !important; width: 80%; }
+    table { page-break-inside:auto; border-collapse: none; border: 0 !important; width: 100%; }
     tr    { page-break-inside:avoid; page-break-after:auto;  }
     td    { page-break-inside:avoid; page-break-after:auto }
     thead { display:table-header-group }

@@ -128,7 +128,7 @@
         <table class="moment-list">
             <thead>
                 <tr>
-                    <th colspan="2">Stap in omslagroute</th>
+                    <th>Stap in omslagroute</th>
                     <th>Status</th>
                     <th>Status datum</th>
                     <th>Status door</th>
@@ -138,7 +138,7 @@
                 {% for moment in moment_list %}
                     {% client_submitted_form object moment.form as case_status %}
                     <tr>
-                        <td colspan="2">
+                        <td>
                             <div class="dot dot--large"></div>
                             {% client_status object 'basis-gegevens' as status %}
                             <strong>

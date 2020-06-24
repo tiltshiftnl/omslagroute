@@ -16,7 +16,7 @@ table {
 
 @media all and (max-width: $tablets) {
     thead {
-        display: none;
+    //    display: none;
     }
 }
 thead th {
@@ -53,14 +53,14 @@ tr {
 }
 
 
-@media all and (min-width: $tablets) {
-    tr:not(:last-of-type) {
-        th, 
-        td {
-            border-bottom: .063rem solid $neutral-grey2;
-        }
-    }
-}
+// @media all and (min-width: $tablets) {
+//     tr:not(:last-of-type) {
+//         th, 
+//         td {
+//             border-bottom: .063rem solid $neutral-grey2;
+//         }
+//     }
+// }
 
 tr:nth-of-type(even) {
     background-color: $neutral-grey2;
@@ -163,7 +163,11 @@ tr:nth-of-type(even) {
     tbody {
         tr {
 
-        border-bottom: .25rem solid $primary-white;
+            border-bottom: .25rem solid $primary-white;
+
+            @media print {
+                border-bottom: 1px solid $neutral-grey4;
+            }
         }
     }
     .dot {
