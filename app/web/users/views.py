@@ -215,7 +215,7 @@ class UserCreationView(UserPassesTestMixin, CreateView):
             )
             sg.send(email)
 
-        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
+        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt en heeft een e-mail ontvangen" % user.username )
         return super().form_valid(form)
 
 
@@ -264,7 +264,7 @@ class UserCreationFederationView(UserPassesTestMixin, CreateView):
             )
             sg.send(email)
 
-        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt" % user.username)
+        messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangemaakt en heeft een e-mail ontvangen" % user.username)
         return super().form_valid(form)
 
 
