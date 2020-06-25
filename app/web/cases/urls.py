@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:pk>/uitgenodigingen-intrekken/', CaseRemoveInvitedUsers.as_view(), name='case_remove_invited_users'),
 
     path('<int:pk>/alle-velden/', CaseDetailAllDataView.as_view(), name='case_all_data'),
+    path('verwijder-verzoek/<int:pk>/', CaseDeleteRequestView.as_view(), name='delete_request_case'),
     path('verwijder/<int:pk>/', CaseDeleteView.as_view(), name='delete_case'),
     path('nieuw/<str:slug>/', GenericCaseCreateFormView.as_view(), name='create_case'),
     path('<int:pk>/<str:slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),

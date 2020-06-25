@@ -13,6 +13,7 @@ from datetime import datetime
 from django.utils import timezone
 from django.conf import settings
 from django.urls import reverse_lazy, reverse
+from django.core.files.storage import default_storage
 
 
 class CaseBase(PrintableModel):
@@ -508,6 +509,12 @@ class CaseBase(PrintableModel):
 
 
 class Case(CaseBase):
+    case_closed = models.DateTimeField(
+        verbose_name=_('Afgesloten datum'),
+        blank=True,
+        null=True,
+    )
+
     def create_version(self, version):
         case_dict = dict(
             (k, v) for k, v in self.__dict__.items()
@@ -520,6 +527,34 @@ class Case(CaseBase):
         case_version.case = self
         case_version.save()
         return case_version
+
+    def delete_related(self):
+        document_path = os.path.join(
+            'uploads',
+            'cases',
+            '%a' % self.id
+        )
+        if default_storage.exists(document_path):
+            dirs, files = default_storage.listdir(document_path)
+            for f in files:
+                file_path = os.path.join(
+                    document_path,
+                    f
+                )
+                if default_storage.exists(file_path):
+                    default_storage.delete(file_path)
+            default_storage.delete(document_path)
+
+        CaseVersion.objects.filter(case=self).delete()
+        CaseStatus.objects.filter(case=self).delete()
+        Document.objects.filter(case=self).delete()
+        return True
+
+    def delete(self):
+        deleted = delete_related()
+        if deleted:
+            super().delete()
+        return False
 
     class Meta:
         verbose_name = _('Client')
