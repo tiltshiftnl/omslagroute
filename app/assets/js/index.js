@@ -30,7 +30,6 @@ function showFileName(event) {
 }
 
 function autoGrow (oField) {
-  console.log("autoGrow", oField)
   if (oField.scrollHeight > oField.clientHeight) {
     oField.style.height = oField.scrollHeight + "px";
   }

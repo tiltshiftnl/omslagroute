@@ -386,7 +386,7 @@ class CaseBase(PrintableModel):
         null=True,
     )
     omklap_akkoord_derde = models.PositiveSmallIntegerField(
-        verbose_name=_('Akkoord door onafhankelijke derde'),
+        verbose_name=_('Akkoord objectieve derde'),
         choices=DEFAULT_YES_OR_NO,
         blank=True,
         null=True,

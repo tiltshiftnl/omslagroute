@@ -414,6 +414,31 @@ FIELDS = (
         help_text='Bijvoorbeeld: doelen niet behaald maar geen risico voor zelfstandig wonen',
         required=False,
     ), {}),
+    ('omklap_akkoord_derde', forms.IntegerField(
+        label=_('Akkoord *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+     ), {'step_required': True}),
+    ('omklap_akkoord_derde_toelichting', forms.CharField(
+        label=_('Toelichting'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('omklap_akkoord_derde_naam', forms.CharField(
+        label=_('Naam / afdeling *'),
+        required=False,
+    ), {'step_required': True}),
+    ('omklap_akkoord_derde_datum', forms.DateField(
+        label=_('Datum akkoord *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
     # ('document_list', forms.ModelMultipleChoiceField(
     #     label=_('Documenten lijst'),
     #     # queryset=Document.objects.all(),
@@ -553,11 +578,11 @@ URGENTIE_AANVRAAG = [
 
 OMKLAP_AANVRAAG = [
     {
-        'title': ' ',
+        'title': 'Woningnet',
         'description': '',
         'section_list': [
             {
-                'title': 'Woningnet',
+                'title': '',
                 'description': '',
                 'fields': [
                     'client_first_name',
@@ -706,6 +731,22 @@ OMKLAP_AANVRAAG = [
         ],
     },
     {
+        'title': 'Akkoord objectieve derde',
+        'description': "",
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'omklap_akkoord_derde',
+                    'omklap_akkoord_derde_toelichting',
+                    'omklap_akkoord_derde_naam',
+                    'omklap_akkoord_derde_datum'
+                ],
+            },
+        ]
+    },
+    {
         'title': 'Bijlagen',
         'description': "<strong>Nodige bijlagen bij aanvraag Voordracht omklap</strong><ul><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente plaatsingsbesluit veldtafel, WMO beschikking of SPIC</li></ul>",
         'section_list': [
@@ -787,8 +828,9 @@ FORMS = (
                 'jonger_dan_26_plaatsing_project',
                 'jonger_dan_26_motivatie_contract_onbepaalde',
                 )),
-            
-
+            'omklap_akkoord_derde': ([2], (
+                ['omklap_akkoord_derde_toelichting']
+                )),
         }},
     ),
 )
