@@ -385,6 +385,27 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    omklap_akkoord_derde = models.PositiveSmallIntegerField(
+        verbose_name=_('Akkoord objectieve derde'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    omklap_akkoord_derde_toelichting = models.TextField(
+        verbose_name=_('Toelichting'),
+        blank=True,
+        null=True,
+    )
+    omklap_akkoord_derde_naam = models.TextField(
+        verbose_name=_('Naam / afdeling objectieve derde'),
+        blank=True,
+        null=True,
+    )
+    omklap_akkoord_derde_datum = models.DateField(
+        verbose_name=_('Datum van akkoord'),
+        blank=True,
+        null=True,
+    )
 
     @property
     def centrale_toegang_naam_value(self):
