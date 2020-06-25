@@ -90,33 +90,41 @@
                         </svg>
                     </summary>
                     <div class="content">
-                        <ul class="u-list-style-none">
-                            <li v-for="h in statusHistory" :key="h.id">
-                                
-                                 <span v-if="caseStatusOptions[h.status].id === 2" class="icon-circle icon-circle--status-disapproved">
-                                    <svg class="icon close__icon" width="12" height="12">
-                                        <use href="#close" xlink:href="#close" width="12" height="12"></use>
-                                    </svg>
-                                </span>
-                                <span v-if="caseStatusOptions[h.status].id === 3" class="icon-circle icon-circle--status-approved">
-                                    <svg class="icon check__icon" width="16" height="14">
-                                        <use href="#check" xlink:href="#check" width="16" height="14"></use>
-                                    </svg>
-                                </span>
-                                <span v-if="caseStatusOptions[h.status].id === 4" class="icon-circle icon-circle--status-pending">
-                                    <svg class="icon pause__icon" width="12" height="12">
-                                        <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
-                                    </svg>
-                                </span>
-                                <small class="status">{{caseStatusOptions[h.status].current }}</small>
-                                <div class="facts">
-                                     <div class="u-clearfix">
-                                         <small>{{ h.created | moment("DD-MM-YYYY HH:mm") }} </small><small class="u-float-right">{{ h.username }}</small>
-                                     </div>
-                                    <p>{{ h.status_comment}}</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <button type="button" data-handler="close-details" class="button button--close">
+                            <span class="sr-only">Verberg historie</span>
+                            <svg class="icon close__icon" width="12" height="12">
+                                <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                            </svg>
+                        </button>
+                        <div class="u-scroll-wrapper">
+                            <ul class="u-list-style-none">
+                                <li v-for="h in statusHistory" :key="h.id">
+                                    
+                                    <span v-if="caseStatusOptions[h.status].id === 2" class="icon-circle icon-circle--status-disapproved">
+                                        <svg class="icon close__icon" width="12" height="12">
+                                            <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                        </svg>
+                                    </span>
+                                    <span v-if="caseStatusOptions[h.status].id === 3" class="icon-circle icon-circle--status-approved">
+                                        <svg class="icon check__icon" width="16" height="14">
+                                            <use href="#check" xlink:href="#check" width="16" height="14"></use>
+                                        </svg>
+                                    </span>
+                                    <span v-if="caseStatusOptions[h.status].id === 4" class="icon-circle icon-circle--status-pending">
+                                        <svg class="icon pause__icon" width="12" height="12">
+                                            <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
+                                        </svg>
+                                    </span>
+                                    <small class="status">{{caseStatusOptions[h.status].current }}</small>
+                                    <div class="facts">
+                                        <div class="u-clearfix">
+                                            <small>{{ h.created | moment("DD-MM-YYYY HH:mm") }} </small><small class="u-float-right">{{ h.username }}</small>
+                                        </div>
+                                        <p>{{ h.status_comment}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>    
                     </div>
                 </details>
             </div>

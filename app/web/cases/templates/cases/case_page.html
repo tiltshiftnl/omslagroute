@@ -20,46 +20,72 @@
 
 {% block main %}
 <section class="section section--client">
-    <div class="flex-container">
-        <div class="flex-item u-margin-top-half">
-            <h1>{{ object.client_name }}</h1>
-            <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}{% if object.saved_by %} door {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %}, <br>'{{ object.saved_form|form_verbose }}'{% endif %}</small>
-        </div>
-        <div class="flex-item">
-            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-            <div class="details-admin screen-only">
-                <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                    Samenwerken ({{ linked_users|length }})
-                </a>
+    <div>
+        <div class="client-header flex-container">
+            <div class="flex-item">
+                <h1>{{ object.client_name }}</h1>
             </div>
-            {% endif %}
-    
+            <div class="flex-item">
+                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
+                
+                <div class="screen-only">
+                    <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                        Samenwerken ({{ linked_users|length }})
+                    </a>
+
+                <details>
+                    <summary>opties<svg class="icon-details--closed" width="14" height="9">
+                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                        </svg><svg class="icon-details--open" width="14" height="9">
+                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                        </svg>
+                    </summary>
+                    <div class="content">
+                        <button type="button" data-handler="close-details" class="button button--close">
+                            <span class="sr-only">Verberg historie</span>
+                            <svg class="icon close__icon" width="12" height="12">
+                                <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                            </svg>
+                        </button>
+                        <ul class="u-list-style-none">
+                            <li>
+                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
+                                    Wijzig basisgegevens
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a href="#">Verzoek verwijderen cliënt uit omslagroute</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </details>
+                
+                </div>
+                {% endif %}    
+        
+            </div>
         </div>
+        
+            
+    
+            <div role="dialog" class="modal" id="modalInvite">
+                <iframe class="modal--invite" id="iframeInvite" src="{% url 'case_invite_users' object.id  %}">
+                </iframe>
+              </div>    
+        <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}{% if object.saved_by %} | {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %} | '{{ object.saved_form|form_verbose }}'{% endif %}</small>
+        <small class="print-only">
+            {% language 'nl' %}
+                Printdatum: {% now "j F Y H:i" %}
+            {% endlanguage %}
+        </small>
+
     </div>
     
-        
-
-        <div role="dialog" class="modal" id="modalInvite">
-            <iframe class="modal--invite" id="iframeInvite" src="{% url 'case_invite_users' object.id  %}">
-            </iframe>
-          </div>
-
-    <p class="print-only">
-        {% language 'nl' %}
-            Printdatum: {% now "j F Y H:i" %}
-        {% endlanguage %}
-    </p>
-
     <section class="section-details-client">
         <!-- START Client basis gegevens -->
         <div class="details-client details-client--basic">
             <header>
                 <h2 class="h3">Basisgegevens</h2>
-                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
-                    Wijzigen
-                </a>
-                {% endif %}
             </header>
 
             <dl>
