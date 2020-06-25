@@ -4,7 +4,7 @@
     <li>{% include option.template_name with widget=option %}</li>{% endfor %}{% if group %}
   </ul></li>{% endif %}{% endfor %}
 </ul>{% endwith %}
-    {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary screen-only">+ Nieuwe bijlage</a>{% endif %}</p>
+    {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary screen-only" data-handler="modal" data-contentid="modalUploads">+ Nieuwe bijlage</a>{% endif %}</p>
 {% else %}
     <br>
     <p><strong>Er zijn nog geen bijlages voor deze cliënt geüpload.</strong><br>
@@ -12,3 +12,9 @@
     <br>
     {% if widget.attrs.instance_id %}<br><a href="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" class="button button--secondary screen-only">+ Nieuwe bijlage</a>{% endif %}</p>
 {% endif %}
+
+<div role="dialog" class="modal" id="modalUploads">
+  <iframe class="modal--uploads" id="iframeModal" src="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}" title="Geef uw mening">
+  </iframe>
+</div>
+
