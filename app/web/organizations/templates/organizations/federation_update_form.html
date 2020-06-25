@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load auth_tags %}
+{% block title %} - Organisatie wijzigen
+{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'federation_list' %}">Alle organisaties</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Organisatie wijzigen</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Organisatie wijzigen</h2>
+    <div class="details-admin screen-only">
+        <a href="{% url 'federation_delete' form.instance.id %}" class="button button--secondary" title="ga naar het verwijderen van deze organisatie">
+            Verwijder organisatie
+        </a>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        {% if form.instance.user_list.all %}
+        <h3>Gebruikers in deze organisatie</h3>
+        <table>
+            <thead>
+                <th>E-mailadres (gebruikersnaam)</th>
+                <th>Voornaam</th>
+                <th>Achternaam</th>
+                <th>Gebruiker rol</th>
+                <th>Actie</th>
+            </thead>
+            <tbody>
+                {% for user in form.instance.user_list.all %}
+                <tr>
+                    <td>
+                        {{user.username}}
+                    </td>
+                    <td>
+                        {{user.first_name}}
+                    </td>
+                    <td>
+                        {{user.last_name}}
+                    </td>
+                    <td>
+                        {{user.user_type|user_type_verbose}}
+                    </td>
+                    <td>
+                        <a href="{% url 'update_user' user.id %}?next={% url 'federation_update' object.id %}">Wijzig</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        <div class="form-field form-field--buttons screen-only">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'federation_list' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} - Alle organisaties
+{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Alle organisaties</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Alle organisaties</h2>
+
+    <div class="form-field form-field--buttons screen-only">
+        <a href="{% url 'federation_create' %}" class="button button--primary">Nieuw organisatie</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Federatie id</th>
+                <th>Organisatie type</th>
+                <th>Aantal gebruikers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for federation in object_list %}
+            <tr>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {{ federation.name }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {{ federation.federation_id }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {% if federation.organization %}{{ federation.organization }}{% else %}-{% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {{ federation.user_list.all|length }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

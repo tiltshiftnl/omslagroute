@@ -91,7 +91,7 @@ class UserList(UserPassesTestMixin, TemplateView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [GEBRUIKERS_BEHEERDER])
+        return auth_test(self.request.user, [BEHEERDER])
 
 
 class FederationUserList(UserPassesTestMixin, TemplateView):
@@ -143,8 +143,13 @@ class UserUpdateView(UserPassesTestMixin, UpdateView):
     form_class = UserUpdateForm
     success_url = reverse_lazy('user_list')
 
+    def get_success_url(self):
+        if self.request.POST.get('next'):
+            return self.request.POST.get('next')
+        return self.success_url
+
     def test_func(self):
-        return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
+        return auth_test(self.request.user, BEHEERDER)
 
     def form_valid(self, form):
         messages.add_message(self.request, messages.INFO, "Gebruiker %s is aangepast" % self.object.username)
@@ -187,7 +192,7 @@ class UserCreationView(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('user_list')
 
     def test_func(self):
-        return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
+        return auth_test(self.request.user, BEHEERDER)
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -273,6 +278,11 @@ class UserDelete(UserPassesTestMixin, DeleteView):
     template_name_suffix = '_delete'
     success_url = reverse_lazy('user_list')
 
+    def get_success_url(self):
+        if self.request.POST.get('next'):
+            return self.request.POST.get('next')
+        return self.success_url
+
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         cases = Case.objects.all()
@@ -285,7 +295,7 @@ class UserDelete(UserPassesTestMixin, DeleteView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, GEBRUIKERS_BEHEERDER)
+        return auth_test(self.request.user, BEHEERDER)
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()

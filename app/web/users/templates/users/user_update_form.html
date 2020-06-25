@@ -16,7 +16,7 @@
     <h2>Gebuiker '{{ form.instance.name }}' aanpassen</h2>
 
     <div class="details-admin screen-only">
-        <a href="{% url 'delete_user' object.id %}" class="button button--secondary">Gebruiker verwijderen</a>
+        <a href="{% url 'delete_user' object.id %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="button button--secondary">Gebruiker verwijderen</a>
     </div>
 
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
@@ -84,6 +84,9 @@
 
         <input type="hidden" name="{{ form.user.id_for_label }}" id="{{ form.user.id_for_label }}">
         <input type="hidden" name="{{ form.id.id_for_label }}" id="{{ form.id.id_for_label }}">
+        {% if request.GET.next %}
+        <input type="hidden" value="{{ request.GET.next }}" name="next" id="id_next">
+        {% endif %}
 
         <div class="form-field form-field--buttons screen-only">
             <input type="submit" value="Opslaan" class="button button--primary">

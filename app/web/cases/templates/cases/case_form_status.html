@@ -11,7 +11,7 @@
                 <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
                 <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.client_name }}</a></li>
             {% endif %}
-            {% if request.user|is_begeleider or request.user|is_begeleider %}
+            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                 <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
                 <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">Cliënt: {{ object.client_name }}</a></li>
             {% endif %}

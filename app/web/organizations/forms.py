@@ -20,3 +20,20 @@ class OrganizationForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': 'Naam organisatie','aria-label': 'Naam organisatie'}),
             'name_abbreviation': forms.TextInput(attrs={'placeholder': 'NIEUW','aria-label': 'Afkorting naam organisatie'}),
         }
+
+
+class FederationForm(forms.ModelForm):
+
+    class Meta:
+        model = Federation
+        exclude = [
+            'name_abbreviation',
+            'main_email',
+        ]
+        widgets = {
+            'federation_id': forms.TextInput(attrs={'disabled': 'disabled'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['organization'].label = _('Organisatie type')
