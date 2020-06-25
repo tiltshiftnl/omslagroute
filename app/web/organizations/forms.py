@@ -23,6 +23,17 @@ class OrganizationForm(forms.ModelForm):
 
 
 class FederationForm(forms.ModelForm):
+
     class Meta:
         model = Federation
-        exclude = []
+        exclude = [
+            'name_abbreviation',
+            'main_email',
+        ]
+        widgets = {
+            'federation_id': forms.TextInput(attrs={'disabled': 'disabled'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['organization'].label = _('Organisatie type')

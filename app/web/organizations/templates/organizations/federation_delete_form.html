@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load auth_tags %}
+{% block title %} - Organisatie aanmaken
+{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step"><a href="{% url 'federation_list' %}">Alle organisaties</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Organisatie verwijderen</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Organisatie verwijderen</h2>
+    <p>Weet je zeker dat je de organisatie <strong>{{ object.name }}</strong> wilt verwijdreen?</p>
+    {% if object.user_list.all %}
+    <p><strong>De gebruikers hieronder zullen door het verwijderen van deze organisatie, hun rol op de Omslagroute verliezen.</strong></p>
+    <table>
+        <thead>
+            <th>E-mailadres (gebruikersnaam)</th>
+            <th>Voornaam</th>
+            <th>Achternaam</th>
+            <th>Gebruiker rol</th>
+            <th>Actie</th>
+        </thead>
+        <tbody>
+            {% for user in object.user_list.all %}
+            <tr>
+                <td>
+                    {{user.username}}
+                </td>
+                <td>
+                    {{user.first_name}}
+                </td>
+                <td>
+                    {{user.last_name}}
+                </td>
+                <td>
+                    {{user.user_type|user_type_verbose}}
+                </td>
+                <td>
+                    <a href="{% url 'update_user' user.id %}?next={% url 'federation_delete' object.id %}">Wijzig</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-field form-field--buttons screen-only">
+            <input type="submit" value="Verwijderen" class="button button--primary">
+            <a href="{% url 'federation_update' object.id %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

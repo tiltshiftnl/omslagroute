@@ -4,6 +4,9 @@ from web.users.auth import auth_test
 register = template.Library()
 from web.users.statics import *
 
+@register.filter()
+def user_type_verbose(user_type):
+    return USER_TYPES_DICT.get(user_type)
 
 @register.filter(name='has_group')
 def has_group(user, group_name):
@@ -25,9 +28,9 @@ def is_begeleider(user):
     return auth_test(user, BEGELEIDER)
 
 
-@register.filter(name='is_gebruikers_beheerder')
-def is_gebruikers_beheerder(user):
-    return auth_test(user, GEBRUIKERS_BEHEERDER)
+@register.filter(name='is_beheerder')
+def is_beheerder(user):
+    return auth_test(user, BEHEERDER)
 
 
 @register.filter(name='is_wonen_medewerker')

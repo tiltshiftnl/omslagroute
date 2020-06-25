@@ -19,11 +19,39 @@
         <a href="{% url 'federation_create' %}" class="button button--primary">Nieuw organisatie</a>
     </div>
     <table>
-        {% for organisatie in object_list %}
-        <tr>
-            <td>{{ organisatie.name }}</td>
-            <td>{{ organisatie.federation_id }}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Federatie id</th>
+                <th>Organisatie type</th>
+                <th>Aantal gebruikers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for federation in object_list %}
+            <tr>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {{ federation.name }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {{ federation.federation_id }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {% if federation.organization %}{{ federation.organization }}{% else %}-{% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'federation_update' federation.id %}">
+                    {{ federation.user_list.all|length }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

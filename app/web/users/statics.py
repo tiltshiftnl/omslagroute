@@ -5,7 +5,7 @@ USER_TYPES = (
     (4, 'Woningcorporatie'),
     (5, 'Persoonlijk begeleider'),
     (6, 'Onbekend'),
-    (7, 'Gebruikers beheerder'),
+    (7, 'Beheerder'),
     (8, 'Organisatie beheerder'),
     (9, 'PB & Organisatie beheerder'),
 )
@@ -16,7 +16,7 @@ USER_TYPES_FEDERATIE = [6, 5, 8]
 
 REDACTIE = 1
 BEGELEIDER = 5
-GEBRUIKERS_BEHEERDER = 7
+BEHEERDER = 7
 PB_FEDERATIE_BEHEERDER = 9
 FEDERATIE_BEHEERDER = 8
 ONBEKEND = 6

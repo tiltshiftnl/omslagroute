@@ -10,7 +10,7 @@ from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured
 from keycloak_oidc.auth import OIDCAuthenticationBackend as DatapuntOIDCAuthenticationBackend
 from mozilla_django_oidc.utils import absolutify
 import logging
-from .statics import GEBRUIKERS_BEHEERDER
+from .statics import BEHEERDER
 from web.core.utils import validate_email_wrapper
 from web.organizations.models import Federation
 import sendgrid
@@ -70,7 +70,7 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
         profile.user = user
         profile.save()
         addresses = [
-            user.username for user in self.UserModel.objects.all().filter(user_type=GEBRUIKERS_BEHEERDER)
+            user.username for user in self.UserModel.objects.all().filter(user_type=BEHEERDER)
             if validate_email_wrapper(user.username)
         ]
         if settings.SENDGRID_KEY and addresses:
