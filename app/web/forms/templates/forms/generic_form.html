@@ -113,38 +113,46 @@
                                                 </svg>
                                             </summary>
                                             <div class="content">
-                                                <ul class="u-list-style-none">
-                                                    {% for case_status in case_status_list %}
-                                                    {% if forloop.counter0 > 0 %}
-                                                    <li>
-                                                        {% if case_status.status == 2 %}
-                                                        <span class="icon-circle icon-circle--status-disapproved">
-                                                            <svg class="icon close__icon" width="12" height="12">
-                                                                <use href="#close" xlink:href="#close" width="12" height="12"></use>
-                                                            </svg>
-                                                        </span>
-                                                        {% elif case_status.status == 3 %}
-                                                        <span class="icon-circle icon-circle--status-approved">
-                                                            <svg class="icon check__icon" width="16" height="14">
-                                                                <use href="#check" xlink:href="#check" width="16" height="14"></use>
-                                                            </svg>
-                                                        </span>
-                                                        {% elif case_status.status == 4 %}
-                                                        <span class="icon-circle icon-circle--status-pending">
-                                                            <svg class="icon pause__icon" width="12" height="12">
-                                                                <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
-                                                            </svg>
-                                                        </span>
+                                                <button type="button" data-handler="close-details" class="button button--close">
+                                                    <span class="sr-only">Verberg historie</span>
+                                                    <svg class="icon close__icon" width="12" height="12">
+                                                        <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                                    </svg>
+                                                </button>
+                                                <div class="u-scroll-wrapper">
+                                                    <ul class="u-list-style-none">
+                                                        {% for case_status in case_status_list %}
+                                                        {% if forloop.counter0 > 0 %}
+                                                        <li>
+                                                            {% if case_status.status == 2 %}
+                                                            <span class="icon-circle icon-circle--status-disapproved">
+                                                                <svg class="icon close__icon" width="12" height="12">
+                                                                    <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                                                </svg>
+                                                            </span>
+                                                            {% elif case_status.status == 3 %}
+                                                            <span class="icon-circle icon-circle--status-approved">
+                                                                <svg class="icon check__icon" width="16" height="14">
+                                                                    <use href="#check" xlink:href="#check" width="16" height="14"></use>
+                                                                </svg>
+                                                            </span>
+                                                            {% elif case_status.status == 4 %}
+                                                            <span class="icon-circle icon-circle--status-pending">
+                                                                <svg class="icon pause__icon" width="12" height="12">
+                                                                    <use href="#pause" xlink:href="#pause" width="12" height="12"></use>
+                                                                </svg>
+                                                            </span>
+                                                            {% endif %}
+                                                            <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
+                                                            <div class="facts u-margin-top-half">
+                                                                <small>{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
+                                                                {% if case_status.status_comment %}<p>{{ case_status.status_comment }}</p>{% endif %}
+                                                            </div>
+                                                        </li>
                                                         {% endif %}
-                                                        <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
-                                                        <div class="facts u-margin-top-half">
-                                                            <small>{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>
-                                                            {% if case_status.status_comment %}<p>{{ case_status.status_comment }}</p>{% endif %}
-                                                        </div>
-                                                    </li>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </ul>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>    
                                             </div>
                                         </details>
                                     </div>

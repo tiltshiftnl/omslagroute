@@ -27,12 +27,41 @@
             </div>
             <div class="flex-item">
                 {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
+                
                 <div class="screen-only">
                     <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
                         Samenwerken ({{ linked_users|length }})
                     </a>
+
+                <details>
+                    <summary>opties<svg class="icon-details--closed" width="14" height="9">
+                            <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                        </svg><svg class="icon-details--open" width="14" height="9">
+                            <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                        </svg>
+                    </summary>
+                    <div class="content">
+                        <button type="button" data-handler="close-details" class="button button--close">
+                            <span class="sr-only">Verberg historie</span>
+                            <svg class="icon close__icon" width="12" height="12">
+                                <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                            </svg>
+                        </button>
+                        <ul>
+                            <li>
+                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
+                                    Wijzig basisgegevens
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a href="#">Verzoek verwijderen cliënt uit omslagroute</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </details>
+                
                 </div>
-                {% endif %}
+                {% endif %}    
         
             </div>
         </div>
@@ -57,11 +86,6 @@
         <div class="details-client details-client--basic">
             <header>
                 <h2 class="h3">Basisgegevens</h2>
-                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
-                    Wijzigen
-                </a>
-                {% endif %}
             </header>
 
             <dl>

@@ -153,6 +153,12 @@ Array.prototype.sortOnData = function (key) {
       console.log("print-page", e)
       window.print();
     },
+    "close-details": function (e) {
+      var self = _closest(e.target, '[data-handler="close-details"]'),
+        //moment = _closest(self, "[data-m"),
+        details = _closest(self, "details");
+        details.open = false;
+    },
     "moment-up": function (e) {
       e.preventDefault();
       var moment = _closest(e.target, "[data-moment]");
