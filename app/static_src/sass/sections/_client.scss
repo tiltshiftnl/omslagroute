@@ -1,5 +1,20 @@
 .section--client{
 
+    .client-header {
+        padding: .5rem 0;
+        margin-bottom: .5rem;
+        border-bottom: 2px solid $neutral-grey2;
+        border-top: 2px solid $neutral-grey2;
+
+        h1 {
+            line-height: 45px;
+        }
+
+        > *:last-child {
+            text-align: right;
+        }
+    }
+
     .section-details-client {
         margin-bottom: 3.75rem;
 
