@@ -29,6 +29,7 @@ from django.db.models import Count
 from django.db.models.functions import Concat
 from django.db.models import TextField, DateTimeField, IntegerField
 from django.core.exceptions import PermissionDenied
+import datetime
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -141,6 +142,7 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
                 user=self.request.user
             )
         )
+        # self.object.delete_related()
         kwargs.update({
             'moment_list': Moment.objects.all(),
             'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
@@ -227,19 +229,46 @@ class CaseUpdateView(UserPassesTestMixin, UpdateView):
 
 class CaseDeleteView(UserPassesTestMixin, DeleteView):
     model = Case
-    form_class = CaseForm
-    template_name_suffix = '_delete_form'
-    success_url = reverse_lazy('cases_by_profile')
+    template_name_suffix = '_delete'
+    success_url = reverse_lazy('case_list')
+
+    def test_func(self):
+        return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
+        return super().get_queryset().filter(id__in=case_list)
+
+    def delete(self, request, *args, **kwargs):
+        obj = self.get_object()
+        response = super().delete(request, *args, **kwargs)
+        messages.add_message(self.request, messages.INFO, "De cliënt '%s' is verwijderd." % obj.client_name)
+        return response
+
+
+class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
+    model = Case
+    template_name_suffix = '_close'
+    success_url = reverse_lazy('cases_by_profile')
+    fields = [
+        'case_closed',
+    ]
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
-    def delete(self, request, *args, **kwargs):
-        response = super().delete(self, request, *args, **kwargs)
-        messages.add_message(self.request, messages.INFO, "De cliënt '%s' is verwijderd." % self.object.client_name)
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+    def get_initial(self):
+        
+        self.initial.update({
+            'case_closed': datetime.datetime.now()
+        })
+        return super().get_initial()
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.INFO, "Eventuele wijzigingen zijn opgeslagen.")
         return response
 
 
