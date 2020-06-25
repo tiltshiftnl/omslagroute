@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .statics import *
@@ -625,6 +626,11 @@ class CaseStatus(models.Model):
         ordering = ('-created', 'case', 'form')
 
 
+def get_upload_path(instance, filename):
+    return os.path.join(
+      "uploads", 'cases', '%s' % instance.case.id, filename)
+
+
 class Document(models.Model):
     name = models.CharField(
         verbose_name=_('Titel van het document'),
@@ -632,7 +638,7 @@ class Document(models.Model):
     )
     uploaded_file = models.FileField(
         verbose_name=_('Selecteer een bestand'),
-        upload_to='uploads'
+        upload_to=get_upload_path
     )
     uploaded = models.DateTimeField(
         verbose_name=_('Initieel opgeslagen datum/tijd'),
