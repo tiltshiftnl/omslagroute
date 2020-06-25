@@ -397,7 +397,7 @@ class CaseBase(PrintableModel):
         null=True,
     )
     omklap_akkoord_derde_naam = models.TextField(
-        verbose_name=_('Naam / afdeling onafhankelijke derde'),
+        verbose_name=_('Naam / afdeling objectieve derde'),
         blank=True,
         null=True,
     )
