@@ -68,6 +68,11 @@ tr:nth-of-type(even) {
 }
 
 .table--interactive {
+    tr:nth-of-type(even) {
+        background-color: transparent;
+        
+    
+    }
     thead {
         th, 
         td {
@@ -83,7 +88,7 @@ tr:nth-of-type(even) {
         th,
         td {
             padding: 0; 
-            
+            border-bottom: 1px solid $neutral-grey2;
             a { 
                 color: $primary-black;
                 display: block; 
