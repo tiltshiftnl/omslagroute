@@ -43,7 +43,11 @@
                 <tr>
                     <td>
                         <span class="show-on-mobile">Naam:</span>
+                        {% if not object.delete_request_date %}
                         <a href="{% url 'case' object.id %}">{{ object.client_name }}</a>
+                        {% else %}
+                        {{ object.client_name }}
+                        {% endif %}
                     </td>
                     <td class="help-text">
                         <span class="show-on-mobile">Laatste opgeslagen:</span>
@@ -52,7 +56,11 @@
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
                         {% if case_status_list %}
+                        {% if not object.delete_request_date %}
                         <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
+                        {% else %}
+                        {{ case_status_list.0.form|form_verbose }}
+                        {% endif %}
                         {% else %}
                         <span class="u-text-color-grey4">Er is nog geen aanvraag verstuurd voor deze cliënt</span>
                         {% endif %}

@@ -509,8 +509,13 @@ class CaseBase(PrintableModel):
 
 
 class Case(CaseBase):
-    case_closed = models.DateTimeField(
-        verbose_name=_('Afgesloten datum'),
+    delete_request_date = models.DateTimeField(
+        verbose_name=_('Verwijder verzoek datum'),
+        blank=True,
+        null=True,
+    )
+    delete_request_message = models.TextField(
+        verbose_name=_('Verwijder verzoek bericht'),
         blank=True,
         null=True,
     )

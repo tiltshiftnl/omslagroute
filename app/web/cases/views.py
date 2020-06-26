@@ -248,11 +248,14 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
 
 class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
     model = Case
-    template_name_suffix = '_close'
+    template_name_suffix = '_delete_request'
     success_url = reverse_lazy('cases_by_profile')
-    fields = [
-        'case_closed',
-    ]
+    form_class = CaseDeleteRequestForm
+
+    def get_success_url(self):
+        return './?iframe=%s' % (
+            self.success_url,
+        )
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
@@ -260,16 +263,38 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
     def get_queryset(self):
         return self.request.user.profile.cases.all()
 
-    def get_initial(self):
-        
-        self.initial.update({
-            'case_closed': datetime.datetime.now()
-        })
-        return super().get_initial()
-
     def form_valid(self, form):
-        messages.add_message(self.request, messages.INFO, "Eventuele wijzigingen zijn opgeslagen.")
-        return response
+        case = form.save(commit=False)
+        case.delete_request_date = datetime.datetime.now()
+        case.save()
+
+        recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
+        if form.cleaned_data.get('extra_recipient'):
+            recipient_list.append(form.cleaned_data.get('extra_recipient'))
+        recipient_list = set(recipient_list)
+        current_site = get_current_site(self.request)
+        body = render_to_string('cases/mail/case_delete_request.txt', {
+            'case': case,
+            'case_url': 'https://%s%s' % (
+                current_site.domain,
+                reverse('case', kwargs={
+                    'pk': case.id,
+                })
+            ),
+            'user': self.request.user,
+        })
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=recipient_list,
+                subject='Omslagroute - Verzoek verwijderen cliënt',
+                plain_text_content=body
+            )
+            sg.send(email)
+
+        messages.add_message(self.request, messages.INFO, "Het verwijder verzoek is verstuurd.")
+        return super().form_valid(form)
 
 
 class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):

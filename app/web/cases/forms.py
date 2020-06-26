@@ -149,3 +149,15 @@ class DocumentForm(forms.ModelForm):
         }
 
 
+class CaseDeleteRequestForm(forms.ModelForm):
+    extra_recipient = forms.EmailField(
+        label=_('E-mailadres woningcorporatie'),
+        required=False
+    )
+    class Meta:
+        model = Case
+        fields = [
+            'delete_request_message',
+        ]
+
+

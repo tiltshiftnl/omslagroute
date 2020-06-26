@@ -9,7 +9,9 @@
                 return true;
             }
         }
-      if (inIframe()) {
+      if (inIframe() && '{{request.GET.iframe}}' !== 'true') {
+        window.parent.location.href = '{{request.GET.iframe}}?iframe=true';//window.location.href.split('?')[0];
+      } else if (inIframe()){
           window.parent.location.reload(false);
       }else{
         window.location = window.location.href.split('?')[0];
