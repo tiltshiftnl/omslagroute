@@ -109,7 +109,7 @@ LANGUAGE_CODE = 'nl-nl'
 # to load the internationalization machinery.
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+# USE_TZ = True
 FRONTEND_TIMEZONE = 'Europe/Amsterdam'
 
 # Static files (CSS, JavaScript, Images)
@@ -211,6 +211,7 @@ CONSTANCE_BRK_AUTHENTICATION_TOKEN_EXPIRY_KEY = 'BRK_AUTHENTICATION_TOKEN_EXPIRY
 CONSTANCE_HOMEPAGE_INTRO_KEY = 'HOMEPAGE_INTRO'
 CONSTANCE_NEW_USER_INTRO_KEY = 'NEW_USER_INTRO'
 CONSTANCE_FEEDBACK_RECIPIENT_LIST_KEY = 'FEEDBACK_RECIPIENT_LIST'
+CONSTANCE_CASE_DELETE_SECONDS_KEY = 'CASE_DELETE_SECONDS'
 
 CONSTANCE_CONFIG = {
     CONSTANCE_ALLOW_DATA_ACCESS_KEY: (True, 'Allow data to be accesible through the API'),
@@ -219,6 +220,7 @@ CONSTANCE_CONFIG = {
     CONSTANCE_HOMEPAGE_INTRO_KEY: ('', 'Homepage introduction html'),
     CONSTANCE_NEW_USER_INTRO_KEY: ('', 'Nieuwe gebruiker introduction html'),
     CONSTANCE_FEEDBACK_RECIPIENT_LIST_KEY: ('', 'Feedback ontvangers lijst(kommagescheiden)'),
+    CONSTANCE_CASE_DELETE_SECONDS_KEY: (60*60*24*30, 'Na het aantal seconden nadat de persoonlijk begeleider de cliënt het verzoek om de cliënt te verwijderen heeft ingediend, wordt de cliënt echt verwijderd. Standaard is dit 30 dagen (60*60*24*30)'),
 }
 
 OIDC_RP_CLIENT_ID = os.environ.get('IAM_CLIENT_ID')

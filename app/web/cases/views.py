@@ -30,6 +30,7 @@ from django.db.models.functions import Concat
 from django.db.models import TextField, DateTimeField, IntegerField
 from django.core.exceptions import PermissionDenied
 import datetime
+from constance import config
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -40,7 +41,10 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, BEGELEIDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all().order_by('-saved')
+        datetime_treshold = datetime.datetime.now() - datetime.timedelta(seconds=config.CASE_DELETE_SECONDS)
+        return self.request.user.profile.cases.all().exclude(
+            delete_request_date__lte=datetime_treshold
+        ).order_by('-saved')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         kwargs = super().get_context_data(object_list=object_list, **kwargs)
@@ -55,6 +59,20 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return kwargs
 
 
+class CaseListArchive(UserPassesTestMixin, ListView):
+    model = Case
+    template_name_suffix = '_list_archive'
+    def test_func(self):
+        return auth_test(self.request.user, WONEN) and hasattr(self.request.user, 'profile')
+
+    def get_queryset(self):
+        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
+        return super().get_queryset().filter(
+            id__in=case_list,
+            delete_request_date__isnull=False
+        )
+
+
 class UserCaseListAll(UserPassesTestMixin, TemplateView):
     template_name = 'cases/case_list_page_wonen.html'
 
@@ -64,7 +82,10 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
 
-        qs = CaseStatus.objects.all().exclude(status=CASE_STATUS_INGEDIEND)
+        qs = CaseStatus.objects.all().exclude(
+            status=CASE_STATUS_INGEDIEND,
+            case__delete_request_date__isnull=False
+        )
         qs = qs.order_by('-created')
         qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
         qs = qs.order_by('distinct_name', '-created')
@@ -81,7 +102,10 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         ingediend = ingediend.distinct('distinct_name')
         ingediend_final_set = CaseStatus.objects.all().order_by('-created')
         ingediend_final_set = ingediend_final_set.filter(id__in=[s.id for s in ingediend])
-        ingediend_final_set = ingediend_final_set.filter(status=CASE_STATUS_INGEDIEND)
+        ingediend_final_set = ingediend_final_set.filter(
+            status=CASE_STATUS_INGEDIEND,
+            case__delete_request_date__isnull=True
+        )
 
         tabs = [
             [CASE_STATUS_INGEDIEND, 'Ingediend'],
@@ -100,7 +124,10 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
 
         tab_all_ids = [s.id for s in ingediend_final_set if s.is_first_of_statustype] + tabs_ids
 
-        tabs[4]['queryset'] = all_objects.filter(id__in=set(tab_all_ids))
+        tabs[4]['queryset'] = all_objects.filter(
+            id__in=set(tab_all_ids),
+            case__delete_request_date__isnull=True
+        )
 
         paginator = Paginator(tabs[int(self.request.GET.get('f', 0))].get('queryset'), 20)
         page = self.request.GET.get('page', 1)
@@ -109,6 +136,7 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         kwargs.update({
             'object_list': paginator.get_page(page),
             'tabs': tabs,
+            'case_archive_list': Case.objects.filter(delete_request_date__isnull=False)
         })
         return kwargs
 
@@ -155,9 +183,13 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
 
     def get_queryset(self):
         if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
-            return self.request.user.profile.cases.all()
+            return self.request.user.profile.cases.all().exclude(
+                delete_request_date__isnull=False
+            )
         case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
-        return super().get_queryset().filter(id__in=case_list)
+        return super().get_queryset().filter(
+            id__in=case_list
+        )
 
 
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):

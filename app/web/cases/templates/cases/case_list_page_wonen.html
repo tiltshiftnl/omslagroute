@@ -15,7 +15,11 @@
 {% block main %}
 <section class="section section--mijn-clienten">
     <h2 class="u-margin-bottom-4x">Aanvragen</h2>
-
+    <div class="details-admin screen-only">
+        <a href="{% url 'case_archive' %}" class="button button--secondary" title="ga terug naar de vorige weergave">
+            Archief ({{case_archive_list|length}})
+        </a>
+    </div>
     <div class="tab-list-container">
         <ul class="u-list-style-none tab-list">
             <li class="list-label">

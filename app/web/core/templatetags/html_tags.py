@@ -47,3 +47,26 @@ def _range(_min, args=None):
             _max = args
     args = filter(None, (_min, _max, _step))
     return range(*args)
+
+
+@register.filter
+def duration(td):
+
+    total_seconds = int(td.total_seconds())
+
+    if total_seconds <= 0:
+        return 'Kan verwijderd worden'
+
+    days = total_seconds // 86400
+    remaining_hours = total_seconds % 86400
+    remaining_minutes = remaining_hours % 3600
+    hours = remaining_hours // 3600
+    minutes = remaining_minutes // 60
+    seconds = remaining_minutes % 60
+
+    days_str = f'{days}d ' if days else ''
+    hours_str = f'{hours}h ' if hours else ''
+    minutes_str = f'{minutes}m ' if minutes else ''
+    seconds_str = f'{seconds}s' if seconds and not hours_str else ''
+
+    return f'{days_str}{hours_str}{minutes_str}{seconds_str}'
