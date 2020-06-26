@@ -5,6 +5,7 @@ from django.urls import path
 urlpatterns = [
     path('', UserCaseListAll.as_view(), name='case_list'),
     path('mijn-clienten/', UserCaseList.as_view(), name='cases_by_profile'),
+    path('archief/', CaseListArchive.as_view(), name='case_archive'),
     path('<int:pk>/', CaseDetailView.as_view(), name='case'),
 
     # invite

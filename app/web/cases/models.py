@@ -9,11 +9,12 @@ import os
 from multiselectfield import MultiSelectField
 from django.utils.safestring import mark_safe
 import locale
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from django.conf import settings
 from django.urls import reverse_lazy, reverse
 from django.core.files.storage import default_storage
+from constance import config
 
 
 class CaseBase(PrintableModel):
@@ -519,6 +520,17 @@ class Case(CaseBase):
         blank=True,
         null=True,
     )
+
+    @property
+    def delete_request_seconds_left(self):
+        datetime_treshold = datetime.now() - timedelta(seconds=config.CASE_DELETE_SECONDS)
+        time_left = self.delete_request_date - datetime_treshold
+        return time_left
+
+    def delete_enabled(self):
+        datetime_treshold = datetime.now() - timedelta(seconds=config.CASE_DELETE_SECONDS)
+        time_left = self.delete_request_date - datetime_treshold
+        return time_left.total_seconds() <= 0
 
     def create_version(self, version):
         case_dict = dict(
