@@ -40,7 +40,7 @@
         <tbody>
             {% for object in object_list %}
                 {% case_status_list_latest object as case_status_list %}
-                <tr>
+                <tr class="{% if object.delete_request_date %}client-inactive{% endif %}">
                     <td>
                         <span class="show-on-mobile">Naam:</span>
                         {% if not object.delete_request_date %}

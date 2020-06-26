@@ -481,3 +481,10 @@
         }
     }
 }
+
+.client-inactive {
+    color: $neutral-grey3;
+    * {
+        color: inherit;
+    }
+}
