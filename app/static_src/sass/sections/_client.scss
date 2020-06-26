@@ -364,7 +364,8 @@
         }
 
         details {
-            display: inline;
+            float: right;
+            margin-top: 0.9rem;
             &[open]{
                 .content {
                     width: 300px;
