@@ -184,6 +184,10 @@
     display: block;
     margin-bottom: 2rem !important;
 }
+.u-margin-bottom-3x{
+    display: block;
+    margin-bottom: 3rem !important;
+}
 
 .u-margin-bottom-4x{
     display: block;
@@ -294,7 +298,10 @@
             text-decoration: none;
         }
     }
-    
+}
+
+.u-text-align--right {
+    text-align: right;
 }
 
 // ********************

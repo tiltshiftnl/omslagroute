@@ -13,10 +13,15 @@
 {% endblock %}
 
 {% block main %}
-    <h2>Gebuiker '{{ form.instance.name }}' aanpassen</h2>
-
-    <div class="details-admin screen-only">
-        <a href="{% url 'delete_federation_user' object.id %}" class="button button--secondary">Gebruiker verwijderen</a>
+    <div class="flex-container u-margin-bottom-3x">
+        <div class="flex-item">
+            <h2>Gebruiker '{{ form.instance.name }}' aanpassen</h2>
+        </div>
+        <div class="flex-item u-text-align--right">
+            <div class="form-field form-field--buttons screen-only">
+                <a href="{% url 'delete_federation_user' object.id %}" class="button button--secondary">Gebruiker verwijderen</a>
+            </div>
+        </div>
     </div>
 
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
