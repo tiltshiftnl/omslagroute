@@ -26,7 +26,7 @@
     {% endif %}
     <form method="post" enctype="multipart/form-data" novalidate autocomplete="off">{% csrf_token %}
 
-        <div class="form-field form-field--buttons screen-only">
+        <div class="form-field form-field--buttons screen-only u-margin-top-3x">
             <input type="submit" value="Verwijderen" class="button button--primary">
             <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
         </div>

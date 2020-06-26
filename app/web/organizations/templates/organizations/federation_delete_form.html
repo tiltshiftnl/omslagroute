@@ -15,10 +15,10 @@
 
 {% block main %}
     <h2>Organisatie verwijderen</h2>
-    <p>Weet je zeker dat je de organisatie <strong>{{ object.name }}</strong> wilt verwijdreen?</p>
+    <p>Weet je zeker dat je de organisatie <strong>{{ object.name }}</strong> wilt verwijderen?</p>
     {% if object.user_list.all %}
     <p><strong>De gebruikers hieronder zullen door het verwijderen van deze organisatie, hun rol op de Omslagroute verliezen.</strong></p>
-    <table>
+    <table class="case-list">
         <thead>
             <th>E-mailadres (gebruikersnaam)</th>
             <th>Voornaam</th>
@@ -51,7 +51,7 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <div class="form-field form-field--buttons screen-only">
+        <div class="form-field form-field--buttons screen-only u-margin-top-3x">
             <input type="submit" value="Verwijderen" class="button button--primary">
             <a href="{% url 'federation_update' object.id %}" class="button button--secondary">Annuleer</a>
         </div>

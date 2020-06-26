@@ -6,7 +6,7 @@
         {% if not request.user.is_authenticated and not KC_ENABLED %}
             {% include 'users/login.html' %}
         {% endif %}
-        <h2>De Omslagroute</h2>
+        <h1 class="h2 u-margin-top-3x">De Omslagroute</h1>
         {% if request.user.is_authenticated and request.user|is_onbekent and NEW_USER_INTRO %}
             {{ NEW_USER_INTRO|safe }}
         {% endif %}
