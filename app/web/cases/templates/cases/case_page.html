@@ -53,9 +53,15 @@
                                     Wijzig basisgegevens
                                 </a>
                             </li>
-                            <!-- <li>
-                                <a href="#">Verzoek verwijderen cliënt uit omslagroute</a>
-                            </li> -->
+                            {% comment %} {% if not object.delete_request_date %} {% endcomment %}
+                            <li>
+                                <a href="#" data-handler="modal" data-contentid="modalDeleteRequest">Verzoek verwijderen cliënt uit omslagroute</a>
+                                <div role="dialog" class="modal" id="modalDeleteRequest">
+                                <iframe class="modal--uploads" id="iframeDeleteRequest" src="{% url 'delete_request_case' object.id %}" title="Verwijder verzoek">
+                                </iframe>
+                                </div>
+                            </li>
+                            {% comment %} {% endif %} {% endcomment %}
                         </ul>
                     </div>
                 </details>
