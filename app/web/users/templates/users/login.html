@@ -36,7 +36,7 @@
                 {% endif %}
             </div>
 
-            <div class="form-field form-field--buttons screen-only">
+            <div class="form-field form-field--buttons screen-only u-margin-top-3x">
                 <input type="submit" value="Log in" class="button button--primary">
                 <input type="hidden" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{{ request.path }}{% endif %}">
                 <input type="hidden" name="is_top_login_form">
