@@ -182,9 +182,10 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
+        datetime_treshold = datetime.datetime.now() - datetime.timedelta(seconds=config.CASE_DELETE_SECONDS)
         if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
             return self.request.user.profile.cases.all().exclude(
-                delete_request_date__isnull=False
+                delete_request_date__lt=datetime_treshold
             )
         case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
         return super().get_queryset().filter(
@@ -298,9 +299,11 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         case = form.save(commit=False)
         case.delete_request_date = datetime.datetime.now()
+        case.delete_request_by = self.request.user.profile
         case.save()
-
+        recipient_list_user = list([u for u in self.object.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
         recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
+        recipient_list = recipient_list + recipient_list_user
         if form.cleaned_data.get('extra_recipient'):
             recipient_list.append(form.cleaned_data.get('extra_recipient'))
         recipient_list = set(recipient_list)
@@ -326,6 +329,59 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
             sg.send(email)
 
         messages.add_message(self.request, messages.INFO, "Het verwijder verzoek is verstuurd.")
+        return super().form_valid(form)
+
+
+class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
+    model = Case
+    template_name_suffix = '_delete_request_revoke'
+    success_url = reverse_lazy('cases_by_profile')
+    fields =[]
+
+    def get_success_url(self):
+        return './?iframe=%s' % (
+            self.success_url,
+        )
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+    def form_valid(self, form):
+        case = form.save(commit=False)
+        case.delete_request_date = None
+        case.delete_request_message = None
+        case.delete_request_by = None
+        case.save()
+
+        recipient_list_user = list([u for u in self.object.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
+        recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
+        recipient_list = recipient_list + recipient_list_user
+        recipient_list = set(recipient_list)
+        current_site = get_current_site(self.request)
+        body = render_to_string('cases/mail/case_delete_request_revoke.txt', {
+            'case': case,
+            'case_url': 'https://%s%s' % (
+                current_site.domain,
+                reverse('case', kwargs={
+                    'pk': case.id,
+                })
+            ),
+            'user': self.request.user,
+        })
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=recipient_list,
+                subject='Omslagroute - Verzoek verwijderen cliënt terug gedraaid',
+                plain_text_content=body
+            )
+            sg.send(email)
+
+        messages.add_message(self.request, messages.INFO, "Het verwijder verzoek is teruggedraaid.")
         return super().form_valid(form)
 
 
