@@ -31,7 +31,9 @@ class FederationForm(forms.ModelForm):
             'main_email',
         ]
         widgets = {
-            'federation_id': forms.TextInput(attrs={'disabled': 'disabled'}),
+            'federation_id': forms.TextInput(attrs={
+                'readonly': 'readonly',
+            }),
         }
 
     def __init__(self, *args, **kwargs):

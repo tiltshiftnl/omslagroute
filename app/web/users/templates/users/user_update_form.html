@@ -95,7 +95,11 @@
 
         <div class="form-field form-field--buttons screen-only u-margin-top-3x">
             <input type="submit" value="Opslaan" class="button button--primary">
+            {% if request.GET.next %}
+            <a href="{{ request.GET.next }}" class="button button--secondary">Annuleer</a>
+            {% else %}
             <a href="{% url 'user_list' %}" class="button button--secondary">Annuleer</a>
+            {% endif %}
         </div>
     </form>
 {% endblock %}
