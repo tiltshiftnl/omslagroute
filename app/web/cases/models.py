@@ -515,6 +515,14 @@ class Case(CaseBase):
         blank=True,
         null=True,
     )
+    delete_request_by = models.ForeignKey(
+        to='profiles.Profile',
+        related_name='profile_list',
+        verbose_name=_('Verwijder verzoek door'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     delete_request_message = models.TextField(
         verbose_name=_('Verwijder verzoek bericht'),
         blank=True,
@@ -568,7 +576,7 @@ class Case(CaseBase):
         return True
 
     def delete(self):
-        deleted = delete_related()
+        deleted = self.delete_related()
         if deleted:
             super().delete()
         return False

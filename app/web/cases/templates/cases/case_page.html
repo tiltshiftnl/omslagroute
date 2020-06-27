@@ -11,7 +11,11 @@
             <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
             {% endif %}
             {% if request.user|is_wonen_medewerker %}
+            {% if object.delete_request_date %}
+            <li class="breadcrumb-step"><a href="{% url 'case_archive' %}">Archief</a></li>
+            {% else %}
             <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+            {% endif %}
             {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
@@ -21,6 +25,31 @@
 {% block main %}
 <section class="section section--client">
     <div>
+        {% if object.delete_request_date %}
+        <div>
+            <p>Klant is in archief geplaatst door <strong>{{ object.delete_request_by.user.username }}</strong> {{ object.delete_request_date|timezone:FRONTEND_TIMEZONE|date:'d-m-y H:i' }}</p>
+            {% if object.delete_request_message %}
+            <p><i>'{{object.delete_request_message}}'</i></p>
+            {% endif %}
+
+            {% if request.user|is_wonen_medewerker %}
+            {% if object.delete_enabled %}
+            <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="ga naar definitief verwijderen">
+                Definitief verwijderen
+            </a>
+            {% else %}
+            <p>Deze cliënt kan over <strong>{{ object.delete_request_seconds_left|duration }}</strong> verwijderd worden.</p>
+            {% endif %}
+            {% else %}
+            <p>Deze cliënt wordt over <strong>{{ object.delete_request_seconds_left|duration }}</strong> verwijderd 
+            (<a href="#" data-handler="modal" data-contentid="modalDeleteRequestRevoke">terugzetten</a>)<div role="dialog" class="modal" id="modalDeleteRequestRevoke">
+                                <iframe class="modal--uploads" id="iframeDeleteRequestRevoke" src="{% url 'delete_request_revoke_case' object.id %}" title="Verwijder verzoek terugzetten">
+                                </iframe>
+                                </div>
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
         <div class="client-header flex-container">
             <div class="flex-item">
                 <h1>{{ object.client_name }}</h1>
