@@ -99,7 +99,7 @@
                                 <use href="#bell" xlink:href="#bell" width="16" height="16"></use>
                             </svg>
                         </span>
-                        <a href="{% url 'case' object.id %}">Verzoek om verwijderen</a> verstuurd (ongedaan maken nog <strong>{{ object.delete_request_seconds_left|duration }}</strong> dagen)<div role="dialog" class="modal" id="modalDeleteRequestRevoke">
+                        <a href="#" data-handler="modal" data-contentid="modalDeleteRequestRevoke">Verzoek om verwijderen</a> verstuurd (ongedaan maken nog <strong>{{ object.delete_request_seconds_left|duration }}</strong> dagen)<div role="dialog" class="modal" id="modalDeleteRequestRevoke">
                                 <iframe class="modal--uploads" id="iframeDeleteRequestRevoke" src="{% url 'delete_request_revoke_case' object.id %}" title="Verwijder verzoek ongedaan maken">
                                 </iframe>
                                 </div>

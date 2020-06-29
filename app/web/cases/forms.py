@@ -150,11 +150,6 @@ class DocumentForm(forms.ModelForm):
 
 
 class CaseDeleteRequestForm(forms.ModelForm):
-    extra_recipient = forms.EmailField(
-        label=_('E-mailadres woningcorporatie'),
-        help_text="Verstuur het bericht ook naar de woningcorporatie door hier een e-mailadres in te vullen",
-        required=False
-    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
@@ -171,5 +166,20 @@ class CaseDeleteRequestForm(forms.ModelForm):
                 'rows': 4,
             }
         )}
+
+class CaseDeleteRequestRevokeForm(forms.ModelForm):
+    delete_request_revoke_message = forms.CharField(
+        label=_('Waarom wil je deze cliënt weer terugzetten? *'),
+        widget=forms.Textarea(
+            attrs={
+                'rows': 4,
+            }
+        ),
+        required=False
+    )
+
+    class Meta:
+        model = Case
+        fields = []
 
 

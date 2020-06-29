@@ -368,7 +368,7 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
     model = Case
     template_name_suffix = '_delete_request_revoke'
     success_url = reverse_lazy('cases_by_profile')
-    fields =[]
+    form_class = CaseDeleteRequestRevokeForm
 
     def get_success_url(self):
         return './?iframe=%s' % (
@@ -402,6 +402,7 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
                     'pk': case.id,
                 })
             ),
+            'delete_request_revoke_message': form.cleaned_data.get('delete_request_revoke_message'),
             'user': self.request.user,
         })
         if settings.SENDGRID_KEY:
