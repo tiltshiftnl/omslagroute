@@ -543,7 +543,10 @@ class Case(CaseBase):
     def create_version(self, version):
         case_dict = dict(
             (k, v) for k, v in self.__dict__.items()
-            if k not in ['_state']
+            if k not in [
+                '_state', 
+            ] and
+            k in CaseVersion._meta.get_fields()
         )
         case_version = CaseVersion(**case_dict)
         case_version.pk = None
@@ -726,7 +729,7 @@ class Document(models.Model):
                 reverse('download_case_document', args=[self.case.id, self.id]),
                 self.name,
                 self.extension,
-                timezone.localtime(self.uploaded).strftime('%d %b %Y %H:%M:%S').lower()
+                timezone.localtime(self.uploaded).strftime('%d %b %Y %H:%M:%S').lower() if timezone.is_aware(self.uploaded) else self.uploaded.strftime('%d %b %Y %H:%M:%S').lower()
             )
         )
         timezone.deactivate()
