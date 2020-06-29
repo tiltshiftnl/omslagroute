@@ -449,6 +449,17 @@
             color: $primary-black;
         }
     }
+
+    .client-inactive {
+        
+        .label {
+            &--status-approved,
+            &--status-disapproved,
+            &--status-pending{
+                background-color: $neutral-grey1;
+            }
+        }
+    }
 }
 
 .icon-circle {
