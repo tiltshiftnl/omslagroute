@@ -125,4 +125,16 @@
      .form-field & {
          max-width: 38.75rem;
      }
+
+     &--with-icon {
+         padding-left: 50px;
+         position: relative;
+
+         .icon {
+             position: absolute;
+             top: 1rem;
+             left: 1rem;
+         }
+     }
+
 }

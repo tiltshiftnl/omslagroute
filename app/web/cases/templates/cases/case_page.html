@@ -26,8 +26,11 @@
 <section class="section section--client">
     <div>
         {% if object.delete_request_date %}
-        <div>
-            <p>Klant is in archief geplaatst door <strong>{{ object.delete_request_by.user.username }}</strong> {{ object.delete_request_date|timezone:FRONTEND_TIMEZONE|date:'d-m-y H:i' }}</p>
+        <div class="alert-box alert-box--with-icon">
+            <svg class="icon icon-bell" width="20" height="20">
+                <use href="#bell" xlink:href="#bell" width="20" height="20"></use>
+            </svg>
+            <p>Cliënt is in archief geplaatst door <strong>{{ object.delete_request_by.user.username }}</strong> {{ object.delete_request_date|timezone:FRONTEND_TIMEZONE|date:'d-m-y H:i' }}</p>
             {% if object.delete_request_message %}
             <p><i>'{{object.delete_request_message}}'</i></p>
             {% endif %}
