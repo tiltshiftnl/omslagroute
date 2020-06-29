@@ -11,7 +11,11 @@
             <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
             {% endif %}
             {% if request.user|is_wonen_medewerker %}
+            {% if object.delete_request_date %}
+            <li class="breadcrumb-step"><a href="{% url 'case_archive' %}">Archief</a></li>
+            {% else %}
             <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+            {% endif %}
             {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
@@ -21,6 +25,9 @@
 {% block main %}
 <section class="section section--client">
     <div>
+        {% if object.delete_request_date %}
+        {% include 'cases/snippets/case_delete_request_header.html' %}
+        {% endif %}
         <div class="client-header flex-container">
             <div class="flex-item">
                 <h1>{{ object.client_name }}</h1>
@@ -28,6 +35,7 @@
             <div class="flex-item u-clearfix">
                 {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                 
+                {% if not object.delete_request_date %}
                 <div class="screen-only">
                     <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
                         Samenwerken ({{ linked_users|length }})
@@ -53,14 +61,19 @@
                                     Wijzig basisgegevens
                                 </a>
                             </li>
-                            <!-- <li>
-                                <a href="#">Verzoek verwijderen cliënt uit omslagroute</a>
-                            </li> -->
+                            <li>
+                                <a href="#" data-handler="modal" data-contentid="modalDeleteRequest">Verzoek verwijderen cliënt uit omslagroute</a>
+                                <div role="dialog" class="modal" id="modalDeleteRequest">
+                                <iframe class="modal--uploads" id="iframeDeleteRequest" src="{% url 'delete_request_case' object.id %}" title="Verwijder verzoek">
+                                </iframe>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </details>
                 
                 </div>
+                {% endif %}
                 {% endif %}    
         
             </div>
@@ -112,9 +125,11 @@
         <div class="details-client details-client--appendix">
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
+                {% if not object.delete_request_date %}
                 <a href="{% url 'add_case_document' object.id %}" class="u-float-right u-underline--none u-margin-top-2x screen-only" title="Voeg een nieuwe bijlage toe">
                     + <span class="u-underline">Nieuwe bijlage</span>
                 </a>
+                {% endif %}
             </header>
 
             <ul class="downloads">

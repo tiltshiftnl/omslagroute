@@ -1,0 +1,27 @@
+{% load tz auth_tags html_tags %}
+        <div class="alert-box alert-box--with-icon">
+            <svg class="icon icon-bell" width="20" height="20">
+                <use href="#bell" xlink:href="#bell" width="20" height="20"></use>
+            </svg>
+            <p>Cliënt is in archief geplaatst door <strong>{{ object.delete_request_by.user.username }}</strong> {{ object.delete_request_date|timezone:FRONTEND_TIMEZONE|date:'d-m-y H:i' }}</p>
+            {% if object.delete_request_message %}
+            <p><i>'{{object.delete_request_message}}'</i></p>
+            {% endif %}
+
+            {% if request.user|is_wonen_medewerker %}
+            {% if object.delete_enabled %}
+            <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="ga naar definitief verwijderen">
+                Definitief verwijderen
+            </a>
+            {% else %}
+            <p>Deze cliënt kan over <strong>{{ object.delete_request_seconds_left|duration }}</strong> verwijderd worden.</p>
+            {% endif %}
+            {% else %}
+            <p>Deze cliënt wordt over <strong>{{ object.delete_request_seconds_left|duration }}</strong> verwijderd 
+            (<a href="#" data-handler="modal" data-contentid="modalDeleteRequestRevoke">terugzetten</a>)<div role="dialog" class="modal" id="modalDeleteRequestRevoke">
+                                <iframe class="modal--uploads" id="iframeDeleteRequestRevoke" src="{% url 'delete_request_revoke_case' object.id %}" title="Verwijder verzoek terugzetten">
+                                </iframe>
+                                </div>
+            </p>
+            {% endif %}
+        </div>

@@ -1,0 +1,4 @@
+Het verzoek om de cliënt te verwijderen is ongedaan gemaakt door {{ user.username }}
+
+Als je bent ingelogd in de Omslagroute kun je de cliënt gegevens inzien met de onderstaande url:
+{{ case_url }}

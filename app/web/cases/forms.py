@@ -149,3 +149,27 @@ class DocumentForm(forms.ModelForm):
         }
 
 
+class CaseDeleteRequestForm(forms.ModelForm):
+    extra_recipient = forms.EmailField(
+        label=_('E-mailadres woningcorporatie'),
+        help_text="Verstuur het bericht ook naar de woningcorporatie door hier een e-mailadres in te vullen",
+        required=False
+    )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ''
+        self.fields['delete_request_message'].label = "Waarom wil je deze cliënt verwijderen?"
+
+    class Meta:
+        model = Case
+        fields = [
+            'delete_request_message',
+        ]
+        widgets={
+            'delete_request_message': forms.Textarea(
+            attrs={
+                'rows': 4,
+            }
+        )}
+
+

@@ -63,10 +63,11 @@
     </table>
 
     <div class="u-margin-top-3x">
-
+    {% if not object.delete_request_date %}
     <a href="{% url 'add_case_document' case.id %}" class="button button--primary screen-only" title="Voeg een nieuwe bijlage toe">
         Nieuwe bijlage
     </a>
+    {% endif %}
     <a href="{% url 'case' case.id %}" class="button button--secondary" title="Voeg een nieuwe bijlage toe">
         Terug naar cliënt
     </a>
