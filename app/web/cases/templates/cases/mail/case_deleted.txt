@@ -1,0 +1,2 @@
+Een cliënt is definitief verwijderd uit de Omslagroute door Wonen (Amsterdam)
+{{ case_url }}
