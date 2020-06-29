@@ -485,7 +485,7 @@
 
 .client-inactive {
     color: $neutral-grey3;
-    * {
+    *:not(.show-active) {
         color: inherit;
     }
 }
