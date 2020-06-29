@@ -105,6 +105,13 @@ tr:nth-of-type(even) {
     }
 }
 
+table table {
+    margin-bottom: 0;
+    tr:nth-of-type(even) {
+        background-color: transparent;   
+    }
+}
+
 .case-list,
 .moment-list {
     
