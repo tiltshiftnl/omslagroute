@@ -18,13 +18,30 @@
     </button>
     <h2>Verzoek 'verwijderen cli&euml;nt uit omslagroute'</h2>
     <hr class="" />
-    <p>Weet je zeker dat je <strong>{{form.instance.client_name}}</strong> wilt verwijderen uit de omslagroute?</p>
-    <p><strong>Dit gebeurt als je...</strong></p>
+    <p>Weet je zeker dat je <strong>{{form.instance.client_name}}</strong> wilt verwijderen uit de amsterdam.omslagroute.nl?</p>
+    <p><strong>Dit gebeurt er nadat je een verwijderverzoek verstuurt:</strong></p>
+    <ol>
+        <li>
+            De afdeling Wonen ontvangt je verzoek om de cliënt te verwijderen. De mensen met wie je aan deze cliënt samenwerkt ontvangen bericht.
+        </li>
+        <li>
+            De cliënt blijft zichtbaar, je kunt deze echter niet meer bewerken. Je hebt 30  dagen de tijd om het verwijderverzoek in te trekken.
+        </li>
+        <li>
+            Na 30 dagen dagen kan de afdeling Wonen alle basisgegevens, formulieren en bijlagen van de cliënt uit omslagroute.amsterdam.nl definitief verwijderen.
+        </li>
+        <li>
+            Na definitief verwijderen is de client niet meer zichtbaar voor: jou, collega’s met wie je aan deze cliënt samenwerkt én de afdeling Wonen
+        </li>
+    </ol>
+    <div class="alert-box">
+        <p><strong>Let op:</strong> informeer zelf de <strong>woningcorporatie</strong> over het verwijderen van deze client uit de omslagroute</p>
+    </div>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <div class="form-field form-field--buttons screen-only u-margin-top-3x">
-            <input type="submit" value="Verzoek versturen" class="button button--primary">
+            <input type="submit" value="Stuur verzoek 'verwijderen cliënt' naar Wonen" class="button button--primary">
             <a href="#" data-handler="modal-close" class="button button--secondary">Annuleer</a>
         </div>
     </form>
