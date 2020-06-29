@@ -306,7 +306,7 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
         recipient_list = recipient_list + recipient_list_user
         if form.cleaned_data.get('extra_recipient'):
             recipient_list.append(form.cleaned_data.get('extra_recipient'))
-        recipient_list = set(recipient_list)
+        recipient_list = list(set(recipient_list))
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_delete_request.txt', {
             'case': case,
@@ -359,7 +359,7 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
         recipient_list_user = list([u for u in self.object.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
         recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
         recipient_list = recipient_list + recipient_list_user
-        recipient_list = set(recipient_list)
+        recipient_list = list(set(recipient_list))
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_delete_request_revoke.txt', {
             'case': case,
