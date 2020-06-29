@@ -32,7 +32,7 @@
     <p>{{ object_list.paginator.count }}{% if object_list.paginator.count == 1 %} resultaat{% else %} resultaten{% endif %}</p>
 
 
-    <table class="case-list">
+    <table class="case-list table--double-row">
         <thead>
             <tr>
                 <th width="150">Cliënt</th>
@@ -46,75 +46,67 @@
         <tbody>
             {% for object in object_list %}
                 {% case_status_list_latest object as case_status_list %}
-                <tr >
-                    <td colspan="6" class="u-padding-none">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span class="show-on-mobile">Naam:</span>
-                                    <a href="{% url 'case' object.id %}">{{ object.client_name }}</a>
-                                    
-                                </td>
-                                <td class="help-text">
-                                    <span class="show-on-mobile">Laatste opgeslagen:</span>
-                                    {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
-                                </td>
-                                <td>
-                                    <span class="show-on-mobile">Stap in omslagroute:</span>
-                                    {% if case_status_list %}
-                                    {% if not object.delete_request_date %}
-                                    <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
-                                    {% else %}
-                                    {{ case_status_list.0.form|form_verbose }}
-                                    {% endif %}
-                                    {% else %}
-                                    <span class="u-text-color-grey4">Er is nog geen aanvraag verstuurd voor deze cliënt</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <span class="show-on-mobile">Status:</span>
-                                    {% if case_status_list %}
-                                    <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">
-                                        {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw {% endif %}{{ case_status_list.0.status|status_verbose }}
-                                    </span>
-                                    {% else %}
-                                    {% endif %}
-                                </td>
-                                <td class="help-text">
-                                    <span class="show-on-mobile">Status datum:</span>
-                                    {% if case_status_list %}
-                                    {{ case_status_list.0.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
-                                    {% else %}
-                                    {% endif %}
-                                </td>
-                                <td class="help-text">
-                                    <span class="show-on-mobile">Status door:</span>
-                                    {% if case_status_list %}
-                                    {{ case_status_list.0.profile.user.username }}
-                                    {% else %}
-                                    {% endif %}
-                                </td>
-                            </tr>
-
-                            {% if object.delete_request_date %}
-                            <tr>
-                                <td colspan="6" class="u-font-size-small u-padding-vertical-half">
-                                    <span class="u-margin-right-half">
-                                        <svg class="icon icon-bell" width="16" height="16" style="vertical-align: middle;">
-                                            <use href="#bell" xlink:href="#bell" width="16" height="16"></use>
-                                        </svg>
-                                    </span>
-                                    <a href="{% url 'case' object.id %}">Verzoek om verwijderen</a> verstuurd (<a href="#" data-handler="modal" data-contentid="modalDeleteRequestRevoke">ongedaan maken nog {{ object.delete_request_seconds_left|duration }} dagen</a>)<div role="dialog" class="modal" id="modalDeleteRequestRevoke">
-                                            <iframe class="modal--uploads" id="iframeDeleteRequestRevoke" src="{% url 'delete_request_revoke_case' object.id %}" title="Verwijder verzoek ongedaan maken">
-                                            </iframe>
-                                            </div>
-                                    </p>
-                                </td>
-                            </tr>
-                            {% endif %}
-                        </table>
+                <tr class="u-border-top {% if object.delete_request_date %}client-inactive{% endif %}">
+        
+                    <td>
+                        <span class="show-on-mobile">Naam:</span>
+                        <a href="{% url 'case' object.id %}" class="show-active">{{ object.client_name }}</a>
+                        
+                    </td>
+                    <td class="help-text">
+                        <span class="show-on-mobile">Laatste opgeslagen:</span>
+                        {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Stap in omslagroute:</span>
+                        {% if case_status_list %}
+                        <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
+                        {% else %}
+                        <span class="u-text-color-grey4">Er is nog geen aanvraag verstuurd voor deze cliënt</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="show-on-mobile">Status:</span>
+                        {% if case_status_list %}
+                        <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">
+                            {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw {% endif %}{{ case_status_list.0.status|status_verbose }}
+                        </span>
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td class="help-text">
+                        <span class="show-on-mobile">Status datum:</span>
+                        {% if case_status_list %}
+                        {{ case_status_list.0.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td class="help-text">
+                        <span class="show-on-mobile">Status door:</span>
+                        {% if case_status_list %}
+                        {{ case_status_list.0.profile.user.username }}
+                        {% else %}
+                        {% endif %}
                     </td>
                 </tr>
+                {% if object.delete_request_date %}
+                
+                <tr>
+                    
+                    <td colspan="6" class="u-font-size-small">
+                        <span class="u-margin-right-half">
+                            <svg class="icon icon-bell" width="16" height="16" style="vertical-align: middle;">
+                                <use href="#bell" xlink:href="#bell" width="16" height="16"></use>
+                            </svg>
+                        </span>
+                        <a href="{% url 'case' object.id %}">Verzoek om verwijderen</a> verstuurd (ongedaan maken nog <strong>{{ object.delete_request_seconds_left|duration }}</strong> dagen)<div role="dialog" class="modal" id="modalDeleteRequestRevoke">
+                                <iframe class="modal--uploads" id="iframeDeleteRequestRevoke" src="{% url 'delete_request_revoke_case' object.id %}" title="Verwijder verzoek ongedaan maken">
+                                </iframe>
+                                </div>
+                        </p>
+                    </td>
+                </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>

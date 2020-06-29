@@ -191,3 +191,9 @@ table table {
         z-index: 2;
     }
 }
+
+.table--double-row {
+    tr:nth-of-type(even) {
+        background-color: transparent;
+    }
+}
