@@ -168,26 +168,18 @@ class CaseDeleteRequestForm(forms.ModelForm):
         )}
 
 class CaseDeleteRequestRevokeForm(forms.ModelForm):
-    delete_request_revoke_message = forms.Textarea(
-        label=_('E-mailadres woningcorporatie'),
-        help_text="Verstuur het bericht ook naar de woningcorporatie door hier een e-mailadres in te vullen",
-        required=False
-    )
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.label_suffix = ''
-        self.fields['delete_request_message'].label = "Waarom wil je deze cliënt verwijderen?"
-
-    class Meta:
-        model = Case
-        fields = [
-            'delete_request_message',
-        ]
-        widgets={
-            'delete_request_message': forms.Textarea(
+    delete_request_revoke_message = forms.CharField(
+        label=_('Waarom wil je deze cliënt weer terugzetten? *'),
+        widget=forms.Textarea(
             attrs={
                 'rows': 4,
             }
-        )}
+        ),
+        required=False
+    )
+
+    class Meta:
+        model = Case
+        fields = []
 
 
