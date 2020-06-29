@@ -184,6 +184,10 @@
     display: block;
     margin-bottom: 2rem !important;
 }
+.u-margin-bottom-3x{
+    display: block;
+    margin-bottom: 3rem !important;
+}
 
 .u-margin-bottom-4x{
     display: block;
@@ -268,6 +272,18 @@
     }
 }
 
+.u-list-columns {
+    &--3 {
+        &ul,
+        >ul {
+            column-count: 2;
+            @media screen and (min-width: $large) {
+                column-count: 3;
+            }
+        }
+    }
+}
+
 .scroll-list-container {
     max-height: 12rem;
     overflow-y: auto;
@@ -282,7 +298,10 @@
             text-decoration: none;
         }
     }
-    
+}
+
+.u-text-align--right {
+    text-align: right;
 }
 
 // ********************

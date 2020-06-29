@@ -508,6 +508,9 @@ ul.form-field__radiogroup,
         margin-top: .625rem;
     }
 }
+.form-field--checkboxselectmultiple.u-width-100 ul {
+    max-width: none;
+}
 
 .form-field--radioselect ul,
 .form-field--checkboxselectmultiple ul {
