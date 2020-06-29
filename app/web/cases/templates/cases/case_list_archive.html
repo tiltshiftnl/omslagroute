@@ -46,9 +46,12 @@
                     </td>
                     <td>
                         {% if object.delete_enabled %}
-                        <a href="{% url 'delete_case' object.id %}" class="button button--secondary" title="ga naar definitief verwijderen">
+                        <a  href="#" data-handler="modal" data-contentid="modalCaseDelete" class="button button--secondary" title="ga naar definitief verwijderen">
                             Definitief verwijderen
                         </a>
+                        <div role="dialog" class="modal" id="modalCaseDelete"> 
+                            <iframe class="modal--uploads" id="iframeCaseDelete" src="{% url 'delete_case' object.id %}" title="Cliënt defintief verwijderen"></iframe>
+                        </div>
                         {% else %}
                         {{ object.delete_request_seconds_left|duration }}
                         {% endif %}

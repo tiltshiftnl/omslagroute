@@ -265,6 +265,11 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
     template_name_suffix = '_delete'
     success_url = reverse_lazy('case_list')
 
+    def get_success_url(self):
+        return './?iframe=%s' % (
+            self.success_url,
+        )
+
     def test_func(self):
         return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
 
@@ -273,8 +278,35 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         return super().get_queryset().filter(id__in=case_list)
 
     def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
+        case = self.get_object()
         response = super().delete(request, *args, **kwargs)
+
+        recipient_list_user = list([u for u in case.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
+        recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
+        recipient_list = recipient_list + recipient_list_user
+        recipient_list = list(set(recipient_list))
+
+        current_site = get_current_site(self.request)
+        body = render_to_string('cases/mail/case_deleted.txt', {
+            'case': case,
+            'case_url': 'https://%s%s' % (
+                current_site.domain,
+                reverse('case', kwargs={
+                    'pk': case.id,
+                })
+            ),
+            'user': self.request.user,
+        })
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=recipient_list,
+                subject='Omslagroute - Cliënt definitief verwijderd',
+                plain_text_content=body
+            )
+            sg.send(email)
+
         messages.add_message(self.request, messages.INFO, "De cliënt '%s' is verwijderd." % obj.client_name)
         return response
 
@@ -301,12 +333,12 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
         case.delete_request_date = datetime.datetime.now()
         case.delete_request_by = self.request.user.profile
         case.save()
-        recipient_list_user = list([u for u in self.object.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
+
+        recipient_list_user = list([u for u in case.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
         recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
         recipient_list = recipient_list + recipient_list_user
-        if form.cleaned_data.get('extra_recipient'):
-            recipient_list.append(form.cleaned_data.get('extra_recipient'))
         recipient_list = list(set(recipient_list))
+
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_delete_request.txt', {
             'case': case,
@@ -360,6 +392,7 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
         recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
         recipient_list = recipient_list + recipient_list_user
         recipient_list = list(set(recipient_list))
+
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_delete_request_revoke.txt', {
             'case': case,

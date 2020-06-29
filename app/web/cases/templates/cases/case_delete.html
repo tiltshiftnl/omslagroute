@@ -1,26 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %} - Cli&euml;nt verwijderen{% endblock %}
+{% block title %} - Cliënt defintief verwijderen{% endblock %}
 
-{% block breadcrumb %}
-    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
-        <ol class="breadcrumb-list">
-            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
-            <li class="breadcrumb-step sr-only" aria-current="location">Cli&euml;nt verwijderen</li>
-        </ol>
-    </nav>
-{% endblock %}
+{% block skiplinks %}{% endblock %}
+{% block header %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block messages %}{% endblock %}
+{% block feedback %}{% endblock %}
 
 {% block main %}
-    <h2>Cli&euml;nt verwijderen</h2>
+<div class="content-container">
+    <button data-handler="modal-close" class="button button--close">
+        <svg width="20" height="20" title="Sluit venster">
+            <use href="#close" xlink:href="#close" width="20" height="20"></use>
+        </svg>
+        <span class="sr-only">Sluit venster</span>
+    </button>
+    <h2>Cliënt definitief verwijderen in omslagroute.amsterdam.nl</h2>
 
+    <p>Weet je zeker dat je <strong>{{ object.client_name }}</strong> defintief wilt verwijderen uit omslagroute.amsterdam.nl?</p>
+
+    <p>De cliënt is niet meer zichtbaar in omslagroute.amsterdam.nl voor:</p>
+    <ul>
+        <li>medewerkers in zorginstellingen die (samen) aan deze client werken</li>
+        <li>de afdeling Wonen</li>
+    </ul>
     <form method="post">
         {% csrf_token %}
 
         <div class="form-field form-field--buttons screen-only">
-            <input type="submit" value="Verwijderen" class="button button--primary">
-            <a href="{% url 'case_archive' %}" class="button button--secondary">Annuleer</a>
+            <input type="submit" value="Cliënt defintief verwijderen" class="button button--primary">
+            <a href="#" data-handler="modal-close" class="button button--secondary">Annuleer</a>
         </div>
     </form>
+</div> 
 {% endblock %}
