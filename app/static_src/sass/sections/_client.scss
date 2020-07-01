@@ -500,3 +500,18 @@
         color: inherit;
     }
 }
+
+.case-number {
+
+    label {
+        display: inline-block;
+        margin-right: .5rem;
+    }
+    input {
+        width: 135px;
+        margin-top: 0;
+    }
+    button {
+        vertical-align: baseline !important;
+    }
+}

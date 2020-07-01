@@ -1,7 +1,7 @@
-from rest_framework import viewsets, mixins
-from .models import CaseStatus
+from rest_framework import viewsets, mixins, generics
+from .models import CaseStatus, Case
 from .statics import CASE_STATUS_INGEDIEND, CASE_STATUS_DICT
-from .serializers import CaseStatusSerializer
+from .serializers import CaseStatusSerializer, CaseDossierNrSerializer
 from django.contrib.auth.mixins import UserPassesTestMixin
 from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER
 from web.forms.statics import FORM_TITLE_BY_SLUG
@@ -49,7 +49,7 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
                     })
                 ),
             })
-            email_adresses = list(serializer.instance.case.profile_set.all().values_list('user__username', flat=True))
+            email_adresses = list(serializer.instance.case.profile_set.all().filter(user__isnull=False).values_list('user__username', flat=True))
             if settings.SENDGRID_KEY:
                 sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
                 email = Mail(
@@ -65,3 +65,18 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class CaseUpdateDossierNrViewSet(UserPassesTestMixin, viewsets.ViewSetMixin, generics.RetrieveUpdateAPIView):
+    queryset = Case.objects.all()
+    serializer_class = CaseDossierNrSerializer
+
+    def test_func(self):
+        return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
+
+    def get_queryset(self):
+        case_list = CaseStatus.objects.order_by('case').distinct().values_list('case')
+        return super().get_queryset().filter(
+            id__in=case_list,
+            delete_request_date__isnull=True
+        )

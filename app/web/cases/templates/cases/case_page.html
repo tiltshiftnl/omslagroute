@@ -23,6 +23,7 @@
 {% endblock %}
 
 {% block main %}
+{% csrf_token %}
 <section class="section section--client">
     <div>
         {% if object.delete_request_date %}
@@ -75,13 +76,17 @@
                 
                 </div>
                 {% endif %}
+
+                {% else %} 
+                <!-- wonen && !dossiernr-->
+                <div data-case-id="{{ object.id }}" id="app">
+                </div>
+                
                 {% endif %}    
         
             </div>
         </div>
         
-        
-            
     
             <div role="dialog" class="modal" id="modalInvite">
                 <iframe class="modal--invite" id="iframeInvite" src="{% url 'case_invite_users' object.id  %}">
@@ -151,7 +156,7 @@
                                 </svg></a>  
                             <div role="dialog" class="modal" id="modalDocumentDelete-{{ document.id }}">
                                 <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" src="{% url 'delete_case_document' object.id document.id %}" title="Verwijder bijlage {{ document.name }}"></iframe>
-                            </div>  
+                            </div>
                         </div>
                     </li>
                 {% endif %}
@@ -239,5 +244,16 @@
     {% endblock %}
 
 </section>
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+
+{% if request.user|is_wonen_medewerker %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+ <script src="{% static "bundles/case.js" %}"></script>
+{% endif %}
 {% endblock %}
 
