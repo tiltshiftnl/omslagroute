@@ -8,12 +8,15 @@ module.exports = {
   context: __dirname,
   mode: 'development',
 
-  entry: './assets/js/case-status', // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
+  entry: {
+    'case-status': './assets/js/case-status', 
+    'case': './assets/js/case',
+  }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
   output: {
       path: path.resolve('./assets/bundles/'),
-      filename: 'bundle.js'
-      // filename: "[name]-[hash].js",
+      // filename: 'bundle.js'
+      filename: "[name].js",
   },
 
   module: {

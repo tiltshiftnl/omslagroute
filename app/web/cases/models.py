@@ -409,6 +409,12 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    wonen_dossier_nr = models.CharField(
+        verbose_name=_('Dossier nr.'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
 
     @property
     def centrale_toegang_naam_value(self):
