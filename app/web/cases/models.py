@@ -536,6 +536,10 @@ class Case(CaseBase):
     )
 
     @property
+    def is_ingediend(self):
+        return bool(CaseVersion.objects.filter(case=self))
+
+    @property
     def delete_request_seconds_left(self):
         datetime_treshold = datetime.now() - timedelta(seconds=config.CASE_DELETE_SECONDS)
         time_left = self.delete_request_date - datetime_treshold

@@ -145,6 +145,7 @@
                 {% if forloop.counter0 < 4 %}
                     <li>
                         <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
+                        {% if not object.delete_request_date %}
                         <div>
                             <a href="{% url 'update_case_document' object.id document.id %}" title="Bijlage aanpassen" class="u-margin-right u-color-black">
                                 <svg class="button__icon"  width="20" height="20" >
@@ -158,12 +159,15 @@
                                 <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" src="{% url 'delete_case_document' object.id document.id %}" title="Verwijder bijlage {{ document.name }}"></iframe>
                             </div>
                         </div>
+                        {% endif %}
                     </li>
                 {% endif %}
             {% endfor %}
 
             </ul>
+            {% if object.document_set.all|length > 4 %}
             <a href="{% url 'case_document_list' object.id %}" class="u-underline--none"><span class="u-underline">Overzicht alle bijlagen</span> ></a>
+            {% endif %}
             
         </div>
         <!-- END BIJLAGE -->

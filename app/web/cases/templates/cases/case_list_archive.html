@@ -34,7 +34,11 @@
                 <tr>
                     <td>
                         <span class="show-on-mobile">Naam:</span>
+                        {% if object.is_ingediend %}
                         <a href="{% url 'case' object.id  %}">{{ object.client_name }}</a>
+                        {% else %}
+                        Cliënt id: {{ object.id }} (Nog niet ingediend)
+                        {% endif %}
                     </td>
                     <td>
                         <span class="show-on-mobile">Datum verzoek:</span>

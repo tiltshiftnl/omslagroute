@@ -68,9 +68,20 @@ class CaseListArchive(UserPassesTestMixin, ListView):
     def get_queryset(self):
         case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
         return super().get_queryset().filter(
-            id__in=case_list,
             delete_request_date__isnull=False
         )
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        kwargs = super().get_context_data(object_list=None, **kwargs)
+
+        paginator = Paginator(kwargs.get('object_list', []), 20)
+        page = self.request.GET.get('page', 1)
+        object_list = paginator.get_page(page)
+
+        kwargs.update({
+            'object_list': paginator.get_page(page),
+        })
+        return kwargs
 
 
 class UserCaseListAll(UserPassesTestMixin, TemplateView):
@@ -84,7 +95,7 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
 
         qs = CaseStatus.objects.all().exclude(
             status=CASE_STATUS_INGEDIEND,
-            case__delete_request_date__isnull=False
+            # case__delete_request_date__isnull=False
         )
         qs = qs.order_by('-created')
         qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
@@ -92,7 +103,10 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         qs = qs.distinct('distinct_name')
         all_objects = CaseStatus.objects.all().order_by('-created')
         tabs_ids = [s.id for s in qs]
-        final_set = all_objects.filter(id__in=tabs_ids)
+        final_set = all_objects.filter(
+            id__in=tabs_ids,
+            case__delete_request_date__isnull=True
+        )
 
 
         ingediend = CaseStatus.objects.all()
