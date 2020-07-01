@@ -75,6 +75,33 @@
                 
                 </div>
                 {% endif %}
+
+                {% else %} 
+                <!-- wonen && !dossiernr-->
+                <div class="" data-show-target-content>
+                    <div class="u-padding-top u-clearfix">
+                        <a href="#" role="button" data-handler="show-target" class="u-float-right u-underline--none screen-only" title="Voeg een nieuwe bijlage toe">
+                            + <span class="u-underline">Dossier nr</span>
+                        </a>
+                    </div>
+                    <!-- wonen && dossiernummer -->
+                    <div class="u-padding-top u-clearfix">
+                        <span>Dossier nr: <strong>123456</strong>&nbsp;</span>
+                        <a href="#" data-handler="show-target" role="button" class="u-float-right u-underline--none screen-only" title="Voeg een nieuwe bijlage toe">
+                            (wijzig)
+                        </a>
+                    </div>
+                    <div class="case-number hide" data-targeted-content>
+                        <form>
+                            <div class="">
+                                <label for="input_casenumber">Dossier nr</label>
+                                <input type="text" placeholder="123456" id="input_casenumber" />
+                                <button type="submit" class="button button--primary">Sla op</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>    
+                
                 {% endif %}    
         
             </div>
