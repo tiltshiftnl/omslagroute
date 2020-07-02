@@ -104,16 +104,16 @@
                         
                         <div class="details-client details-client--basic">
                             <header>
-                                <h2 class="h3">Persoonsgegevens</h2>
+                                <h2 class="h3">Basisgegevens</h2>
                             </header>
                 
                             <dl>
                                 <div>
-                                    <dt>Client voornaam: </dt>
+                                    <dt>Voornaam: </dt>
                                     <dd>{{ form.instance.client_first_name }}</dd>
                                 </div>
                                 <div>
-                                    <dt>Client achternaam: </dt>
+                                    <dt>Achternaam: </dt>
                                     <dd>{{ form.instance.client_last_name }}</dd>
                                 </div>
                                 <div>
@@ -125,6 +125,9 @@
                                     <dd class="u-ellipsis">{% if form.instance.emailadres %}{{ form.instance.emailadres }}{% else %}—{% endif %}</dd>
                                 </div>
                             </dl>
+                            <h2 class="h3">Woning</h2>
+                            <p>Janneke van der Poelstraat 195A<br/>
+                            1000 AZ Amsterdam</p>
                         </div>
                         <!-- END Client persoonsgegevens -->
                 
