@@ -254,10 +254,12 @@
         }
     }
     .client-header,
-    .form-field-history{
+    .form-field-history,
+    .details-client--address{
         details {
             margin: .25rem 0 0;
             position: relative;
+            z-index: 10;
 
             .icon-details--open {
                 display: none;
