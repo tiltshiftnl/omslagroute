@@ -22,10 +22,8 @@ class CaseForm(forms.ModelForm):
         exclude = []
 
 class CaseInviteUsersForm(forms.Form):
-    user = None
-    instance = None
     user_list = forms.ModelMultipleChoiceField(
-        label=_('Met wie wil je samenwerken aan deze cliënt?'),
+        label=_('Met wie van je organisatie wil je samenwerken aan deze cliënt?'),
         help_text=_('Selecteer één of meerdere collega’s. Wanneer je kiest voor samenwerken met een collega kan deze:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li></ul>'),
         queryset=User.objects.filter(user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]),
         widget=CheckboxSelectMultiple(attrs={'class': 'u-list-style-none scroll-list-container'}),
@@ -33,11 +31,9 @@ class CaseInviteUsersForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
-        self.instance = kwargs.pop('instance')
+        self.queryset = kwargs.pop('queryset')
         super().__init__(*args, **kwargs)
-        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all()).values('id')
-        self.fields['user_list'].queryset = self.fields['user_list'].queryset.exclude(id__in=linked_users)
+        self.fields['user_list'].queryset = self.queryset
 
     class Meta:
         model = Case
@@ -56,8 +52,7 @@ class CaseInviteUsersConfirmForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
-        self.instance = kwargs.pop('instance')
+        self.queryset = kwargs.pop('queryset')
         super().__init__(*args, **kwargs)
 
     class Meta:
@@ -66,10 +61,8 @@ class CaseInviteUsersConfirmForm(forms.Form):
 
 
 class CaseRemoveInvitedUsersForm(forms.Form):
-    user = None
-    instance = None
     user_list = forms.ModelMultipleChoiceField(
-        label=_('Met wie wil je níet meer samenwerken aan deze cliënt?'),
+        label=_('Met wie van je organisatie wil je níet meer samenwerken aan deze cliënt?'),
         help_text=_('Wanneer je de samenwerking beëindigt kunnen deze collega’s géén:<ul><li>basisgegevens en aanvraagformulieren bekijken en bewerken</li><li>bijlagen downloaden en  toevoegen</li><li>formulieren verzenden naar afdeling Wonen Gemeente Amsterdam</li>'),
         queryset=User.objects.filter(user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]),
         widget=CheckboxSelectMultipleUser(attrs={'class': 'u-list-style-none scroll-list-container'}),
@@ -77,17 +70,9 @@ class CaseRemoveInvitedUsersForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
-        self.instance = kwargs.pop('instance')
+        self.queryset = kwargs.pop('queryset')
         super().__init__(*args, **kwargs)
-        linked_users = User.objects.filter(
-            profile__in=self.instance.profile_set.filter(
-                user__user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
-            ).exclude(
-                user=self.user
-            )
-        )
-        self.fields['user_list'].queryset = linked_users
+        self.fields['user_list'].queryset = self.queryset
 
     class Meta:
         fields = []
