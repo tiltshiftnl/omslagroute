@@ -743,7 +743,11 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
 
     def get_success_url(self):
         if self.request.POST.get('next'):
-            return '%s' % self.request.POST.get('next')
+            url = '%s%s' % (
+                self.request.POST.get('next').split('#')[0],
+                '?iframe=true' if self.request.GET.get('open-in-iframe') else ''
+            )
+            return url
         return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
 
     def test_func(self):
