@@ -634,12 +634,38 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
     def get_success_url(self):
         return '%s?iframe=true' % reverse('case', kwargs={'pk': self.instance.id})
 
+    def get_all_users(self):
+        return User.objects.filter(
+            profile__isnull=False,
+            user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
+        ).exclude(id=self.request.user.id).order_by('federation', 'username')
+
+    def get_user_options(self):
+        instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        return self.get_all_users().filter(
+            federation=self.request.user.federation,
+        ).exclude(
+            profile__in=instance.profile_set.all(), 
+        )
+
+    def get_linked_users(self):
+        instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        return self.get_all_users().filter(
+            profile__in=instance.profile_set.all(),
+        )
+
+    def get_linked_federation_users(self):
+        instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        return self.get_all_users().filter(
+            profile__in=instance.profile_set.all(),
+            federation=self.request.user.federation,
+        )
+
     def get_form_kwargs(self, step=None):
         kwargs = super().get_form_kwargs(step=step)
         self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
         kwargs.update({
-            'user': self.request.user,
-            'instance': self.instance,
+            'queryset': self.get_user_options()
         })
         return kwargs
 
@@ -650,10 +676,16 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
-        linked_users = User.objects.filter(profile__in=self.instance.profile_set.all(), user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]).exclude(id=self.request.user.id)
+        self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        linked_users = User.objects.filter(
+            profile__in=self.instance.profile_set.all(), 
+            user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
+        ).exclude(id=self.request.user.id)
+
         kwargs.update({
-            'linked_users': linked_users,
-            'unlinked_users': User.objects.filter(user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]).exclude(id=self.request.user.id).exclude(id__in=linked_users.values('id')),
+            'linked_users': self.get_linked_users(),
+            'unlinked_users': self.get_user_options(),
+            'linked_federation_users': self.get_linked_federation_users(),
             'instance': self.instance,
             'selected_users': self.get_all_cleaned_data().get('user_list', []),
         })
@@ -702,6 +734,19 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
     form_class = CaseRemoveInvitedUsersForm
     success_url = reverse_lazy('cases_by_profile')
 
+    def get_all_users(self):
+        return User.objects.filter(
+            profile__isnull=False,
+            user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
+        ).exclude(id=self.request.user.id).order_by('federation', 'username')
+
+    def get_user_options(self):
+        instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        return self.get_all_users().filter(
+            federation=self.request.user.federation,
+            profile__in=instance.profile_set.all(), 
+        )
+
     def get_success_url(self):
         return '%s?iframe=true' % reverse('case', kwargs={'pk': self.instance.id})
 
@@ -712,8 +757,7 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
         kwargs = super().get_form_kwargs()
         self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
         kwargs.update({
-            'user': self.request.user,
-            'instance': self.instance,
+            'queryset': self.get_user_options()
         })
         return kwargs
 

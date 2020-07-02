@@ -21,30 +21,33 @@
 
     <hr class="" />
     {% if unlinked_users %}
+    {% if linked_federation_users %}
+
     <div class="content-wrapper">
         <a href="{% url 'case_remove_invited_users' instance.id %}" class="link-manage">Beheer samenwerking</a>
     </div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         {% if wizard.steps.next %}
-        <h3 class="u-margin-bottom-none u-width-60">Je werkt samen aan deze client met:</h3>
-        {% if linked_users %}
-        <ul class="u-margin-bottom-2x scroll-list-container">
-        
-            {% for u in linked_users %}
-            <li>{{ u.username }}</li>
+            {% if linked_users %}
+            <h3 class="u-margin-bottom-none u-width-60">Je werkt samen aan deze client met:</h3>
+            <ul class="u-margin-bottom-2x scroll-list-container">
+            
+                {% for u in linked_users %}
+                <li>{{ u.username }}{% if request.user.federation != u.federation %}({% if u.federation %}{{u.federation}}{% else %}Geen organisatie{% endif %}){% endif %}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Je werkt nog niet samen aan deze cliënt met collega's</p>
+            {% endif %}
+        {% else %}
+            <h3>Aan:</h3>
+            <ul class="u-margin-bottom-2x scroll-list-container">
+            {% for u in selected_users %}
+                <li>{{ u.username }}</li>
             {% endfor %}
-        </ul>
-        {% else %}
-        <p>Je werkt nog niet samen aan deze cliënt met collega's</p>
-        {% endif %}
-        {% else %}
-        <h3>Aan:</h3>
-        <ul class="u-margin-bottom-2x scroll-list-container">
-        {% for u in selected_users %}
-            <li>{{ u.username }}</li>
-        {% endfor %}
-        </ul>
+            </ul>
         {% endif %}
 
         {{ wizard.management_form }}
@@ -72,10 +75,10 @@
     <div class="content-wrapper">
         <a href="{% url 'case_remove_invited_users' instance.id %}" class="link-manage">Beheer samenwerking</a>
     </div>
-    <p>Je hebt al alle persoonlijk begeleiders uitgenodigd.</p>
+    <p>Je hebt al alle persoonlijk begeleiders van je organisatie uitgenodigd.</p>
     <ul class="u-margin-bottom-2x scroll-list-container">
         {% for u in linked_users %}
-        <li>{{ u.username }}</li>
+        <li>{{ u.username }}{% if request.user.federation != u.federation %}({% if u.federation %}{{u.federation}}{% else %}Geen organisatie{% endif %}){% endif %}</li>
         {% endfor %}
     </ul>
 
