@@ -42,6 +42,60 @@
                     <use href="#print" xlink:href="#print" width="24" height="24"></use>
                 </svg></button>
                 </div>
+                <form>
+                    <fieldset class="section section--step section--incomplete">
+                        
+                        <legend>
+                            <h3 class="section--step__title">
+                                Wat is het adres van {{ form.instance.client_name }}?
+                            </h3>
+                        </legend>
+                            
+                        <div class="section sub-section">    
+                            <div class="form-field form-field--textinput">
+                                <label for="id_straatnaam">Straatnaam *:</label>
+                                <input type="text" name="straatnaam" id="id_straatnaam" required>
+                            </div>
+                            <div class="flex-container">
+                                <div class="flex-item u-margin-bottom">
+                                    <div class="form-field form-field--textinput u-padding-right-2x">
+                                        <label for="id_huisnummer">Huisnummer *:</label>
+                                        <input type="text" name="huisnummer" id="id_huisnummer" required>
+                                    </div>
+                                </div>
+                                <div class="flex-item">
+                                    <div class="form-field form-field--textinput">
+                                        <label for="id_toevoeging">Toevoeging:</label>
+                                        <input type="text" name="toevoeging" id="id_toevoeging">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-container">
+                                <div class="flex-item u-margin-bottom">
+                                    <div class="form-field form-field--textinput u-padding-right-2x">
+                                        <label for="id_postcode">Postcode *:</label>
+                                        <input type="text" name="postcode" id="id_postcode" required>
+                                    </div>
+                                </div>
+                                <div class="flex-item">
+                                    <div class="form-field form-field--textinput">
+                                        <label for="id_plaatsnaam">Plaatsnaam *:</label>
+                                        <input type="text" name="plaatsnaam" id="id_plaatsnaam" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <div class="form-navigation">
+                        <span></span>
+                        <button class=" button--next" type="submit">
+                            <span class="value">Volgende</span>
+                            <div class="arrow"></div>
+                        </button>
+                    </div>
+                    
+                </form>
                 
                 {% if form.enable_ajax %}
                 <div class="section--client">
