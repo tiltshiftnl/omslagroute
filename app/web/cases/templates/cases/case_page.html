@@ -58,9 +58,17 @@
                         </button>
                         <ul class="u-list-style-none">
                             <li>
-                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
+                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="">
                                     Wijzig basisgegevens
                                 </a>
+                            </li>
+                            <li>
+                                <a href="#" data-handler="modal" data-contentid="modalChangeAddress">Wijzig woning</a>
+                                <div role="dialog" class="modal" id="modalChangeAddress">
+                                    <iframe class="modal--address" id="iframeChangeAddress" src="{% url 'delete_request_case' object.id %}" title="Wijzig woning">
+                                        
+                                    </iframe>
+                                </div>
                             </li>
                             <li>
                                 <a href="#" data-handler="modal" data-contentid="modalDeleteRequest">Verzoek verwijderen cliënt uit omslagroute</a>
@@ -170,6 +178,61 @@
             
         </div>
         <!-- END BIJLAGE -->
+        {% endif %}
+
+        {% if request.user|is_wonen_medewerker %}
+        <div class="details-client details-client--address">
+            <header>
+                <h2 class="h3">Woning omslagroute</h2>
+            </header>
+            <p>Janneke van der Poelstraat 195A<br/>1000 AZ Amsterdam
+            </p>
+            <details>
+                <summary>Historie<svg class="icon-details--closed" width="14" height="9">
+                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                    </svg><svg class="icon-details--open" width="14" height="9">
+                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                    </svg>
+                </summary>
+                <div class="content">
+                    <button type="button" data-handler="close-details" class="button button--close">
+                        <span class="sr-only">Verberg historie</span>
+                        <svg class="icon close__icon" width="12" height="12">
+                            <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                        </svg>
+                    </button>
+                    <div class="u-scroll-wrapper">
+                        <ul class="u-list-style-none">
+                            <li>
+                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
+                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
+                                <small>10-11-2019 - pber@zorginstelling.nl</small>
+                            </li>
+                            <li>
+                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
+                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
+                                <small>10-11-2019 - pber@zorginstelling.nl</small>
+                            </li>
+                            <li>
+                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
+                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
+                                <small>10-11-2019 - pber@zorginstelling.nl</small>
+                            </li>
+                            <li>
+                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
+                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
+                                <small>10-11-2019 - pber@zorginstelling.nl</small>
+                            </li>
+                            <li>
+                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
+                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
+                                <small>10-11-2019 - pber@zorginstelling.nl</small>
+                            </li>
+                        </ul>
+                    </div>    
+                </div>
+            </details>
+        </div>
         {% endif %}
     </section>
 
