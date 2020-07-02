@@ -18,12 +18,22 @@
 {% endblock %}
 
 {% block main %}
+<section class="section section--client">
+    {% if object.delete_request_date %}
+    {% include 'cases/snippets/case_delete_request_header.html' with object=form.instance %}
+    {% endif %}
+    <div class="client-header flex-container">
+        <div class="flex-item">
+            <h1>{{ object.client_name }}</h1>
+        </div>
+        <div class="flex-item u-clearfix"></div>
+    </div>
+</section>
+
 <section class="section section--form section--form-{{ title|slugify }}{% if request.GET.control %} section--form--control{% endif %} u-margin-bottom-sticky">
     {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
-        {% if object.delete_request_date %}
-        {% include 'cases/snippets/case_delete_request_header.html' with object=form.instance %}
-        {% endif %}
+
         <div class="grid__wrapper">
             <div class="grid__main">
                 <div class="form-title-wrapper">
@@ -287,14 +297,14 @@
                 {% endif %}
                 <div class="form-field form-field--buttons-sticky screen-only">
                     <div class="button-wrapper">
-                        {% if form.enable_ajax and not object.delete_request_date %}
-                        <a href="#" data-handler="ajax-forms-submit" class="button button--primary">Opslaan</a>
+                        {% if form.enable_ajax%}
+                        <a href="javascript:void(0);" {% if object.delete_request_date %}disabled{% else %} data-handler="ajax-forms-submit" {% endif %} class="button button--primary">Opslaan</a>
                         {% elif not object.delete_request_date %}
-                        <input type="submit" value="Opslaan" class="button button--primary">
+                        <input {% if object.delete_request_date %}disabled{% endif %} type="submit" value="Opslaan" class="button button--primary">
                         {% endif %}
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
-                        {% if form.instance.id and share and not object.delete_request_date %}
-                        <button type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="text-link u-float-right" >
+                        {% if form.instance.id and share %}
+                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="text-link u-float-right" >
                             <svg class="u-margin-right-half" width="16" height="20">
                                 <use href="#email" xlink:href="#email" width="16" height="20"></use>
                             </svg><span>Controleren en versturen naar Wonen (gemeente)</span></button>{% endif %}

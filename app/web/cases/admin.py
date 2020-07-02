@@ -9,6 +9,7 @@ class CaseAdmin(admin.ModelAdmin):
         'created',
         'client_first_name',
         'client_last_name',
+        'delete_request_date',
     )
 
 

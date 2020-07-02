@@ -26,10 +26,9 @@
 {% csrf_token %}
 <section class="section section--client">
     <div>
-        {% if object.delete_request_date %}
-        <h1 class="u-margin-bottom-3x">{{ object.client_name }}</h1>    
+        {% if object.delete_request_date %}  
         {% include 'cases/snippets/case_delete_request_header.html' %}
-        {% else %}
+        {% endif %}    
         <div class="client-header flex-container">
             <div class="flex-item">
                 <h1>{{ object.client_name }}</h1>
@@ -98,7 +97,7 @@
                 Printdatum: {% now "j F Y H:i" %}
             {% endlanguage %}
         </small>
-        {% endif %}    
+        
         
     </div>
     
@@ -145,6 +144,7 @@
                 {% if forloop.counter0 < 4 %}
                     <li>
                         <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
+                        {% if not object.delete_request_date %}
                         <div>
                             <a href="{% url 'update_case_document' object.id document.id %}" title="Bijlage aanpassen" class="u-margin-right u-color-black">
                                 <svg class="button__icon"  width="20" height="20" >
@@ -158,12 +158,15 @@
                                 <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" src="{% url 'delete_case_document' object.id document.id %}" title="Verwijder bijlage {{ document.name }}"></iframe>
                             </div>
                         </div>
+                        {% endif %}
                     </li>
                 {% endif %}
             {% endfor %}
 
             </ul>
+            {% if object.document_set.all|length > 4 %}
             <a href="{% url 'case_document_list' object.id %}" class="u-underline--none"><span class="u-underline">Overzicht alle bijlagen</span> ></a>
+            {% endif %}
             
         </div>
         <!-- END BIJLAGE -->
@@ -250,7 +253,7 @@
 {% block js %}
 {{ block.super }}
 
-{% if request.user|is_wonen_medewerker %}
+{% if request.user|is_wonen_medewerker and not object.delete_request_date %}
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
  <script src="{% static "bundles/case.js" %}"></script>

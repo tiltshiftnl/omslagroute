@@ -102,6 +102,7 @@ class CaseGenericModelForm(GenericModelForm):
             widget=CheckboxSelectMultipleDocument(
                 attrs={
                     'instance_id': self.instance.id,
+                    'instance': self.instance,
                     'path': self.path,
                 }
             ),
