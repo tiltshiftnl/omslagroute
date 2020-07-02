@@ -12,9 +12,9 @@
                 (wijzig)
             </a>
         </div>
-        <div v-if="enableUpdate && !initial" class="case-number" data-targeted-content>
+        <div v-if="enableUpdate && !initial" class="case-number">
             <form>
-                <div class="">
+                <div>
                     <label for="input_casenumber">Dossier nr</label>
                     <input v-model="caseDossierNr" type="text" placeholder="123456" id="input_casenumber" />
                     <button v-on:click="updateCaseDossierNr()" type="submit" class="button button--primary">Sla op</button>

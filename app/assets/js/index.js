@@ -152,13 +152,6 @@ Array.prototype.sortOnData = function (key) {
     "print-page": function(e) {
       window.print();
     },
-    "show-target": function(e) {
-      var container = _closest(e.target, '[data-show-target-content]'),
-      self = _closest(e.target, '[data-handler="show-target"]'),
-      target = container.querySelector("[data-targeted-content]");
-      self.parentNode.classList.add("hide");
-      target.classList.remove("hide");
-    },
     "close-details": function (e) {
       var self = _closest(e.target, '[data-handler="close-details"]'),
         //moment = _closest(self, "[data-m"),
