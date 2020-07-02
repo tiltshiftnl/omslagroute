@@ -22,6 +22,9 @@
 
 {% block main %}
 <section class="section section--client">
+        {% if object.delete_request_date %}
+        {% include 'cases/snippets/case_delete_request_header.html' %}
+        {% endif %}
         <div class="client-header flex-container">
             <div class="flex-item">
                 <h1>{{ object.client_name }}</h1>
@@ -39,9 +42,7 @@
             </div>
         </div>
  
-        {% if object.delete_request_date %}
-        {% include 'cases/snippets/case_delete_request_header.html' %}
-        {% endif %}
+
 
     <div class="form-title-wrapper">
         <h2 class="h3">{{ form_data.title }}</h2>

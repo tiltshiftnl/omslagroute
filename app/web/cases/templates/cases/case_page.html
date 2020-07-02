@@ -26,10 +26,9 @@
 {% csrf_token %}
 <section class="section section--client">
     <div>
-        {% if object.delete_request_date %}
-        <h1 class="u-margin-bottom-3x">{{ object.client_name }}</h1>    
+        {% if object.delete_request_date %}  
         {% include 'cases/snippets/case_delete_request_header.html' %}
-        {% else %}
+        {% endif %}    
         <div class="client-header flex-container">
             <div class="flex-item">
                 <h1>{{ object.client_name }}</h1>
@@ -98,7 +97,7 @@
                 Printdatum: {% now "j F Y H:i" %}
             {% endlanguage %}
         </small>
-        {% endif %}    
+        
         
     </div>
     

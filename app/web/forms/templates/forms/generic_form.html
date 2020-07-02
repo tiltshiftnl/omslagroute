@@ -18,12 +18,22 @@
 {% endblock %}
 
 {% block main %}
+<section class="section section--client">
+    {% if object.delete_request_date %}
+    {% include 'cases/snippets/case_delete_request_header.html' with object=form.instance %}
+    {% endif %}
+    <div class="client-header flex-container">
+        <div class="flex-item">
+            <h1>{{ object.client_name }}</h1>
+        </div>
+        <div class="flex-item u-clearfix"></div>
+    </div>
+</section>
+
 <section class="section section--form section--form-{{ title|slugify }}{% if request.GET.control %} section--form--control{% endif %} u-margin-bottom-sticky">
     {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
-        {% if object.delete_request_date %}
-        {% include 'cases/snippets/case_delete_request_header.html' with object=form.instance %}
-        {% endif %}
+
         <div class="grid__wrapper">
             <div class="grid__main">
                 <div class="form-title-wrapper">
