@@ -58,9 +58,17 @@
                         </button>
                         <ul class="u-list-style-none">
                             <li>
-                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="" title="Wijzig cli&euml;ntgegevens">
+                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="">
                                     Wijzig basisgegevens
                                 </a>
+                            </li>
+                            <li>
+                                <a href="#" data-handler="modal" data-contentid="modalChangeAddress">Wijzig woning</a>
+                                <div role="dialog" class="modal" id="modalChangeAddress">
+                                    <iframe class="modal--address" id="iframeChangeAddress" src="{% url 'delete_request_case' object.id %}" title="Wijzig woning">
+                                        
+                                    </iframe>
+                                </div>
                             </li>
                             <li>
                                 <a href="#" data-handler="modal" data-contentid="modalDeleteRequest">Verzoek verwijderen cliënt uit omslagroute</a>
