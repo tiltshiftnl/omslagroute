@@ -22,7 +22,22 @@
 
 {% block main %}
 <section class="section section--client">
-    <h1 class="u-margin-bottom-3x">{{ object.client_name }}</h1>
+        <div class="client-header flex-container">
+            <div class="flex-item">
+                <h1>{{ object.client_name }}</h1>
+            </div>
+            <div class="flex-item u-clearfix">
+                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
+
+                {% else %} 
+                <!-- wonen && !dossiernr-->
+                <div data-case-id="{{ object.id }}" id="dossier_nr">
+                </div>
+                
+                {% endif %}    
+        
+            </div>
+        </div>
  
         {% if object.delete_request_date %}
         {% include 'cases/snippets/case_delete_request_header.html' %}

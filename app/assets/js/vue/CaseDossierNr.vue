@@ -1,23 +1,17 @@
 <template>
     <div v-bind:class="setFormClass()">
-        <!-- <div class="u-padding-top u-clearfix">
-            <a href="#" role="button" data-handler="show-target" class="u-float-right u-underline--none screen-only" title="Voeg een nieuwe bijlage toe">
-                + <span class="u-underline">Dossier nr</span>
-            </a>
-        </div> -->
-        <!-- wonen && dossiernummer -->
         <div v-if="!enableUpdate && !initial" class="u-padding-top u-clearfix">
             <span>Dossier nr: <strong>{{ caseDossierNr }}</strong>&nbsp;</span>
             <a v-on:click="setEnableUpdate(true)" href="#" role="button" class="u-float-right u-underline--none screen-only" title="Voeg een nieuwe bijlage toe">
                 (wijzig)
             </a>
         </div>
-        <div v-if="enableUpdate && !initial" class="case-number">
-            <form>
-                <div>
+        <div v-if="enableUpdate && !initial" class="case-number" data-targeted-content>
+            <form v-on:submit.prevent="onSubmit">
+                <div class="">
                     <label for="input_casenumber">Dossier nr</label>
                     <input v-model="caseDossierNr" type="text" placeholder="123456" id="input_casenumber" />
-                    <button v-on:click="updateCaseDossierNr()" type="submit" class="button button--primary">Sla op</button>
+                    <button v-on:click="updateCaseDossierNr()" type="submit" class="button button--primary">Bewaar</button>
                 </div>
             </form>
         </div>
@@ -28,7 +22,7 @@
 import axios from "axios";
 
 export default {
-    name: "Case",
+    name: "CaseDossierNr",
     data: () => ({
         caseDossierNr: null,
         caseId: null,
@@ -37,12 +31,14 @@ export default {
         initial: true,
     }),
     created() {
+
+    },
+    beforeMount(){
         this.getInitialData();
         this.getCaseDossierNr(true);
     },
-    beforeMount(){
-    },
     methods: {
+        onSubmit: function(){},
         setFormClass: function(){
             return this.error && 'error';
         },
