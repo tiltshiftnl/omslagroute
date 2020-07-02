@@ -21,6 +21,7 @@ from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import default_storage
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from web.users.auth import user_passes_test
 from django.core.paginator import Paginator
 from web.timeline.models import Moment
@@ -439,6 +440,16 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
     success_url = reverse_lazy('cases_by_profile')
     form_class = CaseGenericModelForm
 
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        if FORMS_BY_SLUG.get(self.kwargs.get('slug')).get('options', {}).get('addres_required') and not self.object.address_complete:
+            return redirect('%s%s' % (
+                reverse('update_case_address', args=[self.object.id]),
+                '?next=%s' % reverse('update_case', args=[self.object.id, self.kwargs.get('slug')]),
+                )
+            )
+        return response
+
     def get_initial(self):
         self.initial.update({
             'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('slug'))
@@ -471,7 +482,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         ld = ld if ld else [{}]
         dl = {k: [{
             value_key: dic[k].get('value'),
-            version_key: FORMS_BY_SLUG.get(dic[version_key].get('value')).get('title'),
+            version_key: FORMS_BY_SLUG.get(dic[version_key].get('value'), {}).get('title'),
             saved_key: dic[saved_key].get('value'),
         } for dic in ld] for k in ld[0] if self.object.to_dict().get(k)}
         dl = {k: [
@@ -791,6 +802,35 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
         messages.add_message(self.request, messages.INFO, "De gebruikers hebben een mail ontvangen van het verbreken van de samenwerking.")
         return super().form_valid(form)
 
+
+class CaseAddressUpdate(UserPassesTestMixin, UpdateView):
+    model = Case
+    form_class = CaseAddressForm
+    template_name_suffix = '_update_address_form'
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
+        return '%s?iframe=true' % reverse(
+            'case', 
+            args=[self.object.id]
+        )
+
+    def get_context_data(self, **kwargs):
+        print(self.object.adres_huisnummer)
+
+        return super().get_context_data(**kwargs)
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+
+    def form_valid(self, form):
+        print(self.get_object())
+        messages.add_message(self.request, messages.INFO, "Het adres is opgeslagen.")
+        response = super().form_valid(form)
+        self.object.create_version('adres-aanpassen')
+        return response
 
 
 class DocumentCreate(UserPassesTestMixin, CreateView):

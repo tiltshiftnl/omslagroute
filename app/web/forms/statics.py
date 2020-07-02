@@ -807,7 +807,7 @@ FORMS = (
                 'medische_problemen_wooneisen',
             ))
 
-        }},
+        }, 'addres_required': True},
     ),
     (
         'omklap_aanvraag',

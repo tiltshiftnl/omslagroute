@@ -17,6 +17,7 @@ urlpatterns = [
     path('verwijder-verzoek-ongedaan-gemaakt/<int:pk>/', CaseDeleteRequestRevokeView.as_view(), name='delete_request_revoke_case'),
     path('verwijder/<int:pk>/', CaseDeleteView.as_view(), name='delete_case'),
     path('nieuw/<str:slug>/', GenericCaseCreateFormView.as_view(), name='create_case'),
+    path('<int:pk>/adres-aanpassen/', CaseAddressUpdate.as_view(), name='update_case_address'),
     path('<int:pk>/<str:slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),
     path('<int:pk>/<str:slug>/verstuur', SendCaseView.as_view(), name='send_case'),
 

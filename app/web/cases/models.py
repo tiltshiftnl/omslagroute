@@ -415,6 +415,36 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    adres_straatnaam = models.CharField(
+        verbose_name=_('Straatnaam'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    adres_huisnummer = models.CharField(
+        verbose_name=_('Huisnummer'),
+        max_length=10,
+        blank=True,
+        null=True,
+    )
+    adres_toevoeging = models.CharField(
+        verbose_name=_('Toevoeging'),
+        max_length=10,
+        blank=True,
+        null=True,
+    )
+    adres_postcode = models.CharField(
+        verbose_name=_('Postcode'),
+        max_length=10,
+        blank=True,
+        null=True,
+    )
+    adres_plaatsnaam = models.CharField(
+        verbose_name=_('Plaatsnaam'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
 
     @property
     def centrale_toegang_naam_value(self):
@@ -504,6 +534,12 @@ class CaseBase(PrintableModel):
             'remaining_fields': not_filled_fields
         }
 
+    @property
+    def address_complete(self):
+        return bool(
+            self.adres_straatnaam and self.adres_huisnummer and self.adres_postcode and self.adres_plaatsnaam
+        ) 
+
     def __str__(self):
         if self.client_first_name:
             return self.client_first_name
@@ -556,7 +592,7 @@ class Case(CaseBase):
             if k not in [
                 '_state', 
             ] and
-            k in CaseVersion._meta.get_fields()
+            k in [f.name for f in CaseVersion._meta.get_fields()]
         )
         case_version = CaseVersion(**case_dict)
         case_version.pk = None
