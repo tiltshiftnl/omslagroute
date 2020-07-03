@@ -1319,6 +1319,22 @@ FORMS = (
             
         }},
     ),
+    (
+        'evaluatie_wonen',
+        EVALUATIE_WONEN,
+        'evaluatie-wonen',
+        'Evaluatie wonen',
+        'Nieuwe evaluatie wonen',
+        True,
+        True,
+        True,
+        {'exclude_fields': [
+            'client_first_name',
+            'client_last_name',
+            'geboortedatum',
+            'emailadres',
+        ]},
+    ),
 )
 
 FORMS_PROCESSTAP = [
