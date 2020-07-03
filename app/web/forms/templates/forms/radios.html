@@ -11,7 +11,9 @@
         {% endif %}
 
             {% for option in options %}
+            <li>
                 {% include option.template_name with widget=option %}
+            </li>
             {% endfor %}
     
         {% if group %}

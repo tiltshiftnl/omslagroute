@@ -38,9 +38,12 @@
             <div class="grid__main">
                 <div class="form-title-wrapper">
                     <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h1>
-                <button type="button" data-handler="ajax-forms-submit print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
-                    <use href="#print" xlink:href="#print" width="24" height="24"></use>
-                </svg></button>
+
+                    {% if slug != "basis-gegevens" %}
+                    <button type="button" data-handler="ajax-forms-submit print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
+                        <use href="#print" xlink:href="#print" width="24" height="24"></use>
+                    </svg></button>
+                    {% endif %}
                 </div>
                 
                 {% if form.enable_ajax %}
@@ -239,7 +242,7 @@
 
                         {% for sub_section in section.section_list %}
                             {% block subsection %}
-                            <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}" id="{% if sub_section.id %}{{ sub_section.id }}{% else %}section_{{ sub_section.title|slugify }}{% endif %}">
+                            <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}" {% if sub_section.id %}id="{{ sub_section.id }}{% endif %}">
                                 {% if sub_section.title %}
                                 <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
                                     {{ sub_section.title }}
