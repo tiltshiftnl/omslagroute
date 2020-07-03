@@ -38,9 +38,12 @@
             <div class="grid__main">
                 <div class="form-title-wrapper">
                     <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h1>
-                <button type="button" data-handler="ajax-forms-submit print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
-                    <use href="#print" xlink:href="#print" width="24" height="24"></use>
-                </svg></button>
+
+                    {% if slug != "basis-gegevens" %}
+                    <button type="button" data-handler="ajax-forms-submit print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
+                        <use href="#print" xlink:href="#print" width="24" height="24"></use>
+                    </svg></button>
+                    {% endif %}
                 </div>
                 
                 {% if form.enable_ajax %}

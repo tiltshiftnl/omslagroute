@@ -22,6 +22,7 @@ body:not(:-moz-handler-blocked) fieldset {
 
 .form-title-wrapper {
     display: flex;
+    margin-bottom: 1rem;
     h1,
     h2 {
         flex-grow: 1;
@@ -130,7 +131,7 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 .section--form__navigation {
-    margin-top: 4.875rem;
+    margin-top: 5.75rem;
     padding-top: 1rem;
     ul {
         position: relative;
