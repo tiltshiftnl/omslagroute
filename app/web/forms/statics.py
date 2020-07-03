@@ -439,6 +439,27 @@ FIELDS = (
             }
         ),
     ), {'step_required': True}),
+    ('zorginstelling_contactpersoon', forms.CharField(
+        label=_('Naam'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=True
+    ), {'step_required': True}),
+    ('zorginstelling_telefoon', forms.CharField(
+        label=_('Telefoonnummer'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=True
+    ), {'step_required': True}),
+    ('zorginstelling_emailadres', forms.EmailField(
+        label=_('E-mailadres'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('zorginstelling_naam', forms.CharField(
+        label=_('Naam zorginstelling'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=True
+    ), {'step_required': True}),
+
     # ('document_list', forms.ModelMultipleChoiceField(
     #     label=_('Documenten lijst'),
     #     # queryset=Document.objects.all(),
@@ -761,6 +782,25 @@ OMKLAP_AANVRAAG = [
     },
 ]
 
+EVALUATIE_WONEN = [
+    {
+        'title': 'Contactpersoon zorgaanbieder',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'zorginstelling_contactpersoon',
+                    'zorginstelling_telefoon',
+                    'zorginstelling_emailadres',
+                    'zorginstelling_naam',
+                ],
+            },
+        ]
+    }
+]
+
 FORMS = (
     (
         'basis_gegevens',
@@ -835,10 +875,27 @@ FORMS = (
                 )),
         }, 'addres_required': True},
     ),
+    (
+        'evaluatie_wonen',
+        EVALUATIE_WONEN,
+        'evaluatie-wonen',
+        'Evaluatie wonen',
+        'Nieuwe evaluatie wonen',
+        True,
+        True,
+        True,
+        {'exclude_fields': [
+            'client_first_name',
+            'client_last_name',
+            'geboortedatum',
+            'emailadres',
+        ]},
+    ),
 )
 
 FORMS_PROCESSTAP = [
     'aanvraag-omslag-en-urgentie',
+    'evaluatie-wonen',
     'aanvraag-omklap',
 ]
 
