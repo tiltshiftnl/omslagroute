@@ -440,25 +440,254 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('zorginstelling_contactpersoon', forms.CharField(
-        label=_('Naam'),
+        label=_('Naam *'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True
+        required=False
     ), {'step_required': True}),
     ('zorginstelling_telefoon', forms.CharField(
-        label=_('Telefoonnummer'),
+        label=_('Telefoonnummer *'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True
+        required=False
     ), {'step_required': True}),
     ('zorginstelling_emailadres', forms.EmailField(
-        label=_('E-mailadres'),
+        label=_('E-mailadres *'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
-    ), {}),
-    ('zorginstelling_naam', forms.CharField(
-        label=_('Naam zorginstelling'),
-        widget=forms.TextInput(attrs={'placeholder': ' '}),
-        required=True
     ), {'step_required': True}),
+    ('zorginstelling_naam', forms.CharField(
+        label=_('Naam zorginstelling *'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=False
+    ), {'step_required': True}),
+    ('woningcorporatie_contactpersoon', forms.CharField(
+        label=_('Naam *'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=False
+    ), {'step_required': True}),
+    ('woningcorporatie_telefoon', forms.CharField(
+        label=_('Telefoonnummer *'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=False
+    ), {'step_required': True}),
+    ('woningcorporatie_emailadres', forms.EmailField(
+        label=_('E-mailadres *'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woningcorporatie_naam', forms.CharField(
+        label=_('Naam woningcorparatie *'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        required=False
+    ), {'step_required': True}),
+    ('woningcorporatie_start_intermediaire_verhuur', forms.DateField(
+        label=_('Startdatum intermediaire verhuur *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('woningcorporatie_datum_kennismakingsgesprek', forms.DateField(
+        label=_('Datum kennismakingsgesprek *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
+        label=_('Datum woonevaluatiegesprek *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('woonevaluatie_ervaring_wonen', forms.CharField(
+        label=_('Hoe ervaar je het wonen? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_goed_minder_goed', forms.CharField(
+        label=_('Wat gaat goed, wat gaat minder goed? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_omschrijving_woning', forms.CharField(
+        label=_('Hoe ziet de woning er uit? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_omschrijving_balkon_tuin', forms.CharField(
+        label=_('Hoe ziet het balkon en/of de tuin er uit? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_omschrijving_portiek', forms.CharField(
+        label=_('Hoe ziet het portiek er uit? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_contact_met_buren', forms.IntegerField(
+        label=_('Heb je contact met buren? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_contact_met_buren_verloop', forms.CharField(
+        label=_('Zo ja, hoe verloopt dat?'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('woonevaluatie_contact_met_buren_gewenst', forms.CharField(
+        label=_('Zo nee, wil je wel contact? En heb je daar ondersteuning bij nodig?'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('woonevaluatie_overlast_buren', forms.IntegerField(
+        label=_('Ervaar je weleens overlast? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_overlast_buren_gemeld', forms.IntegerField(
+        label=_('Heb je dit gemeld bij de corporatie? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('woonevaluatie_overlast_omwonenden_gemeld', forms.IntegerField(
+        label=_('Is er overlast van omwonenden gemeld? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_overlast_omwonenden_oplossing', forms.CharField(
+        label=_('Hoe is daarmee omgegaan? Is het opgelost?'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('woonevaluatie_netwerk_aanwezig', forms.IntegerField(
+        label=_('Heb je een netwerk in de buurt? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_netwerk_hoe_gaat_dat', forms.CharField(
+        label=_('Hoe gaat dat? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_netwerk_behoefte', forms.IntegerField(
+        label=_('Heb je hier behoefte aan? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_netwerk_behoefte_meer_contacten', forms.CharField(
+        label=_('Heb je behoefte aan meer of andere contacten in de buurt? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_huur_betalen_op_tijd', forms.IntegerField(
+        label=_('Heb je de huur elke maand op tijd betaald aan de zorgaanbieder? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_huur_betalen_regeling', forms.CharField(
+        label=_('Is er een regeling getroffen en/of extra ondersteuning geregeld? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('aanvraag_omklap_actief', forms.IntegerField(
+        label=_('Is er sprake van voordracht voor omklap? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('aanvraag_omklap_alle_doelen_behaald', forms.CharField(
+        label=_('Zijn alle doelen behaald? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('aanvraag_omklap_steunstructuren', forms.CharField(
+        label=_('Op welke steunstructuur / structuren kun je een beroep doen na het moment van omklappen? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_moment_volgend_gesprek', forms.CharField(
+        label=_('Wat is een goed moment voor het volgende gesprek? *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_bijzonderheden_wonen', forms.CharField(
+        label=_('Zijn er bijzonderheden rond het wonen? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_bewoner', forms.BooleanField(
+        label=_('Akkoord bewoner *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_bewoner_naam', forms.CharField(
+        label=_('Naam *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_bewoner_datum', forms.DateField(
+        label=_('Datum *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_zorgaanbieder', forms.BooleanField(
+        label=_('Akkoord zorgaanbieder *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_zorgaanbieder_naam', forms.CharField(
+        label=_('Naam *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_zorgaanbieder_datum', forms.DateField(
+        label=_('Datum *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_woningcorporatie', forms.BooleanField(
+        label=_('Akkoord woningcorporatie *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_woningcorporatie_naam', forms.CharField(
+        label=_('Naam *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_akkoord_woningcorporatie_datum', forms.DateField(
+        label=_('Datum *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    
 
     # ('document_list', forms.ModelMultipleChoiceField(
     #     label=_('Documenten lijst'),
@@ -798,6 +1027,187 @@ EVALUATIE_WONEN = [
                 ],
             },
         ]
+    },
+    {
+        'title': 'Contactpersoon woningcorporatie',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woningcorporatie_contactpersoon',
+                    'woningcorporatie_telefoon',
+                    'woningcorporatie_emailadres',
+                    'woningcorporatie_naam',
+                ],
+            },{
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woningcorporatie_start_intermediaire_verhuur',
+                    'woningcorporatie_datum_kennismakingsgesprek',
+                    'woningcorporatie_datum_woonevaluatiegesprek',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Landen in de woning',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_ervaring_wonen',
+                    'woonevaluatie_goed_minder_goed',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Woning',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_omschrijving_woning',
+                    'woonevaluatie_omschrijving_balkon_tuin',
+                    'woonevaluatie_omschrijving_portiek',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Omgeving',
+        'description': '',
+        'section_list': [
+            {
+                'title': 'Contact met buren',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_contact_met_buren',
+                    'woonevaluatie_contact_met_buren_verloop',
+                    'woonevaluatie_contact_met_buren_gewenst',
+                ],
+            },
+            {
+                'title': 'Overlast en de buren',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_overlast_buren',
+                    'woonevaluatie_overlast_buren_gemeld',
+                    'woonevaluatie_overlast_omwonenden_gemeld',
+                    'woonevaluatie_overlast_omwonenden_oplossing',
+                ],
+            },
+            {
+                'title': 'Netwerk in de buurt',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_netwerk_aanwezig',
+                    'woonevaluatie_netwerk_hoe_gaat_dat',
+                    'woonevaluatie_netwerk_behoefte',
+                    'woonevaluatie_netwerk_behoefte_meer_contacten',
+                ],
+            },
+            
+        ]
+    },
+    {
+        'title': 'Huurbetaling',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_huur_betalen_op_tijd',
+                    'woonevaluatie_huur_betalen_regeling',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Stand van zaken gepersonaliseerde doelen rond het wonen',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_zinvolle_dagbesteding',
+                    'urgentiecriteria_functioneert_sociaal_stabiel',
+                    'urgentiecriteria_functioneert_psychisch_stabiel',
+                    'urgentiecriteria_is_financieel_stabiel',
+                ],
+            }
+        ]
+    },
+    {
+        'title': 'Is er sprake van voordracht voor omklap?',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'aanvraag_omklap_actief',
+                    'aanvraag_omklap_alle_doelen_behaald',
+                    'aanvraag_omklap_steunstructuren',
+                ],
+            }
+        ]
+    },
+    {
+        'title': 'Vervolg',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_moment_volgend_gesprek',
+                    'woonevaluatie_bijzonderheden_wonen',
+                ],
+            }
+        ]
+    },
+    {
+        'title': 'Akkoord',
+        'description': '',
+        'section_list': [
+            {
+                'title': 'Bewoner',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_akkoord_bewoner',
+                    'woonevaluatie_akkoord_bewoner_naam',
+                    'woonevaluatie_akkoord_bewoner_datum'
+                ],
+            },
+            {
+                'title': 'Zorgaanbieder',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_akkoord_zorgaanbieder',
+                    'woonevaluatie_akkoord_zorgaanbieder_naam',
+                    'woonevaluatie_akkoord_zorgaanbieder_datum'
+                ],
+            },
+            {
+                'title': 'Woningcorporatie',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_akkoord_woningcorporatie',
+                    'woonevaluatie_akkoord_woningcorporatie_naam',
+                    'woonevaluatie_akkoord_woningcorporatie_datum'
+                ],
+            },
+        ]
     }
 ]
 
@@ -889,7 +1299,25 @@ FORMS = (
             'client_last_name',
             'geboortedatum',
             'emailadres',
-        ]},
+        ]
+        ,'rules': {
+        
+            'woonevaluatie_overlast_buren': ([1], (
+                ['woonevaluatie_overlast_buren_gemeld']
+            )),
+            'woonevaluatie_overlast_omwonenden_gemeld': ([1], (
+                ['woonevaluatie_overlast_omwonenden_oplossing']
+            )),
+            'woonevaluatie_huur_betalen_op_tijd': ([2], (
+                ['woonevaluatie_huur_betalen_regeling']
+            )),
+
+            'aanvraag_omklap_actief': ([1], (
+                ['aanvraag_omklap_alle_doelen_behaald',
+                'aanvraag_omklap_steunstructuren']
+            )),
+            
+        }},
     ),
 )
 
