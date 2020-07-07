@@ -2,7 +2,33 @@
 
 {% block title %}- Bijlage uploaden{% endblock %}
 
+{% block skiplinks %}
+{% if not request.GET.iframe_content %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+{% block header %}
+{% if not request.GET.iframe_content %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+{% block messages %}
+{% if not request.GET.iframe_content %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+{% block feedback %}
+{% if not request.GET.iframe_content %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
+
+
 {% block breadcrumb %}
+{% if not request.GET.iframe_content %}
 <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
     <ol class="breadcrumb-list">
         <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
@@ -11,9 +37,16 @@
         <li class="breadcrumb-step sr-only" aria-current="location">Bijlage uploaden</li>
     </ol>
 </nav>
+{%endif %}
 {% endblock %}
 
 {% block main %}
+    <button data-handler="modal-close" class="button button--close">
+        <svg width="20" height="20" title="Sluit venster">
+            <use href="#close" xlink:href="#close" width="20" height="20"></use>
+        </svg>
+        <span class="sr-only">Sluit venster</span>
+    </button>
     <h2>Bijlage uploaden</h2>
 
     <form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}

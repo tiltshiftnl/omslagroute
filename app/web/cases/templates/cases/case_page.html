@@ -58,22 +58,28 @@
                         </button>
                         <ul class="u-list-style-none">
                             <li>
-                                <a href="{% url 'update_case' object.id 'basis-gegevens' %}" class="">
+                                <a href="#" class="" data-handler="modal" data-contentid="modalChangeBase">
                                     Wijzig basisgegevens
                                 </a>
+                                <div role="dialog" class="modal" id="modalChangeBase">
+                                <iframe class="modal--uploads" id="iframeChangeBase" src="{% url 'update_case_base' object.id %}?iframe_content=true" title="Wijzig basisgegevens">
+                                </iframe>
+                                </div>
                             </li>
+                            {% if object.address_complete %}
                             <li>
                                 <a href="#" data-handler="modal" data-contentid="modalChangeAddress">Wijzig woning</a>
                                 <div role="dialog" class="modal" id="modalChangeAddress">
-                                    <iframe class="modal--address" id="iframeChangeAddress" src="{% url 'delete_request_case' object.id %}" title="Wijzig woning">
+                                    <iframe class="modal--address" id="iframeChangeAddress" src="{% url 'update_case_address' object.id %}?iframe_content=true" title="Wijzig woning">
                                         
                                     </iframe>
                                 </div>
                             </li>
+                            {% endif %}
                             <li>
                                 <a href="#" data-handler="modal" data-contentid="modalDeleteRequest">Verzoek verwijderen cliënt uit omslagroute</a>
                                 <div role="dialog" class="modal" id="modalDeleteRequest">
-                                <iframe class="modal--uploads" id="iframeDeleteRequest" src="{% url 'delete_request_case' object.id %}" title="Verwijder verzoek">
+                                <iframe class="modal--uploads" id="iframeDeleteRequest" src="{% url 'delete_request_case' object.id %}?iframe_content=true" title="Verwijder verzoek">
                                 </iframe>
                                 </div>
                             </li>
@@ -132,6 +138,12 @@
                 {% endif %}
                 {% endfor %}
             </dl>
+
+            {% if object.address_complete %}
+            <h2 class="h3">Woning</h2>
+            <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %} {{ object.adres_toevoeging }}{% endif %}<br/>
+            {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
+            {% endif %}
         </div>
         <!-- END Client basis gegevens -->
 
@@ -185,8 +197,8 @@
             <header>
                 <h2 class="h3">Woning omslagroute</h2>
             </header>
-            <p>Janneke van der Poelstraat 195A<br/>1000 AZ Amsterdam
-            </p>
+            <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %}, {{ object.adres_toevoeging }}{% endif %}<br/>
+            {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
             <details>
                 <summary>Historie<svg class="icon-details--closed" width="14" height="9">
                         <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
@@ -203,31 +215,13 @@
                     </button>
                     <div class="u-scroll-wrapper">
                         <ul class="u-list-style-none">
+                            {% for h in address_history %}
                             <li>
-                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
-                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
-                                <small>10-11-2019 - pber@zorginstelling.nl</small>
+                                <p class="u-margin-bottom-none">{{ h.adres_straatnaam }} {{ h.adres_huisnummer }}, {{ h.adres_postcode }} {{ h.adres_plaatsnaam }}</p>
+                                <p class="u-margin-bottom-none"><i>'{{ h.adres_wijziging_reden }}'</i></p>
+                                <small>{{ h.saved|date:"d-m-y H:i" }} - {{ h.saved_by.user }}</small>
                             </li>
-                            <li>
-                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
-                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
-                                <small>10-11-2019 - pber@zorginstelling.nl</small>
-                            </li>
-                            <li>
-                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
-                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
-                                <small>10-11-2019 - pber@zorginstelling.nl</small>
-                            </li>
-                            <li>
-                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
-                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
-                                <small>10-11-2019 - pber@zorginstelling.nl</small>
-                            </li>
-                            <li>
-                                <p class="u-margin-bottom-none">Janneke van der Poelstraat 195A, 1000 AZ Amsterdam</p>
-                                <p class="u-margin-bottom-none"><i>'Cliënt is gaan samenwonen met partner'</i></p>
-                                <small>10-11-2019 - pber@zorginstelling.nl</small>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>    
                 </div>

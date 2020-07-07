@@ -1,65 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %} - Cliënt adres aanpassen{% endblock %}
-
-{% block skiplinks %}
-{% if not request.GET.iframe_content %}
-{{ block.super }}
-{% endif %}
-{% endblock %}
-
-{% block header %}
-{% if not request.GET.iframe_content %}
-{{ block.super }}
-{% endif %}
-{% endblock %}
-
-{% block messages %}
-{% if not request.GET.iframe_content %}
-{{ block.super }}
-{% endif %}
-{% endblock %}
-
-{% block feedback %}
-{% if not request.GET.iframe_content %}
-{{ block.super }}
-{% endif %}
-{% endblock %}
+{% block title %} - Cliënt adres aanmaken{% endblock %}
 
 {% block breadcrumb %}
-    {% if not request.GET.iframe_content %}
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
             <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
             <li class="breadcrumb-step"><a href="{% url 'case' object.id %}">{{ object.client_name }}</a></li>
-            <li class="breadcrumb-step sr-only" aria-current="location">Cli&euml;nt adres aanpassen</li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Cli&euml;nt adres aanmaken</li>
         </ol>
     </nav>
-    {% endif %}
 {% endblock %}
 
 {% block main %}
-    {% if request.GET.iframe_content %}
-    <button data-handler="modal-close" class="button button--close">
-        <svg width="20" height="20" title="Sluit venster">
-            <use href="#close" xlink:href="#close" width="20" height="20"></use>
-        </svg>
-        <span class="sr-only">Sluit venster</span>
-    </button>
-    {% endif %}
     <h2>Cli&euml;nt adres aanpassen</h2>
 
     <form method="post">
         {% csrf_token %}
-
-        <div class="details-client details-client--address">
-            <header>
-                <h2 class="h3">Huidige woning</h2>
-            </header>
-            <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %}, {{ object.adres_toevoeging }}{% endif %}<br/>
-            {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
-        </div>
 
         <fieldset class="section section--step section--incomplete">
             
@@ -102,16 +60,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-field form-field--textinput">
-                    <label for="{{ form.wijziging_reden.id_for_label }}">{{ form.wijziging_reden.label }} *</label>
-                    {{ form.wijziging_reden }}
-                </div>
-
             </div>
         </fieldset>
         
         {% if request.GET.next %}
         <div class="form-navigation">
+            <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
             <span></span>
             <button class=" button--next" type="submit">
                 <span class="value">Volgende</span>
@@ -121,11 +75,7 @@
         {% else %}
         <div class="form-field form-field--buttons screen-only u-margin-top-3x">
             <input type="submit" value="Opslaan" class="button button--primary">
-            {% if not request.GET.iframe_content %}
             <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
-            {% else %}
-            <a href="#" data-handler='modal-close' class="button button--secondary">Annuleer</a>
-            {% endif %}
         </div>
         {% endif %}
     </form>

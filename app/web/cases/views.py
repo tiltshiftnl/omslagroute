@@ -185,11 +185,11 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
                 user=self.request.user
             )
         )
-        # self.object.delete_related()
         kwargs.update({
             'moment_list': Moment.objects.all(),
             'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
             'linked_users':  linked_users,
+            'address_history': self.object.case_version_list.filter(version_verbose=CASE_VERSION_ADDRESS).order_by('-saved')
         })
         return super().get_context_data(**kwargs)
 
@@ -255,23 +255,6 @@ class CaseCreateView(UserPassesTestMixin, CreateView):
         case = form.save(commit=True)
         self.request.user.profile.cases.add(case)
         messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangemaakt." % case.client_name)
-        return super().form_valid(form)
-
-
-class CaseUpdateView(UserPassesTestMixin, UpdateView):
-    model = Case
-    form_class = CaseForm
-    template_name_suffix = '_update_form'
-    success_url = reverse_lazy('cases_by_profile')
-
-    def get_queryset(self):
-        return self.request.user.profile.cases.all()
-
-    def test_func(self):
-        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
-
-    def form_valid(self, form):
-        messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangepast." % self.object.client_name)
         return super().form_valid(form)
 
 
@@ -444,7 +427,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         response = super().get(request, *args, **kwargs)
         if FORMS_BY_SLUG.get(self.kwargs.get('slug')).get('options', {}).get('addres_required') and not self.object.address_complete:
             return redirect('%s%s' % (
-                reverse('update_case_address', args=[self.object.id]),
+                reverse('create_case_address', args=[self.object.id]),
                 '?next=%s' % reverse('update_case', args=[self.object.id, self.kwargs.get('slug')]),
                 )
             )
@@ -493,7 +476,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
             v[i] for i in range(len(v)) if i == 0 or v[i].get('value') != v[i-1].get('value')
         ] for k, v in dl.items()}
         kwargs.update({
-            'case_versions': dl,
+            'case_versions': self.object.get_history(),
             'case_status_list': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('slug')).order_by('-created')
         })
         return kwargs
@@ -803,10 +786,49 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
         return super().form_valid(form)
 
 
-class CaseAddressUpdate(UserPassesTestMixin, UpdateView):
+class CaseCreateView(UserPassesTestMixin, CreateView):
+    model = Case
+    form_class = CaseBaseForm
+    template_name_suffix = '_update_base_form'
+    success_url = reverse_lazy('cases_by_profile')
+
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        case = form.save(commit=False)
+        case.saved_by = self.request.user.profile
+        case.save()
+        self.request.user.profile.cases.add(case)
+        messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangemaakt." % case.client_name)
+        return response
+
+
+class CaseBaseUpdateView(UserPassesTestMixin, UpdateView):
+    model = Case
+    form_class = CaseBaseForm
+    template_name_suffix = '_update_base_form'
+    success_url = reverse_lazy('cases_by_profile')
+
+    def get_queryset(self):
+        return self.request.user.profile.cases.all()
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangepast." % self.object.client_name)
+        return super().form_valid(form)
+
+
+class CaseAddressCreate(UserPassesTestMixin, UpdateView):
     model = Case
     form_class = CaseAddressForm
-    template_name_suffix = '_update_address_form'
+    template_name_suffix = '_create_address_form'
     success_url = reverse_lazy('home')
 
     def get_success_url(self):
@@ -818,19 +840,71 @@ class CaseAddressUpdate(UserPassesTestMixin, UpdateView):
         )
 
     def get_context_data(self, **kwargs):
-        print(self.object.adres_huisnummer)
-
         return super().get_context_data(**kwargs)
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def form_valid(self, form):
-        print(self.get_object())
+        case = form.save(commit=False)
+        case.saved_by = self.request.user.profile
+        case.save()
         messages.add_message(self.request, messages.INFO, "Het adres is opgeslagen.")
-        response = super().form_valid(form)
-        self.object.create_version('adres-aanpassen')
-        return response
+
+        self.object.create_version(CASE_VERSION_ADDRESS)
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class CaseAddressUpdate(UserPassesTestMixin, UpdateView):
+    model = Case
+    form_class = CaseAddressUpdateForm
+    template_name_suffix = '_update_address_form'
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        return '%s?iframe=true' % reverse(
+            'case', 
+            args=[self.object.id]
+        )
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+
+    def form_valid(self, form):
+        case = form.save(commit=False)
+        case.adres_wijziging_reden = form.cleaned_data.get('wijziging_reden')
+        print(self.request.user.profile)
+        case.saved_by = self.request.user.profile
+        case.save()
+
+        current_site = get_current_site(self.request)
+        context = {
+            'case': case,
+            'user': self.request.user,
+            'case_url': 'https://%s%s' % (
+                current_site.domain, 
+                reverse('case', kwargs={'pk':case.id})
+            ),
+        }
+        body = render_to_string('cases/mail/case_address_changed.txt', context)
+        recipient_list = list([u for u in User.objects.filter(user_type=WONEN).values_list('username', flat=True)])
+
+        if settings.SENDGRID_KEY:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=recipient_list,
+                subject='Omslagroute - Cliënt adres wijiging',
+                plain_text_content=body
+            )
+            sg.send(email)
+
+        messages.add_message(self.request, messages.INFO, "Het adres is opgeslagen.")
+        self.object.create_version(CASE_VERSION_ADDRESS)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DocumentCreate(UserPassesTestMixin, CreateView):

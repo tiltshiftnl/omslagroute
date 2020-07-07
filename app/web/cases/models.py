@@ -445,6 +445,11 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    adres_wijziging_reden = models.TextField(
+        verbose_name=_('Waarom wijzig je dit adres?'),
+        blank=True,
+        null=True,
+    )
 
     @property
     def centrale_toegang_naam_value(self):
@@ -588,11 +593,8 @@ class Case(CaseBase):
 
     def create_version(self, version):
         case_dict = dict(
-            (k, v) for k, v in self.__dict__.items()
-            if k not in [
-                '_state', 
-            ] and
-            k in [f.name for f in CaseVersion._meta.get_fields()]
+            (ff.name, getattr(self, ff.name)) for ff in Case._meta.get_fields()
+            if hasattr(self, ff.name) and ff.name in [f.name for f in CaseVersion._meta.get_fields()]
         )
         case_version = CaseVersion(**case_dict)
         case_version.pk = None
@@ -623,6 +625,31 @@ class Case(CaseBase):
         CaseStatus.objects.filter(case=self).delete()
         Document.objects.filter(case=self).delete()
         return True
+
+    def get_history(self, version=None, double_values=True):
+        qs = self.case_version_list.all().order_by('-saved')
+        if isinstance(version, list):
+            qs = qs.filter(version_verbose__in=version)
+        value_key = 'value'
+        version_key = 'version_verbose'
+        saved_key = 'saved'
+        object_dict = self.to_dict()
+        ld = [cv.to_dict() for cv in qs]
+        ld = ld if ld else [{}]
+        dl = {k: [{
+            value_key: dic[k].get('value'),
+            version_key: CASE_VERSION_BY_SLUG.get(dic[version_key].get('value'), {}).get('title'),
+            saved_key: dic[saved_key].get('value'),
+        } for dic in ld] for k in ld[0] if object_dict.get(k)}
+        if double_values:
+            dl = {k: [
+                vv for vv in v if vv.get(value_key) != '—' and vv.get(value_key) != object_dict.get(k, {}).get('value')
+            ] for k, v in dl.items()}
+            # remove double values
+            dl = {k: [
+                v[i] for i in range(len(v)) if i == 0 or v[i].get('value') != v[i-1].get('value')
+            ] for k, v in dl.items()}
+        return dl
 
     def delete(self):
         deleted = self.delete_related()
