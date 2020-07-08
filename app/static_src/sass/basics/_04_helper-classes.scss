@@ -154,6 +154,9 @@
     display: block;
     margin-top: .5rem !important;
 }
+.u-margin-top-none{
+    margin-top: 0 !important;
+}
 .u-margin-right{
     margin-right: 1rem !important;
 }
@@ -188,7 +191,6 @@
     display: block;
     margin-bottom: 3rem !important;
 }
-
 .u-margin-bottom-4x{
     display: block;
     margin-bottom: 4rem !important;
@@ -199,6 +201,10 @@
 .u-padding-top{
     display: block;
     padding-top: 1rem !important;
+}
+.u-padding-bottom{
+    display: block;
+    padding-bottom: 1rem !important;
 }
 .u-padding-bottom-2x{
     display: block;
@@ -213,8 +219,6 @@
     display: block;
     padding-bottom: 4rem !important;
 }
-
-
 .u-margin-bottom-sticky{
     margin-bottom: 4rem;
 }
