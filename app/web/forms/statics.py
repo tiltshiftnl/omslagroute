@@ -686,6 +686,113 @@ FIELDS = (
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
+    ), ),
+    
+    ('kennismaking_wooncorporatie_goed_huurderschap', forms.BooleanField(
+        label=_('Ik verklaar dat ik me als een goed huurder zal gedragen. Dit houdt in dat ik me houd aan de woonregels, geen overlast veroorzaak en mijn huur op tijd betaal.'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_kennisgemaakt_buren', forms.IntegerField(
+        label=_('Heb je kennisgemaakt met je buren? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_kennismaken_buren', forms.CharField(
+        label=_('Wil je dat en hoe kun je dat het beste doen?'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+
+    ('kennismaking_wooncorporatie_goede_buur', forms.CharField(
+        label=_('Wanneer ben je een goede buur? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_huisregels', forms.CharField(
+        label=_('Zijn er huisregels in het complex waarmee je rekening moet houden? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_afval', forms.CharField(
+        label=_('Weet je waar je afval kwijt kunt (afvalbak, glasbak, grof vuil voorzieningen)? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_technische_klachten', forms.CharField(
+        label=_('Weet je hoe je technische klachten kunt melden bij de woningcorporatie? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_overlast_melden', forms.CharField(
+        label=_('Weet je hoe je overlast kunt melden? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_overlast_voorkomen', forms.CharField(
+        label=_('Weet je hoe je overlast kunt voorkomen? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_overlast_signalen', forms.CharField(
+        label=_('Hoe worden signalen van overlast gedeeld? (verwijzing overlastprotocol) *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    
+
+
+    ('kennismaking_wooncorporatie_akkoord_bewoner', forms.BooleanField(
+        label=_('Akkoord bewoner *'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_bewoner_naam', forms.CharField(
+        label=_('Naam *'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_bewoner_datum', forms.DateField(
+        label=_('Datum *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_zorgaanbieder', forms.BooleanField(
+        label=_('Akkoord zorgaanbieder *'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_zorgaanbieder_naam', forms.CharField(
+        label=_('Naam *'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum', forms.DateField(
+        label=_('Datum *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_woningcorporatie', forms.BooleanField(
+        label=_('Akkoord woningcorporatie *'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_woningcorporatie_naam', forms.CharField(
+        label=_('Naam *'),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_akkoord_woningcorporatie_datum', forms.DateField(
+        label=_('Datum *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
     ), {'step_required': True}),
     
 
@@ -1208,7 +1315,178 @@ EVALUATIE_WONEN = [
                 ],
             },
         ]
-    }
+    },
+]
+
+KENNISMAKING_WONINGCORPORATIE = [
+    {
+        'title': 'Contactpersoon zorgaanbieder',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'zorginstelling_contactpersoon',
+                    'zorginstelling_telefoon',
+                    'zorginstelling_emailadres',
+                    'zorginstelling_naam',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Contactpersoon woningcorporatie',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woningcorporatie_contactpersoon',
+                    'woningcorporatie_telefoon',
+                    'woningcorporatie_emailadres',
+                    'woningcorporatie_naam',
+                ],
+            },{
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woningcorporatie_start_intermediaire_verhuur',
+                    'woningcorporatie_datum_kennismakingsgesprek',
+                    'woningcorporatie_datum_woonevaluatiegesprek',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Goed huurderschap',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_goed_huurderschap',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Landen in de woning',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_ervaring_wonen',
+                    'woonevaluatie_goed_minder_goed',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Landen in het complex',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_kennisgemaakt_buren',
+                    'kennismaking_wooncorporatie_kennismaken_buren',
+                    'kennismaking_wooncorporatie_goede_buur',
+                    'kennismaking_wooncorporatie_huisregels',
+                    'kennismaking_wooncorporatie_afval',
+                    'kennismaking_wooncorporatie_technische_klachten',
+                    'kennismaking_wooncorporatie_overlast_melden',
+                    'kennismaking_wooncorporatie_overlast_voorkomen',
+                    'kennismaking_wooncorporatie_overlast_signalen',
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Landen in de wijk',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_wijk',
+                    'kennismaking_wooncorporatie_wijk_voorzieningen_waar',
+                    'kennismaking_wooncorporatie_wijk_voorzieningen_behoefte',
+                    'kennismaking_wooncorporatie_wijk_voorzieningen_anders',
+                    # TODO bijbehorende velden aanmaken
+                ],
+            },
+        ]
+    },
+    {
+        'title': 'Stand van zaken gepersonaliseerde doelen rond het wonen',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'urgentiecriteria_zinvolle_dagbesteding',
+                    'urgentiecriteria_functioneert_sociaal_stabiel',
+                    'urgentiecriteria_functioneert_psychisch_stabiel',
+                    'urgentiecriteria_is_financieel_stabiel',
+                ],
+            }
+        ]
+    },
+    # Andere afspraken of opmerkingen
+    {
+        'title': 'Vervolg',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_moment_volgend_gesprek',
+                ],
+            }
+        ]
+    },
+    {
+        'title': 'Akkoord',
+        'description': '',
+        'section_list': [
+            {
+                'title': 'Bewoner',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_akkoord_bewoner',
+                    'kennismaking_wooncorporatie_akkoord_bewoner_naam',
+                    'kennismaking_wooncorporatie_akkoord_bewoner_datum'
+                ],
+            },
+            {
+                'title': 'Zorgaanbieder',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_akkoord_zorgaanbieder',
+                    'kennismaking_wooncorporatie_akkoord_zorgaanbieder_naam',
+                    'kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum'
+                ],
+            },
+            {
+                'title': 'Woningcorporatie',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_akkoord_woningcorporatie',
+                    'kennismaking_wooncorporatie_akkoord_woningcorporatie_naam',
+                    'kennismaking_wooncorporatie_akkoord_woningcorporatie_datum'
+                ],
+            },
+        ]
+    },
 ]
 
 FORMS = (
@@ -1320,11 +1598,11 @@ FORMS = (
         }},
     ),
     (
-        'evaluatie_wonen',
-        EVALUATIE_WONEN,
-        'evaluatie-wonen',
-        'Evaluatie wonen',
-        'Nieuwe evaluatie wonen',
+        'kennismaking_woningcorporatie',
+        KENNISMAKING_WONINGCORPORATIE,
+        'kennismaking_woningcorporatie',
+        'Kennismaking woningcorporatie',
+        'Nieuwe kennismaking woningcorporatie',
         True,
         True,
         True,
@@ -1333,12 +1611,14 @@ FORMS = (
             'client_last_name',
             'geboortedatum',
             'emailadres',
-        ]},
+        ]
+        }
     ),
 )
 
 FORMS_PROCESSTAP = [
     'aanvraag-omslag-en-urgentie',
+    'kennismaking_woningcorporatie',
     'evaluatie-wonen',
     'aanvraag-omklap',
 ]
