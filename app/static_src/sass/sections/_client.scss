@@ -40,7 +40,7 @@
             margin-top: 0;
             div {
                 display: flex;
-                padding: .475rem .938rem;
+                padding: 0 .938rem .475rem;
                 border-left: 1px solid $neutral-grey1;
                 border-right: 1px solid $neutral-grey1;
                 border-bottom: 1px solid $neutral-grey1;
@@ -60,6 +60,10 @@
                 dd {
                     //flex-basis: 65%;
                 }
+            }
+
+            + .h3 {
+                margin-top: 0;
             }
         }
 
@@ -250,10 +254,12 @@
         }
     }
     .client-header,
-    .form-field-history{
+    .form-field-history,
+    .details-client--address{
         details {
             margin: .25rem 0 0;
             position: relative;
+            z-index: 10;
 
             .icon-details--open {
                 display: none;

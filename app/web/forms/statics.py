@@ -831,7 +831,7 @@ FORMS = (
             'omklap_akkoord_derde': ([2], (
                 ['omklap_akkoord_derde_toelichting']
                 )),
-        }},
+        }, 'addres_required': True},
     ),
 )
 

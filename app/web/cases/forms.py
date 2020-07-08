@@ -111,6 +111,69 @@ class SendCaseForm(forms.ModelForm):
         fields = []
 
 
+class CaseBaseForm(forms.ModelForm):
+
+    class Meta:
+        model = Case
+        fields = [
+            'client_first_name',
+            'client_last_name',
+            'geboortedatum',
+            'emailadres',
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['client_first_name'].required = True
+        self.fields['client_last_name'].required = True
+        self.fields['geboortedatum'].required = True
+
+
+class CaseAddressForm(forms.ModelForm):
+
+    class Meta:
+        model = Case
+        fields = [
+            'adres_straatnaam',
+            'adres_huisnummer',
+            'adres_toevoeging',
+            'adres_postcode',
+            'adres_plaatsnaam',
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['adres_straatnaam'].required = True
+        self.fields['adres_huisnummer'].required = True
+        self.fields['adres_postcode'].required = True
+        self.fields['adres_plaatsnaam'].required = True
+
+
+class CaseAddressUpdateForm(forms.ModelForm):
+    wijziging_reden = forms.CharField(
+        label=_('Waarom wijzig je dit adres?'),
+        widget=forms.Textarea(),
+        required=True,
+    )
+    class Meta:
+        model = Case
+        fields = [
+            'adres_straatnaam',
+            'adres_huisnummer',
+            'adres_toevoeging',
+            'adres_postcode',
+            'adres_plaatsnaam',
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['adres_straatnaam'].required = True
+        self.fields['adres_huisnummer'].required = True
+        self.fields['adres_postcode'].required = True
+        self.fields['adres_plaatsnaam'].required = True
+        
+
+
 class DocumentForm(forms.ModelForm):
     forms = MultiSelectFormField(
         label=_('Formulieren'),

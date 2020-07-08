@@ -19,6 +19,7 @@ class CaseVersionAdmin(CaseAdmin):
         'id',
         'case',
         'version_verbose',
+        'saved_by',
         'created',
         'client_first_name',
         'client_last_name',

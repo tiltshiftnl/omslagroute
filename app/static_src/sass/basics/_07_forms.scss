@@ -63,11 +63,11 @@ body:not(:-moz-handler-blocked) fieldset {
     .form-field:first-child {
         margin-top: 0;
     }
-    .form-field:last-child {
+    >.form-field:last-child {
         margin-bottom: 0;
+        border: 1px solid red;
     }
 }
-
 .sub-section__title {
     margin-top: 0;
 }
@@ -76,7 +76,6 @@ body:not(:-moz-handler-blocked) fieldset {
 .sub-section__description {
     max-width: $max-text-width;
 }
-
 .next-previous {
     padding: 1rem;
     background-color: $neutral-grey2;
@@ -369,6 +368,10 @@ textarea {
 
     .section--form--control .form-field--step-required.form-field--empty & {
         border: 2px solid $primary-red;
+    }
+
+    .flex-item & {
+        max-width: 18.375rem;
     }
 }
 textarea {
@@ -913,4 +916,14 @@ select {
      + .form-field-error-message {
         display: block;
      }
+ }
+
+ .form-navigation {
+    align-items: center;
+    background-color: $neutral-grey1;
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    padding: 0 16px;
+    margin-top: 28px;
  }

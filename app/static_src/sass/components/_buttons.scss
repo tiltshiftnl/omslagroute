@@ -15,7 +15,7 @@
 }
 
 .button,
-[type="submit"]:not(.text-link),
+[type="submit"]:not(.text-link):not(.button--next),
 [type="cancel"] {
     border: .063rem solid transparent;
     border-radius: 0;
@@ -95,7 +95,7 @@
 // ********************
     
 .button--primary,
-[type="submit"]:not(.text-link) {
+[type="submit"]:not(.text-link):not(.button--next) {
     border: .063rem solid $primary-darkblue;
     background-color: $primary-darkblue;
     color: $primary-white;
@@ -303,6 +303,9 @@ button.text-link {
     line-height: 1.25rem;
     background-color: rgb(236, 0, 0);
     color: rgb(255, 255, 255);
+    font-family: inherit;
+    font-size: .9rem;
+    font-weight: bold;
     position: relative;
     z-index: 0;
     text-decoration: none;
@@ -314,6 +317,7 @@ button.text-link {
     transition: color .1s ease-in-out 0s, background-color .1s ease-in-out 0s;
     margin-right: 1.563rem;
     overflow: visible;
+    cursor: pointer;
 
     .arrow {
         position: absolute;

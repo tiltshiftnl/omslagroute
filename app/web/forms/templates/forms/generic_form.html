@@ -53,16 +53,16 @@
                         
                         <div class="details-client details-client--basic">
                             <header>
-                                <h2 class="h3">Persoonsgegevens</h2>
+                                <h2 class="h3">Basisgegevens</h2>
                             </header>
                 
                             <dl>
                                 <div>
-                                    <dt>Client voornaam: </dt>
+                                    <dt>Voornaam: </dt>
                                     <dd>{{ form.instance.client_first_name }}</dd>
                                 </div>
                                 <div>
-                                    <dt>Client achternaam: </dt>
+                                    <dt>Achternaam: </dt>
                                     <dd>{{ form.instance.client_last_name }}</dd>
                                 </div>
                                 <div>
@@ -74,6 +74,11 @@
                                     <dd class="u-ellipsis">{% if form.instance.emailadres %}{{ form.instance.emailadres }}{% else %}—{% endif %}</dd>
                                 </div>
                             </dl>
+                            {% if object.address_complete %}
+                            <h2 class="h3">Woning</h2>
+                            <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %} {{ object.adres_toevoeging }}{% endif %}<br/>
+                            {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
+                            {% endif %}
                         </div>
                         <!-- END Client persoonsgegevens -->
                 
