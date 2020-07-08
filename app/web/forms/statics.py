@@ -686,7 +686,7 @@ FIELDS = (
                 'placeholder': 'dd-mm-jjjj',
             }
         ),
-    ), ),
+    ), {'step_required': True}),
     
     ('kennismaking_wooncorporatie_goed_huurderschap', forms.BooleanField(
         label=_('Ik verklaar dat ik me als een goed huurder zal gedragen. Dit houdt in dat ik me houd aan de woonregels, geen overlast veroorzaak en mijn huur op tijd betaal.'),
@@ -740,8 +740,37 @@ FIELDS = (
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
-    
-
+    ('kennismaking_wooncorporatie_wijk', forms.CharField(
+        label=_('Hoe ervaar je de wijk? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_wijk_voorzieningen_waar', forms.CharField(
+        label=_('Weet je waar voorzieningen zijn waar jij gebruik van kunt maken? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_wijk_voorzieningen_behoefte', forms.CharField(
+        label=_('Aan welke voorziening heb jij behoefte? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_wijk_voorzieningen_anders', forms.CharField(
+        label=_('Zijn er nog andere voorzieningen die de woningcorporatiemedewerker of begeleider wil voorstellen? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_borg_betalen', forms.IntegerField(
+        label=_('Moet er borg worden betaald als het huurcontract op naam van de bewoner komt te staan? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_borg_bedrag', forms.CharField(
+        label=_('Hoeveel is deze borg?'),
+        required=False,
+    ), {'step_required': True}),
 
     ('kennismaking_wooncorporatie_akkoord_bewoner', forms.BooleanField(
         label=_('Akkoord bewoner *'),
@@ -1419,7 +1448,6 @@ KENNISMAKING_WONINGCORPORATIE = [
                     'kennismaking_wooncorporatie_wijk_voorzieningen_waar',
                     'kennismaking_wooncorporatie_wijk_voorzieningen_behoefte',
                     'kennismaking_wooncorporatie_wijk_voorzieningen_anders',
-                    # TODO bijbehorende velden aanmaken
                 ],
             },
         ]
@@ -1440,7 +1468,21 @@ KENNISMAKING_WONINGCORPORATIE = [
             }
         ]
     },
-    # Andere afspraken of opmerkingen
+    # 
+    {
+        'title': 'Andere afspraken of opmerkingen',
+        'description': '',
+        'section_list': [
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_borg_betalen',
+                    'kennismaking_wooncorporatie_borg_bedrag',
+                ],
+            }
+        ]
+    },
     {
         'title': 'Vervolg',
         'description': '',
@@ -1577,9 +1619,7 @@ FORMS = (
             'client_last_name',
             'geboortedatum',
             'emailadres',
-        ]
-        ,'rules': {
-        
+        ],'rules': {
             'woonevaluatie_overlast_buren': ([1], (
                 ['woonevaluatie_overlast_buren_gemeld']
             )),
@@ -1600,7 +1640,7 @@ FORMS = (
     (
         'kennismaking_woningcorporatie',
         KENNISMAKING_WONINGCORPORATIE,
-        'kennismaking_woningcorporatie',
+        'kennismaking-woningcorporatie',
         'Kennismaking woningcorporatie',
         'Nieuwe kennismaking woningcorporatie',
         True,
@@ -1611,14 +1651,21 @@ FORMS = (
             'client_last_name',
             'geboortedatum',
             'emailadres',
-        ]
-        }
+        ], 'rules': {
+            'kennismaking_wooncorporatie_kennisgemaakt_buren': ([2], (
+                ['kennismaking_wooncorporatie_kennismaken_buren']
+            )),
+            'kennismaking_wooncorporatie_borg_betalen': ([1], (
+                ['kennismaking_wooncorporatie_borg_bedrag']
+            )),
+            
+        }},
     ),
 )
 
 FORMS_PROCESSTAP = [
     'aanvraag-omslag-en-urgentie',
-    'kennismaking_woningcorporatie',
+    'kennismaking-woningcorporatie',
     'evaluatie-wonen',
     'aanvraag-omklap',
 ]
