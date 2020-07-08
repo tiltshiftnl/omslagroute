@@ -807,7 +807,7 @@ FORMS = (
                 'medische_problemen_wooneisen',
             ))
 
-        }, 'addres_required': True},
+        }},
     ),
     (
         'omklap_aanvraag',
@@ -831,7 +831,7 @@ FORMS = (
             'omklap_akkoord_derde': ([2], (
                 ['omklap_akkoord_derde_toelichting']
                 )),
-        }},
+        }, 'addres_required': True},
     ),
 )
 

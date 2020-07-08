@@ -185,11 +185,26 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
                 user=self.request.user
             )
         )
+        qs = self.object.case_version_list.all()
+        qs = qs.annotate(address=Concat(
+            'adres_straatnaam', 
+            'adres_huisnummer', 
+            'adres_toevoeging', 
+            'adres_postcode', 
+            'adres_plaatsnaam', 
+            'adres_wijziging_reden', 
+            output_field=TextField()
+            ))
+        qs = qs.order_by('address')
+        qs = qs.distinct('address')
+        qs = qs.filter(adres_straatnaam__isnull=False)
+        qs = qs.values('address', 'id')
+
         kwargs.update({
             'moment_list': Moment.objects.all(),
             'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
             'linked_users':  linked_users,
-            'address_history': self.object.case_version_list.filter(version_verbose=CASE_VERSION_ADDRESS).order_by('-saved')
+            'address_history': self.object.case_version_list.filter(id__in=[o.get('id') for o in qs]).order_by('-saved')
         })
         return super().get_context_data(**kwargs)
 
@@ -876,7 +891,6 @@ class CaseAddressUpdate(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         case = form.save(commit=False)
         case.adres_wijziging_reden = form.cleaned_data.get('wijziging_reden')
-        print(self.request.user.profile)
         case.saved_by = self.request.user.profile
         case.save()
 

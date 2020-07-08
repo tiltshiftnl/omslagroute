@@ -65,7 +65,7 @@
         
         {% if request.GET.next %}
         <div class="form-navigation">
-            <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
+            <a href="{% url 'case' object.id %}" class="button button--secondary">Annuleer</a>
             <span></span>
             <button class=" button--next" type="submit">
                 <span class="value">Volgende</span>
