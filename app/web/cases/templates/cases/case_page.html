@@ -138,6 +138,12 @@
                 {% endif %}
                 {% endfor %}
             </dl>
+            {% if object.address_complete %}
+            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
+            {% include 'cases/snippets/case_address.html'  with class='u-margin-top-none u-margin-bottom-half' %}
+            {% endif %}
+            {% endif %}
+
         </div>
         <!-- END Client basis gegevens -->
 
@@ -187,42 +193,7 @@
         {% endif %}
 
         {% if request.user|is_wonen_medewerker and object.address_complete %}
-        <div class="details-client details-client--address">
-            <header>
-                <h2 class="h3">Woning omslagroute</h2>
-            </header>
-            <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %}, {{ object.adres_toevoeging }}{% endif %}<br/>
-            {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
-            {% if address_history|length > 1 %}
-            <details>
-                <summary>Historie<svg class="icon-details--closed" width="14" height="9">
-                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                    </svg><svg class="icon-details--open" width="14" height="9">
-                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                    </svg>
-                </summary>
-                <div class="content">
-                    <button type="button" data-handler="close-details" class="button button--close">
-                        <span class="sr-only">Verberg historie</span>
-                        <svg class="icon close__icon" width="12" height="12">
-                            <use href="#close" xlink:href="#close" width="12" height="12"></use>
-                        </svg>
-                    </button>
-                    <div class="u-scroll-wrapper">
-                        <ul class="u-list-style-none">
-                            {% for h in address_history %}
-                            <li>
-                                <p class="u-margin-bottom-none">{{ h.adres_straatnaam }} {{ h.adres_huisnummer }}, {{ h.adres_postcode }} {{ h.adres_plaatsnaam }}</p>
-                                <p class="u-margin-bottom-none"><i>'{{ h.adres_wijziging_reden }}'</i></p>
-                                <small>{{ h.saved|date:"d-m-y H:i" }} - {{ h.saved_by.user }}</small>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>    
-                </div>
-            </details>
-            {% endif %}
-        </div>
+        {% include 'cases/snippets/case_address.html' %}
         {% endif %}
     </section>
 

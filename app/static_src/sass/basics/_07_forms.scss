@@ -2,6 +2,9 @@
 // GENERAL FORM ELEMENTS
 // ********************
 
+.form--limited-width {
+    max-width: 43rem;
+}
 legend {
     padding: 0;
     display: table;
@@ -65,7 +68,6 @@ body:not(:-moz-handler-blocked) fieldset {
     }
     >.form-field:last-child {
         margin-bottom: 0;
-        border: 1px solid red;
     }
 }
 .sub-section__title {

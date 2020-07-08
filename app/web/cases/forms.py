@@ -152,7 +152,11 @@ class CaseAddressForm(forms.ModelForm):
 class CaseAddressUpdateForm(forms.ModelForm):
     wijziging_reden = forms.CharField(
         label=_('Waarom wijzig je dit adres?'),
-        widget=forms.Textarea(),
+        widget=forms.Textarea(
+            attrs={
+                'rows': 4,
+            }
+        ),
         required=True,
     )
     class Meta:

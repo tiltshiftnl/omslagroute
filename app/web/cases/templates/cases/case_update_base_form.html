@@ -43,6 +43,7 @@
 
 {% block main %}
     {% if request.GET.iframe_content %}
+    <div class="content-container">
     <button data-handler="modal-close" class="button button--close">
         <svg width="20" height="20" title="Sluit venster">
             <use href="#close" xlink:href="#close" width="20" height="20"></use>
@@ -51,8 +52,8 @@
     </button>
     {% endif %}
     <h2>{% if form.instance.id %}Cli&euml;nt basisgegevens aanpassen{% else %}Cliënt aanmaken{% endif %}</h2>
-
-    <form method="post">
+    {% if request.GET.iframe_content %}<hr class="" />{% endif %}
+    <form method="post" class="form--limited-width">
         {% csrf_token %}
 
         <fieldset class="section section--step section--incomplete">
@@ -114,7 +115,7 @@
         {% if request.GET.next %}
         <input type="hiden" value="{{request.GET.next }}" name="next"  id="id_next">
         {% else %}
-        <div class="form-field form-field--buttons screen-only u-margin-top-3x">
+        <div class="form-field form-field--buttons screen-only {% if not request.GET.iframe_content %}u-margin-top-3x {% else %} u-margin-top-none {% endif %}">
             <input type="submit" value="Opslaan" class="button button--primary">
             {% if not request.GET.iframe_content %}
             <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
@@ -124,4 +125,5 @@
         </div>
         {% endif %}
     </form>
+    {% if request.GET.iframe_content %}</div>{% endif %}
 {% endblock %}
