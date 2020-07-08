@@ -681,7 +681,11 @@ ul.form-field__radiogroup,
             min-height: 1.25em;
             background-color: $primary-white;
             border: .063rem solid $neutral-grey4;
+<<<<<<< HEAD
             
+=======
+            margin-right: .75rem;
+>>>>>>> css fix, text change
             content: '';
             transform: translateY(.25rem);
         }
