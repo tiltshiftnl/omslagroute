@@ -582,12 +582,12 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_netwerk_hoe_gaat_dat', forms.CharField(
-        label=_('Hoe gaat dat? *'),
+        label=_('Zo ja, hoe gaat dat? *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_netwerk_behoefte', forms.IntegerField(
-        label=_('Heb je hier behoefte aan? *'),
+        label=_('Zo nee, heb je hier behoefte aan? *'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
