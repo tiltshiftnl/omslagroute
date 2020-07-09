@@ -760,6 +760,16 @@ FIELDS = (
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
+('kennismaking_wooncorporatie_doelen_wonen_huurderschap', forms.CharField(
+        label=_('Waar wil jij aan werken dat met wonen en goed huurderschap te maken heeft? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_ondersteuning_medewerker', forms.CharField(
+        label=_('Hoe kan de medewerker van de zorgaanbieder en/of de corporatie hierbij ondersteunen? *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
     ('kennismaking_wooncorporatie_borg_betalen', forms.IntegerField(
         label=_('Moet er borg worden betaald als het huurcontract op naam van de bewoner komt te staan? *'),
         widget=RadioSelect(
@@ -1453,11 +1463,11 @@ KENNISMAKING_WONINGCORPORATIE = [
         ]
     },
     {
-        'title': 'Stand van zaken gepersonaliseerde doelen rond het wonen',
+        'title': 'Woondoelen',
         'description': '',
         'section_list': [
             {
-                'title': '',
+                'title': 'Stand van zaken gepersonaliseerde doelen rond het wonen',
                 'description': '',
                 'fields': [
                     'urgentiecriteria_zinvolle_dagbesteding',
@@ -1465,7 +1475,15 @@ KENNISMAKING_WONINGCORPORATIE = [
                     'urgentiecriteria_functioneert_psychisch_stabiel',
                     'urgentiecriteria_is_financieel_stabiel',
                 ],
-            }
+            },
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'kennismaking_wooncorporatie_doelen_wonen_huurderschap',
+                    'kennismaking_wooncorporatie_ondersteuning_medewerker',
+                ],
+            },
         ]
     },
     # 
