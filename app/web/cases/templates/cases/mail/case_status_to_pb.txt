@@ -1,3 +1,4 @@
+{% load client_status_tags %}
 Beste,
 
 {{ case_status.profile.user.username }} van de afdeling Wonen Amsterdam heeft de status voor '{{ form_name }}' gewijzigd naar '{{ case_status.status|status_verbose|capfirst }}'. 
