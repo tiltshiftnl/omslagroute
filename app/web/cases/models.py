@@ -15,6 +15,7 @@ from django.conf import settings
 from django.urls import reverse_lazy, reverse
 from django.core.files.storage import default_storage
 from constance import config
+from .managers import *
 
 
 class CaseBase(PrintableModel):
@@ -590,6 +591,7 @@ class Case(CaseBase):
         blank=True,
         null=True,
     )
+    objects = CaseManager()
 
     @property
     def is_ingediend(self):
@@ -597,6 +599,7 @@ class Case(CaseBase):
 
     @property
     def delete_request_seconds_left(self):
+        from datetime import datetime
         datetime_treshold = datetime.now() - timedelta(seconds=config.CASE_DELETE_SECONDS)
         time_left = self.delete_request_date - datetime_treshold
         return time_left
