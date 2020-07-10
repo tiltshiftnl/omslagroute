@@ -24,5 +24,5 @@ class CaseManager(models.Manager):
             return queryset
         return queryset.filter(
             id__in=CaseVersion.objects.order_by('case').distinct().values_list('case'),
-            delete_request_date__isnull=False,
+            delete_request_date__isnull=True,
         )
