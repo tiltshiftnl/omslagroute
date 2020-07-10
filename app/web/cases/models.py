@@ -467,6 +467,149 @@ class CaseBase(PrintableModel):
         null=True,
     )
 
+    # Kennismaking wooncorporatie
+    kennismaking_wooncorporatie_goed_huurderschap = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie goed huurderschap'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_kennisgemaakt_buren = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie kennisgemaakt buren'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_kennismaken_buren = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie kennismaken buren'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_goede_buur = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie goede buur'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_huisregels = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie huisregels'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_afval = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie afval'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_technische_klachten = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie technische klachten'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_overlast_melden = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie overlast melden'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_overlast_voorkomen = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie overlast voorkomen'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_overlast_signalen = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie overlast signalen'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie wijk'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk_voorzieningen_waar = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie_wijk voorzieningen waar'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk_voorzieningen_behoefte = models.TextField(
+        verbose_name=_('kennismaking_wooncorporatie_wijk_voorzieningen behoefte'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk_voorzieningen_anders = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie wijk voorzieningen anders'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_doelen_wonen_huurderschap = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie doelen wonen huurderschap'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_ondersteuning_medewerker = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie ondersteuning medewerker'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_borg_betalen = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie borg betalen'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_borg_bedrag = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie borg bedrag'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_bewoner = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord bewoner'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_bewoner_naam = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord bewoner naam'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_bewoner_datum = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord bewoner datum'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder_naam = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder naam'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder datum'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_woningcorporatie = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord woningcorporatie'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_woningcorporatie_naam = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord woningcorporatie naam'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_woningcorporatie_datum = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord woningcorporatie datum'),
+        blank=True,
+        null=True,
+    )
+     = models.TextField(
+        verbose_name=_(''),
+        blank=True,
+        null=True,
+    )
+
+
     @property
     def centrale_toegang_naam_value(self):
         if self.centrale_toegang_naam:
