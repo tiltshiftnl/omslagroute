@@ -4,13 +4,13 @@
     <li>{% include option.template_name with widget=option %}</li>{% endfor %}{% if group %}
   </ul></li>{% endif %}{% endfor %}
 </ul>{% endwith %}
-    {% if widget.attrs.instance_id and not widget.attrs.instance.delete_request_date %}<br><a href="#" class="button button--secondary screen-only" data-handler="modal" data-contentid="modalUploads">+ Nieuwe bijlage</a>{% endif %}</p>
+    {% if widget.attrs.instance_id and not widget.attrs.instance.delete_request_date %}<br><a href="#" class="button button--secondary screen-only" data-handler="ajax-forms-submit modal" data-contentid="modalUploads">+ Nieuwe bijlage</a>{% endif %}</p>
 {% else %}
     <br>
     <p><strong>Er zijn nog geen bijlages voor deze cliënt geüpload.</strong><br>
     Bijlages kun je uploaden vanuit het {% if widget.attrs.instance_id %}<a href="{% url 'case' widget.attrs.instance_id %}">{% endif %}dashboard{% if widget.attrs.instance_id %}</a>{% endif %} van de cliënt.
     <br>
-    {% if widget.attrs.instance_id and not widget.attrs.instance.delete_request_date %}<br><a href="#" class="button button--secondary screen-only" data-handler="modal" data-contentid="modalUploads">+ Nieuwe bijlage</a>{% endif %}</p>
+    {% if widget.attrs.instance_id and not widget.attrs.instance.delete_request_date %}<br><a href="#" class="button button--secondary screen-only" data-handler="ajax-forms-submit modal" data-contentid="modalUploads">+ Nieuwe bijlage</a>{% endif %}</p>
 {% endif %}
 
 <div role="dialog" class="modal" id="modalUploads">
