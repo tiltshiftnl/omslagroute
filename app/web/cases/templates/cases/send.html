@@ -23,7 +23,7 @@
 
             {% if recipient_list  %}
             <div class="u-margin-bottom-4x u-border-bottom">
-                <p class="u-margin-bottom-2x">De volgende informatie van <strong>{{ form.instance.client_name }}</strong> wordt per mail verstuurd naar {% for recipient in  recipient_list %}{% if forloop.counter0 >= 1  and not forloop.last %}, {% elif forloop.counter0 >= 1 and forloop.last %} en {% endif %}<strong>{{ recipient }}</strong>{% endfor %} van <strong>{{ federation.name }}</strong>.</p>
+                <p class="u-margin-bottom-2x">Controleer onderstaande gegevens van <strong>{{ form.instance.client_name }}</strong>.<br>Een verzoek om deze aanvraag te bekijken, zal verstuurd worden naar {% for recipient in  recipient_list %}{% if forloop.counter0 >= 1  and not forloop.last %}, {% elif forloop.counter0 >= 1 and forloop.last %} en {% endif %}<strong>{{ recipient }}</strong>{% endfor %} van <strong>{{ federation.name }}</strong>.</p>
                 
                 <section class="section section--client u-margin-bottom-2x">
                     <h3>Informatie</h3>
