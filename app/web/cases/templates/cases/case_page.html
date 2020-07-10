@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags client_status_tags auth_tags tz %}
+{% load static i18n html_tags client_status_tags auth_tags client_data_tags html_tags tz %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -156,12 +156,16 @@
             <header>
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
                 {% if not object.delete_request_date %}
-                <a href="{% url 'add_case_document' object.id %}" class="u-float-right u-underline--none u-margin-top-2x screen-only" title="Voeg een nieuwe bijlage toe">
+                <a href="#" class="u-float-right u-underline--none u-margin-top-2x screen-only" title="Voeg een nieuwe bijlage toe" data-handler="modal" data-contentid="modalUploads">
                     + <span class="u-underline">Nieuwe bijlage</span>
                 </a>
                 {% endif %}
             </header>
-
+            <div role="dialog" class="modal" id="modalUploads">
+            <iframe class="modal--uploads" id="iframeModal" src="{% url 'add_case_document' object.id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}&open-in-iframe=true" title="ga naar bestand toevoegen">
+            </iframe>
+            </div>
+              
             <ul class="downloads">
             {% for document in object.document_set.all %}
                 {% if forloop.counter0 < 4 %}
