@@ -643,7 +643,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                 )
                 sg.send(email)
             messages.add_message(
-                self.request, messages.INFO, "De aanvraag is ingediend bij medewerkers van '%s'." % (
+                self.request, messages.INFO, "De aanvraag is ingediend bij en vanaf nu zichtbaar voor medewerkers van '%s'." % (
                     federation.name,
                 )
             )

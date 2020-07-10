@@ -39,7 +39,7 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <p>Je werkt nog niet samen aan deze cliënt met collega's</p>
+            <p class="u-width-75">Je werkt nog niet samen aan deze cliënt met collega's</p>
             {% endif %}
         {% else %}
             <h3>Aan:</h3>
@@ -75,7 +75,7 @@
     <div class="content-wrapper">
         <a href="{% url 'case_remove_invited_users' instance.id %}" class="link-manage">Beheer samenwerking</a>
     </div>
-    <p>Je hebt al alle persoonlijk begeleiders van je organisatie uitgenodigd.</p>
+    <p class="u-width-75">Je hebt al alle persoonlijk begeleiders van je organisatie uitgenodigd.</p>
     <ul class="u-margin-bottom-2x scroll-list-container">
         {% for u in linked_users %}
         <li>{{ u.username }}{% if request.user.federation != u.federation %}({% if u.federation %}{{u.federation}}{% else %}Geen organisatie{% endif %}){% endif %}</li>
