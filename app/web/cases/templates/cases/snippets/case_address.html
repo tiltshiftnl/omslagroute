@@ -4,6 +4,18 @@
     </header>
     <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %}, {{ object.adres_toevoeging }}{% endif %}<br/>
     {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
+    <dl>
+        <div>
+            <dt>Woningcorporatie: </dt>
+            <dd>{{ object.woningcorporatie }}</dd>
+        </div>
+        {% if object.woningcorporatie_medewerker %}
+        <div>
+            <dt>Medewerker: </dt>
+            <dd>{{ object.woningcorporatie_medewerker }}</dd>
+        </div>
+        {% endif %}
+    </dl>
     {% if address_history|length > 1 %}
     <details>
         <summary>Historie<svg class="icon-details--closed" width="14" height="9">

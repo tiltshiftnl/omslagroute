@@ -782,6 +782,7 @@ FORMS = (
         True,
         True,
         True,
+        FEDERATION_TYPE_ADW,
         {'exclude_fields': [
             'client_first_name',
             'client_last_name',
@@ -818,6 +819,7 @@ FORMS = (
         True,
         True,
         True,
+        FEDERATION_TYPE_ADW,
         {'exclude_fields': [
             'client_first_name',
             'client_last_name',
@@ -851,7 +853,8 @@ def map_form_keys(f):
         'inpage_navigation': f[5],
         'share': f[6],
         'enable_ajax': f[7],
-        'options': f[8] if len(f) > 8 else {},
+        'federation_type': f[8],
+        'options': f[9] if len(f) > 9 else {},
     }
 
 
@@ -861,3 +864,5 @@ FORMS_CHOICES = [[s[2], s[3]] for s in FORMS]
 FORMS_PROCESSTAP_CHOICES = [[s[2], s[3]] for s in FORMS if s[2] in FORMS_PROCESSTAP]
 
 FORM_TITLE_BY_SLUG = dict((s[2], s[3]) for s in FORMS)
+
+FORMS_SLUG_BY_FEDERATION_TYPE = dict((ft[0], [f[2] for f in FORMS if f[8] == ft[0]])for ft in FEDERATION_TYPE_CHOICES)

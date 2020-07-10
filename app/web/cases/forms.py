@@ -5,9 +5,11 @@ from web.forms.widgets import RadioSelect, CheckboxSelectMultipleDocument, Check
 from .statics import GESLACHT
 from web.forms.statics import FORMS_PROCESSTAP_CHOICES
 from django.utils.translation import ugettext_lazy as _
-from web.forms.fields import MultiSelectFormField
+from web.forms.fields import MultiSelectFormField, GroupedModelChoiceField
 from web.users.models import User
+from web.profiles.models import Profile
 from web.users.statics import BEGELEIDER, PB_FEDERATIE_BEHEERDER
+from web.organizations.statics import FEDERATION_TYPE_WONINGCORPORATIE
 
 class CaseForm(forms.ModelForm):
     geslacht = forms.ChoiceField(
@@ -130,7 +132,14 @@ class CaseBaseForm(forms.ModelForm):
 
 
 class CaseAddressForm(forms.ModelForm):
-
+    woningcorporatie_medewerker = GroupedModelChoiceField(
+        label=_('Woningcorporatie medewerker'),
+        queryset=Profile.objects.filter(
+            user__federation__organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
+        ).exclude(user__federation=None), 
+        choices_groupby='federation',
+        required=False,
+    )
     class Meta:
         model = Case
         fields = [
@@ -139,6 +148,8 @@ class CaseAddressForm(forms.ModelForm):
             'adres_toevoeging',
             'adres_postcode',
             'adres_plaatsnaam',
+            'woningcorporatie',
+            'woningcorporatie_medewerker',
         ]
         
     def __init__(self, *args, **kwargs):
@@ -147,6 +158,10 @@ class CaseAddressForm(forms.ModelForm):
         self.fields['adres_huisnummer'].required = True
         self.fields['adres_postcode'].required = True
         self.fields['adres_plaatsnaam'].required = True
+        self.fields['woningcorporatie'].required = True
+        self.fields['woningcorporatie'].queryset = self.fields['woningcorporatie'].queryset.filter(
+            organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
+        )
 
 
 class CaseAddressUpdateForm(forms.ModelForm):
@@ -159,6 +174,14 @@ class CaseAddressUpdateForm(forms.ModelForm):
         ),
         required=True,
     )
+    woningcorporatie_medewerker = GroupedModelChoiceField(
+        label=_('Woningcorporatie medewerker'),
+        queryset=Profile.objects.filter(
+            user__federation__organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
+        ).exclude(user__federation=None), 
+        choices_groupby='federation',
+        required=False,
+    )
     class Meta:
         model = Case
         fields = [
@@ -167,6 +190,8 @@ class CaseAddressUpdateForm(forms.ModelForm):
             'adres_toevoeging',
             'adres_postcode',
             'adres_plaatsnaam',
+            'woningcorporatie',
+            'woningcorporatie_medewerker',
         ]
         
     def __init__(self, *args, **kwargs):
@@ -175,7 +200,10 @@ class CaseAddressUpdateForm(forms.ModelForm):
         self.fields['adres_huisnummer'].required = True
         self.fields['adres_postcode'].required = True
         self.fields['adres_plaatsnaam'].required = True
-        
+        self.fields['woningcorporatie'].required = True
+        self.fields['woningcorporatie'].queryset = self.fields['woningcorporatie'].queryset.filter(
+            organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
+        )
 
 
 class DocumentForm(forms.ModelForm):

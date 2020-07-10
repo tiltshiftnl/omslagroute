@@ -3,7 +3,7 @@ from .models import CaseStatus, Case
 from .statics import CASE_STATUS_INGEDIEND, CASE_STATUS_DICT
 from .serializers import CaseStatusSerializer, CaseDossierNrSerializer
 from django.contrib.auth.mixins import UserPassesTestMixin
-from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER
+from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER
 from web.forms.statics import FORM_TITLE_BY_SLUG
 from web.users.auth import auth_test
 from rest_framework.views import APIView
@@ -24,10 +24,18 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
     serializer_class = CaseStatusSerializer
 
     def test_func(self):
-        return auth_test(self.request.user, [BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, WONINGCORPORATIE_MEDEWERKER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return CaseStatus.objects.all().order_by('-created')
+        filters = ['case', 'form', 'status']
+        get_vars = self.request.GET
+        queryset = CaseStatus.objects.all()
+        if self.request.user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
+            queryset = CaseStatus.objects.filter(
+                case__woningcorporatie_medewerker__user__federation=self.request.user.federation
+            )
+        kwargs = dict(('%s__in' % f, get_vars.getlist(f)) for f in filters if get_vars.getlist(f))
+        return queryset.filter(**kwargs).order_by('-created')
 
     def create(self, request, *args, **kwargs):
         data = {'profile': request.user.profile.id}

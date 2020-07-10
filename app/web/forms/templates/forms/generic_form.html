@@ -78,7 +78,21 @@
                             <h2 class="h3 u-margin-bottom-half">Woning</h2>
                             <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %} {{ object.adres_toevoeging }}{% endif %}<br/>
                             {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
+
+                            <dl>
+                                <div>
+                                    <dt>Woningcorporatie: </dt>
+                                    <dd>{{ object.woningcorporatie }}</dd>
+                                </div>
+                                {% if object.woningcorporatie_medewerker %}
+                                <div>
+                                    <dt>Medewerker: </dt>
+                                    <dd>{{ object.woningcorporatie_medewerker }}</dd>
+                                </div>
+                                {% endif %}
+                            </dl>
                             {% endif %}
+
                         </div>
                         <!-- END Client persoonsgegevens -->
                 
@@ -311,11 +325,11 @@
                         <input {% if object.delete_request_date %}disabled{% endif %} type="submit" value="Opslaan" class="button button--primary">
                         {% endif %}
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
-                        {% if form.instance.id and share %}
+                        {% if form.instance.id and share and organisation %}
                         <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="text-link u-float-right" >
                             <svg class="u-margin-right-half" width="16" height="20">
                                 <use href="#email" xlink:href="#email" width="16" height="20"></use>
-                            </svg><span>Controleren en versturen naar Wonen (gemeente)</span></button>{% endif %}
+                            </svg><span>Controleren en versturen naar {% if organisation %}{{organisation.name}}{% endif %}</span></button>{% endif %}
                     </div>        
                 </div>
 

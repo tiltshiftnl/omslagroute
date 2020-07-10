@@ -161,6 +161,7 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields = {}
         self.sections = form_context.get('sections', [])
+        self.federation_types = form_context.get('federation_types', [])
         self.options = form_context.get('options', {})
         exclude_fields = self.options.get('exclude_fields', [])
         self.enable_ajax = form_context.get('enable_ajax', False)

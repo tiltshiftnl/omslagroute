@@ -10,6 +10,9 @@
             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
             <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
             {% endif %}
+            {% if request.user|is_woningcorporatie_medewerker %}
+            <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Onze cli&euml;nten</a></li>
+            {% endif %}
             {% if request.user|is_wonen_medewerker %}
             {% if object.delete_request_date %}
             <li class="breadcrumb-step"><a href="{% url 'case_archive' %}">Archief</a></li>
@@ -222,8 +225,8 @@
                                 {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                                 <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
                                 {% endif %}
-                                {% if request.user|is_wonen_medewerker %}
-                                {% if case_status %}
+                                {% if request.user|is_wonen_medewerker or request.user|is_woningcorporatie_medewerker %}
+                                {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
                                 <a href="{% url 'case_version_form' object.id moment.form %}">{{ moment.name }}</a>
                                 {% else %}
                                 <span>{{ moment.name }}</span>
@@ -236,7 +239,7 @@
                         </td>
                         <td>
                             <span class="show-on-mobile">Status:</span>
-                            {% if case_status %}
+                            {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
                                 <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">
                                     {% if case_status.case_form_is_opnieuw_ingediend %}
                                     Opnieuw ingediend
@@ -244,20 +247,20 @@
                                     {{ case_status.status|status_verbose }}
                                     {% endif %}
                                 </span>
-                            {% elif moment.form %}
+                            {% elif request.user.federation.organization.federation_type == moment.form|form_federation_type %}
                                 <span class="u-font-size-small">
                                 Nog niet ingediend
                                 </span>
                             {% endif %}
                         </td>
                         <td>
-                        {% if case_status %}
+                        {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
                             <span class="show-on-mobile">Status datum:</span>
                             <span class="u-font-size-small">{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}</span>
                         {% endif %}
                         </td>
                         <td>
-                        {% if case_status %}
+                        {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
                             <span class="show-on-mobile">Status door:</span>
                             <span class="u-font-size-small">{{ case_status.profile.user.username }}</span>
                         {% endif %}

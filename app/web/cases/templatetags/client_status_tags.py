@@ -42,3 +42,8 @@ def status_verbose(status):
 @register.filter()
 def form_verbose(form):
     return FORMS_BY_SLUG.get(form, {}).get('title')
+
+
+@register.filter()
+def form_federation_type(form):
+    return FORMS_BY_SLUG.get(form, {}).get('federation_type')
