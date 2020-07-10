@@ -467,6 +467,292 @@ class CaseBase(PrintableModel):
         null=True,
     )
 
+    # Kennismaking wooncorporatie
+    kennismaking_wooncorporatie_goed_huurderschap = models.BooleanField(
+        verbose_name=_('Kennismaking wooncorporatie goed huurderschap'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_kennisgemaakt_buren = models.PositiveSmallIntegerField(
+        verbose_name=_('Kennismaking wooncorporatie kennisgemaakt buren'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_kennismaken_buren = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie kennismaken buren'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_goede_buur = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie goede buur'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_huisregels = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie huisregels'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_afval = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie afval'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_technische_klachten = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie technische klachten'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_overlast_melden = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie overlast melden'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_overlast_voorkomen = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie overlast voorkomen'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_overlast_signalen = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie overlast signalen'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie wijk'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk_voorzieningen_waar = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie_wijk voorzieningen waar'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk_voorzieningen_behoefte = models.TextField(
+        verbose_name=_('kennismaking_wooncorporatie_wijk_voorzieningen behoefte'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_wijk_voorzieningen_anders = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie wijk voorzieningen anders'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_doelen_wonen_huurderschap = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie doelen wonen huurderschap'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_ondersteuning_medewerker = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie ondersteuning medewerker'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_borg_betalen = models.PositiveSmallIntegerField(
+        verbose_name=_('Kennismaking wooncorporatie borg betalen'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_borg_bedrag = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie borg bedrag'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_bewoner = models.BooleanField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord bewoner'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_bewoner_naam = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord bewoner naam'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_bewoner_datum = models.DateField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord bewoner datum'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder = models.BooleanField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder_naam = models.TextField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder naam'),
+        blank=True,
+        null=True,
+    )
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum = models.DateField(
+        verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder datum'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_start_intermediaire_verhuur = models.DateField(
+        verbose_name=_('Woningcorporatie start intermediaire verhuur'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_datum_kennismakingsgesprek = models.DateField(
+        verbose_name=_('Woningcorporatie datum kennismakingsgesprek'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_datum_woonevaluatiegesprek = models.DateField(
+        verbose_name=_('Woningcorporatie datum woonevaluatiegesprek'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_ervaring_wonen = models.TextField(
+        verbose_name=_('Woonevaluatie ervaring wonen'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_goed_minder_goed = models.TextField(
+        verbose_name=_('Woonevaluatie goed minder goed'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_omschrijving_woning = models.TextField(
+        verbose_name=_('Woonevaluatie omschrijving woning'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_omschrijving_balkon_tuin = models.TextField(
+        verbose_name=_('Woonevaluatie omschrijving balkon tuin'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_omschrijving_portiek = models.TextField(
+        verbose_name=_('Woonevaluatie omschrijving portiek'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_contact_met_buren = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie contact met buren'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_contact_met_buren_verloop = models.TextField(
+        verbose_name=_('Woonevaluatie contact met buren verloop'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_contact_met_buren_gewenst = models.TextField(
+        verbose_name=_('Woonevaluatie contact met buren gewenst'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_buren = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie overlast buren'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_buren_gemeld = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie overlast buren gemeld'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_omwonenden_gemeld = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie overlast omwonenden gemeld'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_omwonenden_oplossing = models.TextField(
+        verbose_name=_('Woonevaluatie overlast omwonenden oplossing'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_aanwezig = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie netwerk aanwezig'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_hoe_gaat_dat = models.TextField(
+        verbose_name=_('Woonevaluatie netwerk hoe gaat dat'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_behoefte = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie netwerk behoefte'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_behoefte_meer_contacten = models.TextField(
+        verbose_name=_('Woonevaluatie netwerk behoefte meer contacten'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_huur_betalen_op_tijd = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie huur betalen op tijd'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_huur_betalen_regeling = models.TextField(
+        verbose_name=_('Woonevaluatie huur betalen regeling'),
+        blank=True,
+        null=True,
+    )
+    aanvraag_omklap_actief = models.PositiveSmallIntegerField(
+        verbose_name=_('Aanvraag omklap actief'),
+        blank=True,
+        null=True,
+    )
+    aanvraag_omklap_alle_doelen_behaald = models.TextField(
+        verbose_name=_('Aanvraag omklap alle doelen behaald'),
+        blank=True,
+        null=True,
+    )
+    aanvraag_omklap_steunstructuren = models.TextField(
+        verbose_name=_('Aanvraag omklap steunstructuren'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_moment_volgend_gesprek = models.CharField(
+        verbose_name=_('Woonevaluatie moment volgend gesprek'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_bijzonderheden_wonen = models.TextField(
+        verbose_name=_('Woonevaluatie bijzonderheden wonen'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_bewoner = models.BooleanField(
+        verbose_name=_('Woonevaluatie akkoord bewoner'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_bewoner_naam = models.CharField(
+        verbose_name=_('Woonevaluatie akkoord bewoner naam'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_bewoner_datum = models.DateField(
+        verbose_name=_('Woonevaluatie akkoord bewoner datum'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_zorgaanbieder = models.BooleanField(
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_zorgaanbieder_naam = models.CharField(
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder naam'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_zorgaanbieder_datum = models.DateField(
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder datum'),
+        blank=True,
+        null=True,
+    )
+
+
     @property
     def centrale_toegang_naam_value(self):
         if self.centrale_toegang_naam:
@@ -605,6 +891,7 @@ class Case(CaseBase):
         return time_left
 
     def delete_enabled(self):
+        from datetime import datetime
         datetime_treshold = datetime.now() - timedelta(seconds=config.CASE_DELETE_SECONDS)
         time_left = self.delete_request_date - datetime_treshold
         return time_left.total_seconds() <= 0
