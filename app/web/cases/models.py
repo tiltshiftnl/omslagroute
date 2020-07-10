@@ -602,8 +602,218 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-     = models.TextField(
-        verbose_name=_(''),
+    zorginstelling_contactpersoon = models.TextField(
+        verbose_name=_('Zorginstelling contactpersoon'),
+        blank=True,
+        null=True,
+    )
+    zorginstelling_telefoon = models.TextField(
+        verbose_name=_('Zorginstelling telefoon'),
+        blank=True,
+        null=True,
+    )
+    zorginstelling_emailadres = models.TextField(
+        verbose_name=_('Zorginstelling emailadres'),
+        blank=True,
+        null=True,
+    )
+    zorginstelling_naam = models.TextField(
+        verbose_name=_('Zorginstelling naam'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_contactpersoon = models.TextField(
+        verbose_name=_('Woningcorporatie contactpersoon'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_telefoon = models.TextField(
+        verbose_name=_('Woningcorporatie telefoon'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_emailadres = models.TextField(
+        verbose_name=_('Woningcorporatie e-mailadres'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_naam = models.TextField(
+        verbose_name=_('Woningcorporatie naam'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_start_intermediaire_verhuur = models.TextField(
+        verbose_name=_('Woningcorporatie start intermediaire verhuur'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_datum_kennismakingsgesprek = models.TextField(
+        verbose_name=_('Woningcorporatie datum kennismakingsgesprek'),
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_datum_woonevaluatiegesprek = models.TextField(
+        verbose_name=_('Woningcorporatie datum woonevaluatiegesprek'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_ervaring_wonen = models.TextField(
+        verbose_name=_('Woonevaluatie ervaring wonen'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_goed_minder_goed = models.TextField(
+        verbose_name=_('Woonevaluatie goed minder goed'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_omschrijving_woning = models.TextField(
+        verbose_name=_('Woonevaluatie omschrijving woning'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_omschrijving_balkon_tuin = models.TextField(
+        verbose_name=_('Woonevaluatie omschrijving balkon tuin'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_omschrijving_portiek = models.TextField(
+        verbose_name=_('Woonevaluatie omschrijving portiek'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_contact_met_buren = models.TextField(
+        verbose_name=_('Woonevaluatie contact met buren'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_contact_met_buren_verloop = models.TextField(
+        verbose_name=_('Woonevaluatie contact met buren verloop'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_contact_met_buren_gewenst = models.TextField(
+        verbose_name=_('Woonevaluatie contact met buren gewenst'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_buren = models.TextField(
+        verbose_name=_('Woonevaluatie overlast buren'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_buren_gemeld = models.TextField(
+        verbose_name=_('Woonevaluatie overlast buren gemeld'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_omwonenden_gemeld = models.TextField(
+        verbose_name=_('Woonevaluatie overlast omwonenden gemeld'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_overlast_omwonenden_oplossing = models.TextField(
+        verbose_name=_('Woonevaluatie overlast omwonenden oplossing'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_aanwezig = models.TextField(
+        verbose_name=_('Woonevaluatie netwerk aanwezig'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_hoe_gaat_dat = models.TextField(
+        verbose_name=_('Woonevaluatie netwerk hoe gaat dat'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_behoefte = models.TextField(
+        verbose_name=_('Woonevaluatie netwerk behoefte'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_netwerk_behoefte_meer_contacten = models.TextField(
+        verbose_name=_('Woonevaluatie netwerk behoefte meer contacten'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_huur_betalen_op_tijd = models.TextField(
+        verbose_name=_('Woonevaluatie huur betalen op tijd'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_huur_betalen_regeling = models.TextField(
+        verbose_name=_('Woonevaluatie huur betalen regeling'),
+        blank=True,
+        null=True,
+    )
+    aanvraag_omklap_actief = models.TextField(
+        verbose_name=_('Aanvraag omklap actief'),
+        blank=True,
+        null=True,
+    )
+    aanvraag_omklap_alle_doelen_behaald = models.TextField(
+        verbose_name=_('Aanvraag omklap alle doelen behaald'),
+        blank=True,
+        null=True,
+    )
+    aanvraag_omklap_steunstructuren = models.TextField(
+        verbose_name=_('Aanvraag omklap steunstructuren'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_moment_volgend_gesprek = models.TextField(
+        verbose_name=_('Woonevaluatie moment volgend gesprek'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_bijzonderheden_wonen = models.TextField(
+        verbose_name=_('Woonevaluatie bijzonderheden wonen'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_bewoner = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord bewoner'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_bewoner_naam = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord bewoner naam'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_bewoner_datum = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord bewoner datum'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_zorgaanbieder = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_zorgaanbieder_naam = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder naam'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_zorgaanbieder_datum = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder datum'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_woningcorporatie = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord woningcorporatie'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_woningcorporatie_naam = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord woningcorporatie naam'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_akkoord_woningcorporatie_datum = models.TextField(
+        verbose_name=_('Woonevaluatie akkoord woningcorporatie datum'),
         blank=True,
         null=True,
     )
