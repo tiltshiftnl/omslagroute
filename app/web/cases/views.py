@@ -561,32 +561,44 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse('case', kwargs={'pk': self.object.id})
 
-    def get_context_data(self, **kwargs):
-        kwargs.update(self.kwargs)
+    def get_federation(self):
         form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
         federation_type = form_context.get('federation_type')
-        if not form_context:
-            raise Http404
-        kwargs.update(form_context)
-        federation = Federation.objects.filter(organization__federation_type=form_context.get('federation_type')).first()
-        if form_context.get('federation_type') == FEDERATION_TYPE_WONINGCORPORATIE and self.object.woningcorporatie:
+        federation = Federation.objects.filter(organization__federation_type=federation_type).first()
+        if federation_type == FEDERATION_TYPE_WONINGCORPORATIE and self.object.woningcorporatie:
             federation = self.object.woningcorporatie
-        print(federation)
-        self.federation = federation
+        return federation
+
+    def get_recipient_list(self):
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        federation_type = form_context.get('federation_type')
+        federation = self.get_federation()
         recipient_list = [federation.main_email] 
         if not federation.main_email and federation_type == FEDERATION_TYPE_ADW:
             recipient_list = list(User.objects.filter(
                 user_type=WONEN,
                 federation=federation,
             ).values_list('username', flat=True))
-        elif not federation.main_email and federation_type == FEDERATION_TYPE_WONINGCORPORATIE and self.federation:
+        elif not federation.main_email and federation_type == FEDERATION_TYPE_WONINGCORPORATIE and federation:
             recipient_list = list(User.objects.filter(
                 user_type=WONINGCORPORATIE_MEDEWERKER,
                 federation=self.federation,
             ).values_list('username', flat=True))
-        self.recipient_list = recipient_list
+        return recipient_list
+
+
+    def get_context_data(self, **kwargs):
+        kwargs.update(self.kwargs)
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        if not form_context:
+            raise Http404
+        kwargs.update(form_context)
+        federation_type = form_context.get('federation_type')
+        federation = self.get_federation()
+        recipient_list = self.get_recipient_list()
+
         kwargs.update({
-            'federation_type': form_context.get('federation_type'),
+            'federation_type': federation_type,
             'federation': federation,
             'recipient_list': recipient_list,
             'object': self.object,
@@ -605,10 +617,12 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         }
         case_status = CaseStatus(**case_status_dict)
         case_status.save()
-        if self.recipient_list:
+
+        recipient_list = self.get_recipient_list()
+        federation = self.get_federation()
+        if recipient_list:
             current_site = get_current_site(self.request)
             body = render_to_string('cases/mail/case_link.txt', {
-                'case': self.object.to_dict(organization.field_restrictions),
                 'form_name': FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
                 'case_url': 'https://%s%s' % (
                     current_site.domain,
@@ -623,14 +637,14 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                 sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,
-                    to_emails=self.recipient_list,
+                    to_emails=recipient_list,
                     subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
                     plain_text_content=body
                 )
                 sg.send(email)
             messages.add_message(
                 self.request, messages.INFO, "De aanvraag is ingediend bij medewerkers van '%s'." % (
-                    self.federation.name,
+                    federation.name,
                 )
             )
         return super().form_valid(form)
