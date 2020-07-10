@@ -83,8 +83,4 @@ class CaseUpdateDossierNrViewSet(UserPassesTestMixin, viewsets.ViewSetMixin, gen
         return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        case_list = CaseStatus.objects.order_by('case').distinct().values_list('case')
-        return super().get_queryset().filter(
-            id__in=case_list,
-            delete_request_date__isnull=True
-        )
+        return Case._default_manager.by_user(user=self.request.user)

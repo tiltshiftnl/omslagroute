@@ -468,12 +468,12 @@ class CaseBase(PrintableModel):
     )
 
     # Kennismaking wooncorporatie
-    kennismaking_wooncorporatie_goed_huurderschap = models.TextField(
+    kennismaking_wooncorporatie_goed_huurderschap = models.BooleanField(
         verbose_name=_('Kennismaking wooncorporatie goed huurderschap'),
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_kennisgemaakt_buren = models.TextField(
+    kennismaking_wooncorporatie_kennisgemaakt_buren = models.PositiveSmallIntegerField(
         verbose_name=_('Kennismaking wooncorporatie kennisgemaakt buren'),
         blank=True,
         null=True,
@@ -548,7 +548,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_borg_betalen = models.TextField(
+    kennismaking_wooncorporatie_borg_betalen = models.PositiveSmallIntegerField(
         verbose_name=_('Kennismaking wooncorporatie borg betalen'),
         blank=True,
         null=True,
@@ -558,7 +558,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_akkoord_bewoner = models.TextField(
+    kennismaking_wooncorporatie_akkoord_bewoner = models.BooleanField(
         verbose_name=_('Kennismaking wooncorporatie akkoord bewoner'),
         blank=True,
         null=True,
@@ -568,12 +568,12 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_akkoord_bewoner_datum = models.TextField(
+    kennismaking_wooncorporatie_akkoord_bewoner_datum = models.DateField(
         verbose_name=_('Kennismaking wooncorporatie akkoord bewoner datum'),
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_akkoord_zorgaanbieder = models.TextField(
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder = models.BooleanField(
         verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder'),
         blank=True,
         null=True,
@@ -583,77 +583,22 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum = models.TextField(
+    kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum = models.DateField(
         verbose_name=_('Kennismaking wooncorporatie akkoord zorgaanbieder datum'),
         blank=True,
         null=True,
     )
-    kennismaking_wooncorporatie_akkoord_woningcorporatie = models.TextField(
-        verbose_name=_('Kennismaking wooncorporatie akkoord woningcorporatie'),
-        blank=True,
-        null=True,
-    )
-    kennismaking_wooncorporatie_akkoord_woningcorporatie_naam = models.TextField(
-        verbose_name=_('Kennismaking wooncorporatie akkoord woningcorporatie naam'),
-        blank=True,
-        null=True,
-    )
-    kennismaking_wooncorporatie_akkoord_woningcorporatie_datum = models.TextField(
-        verbose_name=_('Kennismaking wooncorporatie akkoord woningcorporatie datum'),
-        blank=True,
-        null=True,
-    )
-    zorginstelling_contactpersoon = models.TextField(
-        verbose_name=_('Zorginstelling contactpersoon'),
-        blank=True,
-        null=True,
-    )
-    zorginstelling_telefoon = models.TextField(
-        verbose_name=_('Zorginstelling telefoon'),
-        blank=True,
-        null=True,
-    )
-    zorginstelling_emailadres = models.TextField(
-        verbose_name=_('Zorginstelling emailadres'),
-        blank=True,
-        null=True,
-    )
-    zorginstelling_naam = models.TextField(
-        verbose_name=_('Zorginstelling naam'),
-        blank=True,
-        null=True,
-    )
-    woningcorporatie_contactpersoon = models.TextField(
-        verbose_name=_('Woningcorporatie contactpersoon'),
-        blank=True,
-        null=True,
-    )
-    woningcorporatie_telefoon = models.TextField(
-        verbose_name=_('Woningcorporatie telefoon'),
-        blank=True,
-        null=True,
-    )
-    woningcorporatie_emailadres = models.TextField(
-        verbose_name=_('Woningcorporatie e-mailadres'),
-        blank=True,
-        null=True,
-    )
-    woningcorporatie_naam = models.TextField(
-        verbose_name=_('Woningcorporatie naam'),
-        blank=True,
-        null=True,
-    )
-    woningcorporatie_start_intermediaire_verhuur = models.TextField(
+    woningcorporatie_start_intermediaire_verhuur = models.DateField(
         verbose_name=_('Woningcorporatie start intermediaire verhuur'),
         blank=True,
         null=True,
     )
-    woningcorporatie_datum_kennismakingsgesprek = models.TextField(
+    woningcorporatie_datum_kennismakingsgesprek = models.DateField(
         verbose_name=_('Woningcorporatie datum kennismakingsgesprek'),
         blank=True,
         null=True,
     )
-    woningcorporatie_datum_woonevaluatiegesprek = models.TextField(
+    woningcorporatie_datum_woonevaluatiegesprek = models.DateField(
         verbose_name=_('Woningcorporatie datum woonevaluatiegesprek'),
         blank=True,
         null=True,
@@ -683,7 +628,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_contact_met_buren = models.TextField(
+    woonevaluatie_contact_met_buren = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie contact met buren'),
         blank=True,
         null=True,
@@ -698,17 +643,17 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_overlast_buren = models.TextField(
+    woonevaluatie_overlast_buren = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie overlast buren'),
         blank=True,
         null=True,
     )
-    woonevaluatie_overlast_buren_gemeld = models.TextField(
+    woonevaluatie_overlast_buren_gemeld = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie overlast buren gemeld'),
         blank=True,
         null=True,
     )
-    woonevaluatie_overlast_omwonenden_gemeld = models.TextField(
+    woonevaluatie_overlast_omwonenden_gemeld = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie overlast omwonenden gemeld'),
         blank=True,
         null=True,
@@ -718,7 +663,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_netwerk_aanwezig = models.TextField(
+    woonevaluatie_netwerk_aanwezig = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie netwerk aanwezig'),
         blank=True,
         null=True,
@@ -728,7 +673,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_netwerk_behoefte = models.TextField(
+    woonevaluatie_netwerk_behoefte = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie netwerk behoefte'),
         blank=True,
         null=True,
@@ -738,7 +683,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_huur_betalen_op_tijd = models.TextField(
+    woonevaluatie_huur_betalen_op_tijd = models.PositiveSmallIntegerField(
         verbose_name=_('Woonevaluatie huur betalen op tijd'),
         blank=True,
         null=True,
@@ -748,7 +693,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    aanvraag_omklap_actief = models.TextField(
+    aanvraag_omklap_actief = models.PositiveSmallIntegerField(
         verbose_name=_('Aanvraag omklap actief'),
         blank=True,
         null=True,
@@ -763,8 +708,9 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_moment_volgend_gesprek = models.TextField(
+    woonevaluatie_moment_volgend_gesprek = models.CharField(
         verbose_name=_('Woonevaluatie moment volgend gesprek'),
+        max_length=100,
         blank=True,
         null=True,
     )
@@ -773,48 +719,35 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woonevaluatie_akkoord_bewoner = models.TextField(
+    woonevaluatie_akkoord_bewoner = models.BooleanField(
         verbose_name=_('Woonevaluatie akkoord bewoner'),
         blank=True,
         null=True,
     )
-    woonevaluatie_akkoord_bewoner_naam = models.TextField(
+    woonevaluatie_akkoord_bewoner_naam = models.CharField(
         verbose_name=_('Woonevaluatie akkoord bewoner naam'),
+        max_length=100,
         blank=True,
         null=True,
     )
-    woonevaluatie_akkoord_bewoner_datum = models.TextField(
+    woonevaluatie_akkoord_bewoner_datum = models.DateField(
         verbose_name=_('Woonevaluatie akkoord bewoner datum'),
         blank=True,
         null=True,
     )
-    woonevaluatie_akkoord_zorgaanbieder = models.TextField(
+    woonevaluatie_akkoord_zorgaanbieder = models.BooleanField(
         verbose_name=_('Woonevaluatie akkoord zorgaanbieder'),
         blank=True,
         null=True,
     )
-    woonevaluatie_akkoord_zorgaanbieder_naam = models.TextField(
+    woonevaluatie_akkoord_zorgaanbieder_naam = models.CharField(
         verbose_name=_('Woonevaluatie akkoord zorgaanbieder naam'),
+        max_length=100,
         blank=True,
         null=True,
     )
-    woonevaluatie_akkoord_zorgaanbieder_datum = models.TextField(
+    woonevaluatie_akkoord_zorgaanbieder_datum = models.DateField(
         verbose_name=_('Woonevaluatie akkoord zorgaanbieder datum'),
-        blank=True,
-        null=True,
-    )
-    woonevaluatie_akkoord_woningcorporatie = models.TextField(
-        verbose_name=_('Woonevaluatie akkoord woningcorporatie'),
-        blank=True,
-        null=True,
-    )
-    woonevaluatie_akkoord_woningcorporatie_naam = models.TextField(
-        verbose_name=_('Woonevaluatie akkoord woningcorporatie naam'),
-        blank=True,
-        null=True,
-    )
-    woonevaluatie_akkoord_woningcorporatie_datum = models.TextField(
-        verbose_name=_('Woonevaluatie akkoord woningcorporatie datum'),
         blank=True,
         null=True,
     )
@@ -958,6 +891,7 @@ class Case(CaseBase):
         return time_left
 
     def delete_enabled(self):
+        from datetime import datetime
         datetime_treshold = datetime.now() - timedelta(seconds=config.CASE_DELETE_SECONDS)
         time_left = self.delete_request_date - datetime_treshold
         return time_left.total_seconds() <= 0

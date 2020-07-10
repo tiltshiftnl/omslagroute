@@ -1159,35 +1159,10 @@ OMKLAP_AANVRAAG = [
 
 EVALUATIE_WONEN = [
     {
-        'title': 'Contactpersoon zorgaanbieder',
+        'title': 'Woningcorporatie informatie',
         'description': '',
         'section_list': [
             {
-                'title': '',
-                'description': '',
-                'fields': [
-                    'zorginstelling_contactpersoon',
-                    'zorginstelling_telefoon',
-                    'zorginstelling_emailadres',
-                    'zorginstelling_naam',
-                ],
-            },
-        ]
-    },
-    {
-        'title': 'Contactpersoon woningcorporatie',
-        'description': '',
-        'section_list': [
-            {
-                'title': '',
-                'description': '',
-                'fields': [
-                    'woningcorporatie_contactpersoon',
-                    'woningcorporatie_telefoon',
-                    'woningcorporatie_emailadres',
-                    'woningcorporatie_naam',
-                ],
-            },{
                 'title': '',
                 'description': '',
                 'fields': [
@@ -1344,50 +1319,16 @@ EVALUATIE_WONEN = [
                     'woonevaluatie_akkoord_zorgaanbieder_datum'
                 ],
             },
-            {
-                'title': 'Woningcorporatie',
-                'description': '',
-                'fields': [
-                    'woonevaluatie_akkoord_woningcorporatie',
-                    'woonevaluatie_akkoord_woningcorporatie_naam',
-                    'woonevaluatie_akkoord_woningcorporatie_datum'
-                ],
-            },
         ]
     },
 ]
 
 KENNISMAKING_WONINGCORPORATIE = [
     {
-        'title': 'Contactpersoon zorgaanbieder',
+        'title': 'Woningcorporatie informatie',
         'description': '',
         'section_list': [
             {
-                'title': '',
-                'description': '',
-                'fields': [
-                    'zorginstelling_contactpersoon',
-                    'zorginstelling_telefoon',
-                    'zorginstelling_emailadres',
-                    'zorginstelling_naam',
-                ],
-            },
-        ]
-    },
-    {
-        'title': 'Contactpersoon woningcorporatie',
-        'description': '',
-        'section_list': [
-            {
-                'title': '',
-                'description': '',
-                'fields': [
-                    'woningcorporatie_contactpersoon',
-                    'woningcorporatie_telefoon',
-                    'woningcorporatie_emailadres',
-                    'woningcorporatie_naam',
-                ],
-            },{
                 'title': '',
                 'description': '',
                 'fields': [
@@ -1536,31 +1477,11 @@ KENNISMAKING_WONINGCORPORATIE = [
                     'kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum'
                 ],
             },
-            {
-                'title': 'Woningcorporatie',
-                'description': '',
-                'fields': [
-                    'kennismaking_wooncorporatie_akkoord_woningcorporatie',
-                    'kennismaking_wooncorporatie_akkoord_woningcorporatie_naam',
-                    'kennismaking_wooncorporatie_akkoord_woningcorporatie_datum'
-                ],
-            },
         ]
     },
 ]
 
 FORMS = (
-    (
-        'basis_gegevens',
-        BASIS_GEGEVENS,
-        'basis-gegevens',
-        'Basisgegevens cliënt',
-        'Nieuwe cliënt',
-        False,
-        False,
-        False,
-        {'exclude_fields': []},
-    ),
     (
         'urgentie_aanvraag',
         URGENTIE_AANVRAAG,
@@ -1632,6 +1553,7 @@ FORMS = (
         True,
         True,
         True,
+        FEDERATION_TYPE_WONINGCORPORATIE,
         {'exclude_fields': [
             'client_first_name',
             'client_last_name',
@@ -1653,7 +1575,7 @@ FORMS = (
                 'aanvraag_omklap_steunstructuren']
             )),
             
-        }},
+        }, 'addres_required': True},
     ),
     (
         'kennismaking_woningcorporatie',
@@ -1664,6 +1586,7 @@ FORMS = (
         True,
         True,
         True,
+        FEDERATION_TYPE_WONINGCORPORATIE,
         {'exclude_fields': [
             'client_first_name',
             'client_last_name',
@@ -1677,7 +1600,7 @@ FORMS = (
                 ['kennismaking_wooncorporatie_borg_bedrag']
             )),
             
-        }},
+        }, 'addres_required': True},
     ),
 )
 
