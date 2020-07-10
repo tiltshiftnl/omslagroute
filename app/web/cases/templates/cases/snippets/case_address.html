@@ -2,9 +2,14 @@
     <header>
         <h2 class="h3 {{class}}">Woning omslagroute</h2>
     </header>
-    <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %}, {{ object.adres_toevoeging }}{% endif %}<br/>
-    {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
+    
     <dl>
+        <div>
+            <dt>Adres: </dt>
+            <dd>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %}, {{ object.adres_toevoeging }}{% endif %}<br/>
+                {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}
+            </dd>
+        </div>
         <div>
             <dt>Woningcorporatie: </dt>
             <dd>{{ object.woningcorporatie }}</dd>
@@ -36,6 +41,7 @@
                     {% for h in address_history %}
                     <li>
                         <p class="u-margin-bottom-none">{{ h.adres_straatnaam }} {{ h.adres_huisnummer }}, {{ h.adres_postcode }} {{ h.adres_plaatsnaam }}</p>
+                        <p class="u-margin-bottom-none">{{ object.woningcorporatie }}{% if object.woningcorporatie_medewerker %}, {{ object.woningcorporatie_medewerker }}{% endif %}</p>
                         {% if h.adres_wijziging_reden %}<p class="u-margin-bottom-none"><i>'{{ h.adres_wijziging_reden }}'</i></p>{% endif %}
                         <small>{{ h.saved|date:"d-m-y H:i" }} - {{ h.saved_by.user }}</small>
                     </li>
