@@ -169,7 +169,7 @@ class CaseDocumentList(UserPassesTestMixin, DetailView):
         return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, BEGELEIDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         kwargs.update({
@@ -217,15 +217,7 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        datetime_treshold = datetime.datetime.now() - datetime.timedelta(seconds=config.CASE_DELETE_SECONDS)
-        if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
-            return self.request.user.profile.cases.all().exclude(
-                delete_request_date__lt=datetime_treshold
-            )
-        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
-        return super().get_queryset().filter(
-            id__in=case_list
-        )
+        return self.model._default_manager.by_user(user=self.request.user)
 
 
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
@@ -244,17 +236,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
-        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
-        if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
-            return Case.objects.filter(id__in=self.request.user.profile.cases.all().values_list('id', flat=True))
-        if self.request.user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
-            return Case.objects.filter(
-                woningcorporatie_medewerker__user__federation=self.request.user.federation
-            )
-        return super().get_queryset().filter(id__in=case_list)
-
-    def get_object(self, queryset=None):
-        return super().get_object(queryset)
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def test_func(self):
         return auth_test(self.request.user, [WONEN, WONINGCORPORATIE_MEDEWERKER]) and hasattr(self.request.user, 'profile')
@@ -274,7 +256,7 @@ class CaseCreateView(UserPassesTestMixin, CreateView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def form_valid(self, form):
         case = form.save(commit=True)
@@ -297,8 +279,7 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
-        return super().get_queryset().filter(id__in=case_list)
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def delete(self, request, *args, **kwargs):
         case = self.get_object()
@@ -349,7 +330,7 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def form_valid(self, form):
         case = form.save(commit=False)
@@ -402,7 +383,7 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def form_valid(self, form):
         case = form.save(commit=False)
@@ -468,7 +449,7 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
         next = self.request.POST.get('next')
@@ -543,7 +524,7 @@ class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
         form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
@@ -575,7 +556,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
         return reverse('case', kwargs={'pk': self.object.id})
@@ -708,7 +689,7 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
         return kwargs
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
@@ -794,6 +775,8 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         self.instance = self.model.objects.get(id=self.kwargs.get('pk'))
+        if self.instance not in self.model._default_manager.by_user(user=self.request.user):
+            raise PermissionDenied
         kwargs.update({
             'queryset': self.get_user_options()
         })
@@ -837,7 +820,7 @@ class CaseCreateView(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('cases_by_profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
@@ -859,7 +842,7 @@ class CaseBaseUpdateView(UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('cases_by_profile')
 
     def get_queryset(self):
-        return self.request.user.profile.cases.all()
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
@@ -874,6 +857,9 @@ class CaseAddressCreate(UserPassesTestMixin, UpdateView):
     form_class = CaseAddressForm
     template_name_suffix = '_create_address_form'
     success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
         if self.request.GET.get('next'):
@@ -904,6 +890,9 @@ class CaseAddressUpdate(UserPassesTestMixin, UpdateView):
     form_class = CaseAddressUpdateForm
     template_name_suffix = '_update_address_form'
     success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
         return '%s?iframe=true' % reverse(
