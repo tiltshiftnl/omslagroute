@@ -8,47 +8,52 @@ from web.users.statics import *
 def user_type_verbose(user_type):
     return USER_TYPES_DICT.get(user_type)
 
-@register.filter(name='has_group')
+@register.filter()
 def has_group(user, group_name):
     return auth_test(user, group_name)
 
 
-@register.filter(name='is_user_type')
+@register.filter()
 def is_user_type(user, user_type):
     return auth_test(user, user_type)
 
 
-@register.filter(name='is_redactie')
+@register.filter()
 def is_redactie(user):
     return auth_test(user, REDACTIE)
 
 
-@register.filter(name='is_begeleider')
+@register.filter()
 def is_begeleider(user):
     return auth_test(user, BEGELEIDER)
 
 
-@register.filter(name='is_beheerder')
+@register.filter()
 def is_beheerder(user):
     return auth_test(user, BEHEERDER)
 
 
-@register.filter(name='is_wonen_medewerker')
+@register.filter()
 def is_wonen_medewerker(user):
     return auth_test(user, WONEN)
 
 
-@register.filter(name='is_federatie_beheerder')
+@register.filter()
 def is_federatie_beheerder(user):
     return auth_test(user, FEDERATIE_BEHEERDER)
 
 
-@register.filter(name='is_pb_federatie_beheerder')
+@register.filter()
 def is_pb_federatie_beheerder(user):
     return auth_test(user, PB_FEDERATIE_BEHEERDER)
 
 
-@register.filter(name='is_onbekent')
+@register.filter()
+def is_woningcorporatie_medewerker(user):
+    return auth_test(user, WONINGCORPORATIE_MEDEWERKER)
+
+
+@register.filter()
 def is_onbekent(user):
     return auth_test(user, ONBEKEND)
 

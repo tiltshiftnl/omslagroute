@@ -1,4 +1,5 @@
 import json
+from web.organizations.statics import *
 
 GESLACHT = (
     (1, 'Man'),
@@ -46,12 +47,61 @@ CASE_STATUS_INGEDIEND = 1
 CASE_STATUS_AFGEKEURD = 2
 CASE_STATUS_GOEDGEKEURD = 3
 CASE_STATUS_IN_BEHANDELING = 4
+CASE_STATUS_WONINGCORPORATIE_INGEDIEND = 5
+CASE_STATUS_WONINGCORPORATIE_AFGEKEURD = 6
+CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD = 7
+CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING = 8
 
 CASE_STATUS = (
-    (CASE_STATUS_INGEDIEND, 'ingediend', 'indienen'),
-    (CASE_STATUS_AFGEKEURD, 'afgekeurd', 'afkeuren'),
-    (CASE_STATUS_GOEDGEKEURD, 'goedgekeurd', 'goedkeuren'),
-    (CASE_STATUS_IN_BEHANDELING, 'in behandeling', 'in behandeling'),
+    (
+        CASE_STATUS_INGEDIEND, 
+        'Ingediend', 
+        'Indienen', 
+        'icon-circle',
+        '',
+    ),
+    (
+        CASE_STATUS_AFGEKEURD, 
+        'Afgekeurd', 
+        'Afkeuren', 
+        'icon-circle icon-circle--status-disapproved',
+        'close',
+    ),
+    (
+        CASE_STATUS_GOEDGEKEURD, 
+        'Goedgekeurd', 
+        'Goedkeuren', 
+        'icon-circle icon-circle--status-approved',
+        'check',
+    ),
+    (
+        CASE_STATUS_IN_BEHANDELING, 
+        'In behandeling', 
+        'In behandeling nemen', 
+        'icon-circle icon-circle--status-pending',
+        'pause',
+    ),
+    (
+        CASE_STATUS_WONINGCORPORATIE_AFGEKEURD, 
+        'Afgekeurd', 
+        'Afkeuren', 
+        'icon-circle icon-circle--status-disapproved',
+        'close',
+    ),
+    (
+        CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD, 
+        'Goedgekeurd', 
+        'Goedkeuren', 
+        'icon-circle icon-circle--status-approved',
+        'check',
+    ),
+    (
+        CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING, 
+        'In behandeling', 
+        'In behandeling nemen', 
+        'icon-circle icon-circle--status-pending',
+        'pause',
+    ),
 )
 
 def map_case_status_keys(f):
@@ -59,11 +109,28 @@ def map_case_status_keys(f):
         'id': f[0],
         'current': f[1],
         'verb': f[2],
+        'status_class': f[3],
+        'icon_name': f[4],
     }
 
 CASE_STATUS_CHOICES = list((s[0], s[1]) for s in CASE_STATUS)
 CASE_STATUS_DICT = dict((s[0], map_case_status_keys(s)) for s in CASE_STATUS)
 CASE_STATUS_DICT_JSON = json.dumps(CASE_STATUS_DICT)
+
+CASE_STATUS_CHOICES_BY_FEDEATION_TYPE = {
+    FEDERATION_TYPE_ADW: [
+        CASE_STATUS_INGEDIEND,
+        CASE_STATUS_IN_BEHANDELING,
+        CASE_STATUS_GOEDGEKEURD,
+        CASE_STATUS_AFGEKEURD,
+    ],
+    FEDERATION_TYPE_WONINGCORPORATIE: [
+        CASE_STATUS_INGEDIEND,
+        CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING,
+        CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD,
+        CASE_STATUS_WONINGCORPORATIE_AFGEKEURD,
+    ]
+}
 
 
 

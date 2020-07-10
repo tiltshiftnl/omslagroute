@@ -5,7 +5,7 @@ from web.cases.models import Case
 from web.users.models import User
 from web.forms.statics import FORMS_BY_SLUG
 from web.forms.utils import get_sections_fields
-
+from .statics import FEDERATION_TYPE_CHOICES
 
 def get_fields():
     return [[str(f.name), '%s [%s]' % (
@@ -22,6 +22,12 @@ class Organization(models.Model):
     name_abbreviation = models.CharField(
         verbose_name=_('Naam afkorting'),
         max_length=4,
+        blank=True,
+        null=True,
+    )
+    federation_type = models.PositiveIntegerField(
+        verbose_name=('Federatie type'),
+        choices=FEDERATION_TYPE_CHOICES,
         blank=True,
         null=True,
     )

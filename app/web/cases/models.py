@@ -450,6 +450,21 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    woningcorporatie = models.ForeignKey(
+        to='organizations.Federation',
+        verbose_name=_('Woningcorporatie'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    woningcorporatie_medewerker = models.ForeignKey(
+        to='profiles.Profile',
+        related_name="%(app_label)s_%(class)s_set",
+        verbose_name=_('Woningcorporatie medewerker'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     @property
     def centrale_toegang_naam_value(self):

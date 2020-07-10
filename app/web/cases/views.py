@@ -6,9 +6,9 @@ from .forms import *
 from web.users.auth import auth_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
-from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER
+from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER
 from web.profiles.models import Profile
-from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS, FORM_TITLE_BY_SLUG
+from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, BASIS_GEGEVENS, FORM_TITLE_BY_SLUG, FORMS_SLUG_BY_FEDERATION_TYPE
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
 from web.forms.utils import get_sections_fields
 import sendgrid
@@ -16,7 +16,7 @@ from sendgrid.helpers.mail import Mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.template.loader import render_to_string
-from web.organizations.models import Organization
+from web.organizations.models import Organization, Federation
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.core.files.storage import default_storage
@@ -89,12 +89,17 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
     template_name = 'cases/case_list_page_wonen.html'
 
     def test_func(self):
-        return auth_test(self.request.user, WONEN) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, WONINGCORPORATIE_MEDEWERKER]) and hasattr(self.request.user, 'profile')
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
+        casestatus_list = CaseStatus.objects.all()
+        if self.request.user.user_type == WONINGCORPORATIE_MEDEWERKER:
+            casestatus_list = casestatus_list.filter(
+                case__woningcorporatie_medewerker__user__federation=self.request.user.federation,
+            )
 
-        qs = CaseStatus.objects.all().exclude(
+        qs = casestatus_list.exclude(
             status=CASE_STATUS_INGEDIEND,
             # case__delete_request_date__isnull=False
         )
@@ -102,45 +107,45 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
         qs = qs.order_by('distinct_name', '-created')
         qs = qs.distinct('distinct_name')
-        all_objects = CaseStatus.objects.all().order_by('-created')
+        all_objects = casestatus_list.order_by('-created')
         tabs_ids = [s.id for s in qs]
         final_set = all_objects.filter(
             id__in=tabs_ids,
             case__delete_request_date__isnull=True
         )
+        form_slug_list = FORMS_SLUG_BY_FEDERATION_TYPE.get(self.request.user.federation.organization.federation_type)
 
-
-        ingediend = CaseStatus.objects.all()
+        ingediend = casestatus_list
         ingediend = ingediend.order_by('-created')
         ingediend = ingediend.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
         ingediend = ingediend.order_by('distinct_name', '-created')
         ingediend = ingediend.distinct('distinct_name')
-        ingediend_final_set = CaseStatus.objects.all().order_by('-created')
+        ingediend_final_set = casestatus_list.order_by('-created')
         ingediend_final_set = ingediend_final_set.filter(id__in=[s.id for s in ingediend])
         ingediend_final_set = ingediend_final_set.filter(
             status=CASE_STATUS_INGEDIEND,
+            form__in=form_slug_list,
             case__delete_request_date__isnull=True
         )
 
-        tabs = [
-            [CASE_STATUS_INGEDIEND, 'Ingediend'],
-            [CASE_STATUS_IN_BEHANDELING, 'In behandeling'],
-            [CASE_STATUS_GOEDGEKEURD, 'Goedgekeurd'],
-            [CASE_STATUS_AFGEKEURD, 'Afgekeurd'],
-            [0, 'Alle'],
-        ]
+        tabs = [[cs, CASE_STATUS_DICT.get(cs).get('current')] for cs in CASE_STATUS_CHOICES_BY_FEDEATION_TYPE.get(self.request.user.federation.organization.federation_type)]
+        tabs.append([0, 'Alle'])
         tabs = [{
             'filter':t[0],  
             'title':t[1],  
-            'queryset':final_set.filter(status=t[0]) if t[0] else final_set,  
+            'queryset':final_set.filter(
+                status=t[0],
+                form__in=form_slug_list,
+            ) if t[0] else final_set,  
         } for t in tabs]
 
         tabs[0]['queryset'] = ingediend_final_set
 
         tab_all_ids = [s.id for s in ingediend_final_set if s.is_first_of_statustype] + tabs_ids
 
-        tabs[4]['queryset'] = all_objects.filter(
+        tabs[-1]['queryset'] = all_objects.filter(
             id__in=set(tab_all_ids),
+            form__in=form_slug_list,
             case__delete_request_date__isnull=True
         )
 
@@ -209,7 +214,7 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return super().get_context_data(**kwargs)
 
     def test_func(self):
-        return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER]) and hasattr(self.request.user, 'profile')
 
     def get_queryset(self):
         datetime_treshold = datetime.datetime.now() - datetime.timedelta(seconds=config.CASE_DELETE_SECONDS)
@@ -234,6 +239,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
             'user_list': ', '.join(list([u for u in self.object.profile_set.all().values_list('user__username', flat=True) if u])),
             'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('slug')),
+            'status_options': json.dumps(dict((k, v) for k, v in CASE_STATUS_DICT.items() if k in CASE_STATUS_CHOICES_BY_FEDEATION_TYPE.get(self.request.user.federation.organization.federation_type))),
         })
         return super().get_context_data(**kwargs)
 
@@ -241,13 +247,17 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
         if self.request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
             return Case.objects.filter(id__in=self.request.user.profile.cases.all().values_list('id', flat=True))
+        if self.request.user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
+            return Case.objects.filter(
+                woningcorporatie_medewerker__user__federation=self.request.user.federation
+            )
         return super().get_queryset().filter(id__in=case_list)
 
     def get_object(self, queryset=None):
         return super().get_object(queryset)
 
     def test_func(self):
-        return auth_test(self.request.user, [WONEN]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [WONEN, WONINGCORPORATIE_MEDEWERKER]) and hasattr(self.request.user, 'profile')
 
 
 class CaseDetailAllDataView(CaseDetailView):
@@ -558,6 +568,8 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     model = Case
     template_name = 'cases/send.html'
     form_class = SendCaseForm
+    recipient_list = []
+    federation = None
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
@@ -571,11 +583,31 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         kwargs.update(self.kwargs)
         form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        federation_type = form_context.get('federation_type')
         if not form_context:
             raise Http404
         kwargs.update(form_context)
+        federation = Federation.objects.filter(organization__federation_type=form_context.get('federation_type')).first()
+        if form_context.get('federation_type') == FEDERATION_TYPE_WONINGCORPORATIE and self.object.woningcorporatie:
+            federation = self.object.woningcorporatie
+        print(federation)
+        self.federation = federation
+        recipient_list = [federation.main_email] 
+        if not federation.main_email and federation_type == FEDERATION_TYPE_ADW:
+            recipient_list = list(User.objects.filter(
+                user_type=WONEN,
+                federation=federation,
+            ).values_list('username', flat=True))
+        elif not federation.main_email and federation_type == FEDERATION_TYPE_WONINGCORPORATIE and self.federation:
+            recipient_list = list(User.objects.filter(
+                user_type=WONINGCORPORATIE_MEDEWERKER,
+                federation=self.federation,
+            ).values_list('username', flat=True))
+        self.recipient_list = recipient_list
         kwargs.update({
-            'organization_list': Organization.objects.filter(main_email__isnull=False),
+            'federation_type': form_context.get('federation_type'),
+            'federation': federation,
+            'recipient_list': recipient_list,
             'object': self.object,
             'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('slug')),
         })
@@ -592,9 +624,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         }
         case_status = CaseStatus(**case_status_dict)
         case_status.save()
-
-        organization_list = Organization.objects.filter(main_email__isnull=False)
-        for organization in organization_list:
+        if self.recipient_list:
             current_site = get_current_site(self.request)
             body = render_to_string('cases/mail/case_link.txt', {
                 'case': self.object.to_dict(organization.field_restrictions),
@@ -612,15 +642,14 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                 sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,
-                    to_emails=organization.main_email,
+                    to_emails=self.recipient_list,
                     subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
                     plain_text_content=body
                 )
                 sg.send(email)
             messages.add_message(
-                self.request, messages.INFO, "De cliëntgegevens van '%s', zijn gestuurd naar '%s'." % (
-                    self.object.client_name,
-                    organization.main_email
+                self.request, messages.INFO, "De aanvraag is ingediend bij medewerkers van '%s'." % (
+                    self.federation.name,
                 )
             )
         return super().form_valid(form)

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static client_status_tags i18n tz %}
+{% load static client_status_tags i18n tz auth_tags %}
 
 {% block title %} - Alle cli&euml;nten{% endblock %}
 
@@ -18,6 +18,7 @@
         <div class="flex-item">
             <h2 class="u-margin-bottom-4x">Aanvragen</h2>
         </div>
+        {% if request.user|is_wonen_medewerker %}
         <div class="flex-item u-text-align--right">
             <div class="form-field form-field--buttons screen-only">
                 <a href="{% url 'case_archive' %}" class="button button--secondary">
@@ -25,6 +26,7 @@
                 </a>
             </div>
         </div>
+        {% endif %}
     </div>
     
     <div class="tab-list-container">

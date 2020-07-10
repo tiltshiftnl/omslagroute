@@ -16,6 +16,10 @@ class Profile(models.Model):
         blank=True,
     )
 
+    @property
+    def federation(self):
+        return self.user.federation
+
     def __str__(self):
         if self.user:
             return self.user.username
