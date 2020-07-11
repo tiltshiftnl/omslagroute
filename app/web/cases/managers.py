@@ -19,7 +19,7 @@ class CaseManager(models.Manager):
             return queryset
         if user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
             queryset = queryset.filter(
-                woningcorporatie_medewerker__user__federation=user.federation
+                woningcorporatie_medewerker__user__federation=user.federation,
             )
             return queryset
         return queryset.filter(

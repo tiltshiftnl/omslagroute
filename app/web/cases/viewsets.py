@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER
 from web.forms.statics import FORM_TITLE_BY_SLUG
 from web.users.auth import auth_test
+from web.users.utils import get_zorginstelling_medewerkers_email_list
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
@@ -44,7 +45,9 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
+
         if serializer.instance.status != CASE_STATUS_INGEDIEND:
+            serializer.instance.case.create_version(serializer.instance.form)
             current_site = get_current_site(request)
             body = render_to_string('cases/mail/case_status_to_pb.txt', {
                 'case_status': serializer.instance,
@@ -57,7 +60,7 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
                     })
                 ),
             })
-            email_adresses = list(serializer.instance.case.profile_set.all().filter(user__isnull=False).values_list('user__username', flat=True))
+            email_adresses = get_zorginstelling_medewerkers_email_list(serializer.instance.case)
             if settings.SENDGRID_KEY:
                 sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
                 email = Mail(

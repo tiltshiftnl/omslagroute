@@ -80,9 +80,10 @@ Array.prototype.sortOnData = function (key) {
         rootElem.appendChild(modal);
         
         var iframe = modal.querySelector('iframe');
-        console.log("iframe", iframe);
         if(iframe !== null) {
+          iframe.setAttribute('src', iframe.dataset.src);
           iframe.onload = function() {
+            console.log('iframe loaded');
             modal.classList.add("active");
             var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
             var innerElement = doc.querySelector(".site-container");

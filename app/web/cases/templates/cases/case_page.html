@@ -65,7 +65,7 @@
                                     Wijzig basisgegevens
                                 </a>
                                 <div role="dialog" class="modal" id="modalChangeBase">
-                                <iframe class="modal--uploads" id="iframeChangeBase" src="{% url 'update_case_base' object.id %}?iframe_content=true" title="Wijzig basisgegevens">
+                                <iframe class="modal--uploads" id="iframeChangeBase" data-src="{% url 'update_case_base' object.id %}?iframe_content=true" title="Wijzig basisgegevens">
                                 </iframe>
                                 </div>
                             </li>
@@ -73,7 +73,7 @@
                             <li>
                                 <a href="#" data-handler="modal" data-contentid="modalChangeAddress">Wijzig woning</a>
                                 <div role="dialog" class="modal" id="modalChangeAddress">
-                                    <iframe class="modal--address" id="iframeChangeAddress" src="{% url 'update_case_address' object.id %}?iframe_content=true" title="Wijzig woning">
+                                    <iframe class="modal--address" id="iframeChangeAddress" data-src="{% url 'update_case_address' object.id %}?iframe_content=true" title="Wijzig woning">
                                         
                                     </iframe>
                                 </div>
@@ -82,7 +82,7 @@
                             <li>
                                 <a href="#" data-handler="modal" data-contentid="modalDeleteRequest">Verzoek verwijderen cliënt uit omslagroute</a>
                                 <div role="dialog" class="modal" id="modalDeleteRequest">
-                                <iframe class="modal--uploads" id="iframeDeleteRequest" src="{% url 'delete_request_case' object.id %}?iframe_content=true" title="Verwijder verzoek">
+                                <iframe class="modal--uploads" id="iframeDeleteRequest" data-src="{% url 'delete_request_case' object.id %}?iframe_content=true" title="Verwijder verzoek">
                                 </iframe>
                                 </div>
                             </li>
@@ -105,7 +105,7 @@
         
     
             <div role="dialog" class="modal" id="modalInvite">
-                <iframe class="modal--invite" id="iframeInvite" src="{% url 'case_invite_users' object.id  %}" title="Uitnodiging tot samenwerking">
+                <iframe class="modal--invite" id="iframeInvite" data-src="{% url 'case_invite_users' object.id  %}" title="Uitnodiging tot samenwerking">
                 </iframe>
               </div>    
         <small class="u-color-neutralgrey4">Laatste activiteit: {{ object.saved|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}{% if object.saved_by %} | {{ object.saved_by.user.username }}{% endif %}{% if object.saved_form %} | '{{ object.saved_form|form_verbose }}'{% endif %}</small>
@@ -162,7 +162,7 @@
                 {% endif %}
             </header>
             <div role="dialog" class="modal" id="modalUploads">
-            <iframe class="modal--uploads" id="iframeModal" src="{% url 'add_case_document' object.id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}&open-in-iframe=true" title="ga naar bestand toevoegen">
+            <iframe class="modal--uploads" id="iframeModal" data-src="{% url 'add_case_document' object.id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}&open-in-iframe=true" title="ga naar bestand toevoegen">
             </iframe>
             </div>
               
@@ -182,7 +182,7 @@
                                     <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
                                 </svg></a>  
                             <div role="dialog" class="modal" id="modalDocumentDelete-{{ document.id }}">
-                                <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" src="{% url 'delete_case_document' object.id document.id %}" title="Verwijder bijlage {{ document.name }}"></iframe>
+                                <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" data-src="{% url 'delete_case_document' object.id document.id %}" title="Verwijder bijlage {{ document.name }}"></iframe>
                             </div>
                         </div>
                         {% endif %}
@@ -246,7 +246,7 @@
 
                             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                                 {% if moment.form and case_status %}
-                                    <span class="label {% if case_status.status == 2 %}label--status-disapproved{% elif case_status.status == 3 %}label--status-approved{% elif case_status.status == 4 %}label--status-pending{% endif %}">
+                                    <span class="label {% if case_status.status == 2 or case_status.status == 6 %}label--status-disapproved{% elif case_status.status == 3 or case_status.status == 7 %}label--status-approved{% elif case_status.status == 4 or case_status.status == 8 %}label--status-pending{% endif %}">
                                         {% if case_status.case_form_is_opnieuw_ingediend %}
                                         Opnieuw ingediend
                                         {% else %}
