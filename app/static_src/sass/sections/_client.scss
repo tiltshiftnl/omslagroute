@@ -163,6 +163,18 @@
                 }
             }
         }
+
+        &--address {
+            dl {
+                div {
+                    border: 0;
+                    padding-left: 0;
+                    &:nth-of-type(odd){
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
     }
     .section--forms {
 
