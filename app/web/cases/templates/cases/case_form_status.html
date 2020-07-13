@@ -38,7 +38,7 @@
 
                 {% else %} 
                 <!-- wonen && !dossiernr-->
-                <div data-case-id="{{ object.id }}" id="dossier_nr">
+                <div data-case-id="{{ object.id }}" {% if request.user|is_woningcorporatie_medewerker %}data-deny-dossier_nr="true"{% endif %} id="dossier_nr">
                 </div>
                 
                 {% endif %}    

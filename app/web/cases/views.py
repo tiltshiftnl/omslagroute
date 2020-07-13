@@ -33,6 +33,7 @@ from django.core.exceptions import PermissionDenied
 import datetime
 from constance import config
 from web.users.utils import *
+from web.users.utils import get_zorginstelling_medewerkers_email_list
 
 
 class UserCaseList(UserPassesTestMixin, ListView):
@@ -101,7 +102,6 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
 
         qs = casestatus_list.exclude(
             status=CASE_STATUS_INGEDIEND,
-            # case__delete_request_date__isnull=False
         )
         qs = qs.order_by('-created')
         qs = qs.annotate(distinct_name=Concat('case', 'form', output_field=TextField()))
@@ -229,7 +229,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         kwargs.update({
             'form_fields': get_sections_fields(form_data.get('sections')),
             'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
-            'user_list': ', '.join(list([u for u in self.object.profile_set.all().values_list('user__username', flat=True) if u])),
+            'user_list': ', '.join(get_zorginstelling_medewerkers_email_list(self.object)),
             'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('slug')),
             'status_options': json.dumps(dict((k, v) for k, v in CASE_STATUS_DICT.items() if k in CASE_STATUS_CHOICES_BY_FEDEATION_TYPE.get(self.request.user.federation.organization.federation_type))),
         })

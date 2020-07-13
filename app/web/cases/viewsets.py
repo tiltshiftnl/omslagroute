@@ -30,11 +30,9 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         filters = ['case', 'form', 'status']
         get_vars = self.request.GET
-        queryset = CaseStatus.objects.all()
-        if self.request.user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
-            queryset = CaseStatus.objects.filter(
-                case__woningcorporatie_medewerker__user__federation=self.request.user.federation
-            )
+        queryset = CaseStatus.objects.filter(
+            case__in=Case.objects.by_user(self.request.user).values_list('id', flat=True),
+        )
         kwargs = dict(('%s__in' % f, get_vars.getlist(f)) for f in filters if get_vars.getlist(f))
         return queryset.filter(**kwargs).order_by('-created')
 
@@ -44,7 +42,6 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-
 
         if serializer.instance.status != CASE_STATUS_INGEDIEND:
             serializer.instance.case.create_version(serializer.instance.form)

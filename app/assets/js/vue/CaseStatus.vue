@@ -34,7 +34,7 @@
                     <h2>Status wijzigen</h2>
                     <div class="prompt-approve">
                         <p>Weet je zeker dat je de status voor <strong>{{ title }}</strong> wilt wijzigen naar <strong>{{ caseStatusOptions[nextCaseStatus.status].verb }}</strong>?</p>
-                        <p><strong>{{ emailList }}</strong> ontvangt hiervan een bevestiging per e-mail.</p>
+                        <p v-if="emailList"><strong>{{ emailList }}</strong> ontvangt hiervan een bevestiging per e-mail.</p>
                         <form>
                             <div class="form-field form-field--textarea screen-only u-margin-top-2x">
                                 <label for="status-message">Bericht (optioneel)</label>
