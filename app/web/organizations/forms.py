@@ -29,11 +29,12 @@ class FederationForm(forms.ModelForm):
         exclude = [
             'name_abbreviation',
         ]
-        widgets = {
-            'federation_id': forms.TextInput(attrs={
-                'readonly': 'readonly',
-            }),
-        }
+        # # enable readonly widget when Keycloak send federation id.
+        # widgets = {
+        #     'federation_id': forms.TextInput(attrs={
+        #         'readonly': 'readonly',
+        #     }),
+        # }
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
