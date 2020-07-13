@@ -5,7 +5,7 @@ from web.users.auth import auth_test
 from django.forms import modelformset_factory
 from django.shortcuts import render
 from web.users.auth import user_passes_test
-from web.users.statics import BEHEERDER
+from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.contrib import messages
@@ -61,8 +61,28 @@ class FederationUpdateView(UserPassesTestMixin, UpdateView):
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('federation_list')
 
+    def get_success_url(self):
+        if self.request.user.user_type in [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER]:
+            return reverse('home')
+        return super().get_success_url()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.user_type in [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER]:
+            queryset = queryset.filter(
+                id=self.request.user.federation.id,
+            )
+        return queryset
+
+
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def test_func(self):
-        return auth_test(self.request.user, [BEHEERDER]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
 
     def form_valid(self, form):
         federation = form.save(commit=True)

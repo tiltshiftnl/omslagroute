@@ -7,7 +7,9 @@
     <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            {% if request.user|is_beheerder %}
             <li class="breadcrumb-step"><a href="{% url 'federation_list' %}">Alle organisaties</a></li>
+            {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">Organisatie wijzigen</li>
         </ol>
     </nav>
@@ -18,6 +20,7 @@
         <div class="flex-item">
             <h2>Organisatie wijzigen</h2>
         </div>
+        {% if request.user|is_beheerder %}
         <div class="flex-item u-text-align--right">
             <div class="form-field form-field--buttons screen-only">
                 <a href="{% url 'federation_delete' form.instance.id %}" class="button button--secondary" title="ga naar het verwijderen van deze organisatie">
@@ -25,13 +28,14 @@
                 </a>
             </div>
         </div>
+        {% endif %}
     </div>
 
     <form method="post">
         {% csrf_token %}
 
         {{ form.as_p }}
-        {% if form.instance.user_list.all %}
+        {% if form.instance.user_list.all and request.user|is_beheerder %}
         <h3 class="u-margin-top-4x">Gebruikers in deze organisatie</h3>
         <table class="case-list">
             <thead>
@@ -66,7 +70,11 @@
         {% endif %}
         <div class="form-field form-field--buttons screen-only u-margin-top-3x">
             <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'federation_list' %}" class="button button--secondary">Annuleer</a>
+            {% if request.user|is_beheerder %}
+                <a href="{% url 'federation_list' %}" class="button button--secondary">Annuleer</a>
+            {% else %}
+                <a href="{% url 'home' %}" class="button button--secondary">Annuleer</a>
+            {% endif %}
         </div>
     </form>
 {% endblock %}
