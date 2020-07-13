@@ -30,11 +30,12 @@ class FederationForm(forms.ModelForm):
             'name_abbreviation',
             'main_email',
         ]
-        widgets = {
-            'federation_id': forms.TextInput(attrs={
-                'readonly': 'readonly',
-            }),
-        }
+        # # enable readonly widget when Keycloak send federation id.
+        # widgets = {
+        #     'federation_id': forms.TextInput(attrs={
+        #         'readonly': 'readonly',
+        #     }),
+        # }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
