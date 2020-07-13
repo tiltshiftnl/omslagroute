@@ -171,8 +171,6 @@ export default {
             return 'Aanvraag ' + this.caseStatusOptions[status].verb.toLowerCase();
         },
         setHistoryClass: function(status){
-            console.log("status", status);
-            console.log("historyClass[status]", this.historyClass[status]);
             return this.historyClass[status];
         },
         setButtonClass: function(status){
