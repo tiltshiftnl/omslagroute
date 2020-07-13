@@ -320,6 +320,8 @@ body:not(:-moz-handler-blocked) fieldset {
 
 .error-text,
 .errorlist {
+    list-style-type: none;
+    padding: 0 .25rem;
     color: $primary-red;
     font-weight: bold;
     margin-bottom: 0;
@@ -635,7 +637,7 @@ ul.form-field__radiogroup,
         width: 0;
         margin: 0;
 
-        &:checked + label::after  {
+        &:checked + label::before  {
             @include checkbox;
         }
 
@@ -643,8 +645,7 @@ ul.form-field__radiogroup,
             @include checkbox;
         }
 
-        &:checked:focus + label::after,
-        &:checked:focus + label::after {
+        &:checked:focus + label::before {
             border: .063rem solid $primary-black;
         }
 
@@ -652,12 +653,12 @@ ul.form-field__radiogroup,
         &:disabled + label {
             color: $neutral-grey3;
 
-            &::after {
+            &::before {
                 border-color: $neutral-grey3;
             }
 
-            &:hover::after,
-            &:focus::after {
+            &:hover::before,
+            &:focus::before {
                 box-shadow: none;
                 border-color: inherit;
             }
@@ -666,11 +667,11 @@ ul.form-field__radiogroup,
 
     label {
         position: relative;
-        padding-left: 34px;
+        padding: 1px 0 2px 34px;
         &::before {
             display: inline-block;
             position: absolute;
-            top: -0.35rem;
+            top: -4px;
             left: 0;
             width: 1.25rem;
             min-width: 1.25rem;
