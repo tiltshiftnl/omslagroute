@@ -16,8 +16,9 @@ new Vue({
  el: "#app",
  render: h => h(CaseStatus)
 });
-
-new Vue({
-  el: "#dossier_nr",
-  render: h => h(CaseDossierNr)
-});
+if (!document.querySelector('[data-deny-dossier_nr]')){
+  new Vue({
+    el: "#dossier_nr",
+    render: h => h(CaseDossierNr)
+  });
+}
