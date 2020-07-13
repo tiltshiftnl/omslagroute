@@ -90,6 +90,15 @@
 import axios from "axios";
 
 export default {
+
+// CASE_STATUS_INGEDIEND = 1
+// CASE_STATUS_AFGEKEURD = 2
+// CASE_STATUS_GOEDGEKEURD = 3
+// CASE_STATUS_IN_BEHANDELING = 4
+// CASE_STATUS_WONINGCORPORATIE_INGEDIEND = 5
+// CASE_STATUS_WONINGCORPORATIE_AFGEKEURD = 6
+// CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD = 7
+// CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING = 8
     name: "CaseStatus",
     data: () => ({
         loading: false,
@@ -113,12 +122,12 @@ export default {
         emailList: null,
 
         buttonClass: {
-            2: "u-margin-bottom button button--danger",
-            3: "u-margin-bottom button button--success",
-            4: "u-margin-bottom button button--warning",
-            6: "u-margin-bottom button button--danger",
-            7: "u-margin-bottom button button--success",
-            8: "u-margin-bottom button button--warning",
+            2: "u-margin-bottom u-margin-right button button--danger",
+            3: "u-margin-bottom u-margin-right button button--success",
+            4: "u-margin-bottom u-margin-right button button--warning",
+            6: "u-margin-bottom u-margin-right button button--danger",
+            7: "u-margin-bottom u-margin-right button button--success",
+            8: "u-margin-bottom u-margin-right button button--warning",
         },
         historyClass: {
             2: "icon-circle icon-circle--status-disapproved",
@@ -129,12 +138,12 @@ export default {
             8: "icon-circle icon-circle--status-pending",
         },
         svg: {
-            2: '<svg class="icon close__icon" width="16" height="16"><use href="#close" xlink:href="#close" width="16" height="16"></use></svg>',
+            2: '<svg class="icon close__icon" width="14" height="14"><use href="#close" xlink:href="#close" width="14" height="14"></use></svg>',
             3: '<svg class="icon check__icon" width="20" height="16"><use href="#check" xlink:href="#check" width="20" height="18"></use></svg>',
-            4: '<svg class="icon close__icon" width="12" height="16"><use href="#pause" xlink:href="#pause" width="12" height="16"></use></svg>',
-            6: '<svg class="icon close__icon" width="16" height="16"><use href="#close" xlink:href="#close" width="16" height="16"></use></svg>',
+            4: '<svg class="icon pause__icon" width="12" height="16"><use href="#pause" xlink:href="#pause" width="12" height="16"></use></svg>',
+            6: '<svg class="icon close__icon" width="14" height="14"><use href="#close" xlink:href="#close" width="14" height="14"></use></svg>',
             7: '<svg class="icon check__icon" width="20" height="16"><use href="#check" xlink:href="#check" width="20" height="18"></use></svg>',
-            8: '<svg class="icon close__icon" width="12" height="16"><use href="#pause" xlink:href="#pause" width="12" height="16"></use></svg>',
+            8: '<svg class="icon pause__icon" width="12" height="16"><use href="#pause" xlink:href="#pause" width="12" height="16"></use></svg>',
         },
     }),
     computed: {

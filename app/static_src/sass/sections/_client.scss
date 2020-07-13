@@ -488,9 +488,6 @@
     }
     &--status-disapproved {
         background-color: $support-invalid;
-        .icon { 
-            margin-top: 6px;
-        }
     }
     &--status-pending {
         background-color: $supplement-orange;
