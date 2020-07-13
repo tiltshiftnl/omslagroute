@@ -61,7 +61,7 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
                 ),
             })
             email_adresses = get_zorginstelling_medewerkers_email_list(serializer.instance.case)
-            if settings.SENDGRID_KEY:
+            if settings.SENDGRID_KEY and email_adresses:
                 sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,

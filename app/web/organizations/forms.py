@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 from django.utils.translation import ugettext_lazy as _
+from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER
 
 
 class OrganizationForm(forms.ModelForm):
@@ -23,12 +24,10 @@ class OrganizationForm(forms.ModelForm):
 
 
 class FederationForm(forms.ModelForm):
-
     class Meta:
         model = Federation
         exclude = [
             'name_abbreviation',
-            'main_email',
         ]
         widgets = {
             'federation_id': forms.TextInput(attrs={
@@ -37,5 +36,11 @@ class FederationForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
-        self.fields['organization'].label = _('Organisatie type')
+        if user.user_type in [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER]:
+            del self.fields['federation_id']
+            del self.fields['organization']
+            del self.fields['name']
+        else:
+            self.fields['organization'].label = _('Organisatie type')
