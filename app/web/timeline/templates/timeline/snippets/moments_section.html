@@ -12,7 +12,7 @@
         {% include 'organizations/snippets/filters.html' with object_list=organization_list %}
 
         {% for moment in moment_list %}
-            <div class="details-wrapper" data-tags="{% for organisation in moment.organizations.all %}{{ organisation|slugify }} {% endfor %}">
+            <div class="details-wrapper" data-tags="{% for organization in moment.organizations.all %}{{ organization|slugify }} {% endfor %}">
                 <div class="dot dot--large">
                     
                 </div>
@@ -30,10 +30,10 @@
 
                         {% if moment.organizations %}
                         <ul class="tag-list">
-                            {% for organisation in moment.organizations.all %}
+                            {% for organization in moment.organizations.all %}
                             <li class="tag-list__item">
-                                <button class="button--tinytag" data-highlight-org="{{ organisation.name|slugify }}" title="{{ organisation.name }}">
-                                    {{ organisation.abbreviation }}
+                                <button class="button--tinytag" data-highlight-org="{{ organization.name|slugify }}" title="{{ organization.name }}">
+                                    {{ organization.abbreviation }}
                                 </button>
                             </li>
                             {% endfor %}

@@ -22,8 +22,8 @@ class BaseGenericForm:
     def as_sections(self):
         return self._html_section_output(
             normal_row='<div %(wrapper_id_attr)s %(html_class_attr)s %(data_attr)s>%(label)s %(help_text)s %(field)s %(errors)s</div>',
-            checkbox_row='<div %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
-            clearablefileinput_row='<div %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s <div id="file-upload-filename" class="form-field__uploaded"></div></div>',
+            checkbox_row='<div %(wrapper_id_attr)s %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s</div>',
+            clearablefileinput_row='<div %(wrapper_id_attr)s %(html_class_attr)s %(data_attr)s>%(help_text)s %(field)s %(label)s %(errors)s <div id="file-upload-filename" class="form-field__uploaded"></div></div>',
             error_row='%s',
             row_ender='</div>',
             help_text_html=' <div class="help-text">%s</div>',

@@ -54,7 +54,7 @@
                             Definitief verwijderen
                         </a>
                         <div role="dialog" class="modal" id="modalCaseDelete"> 
-                            <iframe class="modal--uploads" id="iframeCaseDelete" src="{% url 'delete_case' object.id %}" title="Cliënt defintief verwijderen"></iframe>
+                            <iframe class="modal--uploads" id="iframeCaseDelete" data-src="{% url 'delete_case' object.id %}" title="Cliënt defintief verwijderen"></iframe>
                         </div>
                         {% else %}
                         {{ object.delete_request_seconds_left|duration }}

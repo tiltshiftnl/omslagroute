@@ -55,6 +55,8 @@ def user_passes_test(test_func, login_url=None, redirect_field_name=REDIRECT_FIE
 
 
 def auth_test(user, user_type):
+    if not hasattr(user, 'profile'):
+        return False
     if isinstance(user_type, list):
         return hasattr(user, 'user_type') and user.user_type in user_type
     return hasattr(user, 'user_type') and user.user_type == user_type

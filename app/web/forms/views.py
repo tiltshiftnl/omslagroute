@@ -7,7 +7,7 @@ from json import JSONEncoder
 import datetime
 from .statics import FORMS_BY_SLUG
 from django.http import Http404
-from web.organizations.models import Organization
+from web.organizations.models import Federation
 
 
 class DateTimeEncoder(JSONEncoder):
@@ -84,7 +84,9 @@ class GenericUpdateFormView(UpdateView):
         kwargs.update(form_context)
         kwargs.update({
             'discard_url': self.get_discard_url(),
-            'organisation': Organization.objects.filter(federation_type=form_context.get('federation_type')).first(),
+            'federation': Federation.objects.filter(
+                organization__federation_type=form_context.get('federation_type'),
+            ).first(),
         })
         return kwargs
 

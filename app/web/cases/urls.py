@@ -31,7 +31,4 @@ urlpatterns = [
     path('<int:case_pk>/verwijder-bijlage/<int:pk>/', DocumentDelete.as_view(), name='delete_case_document'),
 
     path('<int:case_pk>/download-bijlage/<int:document_pk>', download_document, name='download_case_document'),
-
-    # v2
-    path('v2/<int:pk>/<str:slug>/', GenericCaseUpdateV2FormView.as_view(), name='update_case_v2'),
 ]

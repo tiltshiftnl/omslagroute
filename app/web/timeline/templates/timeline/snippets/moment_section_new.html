@@ -76,10 +76,10 @@
                 <h4>Betrokken organisaties</h4>
 
                 <ul class="tag-list">
-                    {% for organisation in organization_list %}
-                    <li class="tag-list__item" style="display: none" data-listitem-id="{{ organisation.id }}">
-                        <span class="button button--tinytag" title="{{ organisation.name }}">
-                            <span>{{ organisation.abbreviation }}</span>
+                    {% for organization in organization_list %}
+                    <li class="tag-list__item" style="display: none" data-listitem-id="{{ organization.id }}">
+                        <span class="button button--tinytag" title="{{ organization.name }}">
+                            <span>{{ organization.abbreviation }}</span>
                         </span>
                     </li>
                     {% endfor %}
