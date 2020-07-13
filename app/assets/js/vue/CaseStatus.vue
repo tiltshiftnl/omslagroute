@@ -140,7 +140,7 @@ export default {
         svg: {
             2: '<svg class="icon close__icon" width="14" height="14"><use href="#close" xlink:href="#close" width="14" height="14"></use></svg>',
             3: '<svg class="icon check__icon" width="20" height="16"><use href="#check" xlink:href="#check" width="20" height="18"></use></svg>',
-            4: '<svg class="icon pause__icon" width="14" height="14"><use href="#pause" xlink:href="#pause" width="14" height="14"></use></svg>',
+            4: '<svg class="icon pause__icon" width="12" height="16"><use href="#pause" xlink:href="#pause" width="12" height="16"></use></svg>',
             6: '<svg class="icon close__icon" width="14" height="14"><use href="#close" xlink:href="#close" width="14" height="14"></use></svg>',
             7: '<svg class="icon check__icon" width="20" height="16"><use href="#check" xlink:href="#check" width="20" height="18"></use></svg>',
             8: '<svg class="icon pause__icon" width="12" height="16"><use href="#pause" xlink:href="#pause" width="12" height="16"></use></svg>',

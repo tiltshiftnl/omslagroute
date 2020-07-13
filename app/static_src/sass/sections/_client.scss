@@ -480,7 +480,8 @@
     .icon { 
         color: $primary-white;
         vertical-align: initial !important;
-        margin-top: 5px;
+        margin-top: 4px;
+        transform: scale(0.75);
     }
 
     &--status-approved {
@@ -488,12 +489,12 @@
     }
     &--status-disapproved {
         background-color: $support-invalid;
+        .icon { 
+            margin-top: 5px;
+        }
     }
     &--status-pending {
         background-color: $supplement-orange;
-        .icon { 
-            margin-top: 6px;
-        }
     }
 }
 
