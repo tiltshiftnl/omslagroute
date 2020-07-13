@@ -95,10 +95,9 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         casestatus_list = CaseStatus.objects.all()
-        if self.request.user.user_type == WONINGCORPORATIE_MEDEWERKER:
-            casestatus_list = casestatus_list.filter(
-                case__woningcorporatie_medewerker__user__federation=self.request.user.federation,
-            )
+        casestatus_list = casestatus_list.filter(
+            case__in=Case.objects.by_user(self.request.user).values_list('id', flat=True),
+        )
 
         qs = casestatus_list.exclude(
             status=CASE_STATUS_INGEDIEND,
@@ -289,10 +288,10 @@ class CaseDeleteView(UserPassesTestMixin, DeleteView):
         case = self.get_object()
         response = super().delete(request, *args, **kwargs)
 
-        recipient_list_user = list([u for u in case.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
-        recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
-        recipient_list = recipient_list + recipient_list_user
-        recipient_list = list(set(recipient_list))
+        recipient_list = list(set(
+            get_zorginstelling_medewerkers_email_list(self.object) + 
+            get_woningcorporatie_medewerkers_email_list(self.object)
+        ))
 
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_deleted.txt', {
@@ -342,10 +341,12 @@ class CaseDeleteRequestView(UserPassesTestMixin, UpdateView):
         case.delete_request_by = self.request.user.profile
         case.save()
 
-        recipient_list_user = list([u for u in case.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
-        recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
-        recipient_list = recipient_list + recipient_list_user
-        recipient_list = list(set(recipient_list))
+        recipient_list = list(set(
+            get_wonen_medewerkers_email_list() + 
+            get_zorginstelling_medewerkers_email_list(self.object) + 
+            get_woningcorporatie_medewerkers_email_list(self.object)
+        ))
+        recipient_list.remove(self.request.user.username)
 
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_delete_request.txt', {
@@ -396,10 +397,12 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
         case.delete_request_by = None
         case.save()
 
-        recipient_list_user = list([u for u in self.object.profile_set.all().exclude(user=self.request.user).values_list('user__username', flat=True) if u])
-        recipient_list = list(o[0] for o in Organization.objects.filter(main_email__isnull=False).values_list('main_email'))
-        recipient_list = recipient_list + recipient_list_user
-        recipient_list = list(set(recipient_list))
+        recipient_list = list(set(
+            get_wonen_medewerkers_email_list() + 
+            get_zorginstelling_medewerkers_email_list(self.object) + 
+            get_woningcorporatie_medewerkers_email_list(self.object)
+        ))
+        recipient_list.remove(self.request.user.username)
 
         current_site = get_current_site(self.request)
         body = render_to_string('cases/mail/case_delete_request_revoke.txt', {
@@ -549,8 +552,6 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     model = Case
     template_name = 'cases/send.html'
     form_class = SendCaseForm
-    recipient_list = []
-    federation = None
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
@@ -572,18 +573,11 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     def get_recipient_list(self):
         form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
         federation_type = form_context.get('federation_type')
-        federation = self.get_federation()
-        recipient_list = [federation.main_email] 
-        if not federation.main_email and federation_type == FEDERATION_TYPE_ADW:
-            recipient_list = list(User.objects.filter(
-                user_type=WONEN,
-                federation=federation,
-            ).values_list('username', flat=True))
-        elif not federation.main_email and federation_type == FEDERATION_TYPE_WONINGCORPORATIE and federation:
-            recipient_list = list(User.objects.filter(
-                user_type=WONINGCORPORATIE_MEDEWERKER,
-                federation=self.federation,
-            ).values_list('username', flat=True))
+        recipient_list = [] 
+        if federation_type == FEDERATION_TYPE_ADW:
+            recipient_list = get_wonen_medewerkers_email_list()
+        elif federation_type == FEDERATION_TYPE_WONINGCORPORATIE:
+            recipient_list = get_woningcorporatie_medewerkers_email_list(self.object)
         return recipient_list
 
 

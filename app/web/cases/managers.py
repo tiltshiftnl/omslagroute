@@ -1,5 +1,7 @@
 from django.db import models
 from web.users.statics import *
+from web.forms.statics import FORMS_SLUG_BY_FEDERATION_TYPE
+from web.organizations.statics import FEDERATION_TYPE_WONINGCORPORATIE, FEDERATION_TYPE_ADW
 import datetime
 from constance import config
 
@@ -19,10 +21,15 @@ class CaseManager(models.Manager):
             return queryset
         if user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
             queryset = queryset.filter(
-                woningcorporatie_medewerker__user__federation=user.federation,
+                id__in=CaseVersion.objects.filter(
+                    version_verbose__in=FORMS_SLUG_BY_FEDERATION_TYPE.get(FEDERATION_TYPE_WONINGCORPORATIE)
+                ).order_by('case').distinct().values_list('case'),
+                woningcorporatie=user.federation,
             )
             return queryset
         return queryset.filter(
-            id__in=CaseVersion.objects.order_by('case').distinct().values_list('case'),
+            id__in=CaseVersion.objects.filter(
+                version_verbose__in=FORMS_SLUG_BY_FEDERATION_TYPE.get(FEDERATION_TYPE_ADW)
+            ).order_by('case').distinct().values_list('case'),
             delete_request_date__isnull=True,
         )
