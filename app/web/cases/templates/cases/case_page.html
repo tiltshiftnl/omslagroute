@@ -282,7 +282,11 @@
                                 <ul>
                                     {% for cs in case_status_list %}
                                     <li>
+<<<<<<< HEAD
                                     <span class="label label--status-{{ cs.status|status_class }}">
+=======
+                                    <span class="label {% if cs.status == 2 or cs.status == 6 %}label--status-disapproved{% elif cs.status == 3 or cs.status == 7 %}label--status-approved{% elif cs.status == 4 or cs.status == 8 %}label--status-pending{% endif %}">
+>>>>>>> feat: case form list versions
                                         {{ cs.status|status_verbose }} {{ cs.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
                                     </span>
                                     </li>
