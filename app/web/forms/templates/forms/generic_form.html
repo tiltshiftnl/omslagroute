@@ -45,8 +45,7 @@
                     </svg></button>
                     {% endif %}
                 </div>
-                
-                {% if form.enable_ajax %}
+
                 <div class="section--client">
                     <section class="section-details-client u-margin-none">
                         <!-- START Client persoonsgegevens -->
@@ -197,8 +196,6 @@
                         </div>
                     </section>
                 </div>
-                    <!-- END STATUS -->
-                {% endif %}
             
                 {% csrf_token %}
                 {{ form.as_sections.errors }}
@@ -250,7 +247,6 @@
                         <legend id="{{ section.title|slugify }}">
                             <h3 class="section--step__title">
                                 {{ section.title }}
-                                <!-- &nbsp;{% if inpage_navigation %}<div class="dot dot--large{% if section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if section.step_complete %}&#10003;{% endif %}</div>{% endif %} -->
                             </h3>
                         </legend>
                         {% endif %}
@@ -264,7 +260,6 @@
                                 {% if sub_section.title %}
                                 <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
                                     {{ sub_section.title }}
-                                    <!-- &nbsp;{% if inpage_navigation %}<div class="dot dot--small{% if sub_section.step_complete %} dot--checked{% else %} dot--blue{% endif %}">{% if sub_section.step_complete %}&#10003;{% endif %}</div>{% endif %} -->
                                 </h4>
                                 {% endif %}
                                 {% if sub_section.description %}
@@ -321,18 +316,16 @@
                 {% endblock %}
 
                 {{ form.as_sections.hidden_fields }}
-                {% if share %}
                 <p class="u-margin-bottom-4x">* Verplicht veld</p>
-                {% endif %}
                 <div class="form-field form-field--buttons-sticky screen-only">
                     <div class="button-wrapper">
-                        {% if form.enable_ajax%}
+                        {% if not object.delete_request_date %}
                         <a href="javascript:void(0);" {% if object.delete_request_date %}disabled{% else %} data-handler="ajax-forms-submit" {% endif %} class="button button--primary">Opslaan</a>
-                        {% elif not object.delete_request_date %}
+                        {% elif object.delete_request_date %}
                         <input {% if object.delete_request_date %}disabled{% endif %} type="submit" value="Opslaan" class="button button--primary">
                         {% endif %}
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
-                        {% if form.instance.id and share and federation %}
+                        {% if form.instance.id and federation %}
                         <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="text-link u-float-right" >
                             <svg class="u-margin-right-half" width="16" height="20">
                                 <use href="#email" xlink:href="#email" width="16" height="20"></use>
@@ -342,8 +335,6 @@
 
             </div>
             {% block inpage_navigation %}
-            {% if inpage_navigation %}
-
                 <div class="grid__aside">
 
                     <div class="grid__aside--sticky">
@@ -377,8 +368,6 @@
                         </div>
                     </div>
                 </div>
-
-            {% endif %}
             {% endblock %}
         </div>
 

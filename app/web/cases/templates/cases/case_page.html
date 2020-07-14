@@ -216,6 +216,7 @@
             <thead>
                 <tr>
                     <th>Stap in omslagroute</th>
+                    <th>Organisatie type</th>
                     <th>Status</th>
                     <th>Status datum</th>
                     <th>Status door</th>
@@ -246,21 +247,47 @@
                             </strong>
                         </td>
                         <td>
+                            <span class="show-on-mobile">Organisatie type:</span>
+                            {% if moment.form %}
+                            <span class="tinytag">{{ moment.form|form_organization_type_abbreviation }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
                             <span class="show-on-mobile">Status:</span>
 
                             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
+                                {% if moment.form|form_list_versions %}
+                                Meest recente status<br><br>
+                                {% endif %}
                                 {% if moment.form and case_status %}
                                     <span class="label {% if case_status.status == 2 or case_status.status == 6 %}label--status-disapproved{% elif case_status.status == 3 or case_status.status == 7 %}label--status-approved{% elif case_status.status == 4 or case_status.status == 8 %}label--status-pending{% endif %}">
                                         {% if case_status.case_form_is_opnieuw_ingediend %}
                                         Opnieuw ingediend
                                         {% else %}
-                                        {{ case_status.status|status_verbose }}
+                                        {{ case_status.status|status_verbose }} {{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
                                         {% endif %}
                                     </span>
                                 {% elif moment.form %}
                                     <span class="u-font-size-small">
                                     Nog niet ingediend
                                     </span>
+                                {% endif %}
+                                {% if moment.form|form_list_versions %}
+                                {% get_case_status_list object moment.form as case_status_list %}
+                                {% if case_status_list %}
+                                <br><br><br>Alle goedgekeurde statussen<br>
+                                <ul>
+                                    {% for cs in case_status_list %}
+                                    <li>
+                                    <span class="label {% if cs.status == 2 or cs.status == 6 %}label--status-disapproved{% elif cs.status == 3 or cs.status == 7 %}label--status-approved{% elif cs.status == 4 or cs.status == 8 %}label--status-pending{% endif %}">
+                                        {{ cs.status|status_verbose }} {{ cs.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
+                                    </span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                
+                                
+                                {% endif %}
                                 {% endif %}
                             {% else %}
                                 {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}

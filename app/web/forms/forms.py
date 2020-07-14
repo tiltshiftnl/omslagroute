@@ -164,7 +164,7 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         self.federation_types = form_context.get('federation_types', [])
         self.options = form_context.get('options', {})
         exclude_fields = self.options.get('exclude_fields', [])
-        self.enable_ajax = form_context.get('enable_ajax', False)
+        
         for f in self._get_fields(self.sections):
             if f not in exclude_fields:
                 self.fields[f] = FIELDS_DICT.get(f)

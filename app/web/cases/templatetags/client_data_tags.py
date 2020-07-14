@@ -1,4 +1,6 @@
 from django import template
+from ..models import CaseStatus 
+from ..statics import CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD
 register = template.Library()
 
 
@@ -24,3 +26,13 @@ def get_case_versions(versions, key, *args, **kwargs):
     if not versions:
         return False
     return versions.get(key)
+
+
+@register.simple_tag()
+def get_case_status_list(case, form, *args, **kwargs):
+    case_status_list = CaseStatus.objects.filter(
+        case=case,
+        form=form,
+        status=CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD,
+    )
+    return case_status_list
