@@ -6,6 +6,7 @@ from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 import copy
+import json
 
 
 class BaseGenericForm:
@@ -45,9 +46,8 @@ class BaseGenericForm:
             bf_is_empty = not bool(bf.value())
             rules = self.options.get('rules', {}).get(name)
             if rules:
-                data_attr = ' data-decorator="form-rule" data-rule-values="%s" data-rule-fields="%s" ' % (
-                    ','.join([str(r) for r in rules[0]]),
-                    ','.join(rules[1]),
+                data_attr = " data-decorator='form-rule' data-rule-data='%s' " % (
+                    json.dumps(rules),
                 )
 
             if bf_type == 'checkboxinput':

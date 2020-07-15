@@ -778,7 +778,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_borg_bedrag', forms.CharField(
-        label=_('Hoeveel is deze borg?'),
+        label=_('Hoeveel is deze borg? *'),
         required=False,
     ), {'step_required': True}),
 
@@ -1498,24 +1498,65 @@ FORMS = (
             'geboortedatum',
             'emailadres',
         ], 'rules': {
-            'jonger_dan_26': ([3,4], (
-                'jonger_dan_26_plaatsing_project',
-                'jonger_dan_26_motivatie_contract_onbepaalde',
-                )),
-            'partner_check': ([1], (
-                'partner_naam',
-                'partner_geboortedatum',
-                'partner_gehuwd',
-                'partner_echtscheiding_rond',
-                'partner_woonsituatie',
-                )),
-            'kinderen_check': ([1], (
-                'kinderen',
-                'section_kinderen_opvang',
-                )),
-            'medische_problemen_mbt_traplopen_check': ([1], (
-                'medische_problemen_wooneisen',
-            ))
+            'jonger_dan_26': [
+                {
+                    'values': [3],
+                    'fields': [
+                        'jonger_dan_26_plaatsing_project',
+                    ],
+                    'required_fields': [
+                        'jonger_dan_26_plaatsing_project',
+                    ],
+                },
+                {
+                    'values': [4],
+                    'fields': [
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                    ],
+                    'required_fields': [
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                    ],
+                },
+            ],
+            'partner_check': (
+                {
+                    'values': [1],
+                    'fields': [
+                        'partner_naam',
+                        'partner_geboortedatum',
+                        'partner_gehuwd',
+                        'partner_echtscheiding_rond',
+                        'partner_woonsituatie',
+                    ],
+                    'required_fields': [
+                        'partner_naam',
+                        'partner_geboortedatum',
+                        'partner_gehuwd',
+                        'partner_echtscheiding_rond',
+                        'partner_woonsituatie',
+                    ],
+                },
+            ),
+            'kinderen_check': (
+                {
+                    'values': [1],
+                    'fields': [
+                        'kinderen',
+                        'section_kinderen_opvang',
+                    ],
+                    'required_fields': [
+                        'kinderen',
+                        'section_kinderen_opvang',
+                    ],
+                },
+            ),
+            'medische_problemen_mbt_traplopen_check': (
+                {
+                    'values': [1],
+                    'fields': ['medische_problemen_wooneisen',],
+                    'required_fields': ['medische_problemen_wooneisen',],
+                },
+            ),
 
         }},
     ),
@@ -1535,13 +1576,34 @@ FORMS = (
             'geboortedatum',
             'emailadres',
         ],'rules': {
-            'jonger_dan_26': ([3,4], (
-                'jonger_dan_26_plaatsing_project',
-                'jonger_dan_26_motivatie_contract_onbepaalde',
-                )),
-            'omklap_akkoord_derde': ([2], (
-                ['omklap_akkoord_derde_toelichting']
-                )),
+            'jonger_dan_26': [
+                {
+                    'values': [3],
+                    'fields': [
+                        'jonger_dan_26_plaatsing_project',
+                    ],
+                    'required_fields': [
+                        'jonger_dan_26_plaatsing_project',
+                    ],
+                },
+                {
+                    'values': [4],
+                    'fields': [
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                    ],
+                    'required_fields': [
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                    ],
+                },
+            ],
+
+            'omklap_akkoord_derde': (
+                {
+                    'values': [2],
+                    'fields': ['omklap_akkoord_derde_toelichting',],
+                    'required_fields': ['omklap_akkoord_derde_toelichting',],
+                },
+            ),
         }, 'addres_required': True},
     ),
     (
@@ -1560,20 +1622,61 @@ FORMS = (
             'geboortedatum',
             'emailadres',
         ],'rules': {
-            'woonevaluatie_overlast_buren': ([1], (
-                ['woonevaluatie_overlast_buren_gemeld']
-            )),
-            'woonevaluatie_overlast_omwonenden_gemeld': ([1], (
-                ['woonevaluatie_overlast_omwonenden_oplossing']
-            )),
-            'woonevaluatie_huur_betalen_op_tijd': ([2], (
-                ['woonevaluatie_huur_betalen_regeling']
-            )),
-
-            'aanvraag_omklap_actief': ([1], (
-                ['aanvraag_omklap_alle_doelen_behaald',
-                'aanvraag_omklap_steunstructuren']
-            )),
+            'woonevaluatie_contact_met_buren': [
+                {
+                    'values': [1],
+                    'fields': ['woonevaluatie_contact_met_buren_verloop',],
+                    'required_fields': ['woonevaluatie_contact_met_buren_verloop',],
+                },
+                {
+                    'values': [2],
+                    'fields': ['woonevaluatie_contact_met_buren_gewenst',],
+                    'required_fields': ['woonevaluatie_contact_met_buren_gewenst',],
+                },
+            ],
+            'woonevaluatie_overlast_buren': (
+                {
+                    'values': [1],
+                    'fields': ['woonevaluatie_overlast_buren_gemeld',],
+                    'required_fields': ['woonevaluatie_overlast_buren_gemeld',],
+                },
+            ),
+            'woonevaluatie_overlast_omwonenden_gemeld': (
+                {
+                    'values': [1],
+                    'fields': ['woonevaluatie_overlast_omwonenden_oplossing',],
+                    'required_fields': ['woonevaluatie_overlast_omwonenden_oplossing',],
+                },
+            ),
+            'woonevaluatie_netwerk_aanwezig': [
+                {
+                    'values': [1],
+                    'fields': ['woonevaluatie_netwerk_hoe_gaat_dat',],
+                    'required_fields': ['woonevaluatie_netwerk_hoe_gaat_dat',],
+                },
+                {
+                    'values': [2],
+                    'fields': ['woonevaluatie_netwerk_behoefte',],
+                    'required_fields': ['woonevaluatie_netwerk_behoefte',],
+                },
+            ],
+            
+            'woonevaluatie_huur_betalen_op_tijd': (
+                {
+                    'values': [2],
+                    'fields': ['woonevaluatie_huur_betalen_regeling',],
+                    'required_fields': ['woonevaluatie_huur_betalen_regeling',],
+                },
+            ),
+            'aanvraag_omklap_actief': (
+                {
+                    'values': [1],
+                    'fields': ['aanvraag_omklap_alle_doelen_behaald',
+                                'aanvraag_omklap_steunstructuren',],
+                    'required_fields': ['aanvraag_omklap_alle_doelen_behaald',
+                                        'aanvraag_omklap_steunstructuren',],
+                },
+            ),
             
         }, 'addres_required': True},
     ),
@@ -1593,12 +1696,20 @@ FORMS = (
             'geboortedatum',
             'emailadres',
         ], 'rules': {
-            'kennismaking_wooncorporatie_kennisgemaakt_buren': ([2], (
-                ['kennismaking_wooncorporatie_kennismaken_buren']
-            )),
-            'kennismaking_wooncorporatie_borg_betalen': ([1], (
-                ['kennismaking_wooncorporatie_borg_bedrag']
-            )),
+            'kennismaking_wooncorporatie_kennisgemaakt_buren': (
+                {
+                    'values': [2],
+                    'fields': ['kennismaking_wooncorporatie_kennismaken_buren',],
+                    'required_fields': ['kennismaking_wooncorporatie_kennismaken_buren',],
+                },
+            ),
+            'kennismaking_wooncorporatie_borg_betalen': (
+                {
+                    'values': [1],
+                    'fields': ['kennismaking_wooncorporatie_borg_bedrag',],
+                    'required_fields': ['kennismaking_wooncorporatie_borg_bedrag',],
+                },
+            ),
             
         }, 'addres_required': True},
     ),
