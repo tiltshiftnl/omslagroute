@@ -58,7 +58,7 @@
                                 <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
                             </svg></a>
                         <div role="dialog" class="modal" id="modalDocumentDelete-{{ document.id }}">
-                            <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" data-src="{% url 'delete_case_document' object.id document.id %}" title="Verwijder bijlage {{ document.name }}"></iframe>
+                            <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" data-src="{% url 'delete_case_document' object.id document.id %}" src="about:blank" title="Verwijder bijlage {{ document.name }}"></iframe>
                         </div>  
                     </td>
                     {% endif %}

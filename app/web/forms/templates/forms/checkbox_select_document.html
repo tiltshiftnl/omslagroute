@@ -14,7 +14,7 @@
 {% endif %}
 
 <div role="dialog" class="modal" id="modalUploads">
-  <iframe class="modal--uploads" id="iframeModal" data-src="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}&open-in-iframe=true" title="ga naar bestand toevoegen">
+  <iframe class="modal--uploads" id="iframeModal" data-src="{% url 'add_case_document' widget.attrs.instance_id %}?next={{ widget.attrs.path }}&hash={{ widget.attrs.id }}&open-in-iframe=true" src="about:blank" title="ga naar bestand toevoegen">
   </iframe>
 </div>
 
