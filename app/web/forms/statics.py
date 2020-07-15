@@ -556,7 +556,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_overlast_buren_gemeld', forms.IntegerField(
-        label=_('Heb je dit gemeld bij de corporatie? *'),
+        label=_('Heb je dit gemeld bij de corporatie?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -582,10 +582,10 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_netwerk_hoe_gaat_dat', forms.CharField(
-        label=_('Zo ja, hoe gaat dat? *'),
+        label=_('Zo ja, hoe gaat dat?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('woonevaluatie_netwerk_behoefte', forms.IntegerField(
         label=_('Zo nee, heb je hier behoefte aan? *'),
         widget=RadioSelect(
@@ -606,10 +606,10 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_huur_betalen_regeling', forms.CharField(
-        label=_('Is er een regeling getroffen en/of extra ondersteuning geregeld? *'),
+        label=_('Is er een regeling getroffen en/of extra ondersteuning geregeld?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('aanvraag_omklap_actief', forms.IntegerField(
         label=_('Is er sprake van voordracht voor omklap? *'),
         widget=RadioSelect(
@@ -618,15 +618,15 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('aanvraag_omklap_alle_doelen_behaald', forms.CharField(
-        label=_('Zijn alle doelen behaald? *'),
+        label=_('Zijn alle doelen behaald?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('aanvraag_omklap_steunstructuren', forms.CharField(
-        label=_('Op welke steunstructuur / structuren kun je een beroep doen na het moment van omklappen? *'),
+        label=_('Op welke steunstructuur / structuren kun je een beroep doen na het moment van omklappen?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('woonevaluatie_moment_volgend_gesprek', forms.CharField(
         label=_('Wat is een goed moment voor het volgende gesprek? *'),
         required=False,
@@ -778,9 +778,9 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_borg_bedrag', forms.CharField(
-        label=_('Hoeveel is deze borg? *'),
+        label=_('Hoeveel is deze borg?'),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
 
     ('kennismaking_wooncorporatie_akkoord_bewoner', forms.BooleanField(
         label=_('Akkoord bewoner *'),
