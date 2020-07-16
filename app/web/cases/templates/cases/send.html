@@ -15,7 +15,7 @@
 
 {% block main %}
 <section class="section section--form u-margin-bottom-sticky">
-    <h2>Controleer de gegevens '{{ title }}'</h2>
+    <h1 class="u-margin-bottom">Controleer de gegevens '{{ title }}'</h1>
     <form method="post" novalidate class="u-padding-bottom-4x">
         {% csrf_token %}
         {% client_status form.instance slug as status %}
@@ -26,23 +26,9 @@
                 <p class="u-margin-bottom-2x">Controleer onderstaande gegevens van <strong>{{ form.instance.client_name }}</strong>.<br>Een verzoek om deze aanvraag te bekijken, zal verstuurd worden naar {% for recipient in  recipient_list %}{% if forloop.counter0 >= 1  and not forloop.last %}, {% elif forloop.counter0 >= 1 and forloop.last %} en {% endif %}<strong>{{ recipient }}</strong>{% endfor %} van <strong>{{ federation.name }}</strong>.</p>
                 
                 <section class="section section--client u-margin-bottom-2x">
-                    <h3>Informatie</h3>
                     <div class="details-client">
-                        <dl>
                         {% case_form_data form.instance federation.organization slug as data %}
-                        {% for k, field in data.items  %}
-                        <div>
-                            <dt>{{ field.label }}: </dt>
-                            <dd>
-                                {% if field.value|is_date %}
-                                    {{ field.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
-                                {% else %}
-                                    {{ field.value }}
-                                {% endif %}
-                            </dd>
-                        </div>
-                        {% endfor %}
-                        </dl>
+                        {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data %}
                     </div>
                 </section>
                 {% if document_list %}
@@ -67,7 +53,7 @@
                 </div>    
             </div>
         {% else %}
-            <h3>Aanvraag incompleet</h3>
+            <h2>Aanvraag incompleet</h2>
             <p>De volledigheid van de benodigde informatie is <strong>{{ status.percentage }}%</strong>.<br>
                 De volgende informatie ontbreekt:</p>
             <ul>

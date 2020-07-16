@@ -103,25 +103,9 @@
     <section class="section section--forms">
         <!-- START Client basis gegevens -->
         <div class="details-client">
-            <header>
-                <h2 class="h3">Gegevens</h2>
-            </header>
-
-            <dl>
-                {% case_form_data object request.user.federation.organization form_data.slug as data %}
-                {% for k, field in data.items  %}
-                <div>
-                    <dt>{{ field.label }}: </dt>
-                    <dd>
-                        {% if field.value|is_date %}
-                            {{ field.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
-                        {% else %}
-                            {{ field.value }}
-                        {% endif %}
-                    </dd>
-                </div>
-                {% endfor %}
-            </dl>
+            
+            {% case_form_data object request.user.federation.organization form_data.slug as data %}
+            {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data %}
         </div>
         <!-- END Client basis gegevens -->
 

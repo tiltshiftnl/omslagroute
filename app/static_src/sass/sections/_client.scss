@@ -175,6 +175,24 @@
                 }
             }
         }
+
+        .sub-section--readonly {
+    
+            dl {
+                div {
+                    padding: 0 .938rem;
+                    dt, dd {
+                        padding: .25rem 0;
+                        
+                    }
+                    dt {
+                        flex: 0 1 25%;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+        
     }
     .section--forms {
 
