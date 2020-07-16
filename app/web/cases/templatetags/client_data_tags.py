@@ -15,6 +15,11 @@ def case_form_data(case, organization, form, *args, **kwargs):
 
 
 @register.simple_tag()
+def case_data_by_field_name(data, field_name, *args, **kwargs):
+    return data.get(field_name, {})
+
+
+@register.simple_tag()
 def get_case_versions(versions, key, *args, **kwargs):
     if not versions:
         return False

@@ -1,0 +1,42 @@
+{% load static i18n html_tags client_status_tags auth_tags client_data_tags tz %}
+
+{% for section in form_sections %}
+{% if not forloop.last %}
+<fieldset class="section section--step{% if not section.step_complete %} section--incomplete{% endif %}">
+    {% if section.title %}
+    <legend id="{{ section.title|slugify }}">
+        <h3 class="section--step__title">
+            {{ section.title }}
+        </h3>
+    </legend>
+    {% endif %}
+    {% if section.description %}
+    <p class="section--step__description">{{ section.description|safe }}</p>
+    {% endif %}
+
+    {% for sub_section in section.section_list %}
+        {% block subsection %}
+        <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}" {% if sub_section.id %}id="{{ sub_section.id }}{% endif %}">
+            {% if sub_section.title %}
+            <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
+                {{ sub_section.title }}
+            </h4>
+            {% endif %}
+            {% if sub_section.description %}
+            <p class="sub-section__description">{{ sub_section.description|safe }}</p>
+            {% endif %}
+            <dl>
+            {% for field in sub_section.fields %}
+            <div>
+                {% case_data_by_field_name data field as field_data %}
+                <dt>{{ field_data.label }}</dt>
+                <dd>{{ field_data.value }}</dd>
+            </div>
+            {% endfor %}
+            </dl>
+        </div>
+        {% endblock %}
+    {% endfor %}
+</fieldset>
+{% endif  %}
+{% endfor %}

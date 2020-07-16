@@ -228,7 +228,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
         kwargs.update({
             'form_fields': get_sections_fields(form_data.get('sections')),
-            'form_data': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
+            'form_data': form_data,
             'user_list': ', '.join(get_zorginstelling_medewerkers_email_list(self.object)),
             'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('slug')),
             'status_options': json.dumps(dict((k, v) for k, v in CASE_STATUS_DICT.items() if k in CASE_STATUS_CHOICES_BY_FEDEATION_TYPE.get(self.request.user.federation.organization.federation_type))),
@@ -593,6 +593,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
         kwargs.update({
             'federation_type': federation_type,
+            'form_data': form_context,
             'federation': federation,
             'recipient_list': recipient_list,
             'object': self.object,

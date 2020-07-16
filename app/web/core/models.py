@@ -26,6 +26,8 @@ class PrintableModel(models.Model):
                         data[f.name] = None
                 elif isinstance(f, models.BooleanField):
                     data[f.name] = 'Ja' if f.value_from_object(self) else 'Nee'
+                elif hasattr(self, 'get_%s_display' % f.name) and callable(getattr(self, 'get_%s_display' % f.name)):
+                    data[f.name] = getattr(self, 'get_%s_display' % f.name)()
                 else:
                     data[f.name] = f.value_from_object(self)
                 if isinstance(data[f.name], datetime.date):
