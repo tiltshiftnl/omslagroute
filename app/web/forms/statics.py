@@ -592,7 +592,7 @@ FIELDS = (
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('woonevaluatie_netwerk_behoefte_meer_contacten', forms.CharField(
         label=_('Heb je behoefte aan meer of andere contacten in de buurt? *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
