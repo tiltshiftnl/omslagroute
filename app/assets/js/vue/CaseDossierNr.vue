@@ -2,7 +2,7 @@
     <div v-bind:class="setFormClass()">
         <div v-if="!enableUpdate && !initial" class="u-padding-top u-clearfix">
             <span>Dossier nr: <strong>{{ caseDossierNr }}</strong>&nbsp;</span>
-            <a v-on:click="setEnableUpdate(true)" href="#" role="button" class="u-float-right u-underline--none screen-only" title="Voeg een nieuwe bijlage toe">
+            <a v-on:click="setEnableUpdate(true)" href="#" role="button" class="u-float-right u-underline--none screen-only" title="Wijzig dossiernummer">
                 (wijzig)
             </a>
         </div>
