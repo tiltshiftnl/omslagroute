@@ -658,7 +658,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam en functie *'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder_datum', forms.DateField(

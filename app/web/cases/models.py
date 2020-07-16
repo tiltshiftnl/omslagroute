@@ -741,7 +741,7 @@ class CaseBase(PrintableModel):
         null=True,
     )
     woonevaluatie_akkoord_zorgaanbieder_naam = models.CharField(
-        verbose_name=_('Woonevaluatie akkoord zorgaanbieder naam'),
+        verbose_name=_('Woonevaluatie akkoord zorgaanbieder naam en functie'),
         max_length=100,
         blank=True,
         null=True,
