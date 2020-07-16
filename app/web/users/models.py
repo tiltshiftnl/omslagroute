@@ -6,6 +6,7 @@ from .statics import USER_TYPES, USER_TYPES_DICT, USER_TYPES_ACTIVE, USER_TYPES_
 from django.db import models
 from django import forms
 from django.forms import widgets
+from django.contrib.postgres.fields import JSONField
 
 
 
@@ -23,6 +24,11 @@ class User(AbstractUser):
         related_name='user_list',
         verbose_name=_('Federatie'),
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    meta = JSONField(
+        verbose_name=_('Meta'),
         blank=True,
         null=True,
     )

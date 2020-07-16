@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles auth_tags %}
+
+{% block skiplinks %}{% endblock %}
+{% block header %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block messages %}{% endblock %}
+{% block feedback %}{% endblock %}
+
+{% block main %}
+            {% if request.user and BRANCH_NAME != 'production' %}
+            <dl>
+                {% for k, v in request.user.meta.items %}
+                <div>
+                <dt>{{k}}</dt>
+                <dd>
+                    <dl>
+                        {% for kk, vv in v.items %}
+                        <div>
+                        <dt>{{kk}}</dt>
+                        <dd>
+                            <strong>{{vv}}</strong>
+                        </dd>
+                        </div>
+                        {% endfor %}
+                    </dl>
+                </dd>
+                </div>
+                {% endfor %}
+            </dl>
+            {% endif %}
+{% endblock %}

@@ -344,6 +344,7 @@ class OIDCAuthenticationRequestView(DatapuntOIDCAuthenticationRequestView):
                 request,
                 reverse(reverse_url)
             ),
+            # 'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse(reverse_url),
             'state': state,
         }
 

@@ -12,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
     save_on_top = True
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (_('Omslagroute instellingen'), {'fields': ('user_type', 'federation')}),
+        (_('Omslagroute instellingen'), {'fields': ('user_type', 'federation', 'meta')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser'),
