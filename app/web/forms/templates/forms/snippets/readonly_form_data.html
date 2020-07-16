@@ -2,7 +2,8 @@
 
 {% for section in form_sections %}
 {% if not forloop.last %}
-<fieldset class="section section--step{% if not section.step_complete %} section--incomplete{% endif %}">
+
+<fieldset class="section section--step">
     {% if section.title %}
     <legend id="{{ section.title|slugify }}">
         <h3 class="section--step__title">
@@ -16,7 +17,7 @@
 
     {% for sub_section in section.section_list %}
         {% block subsection %}
-        <div class="section sub-section{% if not sub_section.step_complete %} section--incomplete{% endif %}" {% if sub_section.id %}id="{{ sub_section.id }}{% endif %}">
+        <div class="section sub-section sub-section--readonly">
             {% if sub_section.title %}
             <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
                 {{ sub_section.title }}
