@@ -6,9 +6,9 @@
 <fieldset class="section section--step">
     {% if section.title %}
     <legend id="{{ section.title|slugify }}">
-        <h3 class="section--step__title">
+        <h2 class="h3 section--step__title">
             {{ section.title }}
-        </h3>
+        </h2>
     </legend>
     {% endif %}
     {% if section.description %}
@@ -19,9 +19,9 @@
         {% block subsection %}
         <div class="section sub-section sub-section--readonly">
             {% if sub_section.title %}
-            <h4 class="sub-section__title" id="{{ sub_section.title|slugify }}">
+            <h3 class="h4 sub-section__title" id="{{ sub_section.title|slugify }}">
                 {{ sub_section.title }}
-            </h4>
+            </h3>
             {% endif %}
             {% if sub_section.description %}
             <p class="sub-section__description">{{ sub_section.description|safe }}</p>

@@ -103,10 +103,7 @@
     <section class="section section--forms">
         <!-- START Client basis gegevens -->
         <div class="details-client">
-            <header>
-                <h2 class="h3">Gegevens</h2>
-            </header>
-
+            
             {% case_form_data object request.user.federation.organization form_data.slug as data %}
             {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data %}
         </div>
