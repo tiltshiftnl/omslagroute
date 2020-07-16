@@ -430,6 +430,58 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 
+class CaseCleanForm(UserPassesTestMixin, UpdateView):
+    model = Case
+    template_name = 'cases/case_clean_form.html'
+    fields = []
+    success_url = reverse_lazy('cases_by_profile')
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        print(list(self.get_not_empty_fields()))
+        values = [f for f in self.get_fields()[0] if hasattr(self.object, f) and getattr(self.object, f)]
+        if values:
+            return response
+        # print(values)
+        # return response
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_fields(self):
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        return get_sections_fields(form_context.get('sections')),
+
+    def get_not_empty_fields(self):
+        return [f for f in self.get_fields()[0] if hasattr(self.object, f) and getattr(self.object, f)]
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
+    def get_success_url(self):
+        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.add_message(self.request, messages.INFO, "Eventuele wijzigingen zijn opgeslagen.")
+        return response
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        for f in self.get_not_empty_fields():
+            print('get_%s_display' % f)
+            print(hasattr(self.object, 'get_%s_display' % f)) 
+            print(getattr(self.object, 'get_%s_display' % f)()) 
+        print(dir(self.object))
+        kwargs.update({
+            'not_empty_fields': {
+                f: getattr(self.object, f) if not hasattr(self.object, 'get_%s_display' % f) else getattr(self.object, 'get_%s_display' % f)()  for f in self.get_not_empty_fields()
+            },
+        })
+        return kwargs
+
+
 class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
     model = Case
     template_name = 'forms/generic_form.html'

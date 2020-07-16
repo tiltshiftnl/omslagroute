@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} - Cliënt aanpassen{% endblock %}
+
+{% block breadcrumb %}
+    <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Cli&euml;nt gegevens aanpassen</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h2>Cli&euml;nt gegevens aanpassen</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <dl>
+        {% for k, v in not_empty_fields.items %}
+            <dt>
+                {{k}}
+            </dt>
+            <dd>
+                {{v}}
+            </dd>
+            
+        {% endfor %}
+        </dl>
+        <div class="form-field form-field--buttons screen-only u-margin-top-3x">
+            <input type="submit" value="Opslaan" class="button button--primary">
+            <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
+        </div>
+    </form>
+{% endblock %}

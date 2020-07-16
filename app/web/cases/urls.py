@@ -20,6 +20,7 @@ urlpatterns = [
     path('<int:pk>/basis-gegevens/', CaseBaseUpdateView.as_view(), name='update_case_base'),
     path('<int:pk>/adres-aanmaken/', CaseAddressCreate.as_view(), name='create_case_address'),
     path('<int:pk>/adres-aanpassen/', CaseAddressUpdate.as_view(), name='update_case_address'),
+    path('<int:pk>/<str:slug>/nieuw/', CaseCleanForm.as_view(), name='update_case_clean'),
     path('<int:pk>/<str:slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),
     path('<int:pk>/<str:slug>/verstuur', SendCaseView.as_view(), name='send_case'),
 

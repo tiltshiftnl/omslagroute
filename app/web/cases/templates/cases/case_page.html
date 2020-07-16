@@ -233,6 +233,9 @@
                             {% if moment.form %}
                                 {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                                 <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
+                                {% if moment.form|form_list_versions %}
+                                <a href="{% url 'update_case_clean' object.id moment.form %}" class="button button--secondary">Nieuwe {{ moment.name }}</a>
+                                {% endif %}
                                 {% endif %}
                                 {% if request.user|is_wonen_medewerker or request.user|is_woningcorporatie_medewerker %}
                                 {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
