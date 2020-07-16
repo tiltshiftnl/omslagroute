@@ -53,3 +53,9 @@ if settings.IAM_URL:
         url(r'^oidc/', include('keycloak_oidc.urls')),
         path('inloggen/', OIDCAuthenticationRequestView.as_view(), name='inloggen'),
     ]
+if settings.BRANCH_NAME != 'production':
+    urlpatterns += [
+        path('user-meta/', TemplateView.as_view(
+            template_name="user_meta.html",
+        ), name='user_meta'),
+    ]

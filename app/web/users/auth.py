@@ -66,7 +66,11 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
 
     def create_user(self, claims):
         user = super().create_user(claims)
+        user.meta = {
+            'claims': claims,
+        }
         user = self.update_user_federation(user, claims)
+        user.save()
 
         profile = Profile()
         profile.user = user
@@ -99,11 +103,14 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
             federation_id=federation_id,
             defaults={'name': federation_id},
         )
-        user.save()
         return user
 
     def update_user(self, user, claims):
         user = super().update_user(user, claims)
+        user.meta = {
+            'claims': claims,
+        }
+        user.save()
         return user
 
     def get_userinfo(self, access_token, id_token, payload):
@@ -113,6 +120,10 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
     def get_or_create_user(self, access_token, id_token, payload):
 
         user = super().get_or_create_user(access_token, id_token, payload)
+        user.meta.update({
+            'payload': payload,
+        })
+        user.save()
         return user
 
     def authenticate(self, request, **kwargs):
@@ -141,6 +152,7 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
                 self.request,
                 reverse(reverse_url)
             ),
+            # 'redirect_uri': 'https://acc.omslagroute.amsterdam.nl%s' % reverse(reverse_url),
         }
 
         # Get the token
