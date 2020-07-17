@@ -592,7 +592,7 @@ FIELDS = (
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
-    ), {'step_required': True}),
+    ), {}),
     ('woonevaluatie_netwerk_behoefte_meer_contacten', forms.CharField(
         label=_('Heb je behoefte aan meer of andere contacten in de buurt? *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
@@ -608,6 +608,54 @@ FIELDS = (
     ('woonevaluatie_huur_betalen_regeling', forms.CharField(
         label=_('Is er een regeling getroffen en/of extra ondersteuning geregeld?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('woonevaluatie_gepersonaliseerd_doel_1', forms.CharField(
+        label=_('1. Gepersonaliseerd doel rondom het wonen *'),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_gepersonaliseerd_doel_1_stand_van_zaken', forms.CharField(
+        label=_('Stand van zaken *'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_gepersonaliseerd_doel_1_behaald', forms.IntegerField(
+        label=_('Is het doel behaald? *'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {'step_required': True}),
+    ('woonevaluatie_gepersonaliseerd_doel_2', forms.CharField(
+        label=_('2. Gepersonaliseerd doel rondom het wonen'),
+        required=False,
+    ), {}),
+    ('woonevaluatie_gepersonaliseerd_doel_2_stand_van_zaken', forms.CharField(
+        label=_('Stand van zaken'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('woonevaluatie_gepersonaliseerd_doel_2_behaald', forms.IntegerField(
+        label=_('Is het doel behaald?'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
+        required=False,
+    ), {}),
+    ('woonevaluatie_gepersonaliseerd_doel_3', forms.CharField(
+        label=_('3. Gepersonaliseerd doel rondom het wonen'),
+        required=False,
+    ), {}),
+    ('woonevaluatie_gepersonaliseerd_doel_3_stand_van_zaken', forms.CharField(
+        label=_('Stand van zaken'),
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
+        required=False,
+    ), {}),
+    ('woonevaluatie_gepersonaliseerd_doel_3_behaald', forms.IntegerField(
+        label=_('Is het doel behaald?'),
+        widget=RadioSelect(
+            choices=DEFAULT_YES_OR_NO,
+        ),
         required=False,
     ), {}),
     ('aanvraag_omklap_actief', forms.IntegerField(
@@ -658,7 +706,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam en functie *'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder_datum', forms.DateField(
@@ -1260,12 +1308,29 @@ EVALUATIE_WONEN = [
                 'title': '',
                 'description': '',
                 'fields': [
-                    'urgentiecriteria_zinvolle_dagbesteding',
-                    'urgentiecriteria_functioneert_sociaal_stabiel',
-                    'urgentiecriteria_functioneert_psychisch_stabiel',
-                    'urgentiecriteria_is_financieel_stabiel',
+                    'woonevaluatie_gepersonaliseerd_doel_1',
+                    'woonevaluatie_gepersonaliseerd_doel_1_stand_van_zaken',
+                    'woonevaluatie_gepersonaliseerd_doel_1_behaald',
                 ],
-            }
+            },
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_gepersonaliseerd_doel_2',
+                    'woonevaluatie_gepersonaliseerd_doel_2_stand_van_zaken',
+                    'woonevaluatie_gepersonaliseerd_doel_2_behaald',
+                ],
+            },
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_gepersonaliseerd_doel_3',
+                    'woonevaluatie_gepersonaliseerd_doel_3_stand_van_zaken',
+                    'woonevaluatie_gepersonaliseerd_doel_3_behaald',
+                ],
+            },
         ]
     },
     {
