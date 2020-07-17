@@ -42,7 +42,7 @@ body.isInIframe,
     position: relative;
     
     h2 {
-      margin: 0 0 15px;
+      margin: 0 35px 15px 0;
     }
     hr {
       margin: 15px -15px;
@@ -64,6 +64,7 @@ body.isInIframe,
       font-size: 1.25rem;
       line-height: 1.75rem;
       font-weight: 500;
+      margin-bottom: .5rem;
     }
     
     .button--previous {
