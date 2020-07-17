@@ -693,54 +693,57 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    # woonevaluatie_gepersonaliseerd_doel_1 = models.CharField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 1'),
-    #     max_length=100,
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_1_stand_van_zaken = models.TextField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 1,  stand van zaken'),
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_1_behaald = models.PositiveSmallIntegerField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 1 behaald'),
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_2 = models.CharField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 2'),
-    #     max_length=100,
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_2_stand_van_zaken = models.TextField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 2,  stand van zaken'),
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_2_behaald = models.PositiveSmallIntegerField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 2 behaald'),
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_3 = models.CharField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 3'),
-    #     max_length=100,
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_3_stand_van_zaken = models.TextField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 3,  stand van zaken'),
-    #     blank=True,
-    #     null=True,
-    # )
-    # woonevaluatie_gepersonaliseerd_doel_3_behaald = models.PositiveSmallIntegerField(
-    #     verbose_name=_('Woonevaluatie gepersonaliseerd doel 3 behaald'),
-    #     blank=True,
-    #     null=True,
-    # )
+    woonevaluatie_gepersonaliseerd_doel_1 = models.CharField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 1'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_1_stand_van_zaken = models.TextField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 1,  stand van zaken'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_1_behaald = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 1 behaald'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_2 = models.CharField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 2'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_2_stand_van_zaken = models.TextField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 2,  stand van zaken'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_2_behaald = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 2 behaald'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_3 = models.CharField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 3'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_3_stand_van_zaken = models.TextField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 3,  stand van zaken'),
+        blank=True,
+        null=True,
+    )
+    woonevaluatie_gepersonaliseerd_doel_3_behaald = models.PositiveSmallIntegerField(
+        verbose_name=_('Woonevaluatie gepersonaliseerd doel 3 behaald'),
+        choices=DEFAULT_YES_OR_NO,
+        blank=True,
+        null=True,
+    )
     aanvraag_omklap_actief = models.PositiveSmallIntegerField(
         verbose_name=_('Aanvraag omklap actief'),
         blank=True,
