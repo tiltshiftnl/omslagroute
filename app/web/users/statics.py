@@ -13,7 +13,7 @@ USER_TYPES = (
     (3, 'GGD'),
     (WONINGCORPORATIE_MEDEWERKER, 'Woningcorporatie medewerker'),
     (BEGELEIDER, 'Persoonlijk begeleider'),
-    (ONBEKEND, 'Onbekend'),
+    (ONBEKEND, 'Onbekend/inactief'),
     (BEHEERDER, 'Beheerder'),
     (FEDERATIE_BEHEERDER, 'Organisatie beheerder'),
     (PB_FEDERATIE_BEHEERDER, 'PB & Organisatie beheerder'),
