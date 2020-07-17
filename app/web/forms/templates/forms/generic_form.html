@@ -101,30 +101,10 @@
                             <div class="status--wrapper">
                                 {% if case_status_list %}
                                 <p class="u-margin-bottom-half">
-                                    {% if case_status_list.0.status == 3 %}
-                                    <span class="icon-circle icon-circle--status-approved">
-                                        <svg class="icon check__icon" width="20" height="18">
-                                            <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                                        </svg>
-                                    </span>
-                                    <strong>Goedgekeurd</strong>
-                                    {% elif case_status_list.0.status == 2 %}
-                                    <span class="icon-circle icon-circle--status-disapproved">
-                                        <svg class="icon close__icon" width="14" height="14">
-                                            <use href="#close" xlink:href="#close" width="14" height="14"></use>
-                                        </svg>
-                                    </span>
-                                    <strong>Afgekeurd</strong>
-                                    {% elif case_status_list.0.status == 1 %}
-                                    {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw ingediend{% else %}Ingediend{% endif %}
-                                    {% elif case_status_list.0.status == 4 %}
-                                    <span class="icon-circle icon-circle--status-pending">
-                                        <svg class="icon pause__icon" width="12" height="16">
-                                            <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
-                                        </svg>
-                                    </span>
-                                    <strong>In behandeling</strong>
-                                    {% endif %}
+                                    {% include case_status_list.0.status|status_template %}
+                                    <strong>{% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw {% endif %}
+                                        {{ case_status_list.0.status|status_verbose }}
+                                    </strong>
                                 </p>
                                 <div class="status-container">
                                     <div class="facts u-margin-bottom-half">
@@ -156,25 +136,7 @@
                                                         {% for case_status in case_status_list %}
                                                         {% if forloop.counter0 > 0 %}
                                                         <li>
-                                                            {% if case_status.status == 2 %}
-                                                            <span class="icon-circle icon-circle--status-disapproved">
-                                                                <svg class="icon close__icon" width="14" height="14">
-                                                                    <use href="#close" xlink:href="#close" width="14" height="14"></use>
-                                                                </svg>
-                                                            </span>
-                                                            {% elif case_status.status == 3 %}
-                                                            <span class="icon-circle icon-circle--status-approved">
-                                                                <svg class="icon check__icon" width="20" height="18">
-                                                                    <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                                                                </svg>
-                                                            </span>
-                                                            {% elif case_status.status == 4 %}
-                                                            <span class="icon-circle icon-circle--status-pending">
-                                                                <svg class="icon pause__icon" width="12" height="16">
-                                                                    <use href="#pause" xlink:href="#pause" width="12" height="16"></use>
-                                                                </svg>
-                                                            </span>
-                                                            {% endif %}
+                                                            {% include case_status.status|status_template %}
                                                             <small class="status">{{ case_status.status|status_verbose|capfirst }}</small>
                                                             <div class="facts u-margin-top-half">
                                                                 <small>{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"j b Y H:i" }} </small><small class="u-float-right">{{ case_status.profile.user.username }}</small>

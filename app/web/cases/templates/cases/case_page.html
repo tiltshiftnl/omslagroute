@@ -263,7 +263,7 @@
                                 Meest recente status<br><br>
                                 {% endif %}
                                 {% if moment.form and case_status %}
-                                    <span class="label {% if case_status.status == 2 or case_status.status == 6 %}label--status-disapproved{% elif case_status.status == 3 or case_status.status == 7 %}label--status-approved{% elif case_status.status == 4 or case_status.status == 8 %}label--status-pending{% endif %}">
+                                    <span class="label label--status-{{ case_status.status|status_class }}">
                                         {% if case_status.case_form_is_opnieuw_ingediend %}
                                         Opnieuw ingediend
                                         {% else %}
@@ -282,7 +282,7 @@
                                 <ul>
                                     {% for cs in case_status_list %}
                                     <li>
-                                    <span class="label {% if cs.status == 2 or cs.status == 6 %}label--status-disapproved{% elif cs.status == 3 or cs.status == 7 %}label--status-approved{% elif cs.status == 4 or cs.status == 8 %}label--status-pending{% endif %}">
+                                    <span class="label label--status-{{ cs.status|status_class }}">
                                         {{ cs.status|status_verbose }} {{ cs.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
                                     </span>
                                     </li>
@@ -294,7 +294,7 @@
                                 {% endif %}
                             {% else %}
                                 {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
-                                    <span class="label {% if case_status.status == 2 or case_status.status == 6 %}label--status-disapproved{% elif case_status.status == 3 or case_status.status == 7 %}label--status-approved{% elif case_status.status == 4 or case_status.status == 8 %}label--status-pending{% endif %}">
+                                    <span class="label label--status-{{ case_status.status|status_class }}">
                                         {% if case_status.case_form_is_opnieuw_ingediend %}
                                         Opnieuw ingediend
                                         {% else %}

@@ -475,6 +475,7 @@ class CaseCleanForm(UserPassesTestMixin, UpdateView):
             print(getattr(self.object, 'get_%s_display' % f)()) 
         print(dir(self.object))
         kwargs.update({
+            'form': self.kwargs.get('slug'),
             'not_empty_fields': {
                 f: getattr(self.object, f) if not hasattr(self.object, 'get_%s_display' % f) else getattr(self.object, 'get_%s_display' % f)()  for f in self.get_not_empty_fields()
             },

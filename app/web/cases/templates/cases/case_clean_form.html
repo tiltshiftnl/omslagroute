@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load client_status_tags %}
 {% block title %} - Cliënt aanpassen{% endblock %}
 
 {% block breadcrumb %}
@@ -12,24 +12,59 @@
 {% endblock %}
 
 {% block main %}
-    <h2>Cli&euml;nt gegevens aanpassen</h2>
+    <h2>{{form|form_verbose}}</h2>
+    
+    <p>De huidige status van het formulier is:</p>
+    <strong>Ingediend</strong>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <p><strong>Je hebt de volgnde mogelijke optie</strong></p>
     <form method="post">
         {% csrf_token %}
-        <dl>
-        {% for k, v in not_empty_fields.items %}
-            <dt>
-                {{k}}
-            </dt>
-            <dd>
-                {{v}}
-            </dd>
-            
-        {% endfor %}
-        </dl>
-        <div class="form-field form-field--buttons screen-only u-margin-top-3x">
-            <input type="submit" value="Opslaan" class="button button--primary">
-            <a href="{% url 'cases_by_profile' %}" class="button button--secondary">Annuleer</a>
-        </div>
+        <ol>
+            <li>
+                <p>
+                    Wil doorgaan met het huidige formulier en deze alsnog ter goed keuring indienen.<br>
+                    <a href="{% url 'update_case' object.id form %}" class="button button--secondary">Verder gaan met bestaande</a>
+                </p> 
+            </li>
+            <li>
+                <p>
+                    Wil je een nieuw formulier beginnen en de vorige afsluiten, maar de bestaande informatie als startpunt gebruiken.
+                    <button type="submit" class="button button--secondary">Nieuw formulier met bestaande informatie</button>
+                </p> 
+            </li>
+            <li>
+                <p>
+                    Wil je een nieuw formulier beginnen en de vorige afsluiten en de bestaande informatie verwijderen.<br>
+                    <button type="submit" name="delete" value="delete" class="button button--secondary">Nieuw formulier bestaande informatie verwijderen</button>
+                </p> 
+            </li>
+
+        </ol>
     </form>
+    <br>
+    <br>
+    <br>
+
+    <h3>Huidige niet bewaarde gegevens</h3>
+
+    <dl>
+    {% for k, v in not_empty_fields.items %}
+        <dt>
+            {{k}}
+        </dt>
+        <dd>
+            {{v}}
+        </dd>
+        
+    {% endfor %}
+    </dl>
+    
+    <div class="form-field form-field--buttons screen-only u-margin-top-3x">
+        <a href="{% url 'case' object.id %}" class="button button--secondary">Annuleer</a>
+    </div>
 {% endblock %}

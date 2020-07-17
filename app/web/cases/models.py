@@ -1124,6 +1124,8 @@ class CaseStatus(models.Model):
                 form=self.form, 
                 case=self.case
         )
+        for cs in status_list:
+            print(cs.status)
         first = status_list.first()
         return first.status == 1 if first else False
         

@@ -59,48 +59,55 @@ CASE_STATUS = (
         'Indienen', 
         'icon-circle',
         '',
+        'ingediend.html',
     ),
     (
         CASE_STATUS_AFGEKEURD, 
         'Afgekeurd', 
         'Afkeuren', 
-        'icon-circle icon-circle--status-disapproved',
+        'disapproved',
         'close',
+        'afgekeurd.html',
     ),
     (
         CASE_STATUS_GOEDGEKEURD, 
         'Goedgekeurd', 
         'Goedkeuren', 
-        'icon-circle icon-circle--status-approved',
+        'approved',
         'check',
+        'gegekeurd.html',
     ),
     (
         CASE_STATUS_IN_BEHANDELING, 
         'In behandeling', 
         'In behandeling nemen', 
-        'icon-circle icon-circle--status-pending',
+        'pending',
         'pause',
+        'in_behandeling.html',
     ),
     (
         CASE_STATUS_WONINGCORPORATIE_AFGEKEURD, 
         'Afgekeurd', 
         'Afkeuren', 
-        'icon-circle icon-circle--status-disapproved',
+        'disapproved',
         'close',
+        'afgekeurd.html',
     ),
     (
         CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD, 
         'Goedgekeurd', 
         'Goedkeuren', 
-        'icon-circle icon-circle--status-approved',
+        'approved',
         'check',
+        'goedgekeurd.html',
     ),
     (
         CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING, 
         'In behandeling', 
         'In behandeling nemen', 
-        'icon-circle icon-circle--status-pending',
+        'pending',
         'pause',
+        'in_behandeling.html',
     ),
 )
 
@@ -111,6 +118,7 @@ def map_case_status_keys(f):
         'verb': f[2],
         'status_class': f[3],
         'icon_name': f[4],
+        'template': f[5]
     }
 
 CASE_STATUS_CHOICES = list((s[0], s[1]) for s in CASE_STATUS)
