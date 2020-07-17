@@ -828,6 +828,12 @@ class CaseCreateView(UserPassesTestMixin, CreateView):
     template_name_suffix = '_update_base_form'
     success_url = reverse_lazy('cases_by_profile')
 
+    def get_success_url(self):
+        return reverse(
+            'case', 
+            args=[self.object.id]
+        )
+
     def get_queryset(self):
         return self.model._default_manager.by_user(user=self.request.user)
 
@@ -849,6 +855,12 @@ class CaseBaseUpdateView(UserPassesTestMixin, UpdateView):
     form_class = CaseBaseForm
     template_name_suffix = '_update_base_form'
     success_url = reverse_lazy('cases_by_profile')
+
+    def get_success_url(self):
+        return '%s?iframe=true' % reverse(
+            'case', 
+            args=[self.object.id]
+        )
 
     def get_queryset(self):
         return self.model._default_manager.by_user(user=self.request.user)
