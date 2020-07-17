@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from django.utils.translation import ugettext_lazy as _
-from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER
+from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN
 
 
 class OrganizationForm(forms.ModelForm):
@@ -39,7 +39,7 @@ class FederationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
-        if user.user_type in [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER]:
+        if user.user_type in [PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN]:
             del self.fields['federation_id']
             del self.fields['organization']
             del self.fields['name']
