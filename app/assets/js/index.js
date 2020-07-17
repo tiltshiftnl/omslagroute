@@ -155,20 +155,10 @@ Array.prototype.sortOnData = function (key) {
       window.print();
     },
     "copy-to-input": function(e) {
-      var targetId = "id_"+e.target.parentNode.dataset.targetinput;
-      var targetInput = document.getElementById(targetId);
-      var text = e.target.parentNode.previousSibling.previousSibling.textContent;
-      console.info(e.target.parentNode);
-      console.info(targetInput);
-      
-      //console.log(text);
-
-      // console.log(target.previousSibling.previousSibling.textContent)
-      // var targetObj = input.replace(/['"]+/g, '').replace('id=', '')
-      // var inputTarget = document.getElementById(targetObj);
-      // console.log(targetObj);
-      // console.log(inputTarget);
-      targetInput.value = text;
+      var clickedElement = _closest(e.target, '[data-handler="copy-to-input"]')
+      var targetInput = document.getElementById("id_"+clickedElement.dataset.targetinput);
+      var copiedText = clickedElement.previousElementSibling.textContent;
+      targetInput.value = copiedText;
     
     },    
     "close-details": function (e) {
