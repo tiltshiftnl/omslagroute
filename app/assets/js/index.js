@@ -23,6 +23,7 @@ window.onload = function() {
   }
 };
 
+
 function showFileName(event) {
   var input = event.srcElement;
   var fileName = input.files[0].name;
@@ -153,6 +154,23 @@ Array.prototype.sortOnData = function (key) {
     "print-page": function(e) {
       window.print();
     },
+    "copy-to-input": function(e) {
+      var targetId = "id_"+e.target.parentNode.dataset.targetinput;
+      var targetInput = document.getElementById(targetId);
+      var text = e.target.parentNode.previousSibling.previousSibling.textContent;
+      console.info(e.target.parentNode);
+      console.info(targetInput);
+      
+      //console.log(text);
+
+      // console.log(target.previousSibling.previousSibling.textContent)
+      // var targetObj = input.replace(/['"]+/g, '').replace('id=', '')
+      // var inputTarget = document.getElementById(targetObj);
+      // console.log(targetObj);
+      // console.log(inputTarget);
+      targetInput.value = text;
+    
+    },    
     "close-details": function (e) {
       var self = _closest(e.target, '[data-handler="close-details"]'),
         //moment = _closest(self, "[data-m"),
