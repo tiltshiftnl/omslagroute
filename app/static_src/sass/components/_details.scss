@@ -1,0 +1,52 @@
+.form-field-history,
+.section--forms {
+    details {
+        margin-left: 1rem;
+        .icon-details--open {
+            display: none;
+        }
+        .icon-details--closed {
+            display: inline;
+        }
+
+        &[open]{
+            .icon-details--closed {
+                display: none;
+            }
+            .icon-details--open {
+                display: inline;
+            }
+        }
+        > summary {
+            list-style: none;
+            small {
+                font-size: .8rem;
+            }
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+        >.content {
+            margin: 3px 0 20px;
+            padding: 8px 10px 10px;
+            border: 1px solid $neutral-grey4;
+            *:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.section--forms {
+    details {
+        margin-left: 0;
+        > summary {
+            padding-top: 1rem;
+            h4 {
+                display: inline-block;
+                margin-right: .5rem;
+            }
+        }
+    }
+}

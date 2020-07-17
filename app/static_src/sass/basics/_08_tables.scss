@@ -190,6 +190,12 @@ table table {
         transform: translateY(-.75rem);
         z-index: 2;
     }
+
+    .button--new-form {
+        position: absolute;
+        left: 55px;
+        bottom: 1rem
+    }
 }
 
 .table--double-row {
