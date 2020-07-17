@@ -5,7 +5,7 @@ from web.users.auth import auth_test
 from django.forms import modelformset_factory
 from django.shortcuts import render
 from web.users.auth import user_passes_test
-from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER
+from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.contrib import messages
@@ -82,7 +82,7 @@ class FederationUpdateView(UserPassesTestMixin, UpdateView):
         return kwargs
 
     def test_func(self):
-        return auth_test(self.request.user, [BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER]) and hasattr(self.request.user, 'profile')
+        return auth_test(self.request.user, [BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN]) and hasattr(self.request.user, 'profile')
 
     def form_valid(self, form):
         federation = form.save(commit=True)
