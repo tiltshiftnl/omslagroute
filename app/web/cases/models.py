@@ -997,14 +997,14 @@ class Case(CaseBase):
             version_key: CASE_VERSION_BY_SLUG.get(dic[version_key].get('value'), {}).get('title'),
             saved_key: dic[saved_key].get('value'),
         } for dic in ld] for k in ld[0] if object_dict.get(k)}
-        if double_values:
-            dl = {k: [
-                vv for vv in v if vv.get(value_key) != '—' and vv.get(value_key) != object_dict.get(k, {}).get('value')
-            ] for k, v in dl.items()}
-            # remove double values
-            dl = {k: [
-                v[i] for i in range(len(v)) if i == 0 or v[i].get('value') != v[i-1].get('value')
-            ] for k, v in dl.items()}
+
+        dl = {k: [
+            v[i] for i in range(len(v)) if len(v)-1 > i and v[i].get(value_key) != v[i+1].get(value_key) or len(v)-1 == i
+        ] for k, v in dl.items()}
+
+        dl = {k: [
+            vv for vv in v if vv.get(value_key) != '—'
+        ] for k, v in dl.items()}
         return dl
 
     def delete(self):

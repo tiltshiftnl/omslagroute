@@ -36,7 +36,7 @@ def case_status_list_latest(case, *args, **kwargs):
 
 @register.filter()
 def status_verbose(status):
-    return CASE_STATUS_DICT.get(status).get('current')
+    return CASE_STATUS_DICT.get(status, {}).get('current')
 
 
 @register.filter()
