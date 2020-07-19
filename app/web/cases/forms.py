@@ -131,6 +131,35 @@ class CaseBaseForm(forms.ModelForm):
         self.fields['geboortedatum'].required = True
 
 
+class CaseCleanForm(forms.ModelForm):
+    form_continue_options = forms.ChoiceField(
+        label=_('Wat wil je doen?'),
+        widget=RadioSelect(
+
+        ),
+        initial=1,
+        choices=(
+            (1, 'Bekijken of bewerken huidige formulier'),
+            (2, 'Huidige formulier afsluiten + nieuw formulier'),
+        )
+    )
+    form_new_options = forms.ChoiceField(
+        label=_('Wat voor nieuw formulier?'),
+        widget=RadioSelect(
+
+        ),
+        initial=1,
+        choices=(
+            (1, 'Informatie huidige formulier gebruiken in de nieuwe'),
+            (2, 'Leeg nieuw formulier'),
+        )
+    )
+
+    class Meta:
+        model = Case
+        fields = []
+
+
 class CaseAddressForm(forms.ModelForm):
     woningcorporatie_medewerker = GroupedModelChoiceField(
         label=_('Woningcorporatie medewerker'),

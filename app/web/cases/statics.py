@@ -51,6 +51,7 @@ CASE_STATUS_WONINGCORPORATIE_INGEDIEND = 5
 CASE_STATUS_WONINGCORPORATIE_AFGEKEURD = 6
 CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD = 7
 CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING = 8
+CASE_STATUS_AFGESLOTEN = 9
 
 CASE_STATUS = (
     (
@@ -75,7 +76,7 @@ CASE_STATUS = (
         'Goedkeuren', 
         'approved',
         'check',
-        'gegekeurd.html',
+        'goedgekeurd.html',
     ),
     (
         CASE_STATUS_IN_BEHANDELING, 
@@ -109,6 +110,14 @@ CASE_STATUS = (
         'pause',
         'in_behandeling.html',
     ),
+    (
+        CASE_STATUS_AFGESLOTEN, 
+        'In concept', 
+        'In concept zetten', 
+        'pending',
+        'pause',
+        'afgesloten.html',
+    ),
 )
 
 def map_case_status_keys(f):
@@ -135,8 +144,13 @@ CASE_STATUS_CHOICES_BY_FEDEATION_TYPE = {
     FEDERATION_TYPE_WONINGCORPORATIE: [
         CASE_STATUS_INGEDIEND,
         CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD,
+        CASE_STATUS_WONINGCORPORATIE_AFGEKEURD,
     ]
 }
+
+IN_CONCEPT = [
+    CASE_STATUS_AFGESLOTEN,
+]
 
 
 

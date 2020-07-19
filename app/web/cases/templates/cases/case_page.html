@@ -234,7 +234,9 @@
                                 {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                                 <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
                                 {% if moment.form|form_list_versions %}
+                                {% if not case_status|case_status_in_concept %}
                                 <a href="{% url 'update_case_clean' object.id moment.form %}" class="button button--secondary">Nieuwe {{ moment.name }}</a>
+                                {% endif %}
                                 {% endif %}
                                 {% endif %}
                                 {% if request.user|is_wonen_medewerker or request.user|is_woningcorporatie_medewerker %}
@@ -262,49 +264,29 @@
                                 {% if moment.form|form_list_versions %}
                                 Meest recente status<br><br>
                                 {% endif %}
-                                {% if moment.form and case_status %}
-                                    <span class="label label--status-{{ case_status.status|status_class }}">
-                                        {% if case_status.case_form_is_opnieuw_ingediend %}
-                                        Opnieuw ingediend
-                                        {% else %}
-                                        {{ case_status.status|status_verbose }} {{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
-                                        {% endif %}
-                                    </span>
-                                {% elif moment.form %}
-                                    <span class="u-font-size-small">
-                                    Nog niet ingediend
-                                    </span>
-                                {% endif %}
+
+                                {% include 'cases/status/current.html' with object=case_status %}
+
                                 {% if moment.form|form_list_versions %}
                                 {% get_case_status_list object moment.form as case_status_list %}
-                                {% if case_status_list %}
+                                {% case_versions object moment.form as versions %}
+                                {% if versions %}
                                 <br><br><br>Alle goedgekeurde statussen<br>
                                 <ul>
-                                    {% for cs in case_status_list %}
+                                    {% for cv in versions %}
                                     <li>
-                                    <span class="label label--status-{{ cs.status|status_class }}">
-                                        {{ cs.status|status_verbose }} {{ cs.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
-                                    </span>
+                                        {% include 'cases/status/current.html' with object=cv.casestatus_set.all.first %}
                                     </li>
                                     {% endfor %}
                                 </ul>
-                                
                                 
                                 {% endif %}
                                 {% endif %}
                             {% else %}
                                 {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
-                                    <span class="label label--status-{{ case_status.status|status_class }}">
-                                        {% if case_status.case_form_is_opnieuw_ingediend %}
-                                        Opnieuw ingediend
-                                        {% else %}
-                                        {{ case_status.status|status_verbose }}
-                                        {% endif %}
-                                    </span>
+                                    {% include 'cases/status/current.html' with object=case_status %}
                                 {% elif request.user.federation.organization.federation_type == moment.form|form_federation_type %}
-                                    <span class="u-font-size-small">
-                                    Nog niet ingediend
-                                    </span>
+                                    {% include 'cases/status/current.html' %}
                                 {% endif %}
                             {% endif %}
                         </td>

@@ -12,45 +12,42 @@
 {% endblock %}
 
 {% block main %}
-    <h2>{{form|form_verbose}}</h2>
+    <h2>{{form_context.slug|form_verbose}}</h2>
     
-    <p>De huidige status van het formulier is:</p>
-    <strong>Ingediend</strong>
+    <p>De huidige status van het formulier:</p>
+    {% include 'cases/status/current.html' with object=case_status %}
 
     <br>
     <br>
     <br>
     <br>
-    <p><strong>Je hebt de volgnde mogelijke optie</strong></p>
+    {% comment %} <p><strong>Je hebt de volgnde mogelijke optie</strong></p> {% endcomment %}
     <form method="post">
         {% csrf_token %}
-        <ol>
-            <li>
-                <p>
-                    Wil doorgaan met het huidige formulier en deze alsnog ter goed keuring indienen.<br>
-                    <a href="{% url 'update_case' object.id form %}" class="button button--secondary">Verder gaan met bestaande</a>
-                </p> 
-            </li>
-            <li>
-                <p>
-                    Wil je een nieuw formulier beginnen en de vorige afsluiten, maar de bestaande informatie als startpunt gebruiken.
-                    <button type="submit" class="button button--secondary">Nieuw formulier met bestaande informatie</button>
-                </p> 
-            </li>
-            <li>
-                <p>
-                    Wil je een nieuw formulier beginnen en de vorige afsluiten en de bestaande informatie verwijderen.<br>
-                    <button type="submit" name="delete" value="delete" class="button button--secondary">Nieuw formulier bestaande informatie verwijderen</button>
-                </p> 
-            </li>
+        <div class="form-field form-field--radioselect" data-decorator='form-rule' data-rule-data='[{"values": [2], "fields": ["form_new_options"]}]'>
+            <label for="{{ form.form_continue_options.id_for_label }}">{{ form.form_continue_options.label }}</label>
+            {{ form.form_continue_options }}
+        </div>
+        <div class="form-field form-field--radioselect">
+            <label for="{{ form.form_new_options.id_for_label }}">{{ form.form_new_options.label }}</label>
+            {{ form.form_new_options }}
+        </div>
 
-        </ol>
+
+        <div class="form-navigation">
+            <a href="{% url 'case' object.id %}" class="button button--secondary">Annuleer</a>
+            <span></span>
+            <button class=" button--next" type="submit">
+                <span class="value">Volgende</span>
+                <div class="arrow"></div>
+            </button>
+        </div>
     </form>
     <br>
     <br>
     <br>
 
-    <h3>Huidige niet bewaarde gegevens</h3>
+    {% comment %} <h3>Huidige niet bewaarde gegevens</h3>
 
     <dl>
     {% for k, v in not_empty_fields.items %}
@@ -62,9 +59,7 @@
         </dd>
         
     {% endfor %}
-    </dl>
+    </dl> {% endcomment %}
     
-    <div class="form-field form-field--buttons screen-only u-margin-top-3x">
-        <a href="{% url 'case' object.id %}" class="button button--secondary">Annuleer</a>
-    </div>
+
 {% endblock %}

@@ -36,6 +36,17 @@ def case_status_list_latest(case, *args, **kwargs):
     return case_status_list
 
 
+@register.simple_tag()
+def case_versions(case, form, *args, **kwargs):
+    return case.get_versions(form)
+
+
+@register.filter()
+def case_status_in_concept(case_status):
+    print(case_status.status)
+    return case_status.status in IN_CONCEPT
+
+
 @register.filter()
 def status_verbose(status):
     return CASE_STATUS_DICT.get(status, {}).get('current')
