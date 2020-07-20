@@ -272,7 +272,7 @@
                                 {% endif %}
 
                                 {% for field in sub_section.fields %}
-                                
+                                <div class="form-field-history-container">
                                     {{ field.rendered|safe }}
                                     {% if field.rendered and field.object.field_type == 'radioselect' or field.object.field_type == 'checkboxselect' or field.object.field_type == 'checkboxselectmultipledocument' %}
                                     <span class="form-field-error-message u-font-size-small">Vul in wat van toepassing is.</span>
@@ -311,7 +311,7 @@
                                         </ul>
                                     </div>
                                     {% endif %}
-
+                                </div>
                                 {% endfor %}
                             </div>
                             {% endblock %}
