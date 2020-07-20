@@ -72,6 +72,7 @@
             data-title="{{ form_data.title }}" 
             data-email-list="{{ user_list }}" 
             >
+            {% if form_data.options.bijlages %}
             <header>
                 <h2 class="h3">Bijlagen <small>({{ document_list|length }})</small></h2>
             </header>
@@ -91,6 +92,7 @@
                 </li>
             {% endif %}
             </ul>
+            {% endif %}
         </div>
         {% csrf_token %}
         <div class="details-client details-client--status details-client--approve u-width-50">
@@ -105,7 +107,7 @@
         <div class="details-client">
             
             {% case_form_data object request.user.federation.organization form_data.slug as data %}
-            {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data %}
+            {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data bijlages=form_data.options.bijlages %}
         </div>
         <!-- END Client basis gegevens -->
 

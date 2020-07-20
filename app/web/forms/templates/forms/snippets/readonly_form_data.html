@@ -1,7 +1,7 @@
 {% load static i18n html_tags client_status_tags auth_tags client_data_tags tz %}
 
 {% for section in form_sections %}
-{% if not forloop.last %}
+{% if not forloop.last or not bijlages %}
 
 <fieldset class="section section--step">
     {% if section.title %}

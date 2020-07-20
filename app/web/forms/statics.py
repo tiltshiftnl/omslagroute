@@ -1631,7 +1631,7 @@ FORMS = (
                 },
             ),
 
-        }},
+        }, 'bijlages': True},
     ),
     (
         'omklap_aanvraag',
@@ -1677,7 +1677,7 @@ FORMS = (
                     'required_fields': ['omklap_akkoord_derde_toelichting',],
                 },
             ),
-        }, 'addres_required': True},
+        }, 'addres_required': True, 'bijlages': True},
     ),
     (
         'evaluatie_wonen',
@@ -1751,7 +1751,7 @@ FORMS = (
                 },
             ),
             
-        }, 'addres_required': True},
+        }, 'addres_required': True, 'bijlages': False},
     ),
     (
         'kennismaking_woningcorporatie',
@@ -1784,7 +1784,7 @@ FORMS = (
                 },
             ),
             
-        }, 'addres_required': True},
+        }, 'addres_required': True, 'bijlages': False},
     ),
 )
 
