@@ -43,7 +43,6 @@ def case_versions(case, form, *args, **kwargs):
 
 @register.filter()
 def case_status_in_concept(case_status):
-    print(case_status.status)
     return case_status.status in IN_CONCEPT
 
 

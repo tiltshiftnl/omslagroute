@@ -1071,6 +1071,8 @@ class CaseVersion(CaseBase):
         on_delete=models.CASCADE,
     )
 
+    objects = CaseVersionManager()
+
     def save(self, *args, **kwargs):
         """
         A case version can only be added once, and should not be editable

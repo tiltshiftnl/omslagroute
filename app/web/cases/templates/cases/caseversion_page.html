@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n html_tags client_status_tags auth_tags tz %}
+{% load static i18n html_tags client_status_tags auth_tags client_data_tags tz %}
 
 {% block title %} - Cliënt: {{ object.client_name }}{% endblock %}
 
@@ -9,10 +9,15 @@
             <li class="breadcrumb-step"><a href="{% url 'home' %}">Home</a></li>
             {% if request.user|is_wonen_medewerker %}
                 <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Alle cli&euml;nten</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.case.id %}">Cliënt: {{ object.client_name }}</a></li>
+            {% endif %}
+            {% if request.user|is_woningcorporatie_medewerker %}
+                <li class="breadcrumb-step"><a href="{% url 'case_list' %}">Onze cli&euml;nten</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.case.id %}">Cliënt: {{ object.client_name }}</a></li>
             {% endif %}
             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
                 <li class="breadcrumb-step"><a href="{% url 'cases_by_profile' %}">Mijn cli&euml;nten</a></li>
-                <li class="breadcrumb-step"><a href="{% url 'case' object.case.id %}">Cliënt: {{ object.case.client_name }}</a></li>
+                <li class="breadcrumb-step"><a href="{% url 'case' object.case.id %}">Cliënt: {{ object.client_name }}</a></li>
             {% endif %}
             <li class="breadcrumb-step sr-only" aria-current="location">{{ object.client_name }}</li>
         </ol>
@@ -21,8 +26,26 @@
 
 {% block main %}
 <section class="section section--client">
-    <h1>{{ object.client_name }}</h1>
-    <h2 class="h3">{{ form_data.title }} - versie {{ object.created|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}</h2>
+        {% if object.delete_request_date %}
+        {% include 'cases/snippets/case_delete_request_header.html' %}
+        {% endif %}
+        <div class="client-header flex-container">
+            <div class="flex-item">
+                <h1>{{ object.client_name }}</h1>
+            </div>
+            <div class="flex-item u-clearfix">   
+                {% include 'cases/status/current.html' with object=object.casestatus_set.all.first %}
+            </div>
+        </div>
+ 
+
+
+    <div class="form-title-wrapper">
+        <h2 class="h3">{{ form_context.title }} (ter inzage)</h2>
+    <button type="button" data-handler="print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="32" height="32">
+        <use href="#print" xlink:href="#print" width="32" height="32"></use>
+    </svg></button>
+    </div>
     <p class="print-only">
         {% language 'nl' %}
             Printdatum: {% timezone FRONTEND_TIMEZONE %}
@@ -34,167 +57,38 @@
     <section class="section-details-client">
 
         <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix u-width-50 u-padding-right-3x">
+        <div class="details-client details-client--appendix u-width-50"
+            >
             <header>
-                <h2 class="h3">Bijlagen <small>({{ object.case.document_set.all|length }})</small></h2>
+                <h2 class="h3">Bijlagen <small>({{ document_list|length }})</small></h2>
             </header>
 
             <ul class="list-as-table">
-            {% for document in object.case.document_set.all %}
-                <!-- <li>
-                    <a href="{% url 'download_case_document_wonen' object.case.id document.id %}" target="_blank">{{ document.name }} - geüpload: {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"j b Y" }} - {{ document.extension }}</a>
-                </li> -->
+            {% if document_list %}
+            {% for document in document_list %}
                 <li>
-                    <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y" }} </span></div>
+                    <div><a href="{% url 'download_case_document' object.id document.id %}
+                    " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
                     
                 </li>
             {% endfor %}
-
+            {% else %}
+                <li>
+                    <div><span>Er zijn geen bijlages toegevoegd aan deze stap.</span></div>
+                </li>
+            {% endif %}
             </ul>
         </div>
         <!-- END BIJLAGE -->
-        <!-- START APPROVE/DISAPPROVE -->
-        <div class="details-client details-client--approve u-width-50" 
-        data-decorator="case-status" 
-        data-profile-id="{{ request.user.profile.id }}" 
-        data-case-id="{{ object.case.id }}" 
-        data-caseversion-id="{{ object.id }}" 
-        data-status="">
-            <header>
-                <h2 class="h3">Status aanvraag</h2>
-            </header>
-            
-<!-- status pending -->
-            <p>Ingediend</p>
-            <div class="form-field">
-                <button data-handler="form-approve" class="button button--success">
-                    <svg class="check__icon" width="20" height="16">
-                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                    </svg>
-                    Goedkeuren
-                </button>
-                <button data-handler="form-disapprove" class="button button--danger">
-                    <svg class="close__icon" width="16" height="16">
-                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                    </svg>
-                    Afkeuren
-                </button>
-                <button data-handler="form-pending" class="button button--warning">
-                    <svg class="pause__icon" width="16" height="16">
-                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                    </svg>
-                    In behandeling
-                </button>
-            </div>
-            <ul>
-                <li><span>Wacht op goedkeuring</span><small>12 mei 2020</small><small>j.devos@hvoquerido.nl</small></li>
-            </ul>
-{% comment %}
-<!-- status goedgekeurd -->
-            <p>
-                <svg class="check__icon" width="20" height="16">
-                    <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                </svg>
-                Goedgekeurd
-            </p>
-            <div class="form-field">
-                <button data-handler="form-disapprove" class="button button--secondary button--danger">
-                    <svg class="close__icon" width="16" height="16">
-                        <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                    </svg>
-                    Afkeuren
-                </button>
-                <button data-handler="form-pending" class="button  button--secondary button--warning">
-                    <svg class="pause__icon" width="16" height="16">
-                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                    </svg>
-                    In behandeling
-                </button>
-            </div>
-
-<!-- status afgekeurd -->
-            <p>
-                <svg class="close__icon" width="16" height="16">
-                    <use href="#close" xlink:href="#close" width="16" height="16"></use>
-                </svg>
-                Afgekeurd
-
-            </p>
-            <div class="form-field">
-                <button data-handler="form-approve" class="button button--secondary button--success">
-                    <svg class="check__icon" width="20" height="16">
-                        <use href="#check" xlink:href="#alert" width="20" height="18"></use>
-                    </svg>
-                    Goedkeuren
-                </button>
-                <button data-handler="form-pending" class="button  button--secondary button--warning">
-                    <svg class="pause__icon" width="16" height="16">
-                        <use href="#pause" xlink:href="#pause" width="16" height="16"></use>
-                    </svg>
-                    In behandeling
-                </button>
-            </div>
-        </div>
-
-        <!-- start prompt approve-->
-        <div class="prompt-container" data-handler="prompt-approve">
-            <div class="prompt-approve">
-                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt goedkeuren?</p>
-                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
-                <form>
-                    <input type="hidden" value="goedgekeurd">
-                    <input type="submit" value="Aanvraag goedkeuren" class="button">
-                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                </form>
-            </div>
-            <div class="prompt-disapprove">
-                <p>Weet je zeker dat je deze <strong>{{ form_data.title }}</strong> wilt afkeuren?</p>
-                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
-                <form>
-                    <input type="hidden" value="afgekeurd">
-                    <input type="submit" value="Aanvraag afkeuren" class="button">
-                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                </form>
-            </div>
-            <div class="prompt-pending">
-                <p>Weet je zeker dat je de status van deze <strong>{{ form_data.title }}</strong> op 'In behandeling' wilt zetten?</p>
-                <p><strong>[e-mail]</strong> ontvangt hiervan een bevestiging per e-mail.</p>
-                <form>
-                    <input type="hidden" value="pending">
-                    <input type="submit" value="In behandeling" class="button">
-                    <button type="button" class="button button--secondary" data-handler="form-approve-cancel">Annuleren</button>
-                </form>
-            </div>    
-        </div>
-        <!--end prompt approve-->
-{% endcomment %}
-            
-        <!-- END APPROVE/DISAPPROVE -->
+        
 
     </section>
     <section class="section section--forms">
         <!-- START Client basis gegevens -->
         <div class="details-client">
-            <header>
-                <h2 class="h3">Gegevens</h2>
-            </header>
-
-            <dl>
-                {% for k, client_info in object.to_dict.items %}
-                {% if not forloop.first and k in form_fields %}
-                <div>
-                    <dt>{{ client_info.label }}: </dt>
-                    <dd>
-                        {% if client_info.value|is_date %}
-                            {{ client_info.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
-                        {% else %}
-                            {{ client_info.value }}
-                        {% endif %}
-                    </dd>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </dl>
+            
+            {% case_form_data object.case request.user.federation.organization object.version_verbose as data %}
+            {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_context.sections data=data %}
         </div>
         <!-- END Client basis gegevens -->
 
@@ -202,4 +96,5 @@
 </section>
 
 {% endblock %}
+
 

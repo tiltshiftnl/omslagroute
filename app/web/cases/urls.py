@@ -7,6 +7,7 @@ urlpatterns = [
     path('mijn-clienten/', UserCaseList.as_view(), name='cases_by_profile'),
     path('archief/', CaseListArchive.as_view(), name='case_archive'),
     path('<int:pk>/', CaseDetailView.as_view(), name='case'),
+    path('versie/<int:pk>/', CaseVersionDetailView.as_view(), name='case_version'),
 
     # invite
     path('<int:pk>/uitnodigen/', CaseInviteUsers.as_view(), name='case_invite_users'),

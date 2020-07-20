@@ -240,7 +240,7 @@
                                 {% endif %}
                                 {% endif %}
                                 {% if request.user|is_wonen_medewerker or request.user|is_woningcorporatie_medewerker %}
-                                {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
+                                {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type and not case_status|case_status_in_concept %}
                                 <a href="{% url 'case_version_form' object.id moment.form %}">{{ moment.name }}</a>
                                 {% else %}
                                 <span>{{ moment.name }}</span>
@@ -257,31 +257,52 @@
                             <span class="tinytag">{{ moment.form|form_organization_type_abbreviation }}</span>
                             {% endif %}
                         </td>
+                        {% if moment.form|form_list_versions %}
+                        <td colspan="3">
+                            {% case_versions object moment.form as versions %}
+                            <span class="show-on-mobile">Status:</span>
+                            {% if request.user|is_wonen_medewerker or request.user|is_woningcorporatie_medewerker %}
+                                {% if not case_status|case_status_in_concept %}
+                                    <h4 class="h5 u-margin-top-none">Meest recente evaluatie</h4>
+                                    {% url 'case_version_form' object.id moment.form as link %}
+                                    {% include 'cases/status/current_link.html' with object=case_status link=link %}
+                                {% endif %}
+                            {% endif %}
+                            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
+                                <h4 class="h5 u-margin-top-none">Meest recente evaluatie</h4>
+                            {% include 'cases/status/current_link.html' with object=case_status %}
+                            {% endif %}
+                            <details>
+                                <summary><h4 class="h5 u-margin-top-none">Eerdere evaluaties</h4><svg class="icon-details--closed" width="14" height="9">
+                                        <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                    </svg><svg class="icon-details--open" width="14" height="9">
+                                        <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                    </svg>
+                                </summary>
+                                <div class="content">
+                                    
+                                    <ul class="u-list-style-none">
+                                        {% for cv in versions %}
+                                        <li>
+                                            {% url 'case_version' cv.id as link %}
+                                            {% include 'cases/status/current_link.html' with object=cv.casestatus_set.all.first link=link %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </details>
+
+
+                        <td>
+                        {% else %}
                         <td>
                             <span class="show-on-mobile">Status:</span>
 
                             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-                                {% if moment.form|form_list_versions %}
-                                Meest recente status<br><br>
-                                {% endif %}
+
 
                                 {% include 'cases/status/current.html' with object=case_status %}
 
-                                {% if moment.form|form_list_versions %}
-                                {% get_case_status_list object moment.form as case_status_list %}
-                                {% case_versions object moment.form as versions %}
-                                {% if versions %}
-                                <br><br><br>Alle goedgekeurde statussen<br>
-                                <ul>
-                                    {% for cv in versions %}
-                                    <li>
-                                        {% include 'cases/status/current.html' with object=cv.casestatus_set.all.first %}
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                                
-                                {% endif %}
-                                {% endif %}
                                 {% if moment.form|form_list_versions %}
                                 {% get_case_status_list object moment.form as case_status_list %}
                                 {% if case_status_list %}
@@ -319,6 +340,7 @@
                             <span class="u-font-size-small">{{ case_status.profile.user.username }}</span>
                         {% endif %}
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 <tr>

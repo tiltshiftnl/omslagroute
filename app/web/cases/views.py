@@ -220,6 +220,25 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return self.model._default_manager.by_user(user=self.request.user)
 
 
+class CaseVersionDetailView(UserPassesTestMixin, DetailView):
+    model = CaseVersion
+    template_name_suffix = '_page'
+
+    def get_context_data(self, **kwargs):
+        form_context = FORMS_BY_SLUG.get(self.object.version_verbose)
+
+        kwargs.update({
+            'form_context': form_context,
+        })
+        return super().get_context_data(**kwargs)
+
+    def test_func(self):
+        return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER])
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
+
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
     model = Case
     template_name_suffix = '_form_status'

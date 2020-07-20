@@ -1,0 +1,13 @@
+{% load client_status_tags tz %}
+{% if object %}
+{% include object.status|status_template %}
+<a href="{% if link %}{{ link }}{% else %}{% url 'update_case' object.case.id object.form %}{% endif %}">
+{% if object.case.case_form_is_opnieuw_ingediend %}
+    Opnieuw ingediend
+{% else %}
+    {{ object.status|status_verbose }}
+{% endif %}
+ <small>({{ object.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }})</small></a>
+{% else %}
+    Nog niet ingediend
+{% endif %}
