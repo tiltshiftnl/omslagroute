@@ -346,8 +346,15 @@ Array.prototype.sortOnData = function (key) {
               var f = document.querySelector('[name="'+ruleData[i].fields[j]+'"]'),
                   s = document.querySelector('.section#'+ruleData[i].fields[j]);
               if (f) {
-                _closest(f, '.form-field').classList[show?'remove':'add']('hide-animated');
-                _closest(f, '.form-field').classList[show?'add':'remove']('show-animated');
+                var t = _closest(f, '.form-field');
+                var tHistory = _next(t, '.form-field.form-field-history.screen-only');
+                console.info(t);
+                console.info(tHistory);
+                t.classList[show?'remove':'add']('hide-animated');
+                t.classList[show?'add':'remove']('show-animated');
+                // tHistory.classList[show?'remove':'add']('hide-animated');
+                // tHistory.classList[show?'add':'remove']('show-animated');
+
               }else if (s){
                 s.classList[show?'remove':'add']('hide-animated');
                 s.classList[show?'add':'remove']('show-animated');
@@ -808,6 +815,26 @@ Array.prototype.sortOnData = function (key) {
       }
     } catch (e) {}
     return null;
+  };
+
+  var _next = function (elem, selector) {
+    console.log("_next, elem", elem);
+    console.log("_next, selector", selector);
+    // Get the next sibling element
+    var sibling = elem.nextElementSibling;
+    
+  
+    // If there's no selector, return the first sibling
+    if (!selector) return sibling;
+  
+    // If the sibling matches our selector, use it
+    // If not, jump to the next sibling and continue the loop
+    while (sibling) {
+      console.log("_next, sibling", sibling);
+      if (sibling.matches(selector)) return sibling;
+      sibling = sibling.nextElementSibling
+    }
+  
   };
   var _formDataToQueryString = function (data) {
     var out = "",
