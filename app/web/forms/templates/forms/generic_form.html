@@ -272,6 +272,7 @@
                                 {% endif %}
 
                                 {% for field in sub_section.fields %}
+                                <div class="form-field-history-container">
                                     {{ field.rendered|safe }}
                                     {% if field.rendered and field.object.field_type == 'radioselect' or field.object.field_type == 'checkboxselect' or field.object.field_type == 'checkboxselectmultipledocument' %}
                                     <span class="form-field-error-message u-font-size-small">Vul in wat van toepassing is.</span>
@@ -294,8 +295,15 @@
                                                             <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
                                                         </svg>
                                                     </summary>
-                                                    <div class="content">
-                                                        {{ h.value }}
+                                                    <div class="content u-clearfix">
+                                                        <span data-handler="copy-text">{{ h.value }}</span>
+                                                        {% if field.object.field_type == "textarea" or field.object.field_type == "textinput"%}
+                                                        <button type="button" class="text-link u-float-right" data-handler="copy-to-input" data-targetinput="{{ field.object.name }}" type="button">
+                                                            <svg class="icon-recycle" width="18" height="18">
+                                                                <use href="#recycle" xlink:href="#recycle" width="18" height="18"></use>
+                                                            </svg>
+                                                        </button>    
+                                                        {% endif %}
                                                     </div>
                                                 </details>
                                             </li>
@@ -303,7 +311,7 @@
                                         </ul>
                                     </div>
                                     {% endif %}
-
+                                </div>
                                 {% endfor %}
                             </div>
                             {% endblock %}

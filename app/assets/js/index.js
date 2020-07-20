@@ -23,6 +23,7 @@ window.onload = function() {
   }
 };
 
+
 function showFileName(event) {
   var input = event.srcElement;
   var fileName = input.files[0].name;
@@ -153,6 +154,13 @@ Array.prototype.sortOnData = function (key) {
     "print-page": function(e) {
       window.print();
     },
+    "copy-to-input": function(e) {
+      var clickedElement = _closest(e.target, '[data-handler="copy-to-input"]')
+      var targetInput = document.getElementById("id_"+clickedElement.dataset.targetinput);
+      var copiedText = clickedElement.previousElementSibling.textContent;
+      targetInput.value = copiedText;
+    
+    },    
     "close-details": function (e) {
       var self = _closest(e.target, '[data-handler="close-details"]'),
         //moment = _closest(self, "[data-m"),
@@ -338,8 +346,10 @@ Array.prototype.sortOnData = function (key) {
               var f = document.querySelector('[name="'+ruleData[i].fields[j]+'"]'),
                   s = document.querySelector('.section#'+ruleData[i].fields[j]);
               if (f) {
-                _closest(f, '.form-field').classList[show?'remove':'add']('hide-animated');
-                _closest(f, '.form-field').classList[show?'add':'remove']('show-animated');
+                var c = _closest(f, '.form-field-history-container');
+                c.classList[show?'remove':'add']('hide-animated');
+                c.classList[show?'add':'remove']('show-animated');
+                
               }else if (s){
                 s.classList[show?'remove':'add']('hide-animated');
                 s.classList[show?'add':'remove']('show-animated');
@@ -801,6 +811,7 @@ Array.prototype.sortOnData = function (key) {
     } catch (e) {}
     return null;
   };
+
   var _formDataToQueryString = function (data) {
     var out = "",
       i;

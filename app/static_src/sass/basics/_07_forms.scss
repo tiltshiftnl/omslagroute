@@ -19,6 +19,10 @@ fieldset {
     min-width: 0;
 }
 
+summary {
+    cursor: pointer;
+}
+
 body:not(:-moz-handler-blocked) fieldset {
     display: table-cell;
 }
@@ -838,8 +842,19 @@ select {
             margin: 3px 0 20px;
             padding: 8px 10px 10px;
             border: 1px solid $neutral-grey4;
+            position: relative;
+
             *:last-child {
                 margin-bottom: 0;
+            }
+
+            .text-link {
+                margin: 0;
+            }
+
+            >span {
+                display: inline-block;
+                max-width: calc(100% - 40px);
             }
         }
     }
