@@ -1469,30 +1469,38 @@ KENNISMAKING_WONINGCORPORATIE = [
         ]
     },
     {
-        'title': 'Woondoelen',
+        'title': 'Stand van zaken gepersonaliseerde doelen rond het wonen',
         'description': '',
         'section_list': [
             {
-                'title': 'Stand van zaken gepersonaliseerde doelen rond het wonen',
+                'title': '',
                 'description': '',
                 'fields': [
-                    'urgentiecriteria_zinvolle_dagbesteding',
-                    'urgentiecriteria_functioneert_sociaal_stabiel',
-                    'urgentiecriteria_functioneert_psychisch_stabiel',
-                    'urgentiecriteria_is_financieel_stabiel',
+                    'woonevaluatie_gepersonaliseerd_doel_1',
+                    'woonevaluatie_gepersonaliseerd_doel_1_stand_van_zaken',
+                    'woonevaluatie_gepersonaliseerd_doel_1_behaald',
                 ],
             },
             {
                 'title': '',
                 'description': '',
                 'fields': [
-                    'kennismaking_wooncorporatie_doelen_wonen_huurderschap',
-                    'kennismaking_wooncorporatie_ondersteuning_medewerker',
+                    'woonevaluatie_gepersonaliseerd_doel_2',
+                    'woonevaluatie_gepersonaliseerd_doel_2_stand_van_zaken',
+                    'woonevaluatie_gepersonaliseerd_doel_2_behaald',
+                ],
+            },
+            {
+                'title': '',
+                'description': '',
+                'fields': [
+                    'woonevaluatie_gepersonaliseerd_doel_3',
+                    'woonevaluatie_gepersonaliseerd_doel_3_stand_van_zaken',
+                    'woonevaluatie_gepersonaliseerd_doel_3_behaald',
                 ],
             },
         ]
     },
-    # 
     {
         'title': 'Andere afspraken of opmerkingen',
         'description': '',
