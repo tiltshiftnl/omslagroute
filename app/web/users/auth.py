@@ -63,6 +63,13 @@ def auth_test(user, user_type):
 
 
 class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
+    def get_userinfo(self, access_token, id_token, payload):
+        userinfo = super().get_userinfo(access_token, id_token, payload)
+        userinfo.update({
+            settings.OIDC_FEDERATION_KEY: payload.get(settings.OIDC_FEDERATION_KEY)
+        })
+        return userinfo
+
 
     def create_user(self, claims):
         user = super().create_user(claims)
@@ -112,10 +119,6 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
         }
         user.save()
         return user
-
-    def get_userinfo(self, access_token, id_token, payload):
-        userinfo = super().get_userinfo(access_token, id_token, payload)
-        return userinfo
 
     def get_or_create_user(self, access_token, id_token, payload):
 
