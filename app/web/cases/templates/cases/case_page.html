@@ -235,7 +235,7 @@
                                 <a href="{% url 'update_case' object.id moment.form %}">{{ moment.name }}</a>
                                 {% if moment.form|form_list_versions %}
                                 {% if not case_status|case_status_in_concept %}
-                                <a href="{% url 'update_case_clean' object.id moment.form %}" class="button button--secondary">Nieuwe {{ moment.name }}</a>
+                                <a href="{% url 'update_case_clean' object.id moment.form %}" class="button button--secondary button--new-form">Nieuwe {{ moment.name }}</a>
                                 {% endif %}
                                 {% endif %}
                                 {% endif %}
@@ -293,7 +293,7 @@
                             </details>
 
 
-                        <td>
+                        </td>
                         {% else %}
                         <td>
                             <span class="show-on-mobile">Status:</span>

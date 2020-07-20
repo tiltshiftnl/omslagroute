@@ -53,22 +53,13 @@ def status_verbose(status):
 
 @register.filter()
 def status_template(case_status):
-    return 'cases/status/%s' % CASE_STATUS_DICT.get(case_status).get('template')
+    print(case_status)
+    return 'cases/status/%s' % CASE_STATUS_DICT.get(case_status, {}).get('template')
 
 
 @register.filter()
 def status_class(case_status):
-    return CASE_STATUS_DICT.get(case_status).get('status_class')
-
-
-@register.filter()
-def status_template(case_status):
-    return 'cases/status/%s' % CASE_STATUS_DICT.get(case_status).get('template')
-
-
-@register.filter()
-def status_class(case_status):
-    return CASE_STATUS_DICT.get(case_status).get('status_class')
+    return CASE_STATUS_DICT.get(case_status, {}).get('status_class')
 
 
 @register.filter()
