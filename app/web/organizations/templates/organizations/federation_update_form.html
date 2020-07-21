@@ -10,7 +10,7 @@
             {% if request.user|is_beheerder %}
             <li class="breadcrumb-step"><a href="{% url 'federation_list' %}">Alle organisaties</a></li>
             {% endif %}
-            <li class="breadcrumb-step sr-only" aria-current="location">Organisatie wijzigen</li>
+            <li class="breadcrumb-step sr-only" aria-current="location">Gegevens wijzigen {{object.name}}</li>
         </ol>
     </nav>
 {% endblock %}
@@ -18,7 +18,7 @@
 {% block main %}
     <div class="flex-container u-margin-bottom-3x">
         <div class="flex-item">
-            <h2>Organisatie wijzigen</h2>
+            <h2>Gegevens wijzigen {{object.name}}</h2>
         </div>
         {% if request.user|is_beheerder %}
         <div class="flex-item u-text-align--right">
@@ -35,6 +35,16 @@
         {% csrf_token %}
 
         {{ form.as_p }}
+        {% if not request.user|is_beheerder %}
+        {% if request.user|user_federation_type_is_adw or request.user|user_federation_type_is_woningcorporatie %}
+        <p>Vul een e-mail-adres in:<br>alleen dit centrale e-mail adres ontvangt een notificatie wanneer een formulier wordt ingediend</p>
+
+        <p>Vul géén e-mail adres in:<br>alle medewerkers van {{ request.user.federation.name }} met een omslagroute-account, ontvangen een notificatie wanneer een formulier wordt ingediend</p>
+        {% else %}
+        <p>Dit e-mailadres heeft (nog) geen functie binnen de omslagroute website.</p>
+        {% endif %}
+        {% endif %}
+
         {% if form.instance.user_list.all and request.user|is_beheerder %}
         <h3 class="u-margin-top-4x">Gebruikers in deze organisatie</h3>
         <table class="case-list">

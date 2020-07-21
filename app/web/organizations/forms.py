@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from .statics import *
 from django.utils.translation import ugettext_lazy as _
 from web.users.statics import BEHEERDER, PB_FEDERATIE_BEHEERDER, FEDERATIE_BEHEERDER, WONEN
 
@@ -45,3 +46,5 @@ class FederationForm(forms.ModelForm):
             del self.fields['name']
         else:
             self.fields['organization'].label = _('Organisatie type')
+        if user.federation.organization.federation_type in [FEDERATION_TYPE_ADW, FEDERATION_TYPE_WONINGCORPORATIE]:
+            self.fields['main_email'].label = 'Centraal e-mail adres voor notificaties'
