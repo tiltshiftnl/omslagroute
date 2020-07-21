@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 from web.users.auth import auth_test
 register = template.Library()
 from web.users.statics import *
+from web.organizations.statics import FEDERATION_TYPE_WONINGCORPORATIE, FEDERATION_TYPE_ADW
 
 @register.filter()
 def user_type_verbose(user_type):
@@ -51,6 +52,16 @@ def is_pb_federatie_beheerder(user):
 @register.filter()
 def is_woningcorporatie_medewerker(user):
     return auth_test(user, WONINGCORPORATIE_MEDEWERKER)
+
+
+@register.filter()
+def user_federation_type_is_woningcorporatie(user):
+    return user.federation.organization.federation_type in [FEDERATION_TYPE_WONINGCORPORATIE]
+
+
+@register.filter()
+def user_federation_type_is_adw(user):
+    return user.federation.organization.federation_type in [FEDERATION_TYPE_ADW]
 
 
 @register.filter()
