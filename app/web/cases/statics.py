@@ -141,13 +141,17 @@ CASE_STATUS_CHOICES_BY_FEDEATION_TYPE = {
 CASE_VERSION_BASE = 'basis-gegevens'
 CASE_VERSION_ADDRESS = 'adres-aanpassen'
 CASE_VERSION_FORM_URGENTIE = 'aanvraag-omslag-en-urgentie'
-CASE_VERSION_FORM_OMKLAP = 'aanvraag-omslag-en-urgentie'
+CASE_VERSION_FORM_OMKLAP = 'aanvraag-omklap'
+CASE_VERSION_FORM_KENNISMAKING_WONINGCORPORATIE = 'kennismaking-woningcorporatie'
+CASE_VERSION_FORM_EVALUATIE_WONEN = 'evaluatie-wonen'
 
 CASE_VERSION = (
     (CASE_VERSION_BASE, 'Basis gegevens'),
     (CASE_VERSION_ADDRESS, 'Adres gegevens'),
     (CASE_VERSION_FORM_URGENTIE, 'Aanvraag Urgentie onder voorwaarden'),
     (CASE_VERSION_FORM_OMKLAP, 'Aanvraag Voordracht omklap'),
+    (CASE_VERSION_FORM_KENNISMAKING_WONINGCORPORATIE, 'Kennismaking woningcorporatie'),
+    (CASE_VERSION_FORM_EVALUATIE_WONEN, 'Evaluatie wonen'),
 )
 
 def map_case_version_keys(f):
