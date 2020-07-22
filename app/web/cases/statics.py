@@ -51,6 +51,7 @@ CASE_STATUS_WONINGCORPORATIE_INGEDIEND = 5
 CASE_STATUS_WONINGCORPORATIE_AFGEKEURD = 6
 CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD = 7
 CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING = 8
+CASE_STATUS_AFGESLOTEN = 9
 
 CASE_STATUS = (
     (
@@ -59,48 +60,63 @@ CASE_STATUS = (
         'Indienen', 
         'icon-circle',
         '',
+        'ingediend.html',
     ),
     (
         CASE_STATUS_AFGEKEURD, 
         'Afgekeurd', 
         'Afkeuren', 
-        'icon-circle icon-circle--status-disapproved',
+        'disapproved',
         'close',
+        'afgekeurd.html',
     ),
     (
         CASE_STATUS_GOEDGEKEURD, 
         'Goedgekeurd', 
         'Goedkeuren', 
-        'icon-circle icon-circle--status-approved',
+        'approved',
         'check',
+        'goedgekeurd.html',
     ),
     (
         CASE_STATUS_IN_BEHANDELING, 
         'In behandeling', 
         'In behandeling nemen', 
-        'icon-circle icon-circle--status-pending',
+        'pending',
         'pause',
+        'in_behandeling.html',
     ),
     (
         CASE_STATUS_WONINGCORPORATIE_AFGEKEURD, 
         'Afgekeurd', 
         'Afkeuren', 
-        'icon-circle icon-circle--status-disapproved',
+        'disapproved',
         'close',
+        'afgekeurd.html',
     ),
     (
         CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD, 
         'Goedgekeurd', 
         'Goedkeuren', 
-        'icon-circle icon-circle--status-approved',
+        'approved',
         'check',
+        'goedgekeurd.html',
     ),
     (
         CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING, 
         'In behandeling', 
         'In behandeling nemen', 
-        'icon-circle icon-circle--status-pending',
+        'pending',
         'pause',
+        'in_behandeling.html',
+    ),
+    (
+        CASE_STATUS_AFGESLOTEN, 
+        'In concept', 
+        'In concept zetten', 
+        'pending',
+        'pause',
+        'afgesloten.html',
     ),
 )
 
@@ -111,6 +127,7 @@ def map_case_status_keys(f):
         'verb': f[2],
         'status_class': f[3],
         'icon_name': f[4],
+        'template': f[5]
     }
 
 CASE_STATUS_CHOICES = list((s[0], s[1]) for s in CASE_STATUS)
@@ -126,11 +143,15 @@ CASE_STATUS_CHOICES_BY_FEDEATION_TYPE = {
     ],
     FEDERATION_TYPE_WONINGCORPORATIE: [
         CASE_STATUS_INGEDIEND,
-        CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING,
         CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD,
         CASE_STATUS_WONINGCORPORATIE_AFGEKEURD,
+        CASE_STATUS_WONINGCORPORATIE_IN_BEHANDELING,
     ]
 }
+
+IN_CONCEPT = [
+    CASE_STATUS_AFGESLOTEN,
+]
 
 
 

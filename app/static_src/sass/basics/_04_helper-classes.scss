@@ -331,6 +331,14 @@
     text-align: right;
 }
 
+.u-indent-no-icon {
+    a {
+        &:first-child {
+            padding-left: 33px;
+        }
+    }
+}
+
 // ********************
 // COLORS
 // ********************

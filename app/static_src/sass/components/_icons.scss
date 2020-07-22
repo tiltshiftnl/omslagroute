@@ -8,3 +8,18 @@
 .pause__icon {
     color: $supplement-orange;
 }
+
+.list--status-icons {
+
+    li{
+        margin-bottom: 0.5rem;
+        .icon-circle {
+            vertical-align: middle;
+        }
+        a {
+            &:first-child{
+                padding-left: 30px;
+            }
+        }
+    }
+}

@@ -7,6 +7,7 @@ urlpatterns = [
     path('mijn-clienten/', UserCaseList.as_view(), name='cases_by_profile'),
     path('archief/', CaseListArchive.as_view(), name='case_archive'),
     path('<int:pk>/', CaseDetailView.as_view(), name='case'),
+    path('versie/<int:pk>/', CaseVersionDetailView.as_view(), name='case_version'),
 
     # invite
     path('<int:pk>/uitnodigen/', CaseInviteUsers.as_view(), name='case_invite_users'),
@@ -20,6 +21,7 @@ urlpatterns = [
     path('<int:pk>/basis-gegevens/', CaseBaseUpdateView.as_view(), name='update_case_base'),
     path('<int:pk>/adres-aanmaken/', CaseAddressCreate.as_view(), name='create_case_address'),
     path('<int:pk>/adres-aanpassen/', CaseAddressUpdate.as_view(), name='update_case_address'),
+    path('<int:pk>/<str:slug>/nieuw/', CaseCleanForm.as_view(), name='update_case_clean'),
     path('<int:pk>/<str:slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),
     path('<int:pk>/<str:slug>/verstuur', SendCaseView.as_view(), name='send_case'),
 

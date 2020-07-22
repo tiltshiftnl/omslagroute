@@ -36,6 +36,11 @@ class CaseStatusAdmin(admin.ModelAdmin):
         'profile',
         'case_version',
     )
+    list_filter =   (
+        'case',
+        'status',
+        'form',
+    )
 
 
 @admin.register(Document)

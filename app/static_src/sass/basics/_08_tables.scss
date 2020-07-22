@@ -185,10 +185,16 @@ table table {
     .dot {
         display: block;
         position: absolute;
-        top: 50%;
+        top: 1.6rem;
         left: 1rem;
         transform: translateY(-.75rem);
         z-index: 2;
+    }
+
+    .button--new-form {
+        position: absolute;
+        left: 55px;
+        bottom: 1rem
     }
 }
 

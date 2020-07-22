@@ -5,7 +5,7 @@ from web.cases.models import Case
 from web.users.models import User
 from web.forms.statics import FORMS_BY_SLUG
 from web.forms.utils import get_sections_fields
-from .statics import FEDERATION_TYPE_CHOICES
+from .statics import FEDERATION_TYPE_CHOICES, FEDERATION_TYPE_ZORGINSTELLING
 
 def get_fields():
     return [[str(f.name), '%s [%s]' % (
@@ -55,6 +55,8 @@ class Organization(models.Model):
         return case.to_dict(self.field_restrictions)
 
     def get_case_form_data(self, case, form):
+        if self.federation_type == FEDERATION_TYPE_ZORGINSTELLING:
+            return case.to_dict()
         form_sections = FORMS_BY_SLUG.get(form, {}).get('sections', [])
         fields = [f for f in self.field_restrictions if f in get_sections_fields(form_sections)]
         return case.to_dict(fields)

@@ -39,12 +39,16 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         data = {'profile': request.user.profile.id}
         data.update(request.data)
+        if data.get('status') != CASE_STATUS_INGEDIEND:
+            data.update({
+                'case_version': Case.objects.get(id=data.get('case')).create_version(data.get('form')).id,
+            })
+            
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
         if serializer.instance.status != CASE_STATUS_INGEDIEND:
-            serializer.instance.case.create_version(serializer.instance.form)
             current_site = get_current_site(request)
             body = render_to_string('cases/mail/case_status_to_pb.txt', {
                 'case_status': serializer.instance,

@@ -2,6 +2,7 @@ from django.db import models
 from web.users.statics import *
 from web.forms.statics import FORMS_SLUG_BY_FEDERATION_TYPE
 from web.organizations.statics import FEDERATION_TYPE_WONINGCORPORATIE, FEDERATION_TYPE_ADW
+from .statics import CASE_STATUS_AFGESLOTEN
 import datetime
 from constance import config
 
@@ -22,7 +23,8 @@ class CaseManager(models.Manager):
         if user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
             queryset = queryset.filter(
                 id__in=CaseVersion.objects.filter(
-                    version_verbose__in=FORMS_SLUG_BY_FEDERATION_TYPE.get(FEDERATION_TYPE_WONINGCORPORATIE)
+                        version_verbose__in=FORMS_SLUG_BY_FEDERATION_TYPE.get(FEDERATION_TYPE_WONINGCORPORATIE,
+                    )
                 ).order_by('case').distinct().values_list('case'),
                 woningcorporatie=user.federation,
             )
@@ -32,4 +34,14 @@ class CaseManager(models.Manager):
                 version_verbose__in=FORMS_SLUG_BY_FEDERATION_TYPE.get(FEDERATION_TYPE_ADW)
             ).order_by('case').distinct().values_list('case'),
             delete_request_date__isnull=True,
+        )
+
+
+class CaseVersionManager(models.Manager):
+    def by_user(self, user):
+        from .models import Case
+        queryset = self.get_queryset()
+
+        return queryset.filter(
+            case__in=Case._default_manager.by_user(user=user)
         )

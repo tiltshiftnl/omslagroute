@@ -220,6 +220,25 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
         return self.model._default_manager.by_user(user=self.request.user)
 
 
+class CaseVersionDetailView(UserPassesTestMixin, DetailView):
+    model = CaseVersion
+    template_name_suffix = '_page'
+
+    def get_context_data(self, **kwargs):
+        form_context = FORMS_BY_SLUG.get(self.object.version_verbose)
+
+        kwargs.update({
+            'form_context': form_context,
+        })
+        return super().get_context_data(**kwargs)
+
+    def test_func(self):
+        return auth_test(self.request.user, [WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER])
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
+
 class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
     model = Case
     template_name_suffix = '_form_status'
@@ -428,6 +447,88 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
 
         messages.add_message(self.request, messages.INFO, "Het verwijder verzoek is teruggedraaid.")
         return super().form_valid(form)
+
+
+class CaseCleanForm(UserPassesTestMixin, UpdateView):
+    model = Case
+    template_name = 'cases/case_clean_form.html'
+    form_class = CaseCleanForm
+    success_url = reverse_lazy('cases_by_profile')
+
+    # def get(self, request, *args, **kwargs):
+        # response = super().get(request, *args, **kwargs)
+        # print(list(self.get_not_empty_fields()))
+        # values = [f for f in self.get_fields()[0] if hasattr(self.object, f) and getattr(self.object, f)]
+        # if values:
+        # print(values)
+        # return response
+        # return HttpResponseRedirect(self.get_success_url())
+        # return response
+
+    def get_fields(self):
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        return get_sections_fields(form_context.get('sections')),
+
+    def get_not_empty_fields(self):
+        return [f for f in self.get_fields()[0] if hasattr(self.object, f) and getattr(self.object, f)]
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
+    def get_success_url(self):
+        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
+
+    def reset_form(self):
+        version = self.object.create_version(self.kwargs.get('slug'))
+
+        case_status_dict = {
+            'form': self.kwargs.get('slug'),
+            'case': self.object,
+            'case_version': version,
+            'profile': self.request.user.profile,
+            'status': CASE_STATUS_AFGESLOTEN,
+        }
+        case_status = CaseStatus(**case_status_dict)
+        case_status.save()
+
+        return True
+
+    def clean_form(self):
+        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        form_fields = get_sections_fields(form_context.get('sections', {}))
+        for f in form_fields:
+            if hasattr(self.object, f):
+                setattr(self.object, f, None)
+        self.object.save()
+        return True
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        form_data = form.cleaned_data
+        case_status = self.object.get_status(self.kwargs.get('slug'))
+        if not case_status or case_status in IN_CONCEPT:
+            raise Http404()
+        if form_data.get('form_continue_options') == '1':
+            messages.add_message(self.request, messages.INFO, "Je kan verder met de aanvraag.")
+        elif form_data.get('form_new_options') == '1':
+            self.reset_form()
+            messages.add_message(self.request, messages.INFO, "Je kan starten met deze nieuwe aanvraag. De vorige aanvraag is afgesloten.")
+        elif form_data.get('form_new_options') == '2':
+            self.reset_form()
+            self.clean_form()
+            messages.add_message(self.request, messages.INFO, "Je kan starten met deze nieuwe lege aanvraag. De vorige aanvraag is afgesloten.")
+        return response
+
+    def get_context_data(self, **kwargs):
+        kwargs = super().get_context_data(**kwargs)
+        kwargs.update({
+            'form_context': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
+            'case_status': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('slug')).order_by('-created').first(),
+        })
+        return kwargs
 
 
 class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):

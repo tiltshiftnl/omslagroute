@@ -1022,6 +1022,28 @@ class Case(CaseBase):
         ] for k, v in dl.items()}
         return dl
 
+    def get_status(self, form):
+        return CaseStatus.objects.filter(
+            case=self,
+            form=form,
+        ).order_by('-created').first()
+
+
+    def get_versions(self, form):
+        l = CaseStatus.objects.filter(
+            case=self,
+            form=form,
+        ).values(
+            'id',
+            'status',
+            'case_version',
+        ).order_by('-created')
+        l = [l[i+1].get('case_version') for i in range(len(l)) if l[i].get('status') in IN_CONCEPT and len(l)-1 > i]
+        vl = CaseVersion.objects.filter(
+            id__in=l
+        ).order_by('-created')
+        return vl
+
     def delete(self):
         deleted = self.delete_related()
         if deleted:
@@ -1048,6 +1070,19 @@ class CaseVersion(CaseBase):
         verbose_name=_('Cliënt'),
         on_delete=models.CASCADE,
     )
+
+    objects = CaseVersionManager()
+
+    def save(self, *args, **kwargs):
+        """
+        A case version can only be added once, and should not be editable
+        """
+        is_new = self.pk is None
+
+        if is_new:
+            super().save(*args, **kwargs)
+        else:
+            raise Exception("It's not allowed to update a case version")
 
     class Meta:
         verbose_name = _('Client versie')
@@ -1117,6 +1152,18 @@ class CaseStatus(models.Model):
             )
         )
 
+    def save(self, *args, **kwargs):
+        """
+        A case status can only be added once, and should not be editable
+        """
+        is_new = self.pk is None
+
+        if is_new:
+            super().save(*args, **kwargs)
+        else:
+            raise Exception("It's not allowed to update a case status")
+
+
     @property
     def case_form_is_opnieuw_ingediend(self):
         status_list = CaseStatus.objects.order_by('-created')
@@ -1124,6 +1171,8 @@ class CaseStatus(models.Model):
                 form=self.form, 
                 case=self.case
         )
+        # for cs in status_list:
+        #     print(cs.status)
         first = status_list.first()
         return first.status == 1 if first else False
         

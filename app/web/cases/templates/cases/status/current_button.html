@@ -1,0 +1,14 @@
+{% load client_status_tags tz %}
+{% if object %}
+<span class="label label--status-{{ object.status|status_class }}">
+    {% if object.case_form_is_opnieuw_ingediend %}
+    Opnieuw ingediend
+    {% else %}
+    {{ object.status|status_verbose }} {{ object.created|timezone:FRONTEND_TIMEZONE|date:"d-m-Y H:i" }}
+    {% endif %}
+</span>
+{% else %}
+<span class="u-font-size-small">
+    Nog niet ingediend
+</span>
+{% endif %}
