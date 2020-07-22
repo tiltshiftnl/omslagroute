@@ -3,6 +3,7 @@ from django.db.models.fields.related import ManyToManyField
 import datetime
 from textile import textile
 import json
+from web.forms.statics import FIELDS_DICT
 
 
 class PrintableModel(models.Model):
@@ -38,9 +39,10 @@ class PrintableModel(models.Model):
                     data[f.name] = self.EMPTY_VALUE if hasattr(self, 'EMPTY_VALUE') else '\u2014'
                 if f.name in textile_fields:
                     data[f.name] = textile(data[f.name])
+                label = FIELDS_DICT.get(f.name).label if FIELDS_DICT.get(f.name) else str(f.verbose_name)
                 data[f.name] = {
                     'value': data[f.name],
-                    'label': str(f.verbose_name)
+                    'label': label,
                 }
         return data
 
