@@ -1022,7 +1022,7 @@ class Case(CaseBase):
             value_key: dic[k].get('value'),
             version_key: CASE_VERSION_BY_SLUG.get(dic[version_key].get('value'), {}).get('title'),
             saved_key: dic[saved_key].get('value'),
-        } for dic in ld] for k in fields}
+        } for dic in ld] for k in fields if k in ld[0]}
 
         dl = {k: [
             v[i] for i in range(len(v)) if len(v)-1 > i and v[i].get(value_key) != v[i+1].get(value_key) or len(v)-1 == i
