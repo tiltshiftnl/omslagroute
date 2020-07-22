@@ -497,7 +497,16 @@ FIELDS = (
             }
         ),
     ), {'step_required': True}),
-    ('woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
+    ('woonevaluatie_woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
+        label=_('Datum woonevaluatiegesprek *'),
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
+    ('kennismaking_woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
         label=_('Datum woonevaluatiegesprek *'),
         required=False,
         widget=forms.TextInput(
@@ -1216,7 +1225,7 @@ EVALUATIE_WONEN = [
                 'fields': [
                     'woningcorporatie_start_intermediaire_verhuur',
                     'woningcorporatie_datum_kennismakingsgesprek',
-                    'woningcorporatie_datum_woonevaluatiegesprek',
+                    'woonevaluatie_woningcorporatie_datum_woonevaluatiegesprek',
                 ],
             },
         ]
@@ -1399,7 +1408,7 @@ KENNISMAKING_WONINGCORPORATIE = [
                 'fields': [
                     'woningcorporatie_start_intermediaire_verhuur',
                     'woningcorporatie_datum_kennismakingsgesprek',
-                    'woningcorporatie_datum_woonevaluatiegesprek',
+                    'kennismaking_woningcorporatie_datum_woonevaluatiegesprek',
                 ],
             },
         ]

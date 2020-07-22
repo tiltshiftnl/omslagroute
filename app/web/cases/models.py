@@ -468,6 +468,11 @@ class CaseBase(PrintableModel):
     )
 
     # Kennismaking wooncorporatie
+    kennismaking_woningcorporatie_datum_woonevaluatiegesprek = models.DateField(
+        verbose_name=_('Datum woonevaluatiegesprek'),
+        blank=True,
+        null=True,
+    )
     kennismaking_wooncorporatie_goed_huurderschap = models.BooleanField(
         verbose_name=_('Ik verklaar dat ik me als een goed huurder zal gedragen. Dit houdt in dat ik me houd aan de woonregels, geen overlast veroorzaak en mijn huur op tijd betaal.'),
         blank=True,
@@ -600,7 +605,7 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
-    woningcorporatie_datum_woonevaluatiegesprek = models.DateField(
+    woonevaluatie_woningcorporatie_datum_woonevaluatiegesprek = models.DateField(
         verbose_name=_('Datum woonevaluatiegesprek'),
         blank=True,
         null=True,
