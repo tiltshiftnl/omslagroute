@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from .statics import *
 from web.core.models import PrintableModel
 from web.forms.forms import BaseGenericForm
+from web.forms.utils import get_sections_fields
 from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT, FORMS_PROCESSTAP_CHOICES
 import os
 from multiselectfield import MultiSelectField
@@ -565,6 +566,12 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    kennismaking_wooncorporatie_moment_volgend_gesprek = models.CharField(
+        verbose_name=_('Wat is een goed moment voor het volgende gesprek?'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
     kennismaking_wooncorporatie_akkoord_bewoner = models.BooleanField(
         verbose_name=_('Akkoord bewoner'),
         blank=True,
@@ -997,21 +1004,25 @@ class Case(CaseBase):
         Document.objects.filter(case=self).delete()
         return True
 
-    def get_history(self, version=None, double_values=True):
+    def get_history(self, form_config):
         qs = self.case_version_list.all().order_by('-saved')
-        if isinstance(version, list):
-            qs = qs.filter(version_verbose__in=version)
+        qs = qs.filter(version_verbose=form_config.get('slug'))
+
+        fields = [f for f in get_sections_fields(form_config.get('sections')) if f not in form_config.get('options', {}).get('no_history', [])]
+        if 'document_list' in fields: fields.remove('document_list')
+        fields = fields + ['version_verbose', 'saved']
+
         value_key = 'value'
         version_key = 'version_verbose'
         saved_key = 'saved'
-        object_dict = self.to_dict()
-        ld = [cv.to_dict() for cv in qs]
+        ld = [cv.to_dict(fields=fields) for cv in qs]
         ld = ld if ld else [{}]
+
         dl = {k: [{
             value_key: dic[k].get('value'),
             version_key: CASE_VERSION_BY_SLUG.get(dic[version_key].get('value'), {}).get('title'),
             saved_key: dic[saved_key].get('value'),
-        } for dic in ld] for k in ld[0] if object_dict.get(k)}
+        } for dic in ld] for k in fields}
 
         dl = {k: [
             v[i] for i in range(len(v)) if len(v)-1 > i and v[i].get(value_key) != v[i+1].get(value_key) or len(v)-1 == i

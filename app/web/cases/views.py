@@ -571,26 +571,11 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
-        value_key = 'value'
-        version_key = 'version_verbose'
-        saved_key = 'saved'
-        object_dict = self.object.to_dict()
-        ld = [cv.to_dict() for cv in CaseVersion.objects.filter(case=self.object).order_by('-saved')]
-        ld = ld if ld else [{}]
-        dl = {k: [{
-            value_key: dic[k].get('value'),
-            version_key: FORMS_BY_SLUG.get(dic[version_key].get('value'), {}).get('title'),
-            saved_key: dic[saved_key].get('value'),
-        } for dic in ld] for k in ld[0] if self.object.to_dict().get(k)}
-        dl = {k: [
-            vv for vv in v if vv.get(value_key) != '—' and vv.get(value_key) != object_dict.get(k, {}).get('value')
-        ] for k, v in dl.items()}
-        # remove double values
-        dl = {k: [
-            v[i] for i in range(len(v)) if i == 0 or v[i].get('value') != v[i-1].get('value')
-        ] for k, v in dl.items()}
+
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+
         kwargs.update({
-            'case_versions': self.object.get_history(),
+            'case_versions': self.object.get_history(form_config),
             'case_status_list': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('slug')).order_by('-created')
         })
         return kwargs

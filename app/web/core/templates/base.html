@@ -10,7 +10,7 @@
             }
         }
       if (inIframe() && '{{request.GET.iframe}}' !== 'true') {
-        window.parent.location.href = '{{request.GET.iframe}}?iframe=true';//window.location.href.split('?')[0];
+        window.parent.location.href = '{{request.GET.iframe}}?iframe=true';
       } else if (inIframe()){
           window.parent.location.reload(false);
       }else{
