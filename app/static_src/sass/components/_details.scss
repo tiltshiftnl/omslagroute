@@ -2,19 +2,24 @@
 .section--forms {
     details {
         margin-left: 1rem;
-        .icon-details--open {
-            display: none;
-        }
-        .icon-details--closed {
-            display: inline;
-        }
-
-        &[open]{
-            .icon-details--closed {
+        >summary{
+            .icon-details--open {
                 display: none;
             }
-            .icon-details--open {
+            .icon-details--closed {
                 display: inline;
+            }
+    
+        }
+        
+        &[open]{
+            >summary{
+                .icon-details--closed {
+                    display: none;
+                }
+                .icon-details--open {
+                    display: inline;
+                }
             }
         }
         > summary {
