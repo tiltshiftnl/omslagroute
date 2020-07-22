@@ -218,8 +218,6 @@
                     <th>Stap in omslagroute</th>
                     <th>Organisatie type</th>
                     <th>Status</th>
-                    <th>Status datum</th>
-                    <th>Status door</th>
                 </tr>
             </thead>
             <tbody>
@@ -273,7 +271,7 @@
                             {% include 'cases/status/current_link.html' with object=case_status %}
                             {% endif %}
                             <details>
-                                <summary><h4 class="h5 u-margin-top-none">Eerdere evaluaties</h4><svg class="icon-details--closed" width="14" height="9">
+                                <summary class="summary summary--textlink">Eerdere evaluaties<svg class="icon-details--closed" width="14" height="9">
                                         <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
                                     </svg><svg class="icon-details--open" width="14" height="9">
                                         <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
@@ -328,95 +326,9 @@
                                 {% endif %}
                             {% endif %}
                         </td>
-                        <td>
-                        {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
-                            <span class="show-on-mobile">Status datum:</span>
-                            <span class="u-font-size-small">{{ case_status.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}</span>
-                        {% endif %}
-                        </td>
-                        <td>
-                        {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
-                            <span class="show-on-mobile">Status door:</span>
-                            <span class="u-font-size-small">{{ case_status.profile.user.username }}</span>
-                        {% endif %}
-                        </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
-                <tr>
-                    <td>
-                        <div class="dot dot--large"></div>
-                        
-                        <strong>
-                        
-                            
-                            Evaluatie wonen
-                            
-                            <a href="/clienten/1/evaluatie-wonen/nieuw/" class="button button--secondary button--new-form">Nieuwe Evaluatie wonen</a>
-                            
-                            
-                            
-                        
-                        </strong>
-                    </td>
-                    <td>
-                        <span class="show-on-mobile">Organisatie type:</span>
-                        
-                        <span class="tinytag">CORP</span>
-                        
-                    </td>
-                    <td colspan="3">
-                        <!-- 1 van deze 3 varianten -->
-                        <span class="show-on-mobile">Status:</span>
-                        <h4 class="h5 u-margin-top-none">Meest recente evaluatie</h4>
-                        <a href="/clienten/1/evaluatie-wonen/">Ingediend <small>(17-07-2020 11:06)</small></a>
-                        <br>
-                        <span class="icon-circle icon-circle--status-approved">
-                            <svg class="icon check__icon" width="20" height="18">
-                                <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                            </svg>
-                        </span>
-                        <a href="#">Goedgekeurd <small>(17-07-2020 11:06)</small></a>
-                        <br>
-                        <span class="icon-circle icon-circle--status-disapproved">
-                            <svg class="icon close__icon" width="14" height="14">
-                                <use href="#close" xlink:href="#close" width="14" height="14"></use>
-                            </svg>
-                        </span>
-                        <a href="#">Afgekeurd <small>(17-07-2020 11:06)</small></a>
-                        <details>
-                            <summary><h4 class="h5 u-margin-top-none">Eerdere evaluaties</h4><svg class="icon-details--closed" width="14" height="9">
-                                    <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                                </svg><svg class="icon-details--open" width="14" height="9">
-                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                                </svg>
-                            </summary>
-                            <div class="content">
-                                
-                                <ul class="u-list-style-none">
-                                    <li>
-                                        <span class="icon-circle icon-circle--status-approved">
-                                            <svg class="icon check__icon" width="20" height="18">
-                                                <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                                            </svg>
-                                        </span>
-                                        <a href="#">Goedgekeurd <small>(17-07-2020 11:06)</small></a>
-                                    </li>
-                                    
-                                    <li>
-                                        <span class="icon-circle icon-circle--status-approved">
-                                            <svg class="icon check__icon" width="20" height="18">
-                                                <use href="#check" xlink:href="#check" width="20" height="18"></use>
-                                            </svg>
-                                        </span>
-                                        <a href="#">Goedgekeurd <small>(17-07-2020 10:54)</small></a>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                        </details>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </section>

@@ -21,6 +21,21 @@ fieldset {
 
 summary {
     cursor: pointer;
+    
+}
+
+.summary {
+    &--textlink {
+        outline: 0;
+        color: #004699;
+        text-decoration: underline;
+        font-weight: bold;
+        cursor: pointer;
+        svg {
+            margin-left: 0.5rem;
+            color: $primary-black;
+        }
+    }
 }
 
 body:not(:-moz-handler-blocked) fieldset {
