@@ -817,7 +817,7 @@ FIELDS = (
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
-('kennismaking_wooncorporatie_doelen_wonen_huurderschap', forms.CharField(
+    ('kennismaking_wooncorporatie_doelen_wonen_huurderschap', forms.CharField(
         label=_('Waar wil jij aan werken dat met wonen en goed huurderschap te maken heeft? *'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
@@ -838,7 +838,10 @@ FIELDS = (
         label=_('Hoeveel is deze borg?'),
         required=False,
     ), {}),
-
+    ('kennismaking_wooncorporatie_moment_volgend_gesprek', forms.CharField(
+        label=_('Wat is een goed moment voor het volgende gesprek? *'),
+        required=False,
+    ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_bewoner', forms.BooleanField(
         label=_('Akkoord bewoner *'),
         required=False,
@@ -1532,7 +1535,7 @@ KENNISMAKING_WONINGCORPORATIE = [
                 'title': '',
                 'description': '',
                 'fields': [
-                    'woonevaluatie_moment_volgend_gesprek',
+                    'kennismaking_wooncorporatie_moment_volgend_gesprek',
                 ],
             }
         ]
@@ -1682,7 +1685,26 @@ FORMS = (
                     'required_fields': ['omklap_akkoord_derde_toelichting',],
                 },
             ),
-        }, 'addres_required': True, 'bijlages': True},
+        }, 
+            'addres_required': True, 
+            'bijlages': True,
+            'no_history': [
+                'urgentiecriteria_zinvolle_dagbesteding_akkoord',
+                'urgentiecriteria_zinvolle_dagbesteding_datum_evaluatiemoment',
+                'urgentiecriteria_functioneert_sociaal_akkoord',
+                'urgentiecriteria_functioneert_sociaal_datum_evaluatiemoment',
+                'urgentiecriteria_functioneert_psychisch_akkoord',
+                'urgentiecriteria_functioneert_psychisch_datum_evaluatiemoment',
+                'urgentiecriteria_is_financieel_stabiel_akkoord',
+                'urgentiecriteria_is_financieel_stabiel_datum_evaluatiemoment',
+                'urgentiecriteria_kinderen_gezonde_akkoord',
+                'urgentiecriteria_kinderen_gezonde_datum_evaluatiemoment',
+                'omklap_datum_evaluatiemoment',
+                'omklap_akkoord_derde',
+                'omklap_akkoord_derde_naam',
+                'omklap_akkoord_derde_datum',
+            ],
+        },
     ),
     (
         'evaluatie_wonen',
@@ -1754,7 +1776,19 @@ FORMS = (
                 },
             ),
             
-        }, 'addres_required': True, 'bijlages': False},
+        }, 
+            'addres_required': True, 
+            'bijlages': False,
+            'no_history': [
+                'woonevaluatie_moment_volgend_gesprek',
+                'woonevaluatie_akkoord_bewoner',
+                'woonevaluatie_akkoord_bewoner_naam',
+                'woonevaluatie_akkoord_bewoner_datum',
+                'woonevaluatie_akkoord_zorgaanbieder',
+                'woonevaluatie_akkoord_zorgaanbieder_naam',
+                'woonevaluatie_akkoord_zorgaanbieder_datum',
+            ],
+        },
     ),
     (
         'kennismaking_woningcorporatie',
@@ -1785,7 +1819,20 @@ FORMS = (
                 },
             ),
             
-        }, 'addres_required': True, 'bijlages': False},
+        }, 
+            'addres_required': True, 
+            'bijlages': False,
+            'no_history': [
+                'kennismaking_wooncorporatie_goed_huurderschap',
+                'kennismaking_wooncorporatie_moment_volgend_gesprek',
+                'kennismaking_wooncorporatie_akkoord_bewoner',
+                'kennismaking_wooncorporatie_akkoord_bewoner_naam',
+                'kennismaking_wooncorporatie_akkoord_bewoner_datum',
+                'kennismaking_wooncorporatie_akkoord_zorgaanbieder',
+                'kennismaking_wooncorporatie_akkoord_zorgaanbieder_naam',
+                'kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum',
+            ],
+        },
     ),
 )
 
