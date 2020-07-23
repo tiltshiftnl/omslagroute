@@ -55,7 +55,7 @@
                                 {% for user in object.get_linked_users %}
                                 {% if request.user.id != user.id %}
                                 <li>
-                                    <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Hallo,%20...">{{user.username}}</a>
+                                    <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Ondestaande is de link naar het formulier:%0D%0A{{request.build_absolute_uri}}">{{user.username}}</a>
                                 </li>
                                 {% endif %}
                                 {% endfor %}
@@ -93,7 +93,7 @@
                     {% endif %}
                         <li>
                             
-                            <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Hallo,%20...">
+                            <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Ondestaande is de link naar het formulier:%0D%0A{{request.build_absolute_uri}}">
                                 <span>Mail samenwerker(s)</span><svg width="20" height="20">
                                     <use href="#email" xlink:href="#email" width="20" height="20"></use>
                                 </svg>
