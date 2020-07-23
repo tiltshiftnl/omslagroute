@@ -35,3 +35,18 @@
         }
     }
 }
+
+.tool--email {
+    color: $primary-darkblue;
+    text-align: center;
+    > * {
+        display: block;
+    }
+
+    .client-header details summary & {
+        svg {
+            color: currentColor;
+        }
+
+    }
+}
