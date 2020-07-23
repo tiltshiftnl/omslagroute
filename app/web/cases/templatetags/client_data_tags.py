@@ -1,5 +1,6 @@
 from django import template
 from ..models import CaseStatus 
+from web.forms.utils import get_rules_reversed as rules_reversed
 from ..statics import CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD
 register = template.Library()
 
@@ -17,7 +18,10 @@ def case_form_data(case, organization, form, *args, **kwargs):
 
 
 @register.simple_tag()
-def case_data_by_field_name(data, field_name, *args, **kwargs):
+def case_data_by_field_name(data, field_name, rules_reversed, *args, **kwargs):
+    if rules_reversed.get(field_name, []):
+        if data.get(rules_reversed.get(field_name, [])[0], {}).get('raw') not in rules_reversed.get(field_name, [])[1]:
+            return False
     return data.get(field_name, {})
 
 
@@ -36,3 +40,7 @@ def get_case_status_list(case, form, *args, **kwargs):
         status=CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD,
     )
     return case_status_list
+
+@register.simple_tag()
+def get_rules_reversed(form_cnfig, *args, **kwargs):
+    return rules_reversed(form_cnfig)

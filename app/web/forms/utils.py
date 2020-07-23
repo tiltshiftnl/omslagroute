@@ -14,3 +14,8 @@ def get_sections_fields(sections):
         fff for f in sections for ff in f.get('section_list', []) for fff in ff.get('fields', [])
     ]
     return sections
+
+
+def get_rules_reversed(form_config):
+    rules = form_config.get('options', {}).get('rules', {}).items()
+    return {f: [k, r.get('values', [])] for k, v in rules for r in v for f in r.get('fields', [])}

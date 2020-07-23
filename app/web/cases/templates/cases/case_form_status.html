@@ -107,7 +107,7 @@
         <div class="details-client">
             
             {% case_form_data object request.user.federation.organization form_data.slug as data %}
-            {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data bijlages=form_data.options.bijlages %}
+            {% include 'forms/snippets/readonly_form_data.html' with form_config=form_data data=data %}
         </div>
         <!-- END Client basis gegevens -->
 
