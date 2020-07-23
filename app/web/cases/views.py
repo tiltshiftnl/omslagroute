@@ -455,16 +455,6 @@ class CaseCleanForm(UserPassesTestMixin, UpdateView):
     form_class = CaseCleanForm
     success_url = reverse_lazy('cases_by_profile')
 
-    # def get(self, request, *args, **kwargs):
-        # response = super().get(request, *args, **kwargs)
-        # print(list(self.get_not_empty_fields()))
-        # values = [f for f in self.get_fields()[0] if hasattr(self.object, f) and getattr(self.object, f)]
-        # if values:
-        # print(values)
-        # return response
-        # return HttpResponseRedirect(self.get_success_url())
-        # return response
-
     def get_fields(self):
         form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
         return get_sections_fields(form_context.get('sections')),

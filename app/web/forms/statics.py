@@ -40,12 +40,12 @@ FIELDS = (
         required=False,
     ), {}),
     ('woningnet_nummer', forms.CharField(
-        label=_('Woningnetnummer *'),
+        label=_('Woningnetnummer'),
         widget=forms.TextInput(attrs={'placeholder': ' ', 'pattern': '^[0-9]*$'}),
         required=False,
     ), {'step_required': True}),
     ('woningnet_geldigheid', forms.DateField(
-        label=_('Geldigheid woningnet *'),
+        label=_('Geldigheid woningnet'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -56,14 +56,14 @@ FIELDS = (
         help_text=_('Deze moet in de toekomst liggen')
     ), {'step_required': True}),
     ('centrale_toegang_naam', forms.IntegerField(
-        label=_('Naam centrale toegang *'),
+        label=_('Naam centrale toegang'),
         widget=RadioSelect(
             choices=CENTRALE_TOEGANG,
         ),
         required=False,
     ), {'step_required': True}),
     ('jonger_dan_26', forms.IntegerField(
-        label=_('Plaatsing jonger dan 27 jaar *'),
+        label=_('Plaatsing jonger dan 27 jaar'),
         widget=RadioSelect(
             choices=JONGER_DAN_26,
         ),
@@ -82,7 +82,7 @@ FIELDS = (
         help_text='Wat is de motivatie voor aanvraag van een huurcontract voor onbepaalde tijd?'
     ), {}),
     ('partner_check', forms.IntegerField(
-        label=_('Heeft de cliënt een partner? *'),
+        label=_('Heeft de cliënt een partner?'),
         widget=RadioSelect(
             choices=DEFAULT_NO_OR_YES,
         ),
@@ -118,7 +118,7 @@ FIELDS = (
         help_text='Waar/bij wie/hoe?'
     ), {}),
     ('kinderen_check', forms.IntegerField(
-        label=_('Heeft de cliënt kinderen? *'),
+        label=_('Heeft de cliënt kinderen?'),
         widget=RadioSelect(
             choices=DEFAULT_NO_OR_YES,
         ),
@@ -138,12 +138,12 @@ FIELDS = (
         required=False,
     ), {}),
     ('trajecthouder_naam', forms.CharField(
-        label=_('Naam instroomfunctionaris of trajecthouder *'),
+        label=_('Naam instroomfunctionaris of trajecthouder'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('aanvraag_datum', forms.DateField(
-        label=_('Datum aanvraag *'),
+        label=_('Datum aanvraag'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -153,30 +153,30 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('omslagwoning_zorgaanbieder', forms.CharField(
-        label=_('Zorgaanbieder omslagwoning *'),
+        label=_('Zorgaanbieder omslagwoning'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding', forms.CharField(
-        label=_('De cliënt heeft passende zinvolle dagbesteding. Dat betekent voor deze cliënt het volgende *'),
+        label=_('De cliënt heeft passende zinvolle dagbesteding. Dat betekent voor deze cliënt het volgende'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: cliënt wil een betaalde baan die zij kan combineren met de zorg voor haar kinderen',
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_stabiel', forms.CharField(
-        label=_('De cliënt functioneert sociaal stabiel. Dat betekent voor deze cliënt het volgende *'),
+        label=_('De cliënt functioneert sociaal stabiel. Dat betekent voor deze cliënt het volgende'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: Het doel is om het huidige netwerk te behouden en het contact met haar ex-man te stabiliseren.',
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_stabiel', forms.CharField(
-        label=_('De cliënt functioneert psychisch stabiel. Dat betekent voor deze cliënt het volgende *'),
+        label=_('De cliënt functioneert psychisch stabiel. Dat betekent voor deze cliënt het volgende'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Bijvoorbeeld: cliënt functioneert psychisch stabiel en heeft als doel dit voort te zetten. <br /><strong>Let op! Leg geen medische informatie vast.</strong>',
     ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel', forms.CharField(
-        label=_('De cliënt is financieel stabiel. Dat betekent voor deze cliënt het volgende *'),
+        label=_('De cliënt is financieel stabiel. Dat betekent voor deze cliënt het volgende'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}),
         required=False,
         help_text='Met financieel stabiel wordt bedoeld dat deze een stabiel inkomen heeft inzage heeft gegeven in eventuele schulden op basis van informatie van Bureau KredietRegistratie.<br /><br />In het geval er schulden zijn is de cliënt financieel stabiel wanneer de cliënt aan een of meerdere van deze zaken voldoet: <ul><li>een overzicht heeft gegeven van alle schulden en betalingsverplichtingen</li><li>inzicht heeft gegeven in eventuele openstaande CJIB-boetes en heeft aangetoond dat er geen kans is op detentie vanwege openstaande boetes</li><li>in inkomensbeheer zit</li><li>een stabiel werkend budgetplan heeft</li><li>een overeenkomst heeft met een schuldhulpverleningsbureau waarbij het schuldhulpverleningstraject voorspoedig loopt</li></ul>Bijvoorbeeld: cliënt wil zelfstandig haar administratie bijhouden en haar schulden regelen.',
@@ -216,30 +216,30 @@ FIELDS = (
         required=False,
     ), {}),
     ('organisatie', forms.CharField(
-        label=_('Organisatie *'),
+        label=_('Organisatie'),
         required=False,
     ), {'step_required': True}),
     ('persoonlijk_begeleider', forms.CharField(
-        label=_('Persoonlijk begeleider *'),
+        label=_('Persoonlijk begeleider'),
         required=False,
     ), {'step_required': True}),
     ('start_zelfstandig_wonen', forms.CharField(
-        label=_('Start zelfstandig wonen (intermediair) *'),
+        label=_('Start zelfstandig wonen (intermediair)'),
         required=False,
     ), {'step_required': True}),
     ('datum_voordracht', forms.DateField(
-        label=_('Datum voordracht *'),
+        label=_('Datum voordracht'),
         required=False,
     ), {'step_required': True}),
     ('woningcorporatie_akkoord_met_omklap', forms.IntegerField(
-        label=_('Woningcorporatie akkoord met omklap *'),
+        label=_('Woningcorporatie akkoord met omklap'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
     ), {'step_required': True}),
     ('datum_evaluatie_moment', forms.DateField(
-        label=_('Datum evaluatie moment *'),
+        label=_('Datum evaluatie moment'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -249,24 +249,24 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_behaald_omdat', forms.CharField(
-        label=_('Deze doelen zijn behaald omdat *'),
+        label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_beoordeeld_door', forms.CharField(
-        label=_('Deze doelen zijn beoordeeld door *'),
+        label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_akkoord', forms.IntegerField(
-        label=_('Akkoord *'),
+        label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_zinvolle_dagbesteding_datum_evaluatiemoment', forms.DateField(
-        label=_('Datum evaluatiemoment *'),
+        label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -276,24 +276,24 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_behaald_omdat', forms.CharField(
-        label=_('Deze doelen zijn behaald omdat *'),
+        label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_beoordeeld_door', forms.CharField(
-        label=_('Deze doelen zijn beoordeeld door *'),
+        label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_akkoord', forms.IntegerField(
-        label=_('Akkoord *'),
+        label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_sociaal_datum_evaluatiemoment', forms.DateField(
-        label=_('Datum evaluatiemoment *'),
+        label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -303,24 +303,24 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_behaald_omdat', forms.CharField(
-        label=_('Deze doelen zijn behaald omdat *'),
+        label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_beoordeeld_door', forms.CharField(
-        label=_('Deze doelen zijn beoordeeld door *'),
+        label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_akkoord', forms.IntegerField(
-        label=_('Akkoord *'),
+        label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_functioneert_psychisch_datum_evaluatiemoment', forms.DateField(
-        label=_('Datum evaluatiemoment *'),
+        label=_('Datum evaluatiemoment'),
          widget=forms.TextInput(
              attrs={
                  'placeholder': 'dd-mm-jjjj',
@@ -330,24 +330,24 @@ FIELDS = (
          required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_behaald_omdat', forms.CharField(
-        label=_('Deze doelen zijn behaald omdat *'),
+        label=_('Deze doelen zijn behaald omdat'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_beoordeeld_door', forms.CharField(
-        label=_('Deze doelen zijn beoordeeld door *'),
+        label=_('Deze doelen zijn beoordeeld door'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_akkoord', forms.IntegerField(
-        label=_('Akkoord *'),
+        label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
     ), {'step_required': True}),
     ('urgentiecriteria_is_financieel_stabiel_datum_evaluatiemoment', forms.DateField(
-        label=_('Datum evaluatiemoment *'),
+        label=_('Datum evaluatiemoment'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -415,7 +415,7 @@ FIELDS = (
         required=False,
     ), {}),
     ('omklap_akkoord_derde', forms.IntegerField(
-        label=_('Akkoord *'),
+        label=_('Akkoord'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -427,11 +427,11 @@ FIELDS = (
         required=False,
     ), {}),
     ('omklap_akkoord_derde_naam', forms.CharField(
-        label=_('Naam / afdeling *'),
+        label=_('Naam / afdeling'),
         required=False,
     ), {'step_required': True}),
     ('omklap_akkoord_derde_datum', forms.DateField(
-        label=_('Datum akkoord *'),
+        label=_('Datum akkoord'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -440,47 +440,47 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('zorginstelling_contactpersoon', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False
     ), {'step_required': True}),
     ('zorginstelling_telefoon', forms.CharField(
-        label=_('Telefoonnummer *'),
+        label=_('Telefoonnummer'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False
     ), {'step_required': True}),
     ('zorginstelling_emailadres', forms.EmailField(
-        label=_('E-mailadres *'),
+        label=_('E-mailadres'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('zorginstelling_naam', forms.CharField(
-        label=_('Naam zorginstelling *'),
+        label=_('Naam zorginstelling'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False
     ), {'step_required': True}),
     ('woningcorporatie_contactpersoon', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False
     ), {'step_required': True}),
     ('woningcorporatie_telefoon', forms.CharField(
-        label=_('Telefoonnummer *'),
+        label=_('Telefoonnummer'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False
     ), {'step_required': True}),
     ('woningcorporatie_emailadres', forms.EmailField(
-        label=_('E-mailadres *'),
+        label=_('E-mailadres'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woningcorporatie_naam', forms.CharField(
-        label=_('Naam woningcorparatie *'),
+        label=_('Naam woningcorparatie'),
         widget=forms.TextInput(attrs={'placeholder': ' '}),
         required=False
     ), {'step_required': True}),
     ('woningcorporatie_start_intermediaire_verhuur', forms.DateField(
-        label=_('Startdatum intermediaire verhuur *'),
+        label=_('Startdatum intermediaire verhuur'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -489,7 +489,7 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('woningcorporatie_datum_kennismakingsgesprek', forms.DateField(
-        label=_('Datum kennismakingsgesprek *'),
+        label=_('Datum kennismakingsgesprek'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -498,7 +498,7 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('woonevaluatie_woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
-        label=_('Datum woonevaluatiegesprek *'),
+        label=_('Datum woonevaluatiegesprek'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -507,7 +507,7 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('kennismaking_woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
-        label=_('Datum woonevaluatiegesprek *'),
+        label=_('Datum woonevaluatiegesprek'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -516,32 +516,32 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('woonevaluatie_ervaring_wonen', forms.CharField(
-        label=_('Hoe ervaar je het wonen? *'),
+        label=_('Hoe ervaar je het wonen?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_goed_minder_goed', forms.CharField(
-        label=_('Wat gaat goed, wat gaat minder goed? *'),
+        label=_('Wat gaat goed, wat gaat minder goed?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_omschrijving_woning', forms.CharField(
-        label=_('Hoe ziet de woning er uit? *'),
+        label=_('Hoe ziet de woning er uit?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_omschrijving_balkon_tuin', forms.CharField(
-        label=_('Hoe ziet het balkon en/of de tuin er uit? *'),
+        label=_('Hoe ziet het balkon en/of de tuin er uit?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_omschrijving_portiek', forms.CharField(
-        label=_('Hoe ziet het portiek er uit? *'),
+        label=_('Hoe ziet het portiek er uit?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_contact_met_buren', forms.IntegerField(
-        label=_('Heb je contact met buren? *'),
+        label=_('Heb je contact met buren?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -558,7 +558,7 @@ FIELDS = (
         required=False,
     ), {}),
     ('woonevaluatie_overlast_buren', forms.IntegerField(
-        label=_('Ervaar je weleens overlast? *'),
+        label=_('Ervaar je weleens overlast?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -572,7 +572,7 @@ FIELDS = (
         required=False,
     ), {}),
     ('woonevaluatie_overlast_omwonenden_gemeld', forms.IntegerField(
-        label=_('Is er overlast van omwonenden gemeld? *'),
+        label=_('Is er overlast van omwonenden gemeld?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -584,7 +584,7 @@ FIELDS = (
         required=False,
     ), {}),
     ('woonevaluatie_netwerk_aanwezig', forms.IntegerField(
-        label=_('Heb je een netwerk in de buurt? *'),
+        label=_('Heb je een netwerk in de buurt?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -596,19 +596,19 @@ FIELDS = (
         required=False,
     ), {}),
     ('woonevaluatie_netwerk_behoefte', forms.IntegerField(
-        label=_('Zo nee, heb je hier behoefte aan? *'),
+        label=_('Zo nee, heb je hier behoefte aan?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
         required=False,
     ), {}),
     ('woonevaluatie_netwerk_behoefte_meer_contacten', forms.CharField(
-        label=_('Heb je behoefte aan meer of andere contacten in de buurt? *'),
+        label=_('Heb je behoefte aan meer of andere contacten in de buurt?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_huur_betalen_op_tijd', forms.IntegerField(
-        label=_('Heb je de huur elke maand op tijd betaald aan de zorgaanbieder? *'),
+        label=_('Heb je de huur elke maand op tijd betaald aan de zorgaanbieder?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -620,16 +620,16 @@ FIELDS = (
         required=False,
     ), {}),
     ('woonevaluatie_gepersonaliseerd_doel_1', forms.CharField(
-        label=_('1. Gepersonaliseerd doel rondom het wonen *'),
+        label=_('1. Gepersonaliseerd doel rondom het wonen'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_gepersonaliseerd_doel_1_stand_van_zaken', forms.CharField(
-        label=_('Stand van zaken *'),
+        label=_('Stand van zaken'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_gepersonaliseerd_doel_1_behaald', forms.IntegerField(
-        label=_('Is het doel behaald? *'),
+        label=_('Is het doel behaald?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -668,7 +668,7 @@ FIELDS = (
         required=False,
     ), {}),
     ('aanvraag_omklap_actief', forms.IntegerField(
-        label=_('Is er sprake van voordracht voor omklap? *'),
+        label=_('Is er sprake van voordracht voor omklap?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -685,24 +685,24 @@ FIELDS = (
         required=False,
     ), {}),
     ('woonevaluatie_moment_volgend_gesprek', forms.CharField(
-        label=_('Wat is een goed moment voor het volgende gesprek? *'),
+        label=_('Wat is een goed moment voor het volgende gesprek?'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_bijzonderheden_wonen', forms.CharField(
-        label=_('Zijn er bijzonderheden rond het wonen? *'),
+        label=_('Zijn er bijzonderheden rond het wonen?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_bewoner', forms.BooleanField(
-        label=_('Akkoord bewoner *'),
+        label=_('Akkoord bewoner'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_bewoner_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_bewoner_datum', forms.DateField(
-        label=_('Datum *'),
+        label=_('Datum'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -711,15 +711,15 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder', forms.BooleanField(
-        label=_('Akkoord zorgaanbieder *'),
+        label=_('Akkoord zorgaanbieder'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder_naam', forms.CharField(
-        label=_('Naam en functie *'),
+        label=_('Naam en functie'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_zorgaanbieder_datum', forms.DateField(
-        label=_('Datum *'),
+        label=_('Datum'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -728,15 +728,15 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_woningcorporatie', forms.BooleanField(
-        label=_('Akkoord woningcorporatie *'),
+        label=_('Akkoord woningcorporatie'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_woningcorporatie_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         required=False,
     ), {'step_required': True}),
     ('woonevaluatie_akkoord_woningcorporatie_datum', forms.DateField(
-        label=_('Datum *'),
+        label=_('Datum'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -750,7 +750,7 @@ FIELDS = (
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_kennisgemaakt_buren', forms.IntegerField(
-        label=_('Heb je kennisgemaakt met je buren? *'),
+        label=_('Heb je kennisgemaakt met je buren?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -763,72 +763,72 @@ FIELDS = (
     ), {}),
 
     ('kennismaking_wooncorporatie_goede_buur', forms.CharField(
-        label=_('Wanneer ben je een goede buur? *'),
+        label=_('Wanneer ben je een goede buur?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_huisregels', forms.CharField(
-        label=_('Zijn er huisregels in het complex waarmee je rekening moet houden? *'),
+        label=_('Zijn er huisregels in het complex waarmee je rekening moet houden?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_afval', forms.CharField(
-        label=_('Weet je waar je afval kwijt kunt (afvalbak, glasbak, grof vuil voorzieningen)? *'),
+        label=_('Weet je waar je afval kwijt kunt (afvalbak, glasbak, grof vuil voorzieningen)?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_technische_klachten', forms.CharField(
-        label=_('Weet je hoe je technische klachten kunt melden bij de woningcorporatie? *'),
+        label=_('Weet je hoe je technische klachten kunt melden bij de woningcorporatie?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_overlast_melden', forms.CharField(
-        label=_('Weet je hoe je overlast kunt melden? *'),
+        label=_('Weet je hoe je overlast kunt melden?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_overlast_voorkomen', forms.CharField(
-        label=_('Weet je hoe je overlast kunt voorkomen? *'),
+        label=_('Weet je hoe je overlast kunt voorkomen?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_overlast_signalen', forms.CharField(
-        label=_('Hoe worden signalen van overlast gedeeld? (verwijzing overlastprotocol) *'),
+        label=_('Hoe worden signalen van overlast gedeeld? (verwijzing overlastprotocol)'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_wijk', forms.CharField(
-        label=_('Hoe ervaar je de wijk? *'),
+        label=_('Hoe ervaar je de wijk?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_wijk_voorzieningen_waar', forms.CharField(
-        label=_('Weet je waar voorzieningen zijn waar jij gebruik van kunt maken? *'),
+        label=_('Weet je waar voorzieningen zijn waar jij gebruik van kunt maken?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_wijk_voorzieningen_behoefte', forms.CharField(
-        label=_('Aan welke voorziening heb jij behoefte? *'),
+        label=_('Aan welke voorziening heb jij behoefte?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_wijk_voorzieningen_anders', forms.CharField(
-        label=_('Zijn er nog andere voorzieningen die de woningcorporatiemedewerker of begeleider wil voorstellen? *'),
+        label=_('Zijn er nog andere voorzieningen die de woningcorporatiemedewerker of begeleider wil voorstellen?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_doelen_wonen_huurderschap', forms.CharField(
-        label=_('Waar wil jij aan werken dat met wonen en goed huurderschap te maken heeft? *'),
+        label=_('Waar wil jij aan werken dat met wonen en goed huurderschap te maken heeft?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_ondersteuning_medewerker', forms.CharField(
-        label=_('Hoe kan de medewerker van de zorgaanbieder en/of de corporatie hierbij ondersteunen? *'),
+        label=_('Hoe kan de medewerker van de zorgaanbieder en/of de corporatie hierbij ondersteunen?'),
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_borg_betalen', forms.IntegerField(
-        label=_('Moet er borg worden betaald als het huurcontract op naam van de bewoner komt te staan? *'),
+        label=_('Moet er borg worden betaald als het huurcontract op naam van de bewoner komt te staan?'),
         widget=RadioSelect(
             choices=DEFAULT_YES_OR_NO,
         ),
@@ -839,19 +839,19 @@ FIELDS = (
         required=False,
     ), {}),
     ('kennismaking_wooncorporatie_moment_volgend_gesprek', forms.CharField(
-        label=_('Wat is een goed moment voor het volgende gesprek? *'),
+        label=_('Wat is een goed moment voor het volgende gesprek?'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_bewoner', forms.BooleanField(
-        label=_('Akkoord bewoner *'),
+        label=_('Akkoord bewoner'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_bewoner_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_bewoner_datum', forms.DateField(
-        label=_('Datum *'),
+        label=_('Datum'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -860,15 +860,15 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_zorgaanbieder', forms.BooleanField(
-        label=_('Akkoord zorgaanbieder *'),
+        label=_('Akkoord zorgaanbieder'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_zorgaanbieder_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum', forms.DateField(
-        label=_('Datum *'),
+        label=_('Datum'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -877,15 +877,15 @@ FIELDS = (
         ),
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_woningcorporatie', forms.BooleanField(
-        label=_('Akkoord woningcorporatie *'),
+        label=_('Akkoord woningcorporatie'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_woningcorporatie_naam', forms.CharField(
-        label=_('Naam *'),
+        label=_('Naam'),
         required=False,
     ), {'step_required': True}),
     ('kennismaking_wooncorporatie_akkoord_woningcorporatie_datum', forms.DateField(
-        label=_('Datum *'),
+        label=_('Datum'),
         required=False,
         widget=forms.TextInput(
             attrs={
@@ -893,13 +893,6 @@ FIELDS = (
             }
         ),
     ), {'step_required': True}),
-    
-
-    # ('document_list', forms.ModelMultipleChoiceField(
-    #     label=_('Documenten lijst'),
-    #     # queryset=Document.objects.all(),
-    #     required=False,
-    # ), {}),
 )
 
 FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)

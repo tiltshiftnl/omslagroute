@@ -78,7 +78,7 @@ class BaseGenericForm:
                     html_class_attr = ' class="%s"' % css_classes
                 if bf.label:
                     label = conditional_escape(bf.label)
-                    if bf.field.required:
+                    if bf.field.required or FIELDS_REQUIRED_DICT.get(bf.name):
                         label = '%s *' % label
                     label = bf.label_tag(label) or ''
                 else:
