@@ -183,17 +183,25 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
     template_name_suffix = '_page'
 
     def get_context_data(self, **kwargs):
-        linked_users = User.objects.filter(
-            profile__in=self.object.profile_set.filter(
-                user__user_type__in=[PB_FEDERATIE_BEHEERDER, BEGELEIDER]
-            ).exclude(
-                user=self.request.user
-            )
-        )
+        qs = self.object.case_version_list.all()
+        qs = qs.annotate(address=Concat(
+            'adres_straatnaam', 
+            'adres_huisnummer', 
+            'adres_toevoeging', 
+            'adres_postcode', 
+            'adres_plaatsnaam', 
+            'adres_wijziging_reden', 
+            output_field=TextField()
+            ))
+        qs = qs.order_by('address')
+        qs = qs.distinct('address')
+        qs = qs.filter(adres_straatnaam__isnull=False)
+        qs = qs.values('address', 'id')
 
         kwargs.update({
             'moment_list': Moment.objects.all(),
-            'linked_users':  linked_users,
+            'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
+            'address_history': self.object.case_version_list.filter(id__in=[o.get('id') for o in qs]).order_by('-saved')
         })
         return super().get_context_data(**kwargs)
 

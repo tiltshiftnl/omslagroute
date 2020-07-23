@@ -42,7 +42,7 @@
                 {% if not object.delete_request_date %}
                 <div class="screen-only">
                     <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                        Samenwerken ({{ linked_users|length }})
+                        Samenwerken ({{ object.get_linked_users|length|add:-1 }})
                     </a>
 
                 <details>
