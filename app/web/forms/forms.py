@@ -157,12 +157,12 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.path = kwargs.pop('path')
-        form_context = kwargs.pop('form_context')
+        form_config = kwargs.pop('form_config')
         super().__init__(*args, **kwargs)
         self.fields = {}
-        self.sections = form_context.get('sections', [])
-        self.federation_types = form_context.get('federation_types', [])
-        self.options = form_context.get('options', {})
+        self.sections = form_config.get('sections', [])
+        self.federation_types = form_config.get('federation_types', [])
+        self.options = form_config.get('options', {})
         exclude_fields = self.options.get('exclude_fields', [])
         
         for f in self._get_fields(self.sections):

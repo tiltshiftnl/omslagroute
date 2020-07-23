@@ -177,7 +177,7 @@ CASE_VERSION = (
 
 def map_case_version_keys(f):
     return {
-        'slug': f[0],
+        'form_config_slug': f[0],
         'title': f[1],
     }
 

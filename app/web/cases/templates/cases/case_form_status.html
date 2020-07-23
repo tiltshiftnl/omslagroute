@@ -49,9 +49,9 @@
 
 
     <div class="form-title-wrapper">
-        <h2 class="h3">{{ form_data.title }}</h2>
-    <button type="button" data-handler="print-page" class="button text-link text-link--small screen-only"><span class="u-margin-right-half">Print of bewaar als pdf</span><svg class="icon print__icon" width="18" height="18">
-        <use href="#print" xlink:href="#print" width="18" height="18"></use>
+        <h2 class="h3">{{ form_config.title }}</h2>
+    <button type="button" data-handler="print-page" class="button text-link text-link--small screen-only"><span class="u-margin-right-half">Print of bewaar als pdf</span><svg class="icon print__icon" width="32" height="32">
+        <use href="#print" xlink:href="#print" width="32" height="32"></use>
     </svg></button>
     </div>
     <p class="print-only">
@@ -117,8 +117,8 @@
         <!-- START Client basis gegevens -->
         <div class="details-client">
             
-            {% case_form_data object request.user.federation.organization form_data.slug as data %}
-            {% include 'forms/snippets/readonly_form_data.html' with form_config=form_data data=data %}
+            {% case_form_data object request.user.federation.organization form_config.form_config_slug as data %}
+            {% include 'forms/snippets/readonly_form_data.html' with form_config=form_config data=data %}
         </div>
         <!-- END Client basis gegevens -->
 

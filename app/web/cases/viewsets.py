@@ -57,7 +57,7 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
                     current_site.domain,
                     reverse('update_case', kwargs={
                         'pk': serializer.instance.case.id,
-                        'slug': serializer.instance.form,
+                        'form_config_slug': serializer.instance.form,
                     })
                 ),
             })

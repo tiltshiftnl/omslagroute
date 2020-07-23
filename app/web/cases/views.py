@@ -217,10 +217,10 @@ class CaseVersionDetailView(UserPassesTestMixin, DetailView):
     template_name_suffix = '_page'
 
     def get_context_data(self, **kwargs):
-        form_context = FORMS_BY_SLUG.get(self.object.version_verbose)
+        form_config = FORMS_BY_SLUG.get(self.object.version_verbose)
 
         kwargs.update({
-            'form_context': form_context,
+            'form_config': form_config,
         })
         return super().get_context_data(**kwargs)
 
@@ -236,12 +236,12 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
     template_name_suffix = '_form_status'
 
     def get_context_data(self, **kwargs):
-        form_data = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
         kwargs.update({
-            'form_fields': get_sections_fields(form_data.get('sections')),
-            'form_data': form_data,
+            'form_fields': get_sections_fields(form_config.get('sections')),
+            'form_config': form_config,
             'user_list': ', '.join(get_zorginstelling_medewerkers_email_list(self.object)),
-            'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('slug')),
+            'document_list': self.object.document_set.filter(forms__contains=self.kwargs.get('form_config_slug')),
             'status_options': json.dumps(dict((k, v) for k, v in CASE_STATUS_DICT.items() if k in CASE_STATUS_CHOICES_BY_FEDEATION_TYPE.get(self.request.user.federation.organization.federation_type))),
         })
         return super().get_context_data(**kwargs)
@@ -251,7 +251,7 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         form_slug_list = FORMS_SLUG_BY_FEDERATION_TYPE.get(self.request.user.federation.organization.federation_type)
-        if not self.kwargs.get('slug') in form_slug_list:
+        if not self.kwargs.get('form_config_slug') in form_slug_list:
             return False
         return auth_test(self.request.user, [WONEN, WONINGCORPORATIE_MEDEWERKER])
 
@@ -441,15 +441,15 @@ class CaseDeleteRequestRevokeView(UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 
-class CaseCleanForm(UserPassesTestMixin, UpdateView):
+class CaseCleanView(UserPassesTestMixin, UpdateView):
     model = Case
     template_name = 'cases/case_clean_form.html'
     form_class = CaseCleanForm
     success_url = reverse_lazy('cases_by_profile')
 
     def get_fields(self):
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        return get_sections_fields(form_context.get('sections')),
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        return get_sections_fields(form_config.get('sections')),
 
     def get_not_empty_fields(self):
         return [f for f in self.get_fields()[0] if hasattr(self.object, f) and getattr(self.object, f)]
@@ -461,13 +461,13 @@ class CaseCleanForm(UserPassesTestMixin, UpdateView):
         return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
-        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
+        return reverse('update_case', kwargs={'pk': self.object.id, 'form_config_slug': self.kwargs.get('form_config_slug')})
 
     def reset_form(self):
-        version = self.object.create_version(self.kwargs.get('slug'))
+        version = self.object.create_version(self.kwargs.get('form_config_slug'))
 
         case_status_dict = {
-            'form': self.kwargs.get('slug'),
+            'form': self.kwargs.get('form_config_slug'),
             'case': self.object,
             'case_version': version,
             'profile': self.request.user.profile,
@@ -479,8 +479,8 @@ class CaseCleanForm(UserPassesTestMixin, UpdateView):
         return True
 
     def clean_form(self):
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        form_fields = get_sections_fields(form_context.get('sections', {}))
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        form_fields = get_sections_fields(form_config.get('sections', {}))
         for f in form_fields:
             if hasattr(self.object, f):
                 setattr(self.object, f, None)
@@ -490,7 +490,7 @@ class CaseCleanForm(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         form_data = form.cleaned_data
-        case_status = self.object.get_status(self.kwargs.get('slug'))
+        case_status = self.object.get_status(self.kwargs.get('form_config_slug'))
         if not case_status or case_status in IN_CONCEPT:
             raise Http404()
         if form_data.get('form_continue_options') == '1':
@@ -507,8 +507,8 @@ class CaseCleanForm(UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         kwargs.update({
-            'form_context': FORMS_BY_SLUG.get(self.kwargs.get('slug')),
-            'case_status': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('slug')).order_by('-created').first(),
+            'form_config': FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug')),
+            'case_status': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('form_config_slug')).order_by('-created').first(),
         })
         return kwargs
 
@@ -521,17 +521,17 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
-        if FORMS_BY_SLUG.get(self.kwargs.get('slug')).get('options', {}).get('addres_required') and not self.object.address_complete:
+        if FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug')).get('options', {}).get('addres_required') and not self.object.address_complete:
             return redirect('%s%s' % (
                 reverse('create_case_address', args=[self.object.id]),
-                '?next=%s' % reverse('update_case', args=[self.object.id, self.kwargs.get('slug')]),
+                '?next=%s' % reverse('update_case', args=[self.object.id, self.kwargs.get('form_config_slug')]),
                 )
             )
         return response
 
     def get_initial(self):
         self.initial.update({
-            'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('slug'))
+            'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('form_config_slug'))
         })
         return super().get_initial()
 
@@ -543,8 +543,8 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def get_success_url(self):
         next = self.request.POST.get('next')
-        default_url = reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
-        percentage = self.object.status(FORMS_BY_SLUG.get(self.kwargs.get('slug'), {}).get('sections')).get('percentage')
+        default_url = reverse('update_case', kwargs={'pk': self.object.id, 'form_config_slug': self.kwargs.get('form_config_slug')})
+        percentage = self.object.status(FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'), {}).get('sections')).get('percentage')
         if percentage < 100 and next:
             return '%s?control=1' % default_url
         if next:
@@ -554,11 +554,11 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
 
-        form_config = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
 
         kwargs.update({
             'case_versions': self.object.get_history(form_config),
-            'case_status_list': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('slug')).order_by('-created')
+            'case_status_list': CaseStatus.objects.filter(case=self.object, form=self.kwargs.get('form_config_slug')).order_by('-created')
         })
         return kwargs
 
@@ -570,16 +570,16 @@ class GenericCaseUpdateFormView(UserPassesTestMixin, GenericUpdateFormView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        slug = self.kwargs.get('slug')
+        form_config_slug = self.kwargs.get('form_config_slug')
         self.object.saved_by = self.request.user.profile
-        self.object.saved_form = slug
+        self.object.saved_form = form_config_slug
         self.object.save()
         document_list = form.cleaned_data.get('document_list')
         for doc in form.fields['document_list'].queryset:
-            if doc in document_list and slug not in doc.forms:
-                doc.forms.append(slug)
-            elif doc not in document_list and slug in doc.forms:
-                doc.forms.remove(slug)
+            if doc in document_list and form_config_slug not in doc.forms:
+                doc.forms.append(form_config_slug)
+            elif doc not in document_list and form_config_slug in doc.forms:
+                doc.forms.remove(form_config_slug)
             doc.save()
         messages.add_message(self.request, messages.INFO, "Eventuele wijzigingen zijn opgeslagen.")
         return response
@@ -598,10 +598,10 @@ class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
         return self.model._default_manager.by_user(user=self.request.user)
 
     def get_success_url(self):
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
-        if not form_context.get('enable_ajax', False):
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'), {})
+        if not form_config.get('enable_ajax', False):
             return reverse('case', kwargs={'pk': self.object.id})
-        return reverse('update_case', kwargs={'pk': self.object.id, 'slug': self.kwargs.get('slug')})
+        return reverse('update_case', kwargs={'pk': self.object.id, 'form_config_slug': self.kwargs.get('form_config_slug')})
 
     def get_discard_url(self):
         return reverse('cases_by_profile')
@@ -631,16 +631,16 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         return reverse('case', kwargs={'pk': self.object.id})
 
     def get_federation(self):
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        federation_type = form_context.get('federation_type')
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        federation_type = form_config.get('federation_type')
         federation = Federation.objects.filter(organization__federation_type=federation_type).first()
         if federation_type == FEDERATION_TYPE_WONINGCORPORATIE and self.object.woningcorporatie:
             federation = self.object.woningcorporatie
         return federation
 
     def get_recipient_list(self):
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        federation_type = form_context.get('federation_type')
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        federation_type = form_config.get('federation_type')
         recipient_list = [] 
         if federation_type == FEDERATION_TYPE_ADW:
             recipient_list = get_wonen_medewerkers_email_list()
@@ -651,29 +651,29 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         kwargs.update(self.kwargs)
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        if not form_context:
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        if not form_config:
             raise Http404
-        kwargs.update(form_context)
-        federation_type = form_context.get('federation_type')
+        kwargs.update(form_config)
+        federation_type = form_config.get('federation_type')
         federation = self.get_federation()
         recipient_list = self.get_recipient_list()
 
         kwargs.update({
             'federation_type': federation_type,
-            'form_data': form_context,
+            'form_config': form_config,
             'federation': federation,
             'recipient_list': recipient_list,
             'object': self.object,
-            'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('slug')),
+            'document_list': Document.objects.filter(case=self.object, forms__contains=self.kwargs.get('form_config_slug')),
         })
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        version = self.object.create_version(self.kwargs.get('slug'))
+        version = self.object.create_version(self.kwargs.get('form_config_slug'))
 
         case_status_dict = {
-            'form': self.kwargs.get('slug'),
+            'form': self.kwargs.get('form_config_slug'),
             'case': self.object,
             'case_version': version,
             'profile': self.request.user.profile,
@@ -686,12 +686,12 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         if recipient_list:
             current_site = get_current_site(self.request)
             body = render_to_string('cases/mail/case_link.txt', {
-                'form_name': FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
+                'form_name': FORM_TITLE_BY_SLUG.get(self.kwargs.get('form_config_slug')),
                 'case_url': 'https://%s%s' % (
                     current_site.domain,
                     reverse('case_version_form', kwargs={
                         'pk': self.object.id,
-                        'slug': self.kwargs.get('slug'),
+                        'form_config_slug': self.kwargs.get('form_config_slug'),
                     })
                 ),
                 'user': self.request.user,
@@ -701,7 +701,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,
                     to_emails=recipient_list,
-                    subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('slug')),
+                    subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('form_config_slug')),
                     plain_text_content=body
                 )
                 sg.send(email)

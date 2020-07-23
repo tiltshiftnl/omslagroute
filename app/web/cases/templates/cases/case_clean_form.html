@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block main %}
-    <h2>{{form_context.slug|form_verbose}}</h2>
+    <h2>{{form_config.form_config_slug|form_verbose}}</h2>
     
     <p>De huidige status van het formulier:</p>
     {% include 'cases/status/current.html' with object=case_status %}

@@ -1822,7 +1822,7 @@ def map_form_keys(f):
     return {
         'key': f[0],
         'sections': f[1],
-        'slug': f[2],
+        'form_config_slug': f[2],
         'title': f[3],
         'title_new': f[4],
         'list_versions': f[5],

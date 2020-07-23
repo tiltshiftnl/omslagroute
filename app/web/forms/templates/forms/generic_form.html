@@ -41,7 +41,7 @@
 </section>
 
 <section class="section section--form section--form-{{ title|slugify }}{% if request.GET.control %} section--form--control{% endif %} u-margin-bottom-sticky">
-    {% if form.instance.id %}{% client_status form.instance slug as status  %}{% endif %}
+    {% if form.instance.id %}{% client_status form.instance form_config_slug as status  %}{% endif %}
     <form method="post" enctype="multipart/form-data" novalidate>
 
         <div class="grid__wrapper">
@@ -49,7 +49,7 @@
                 <div class="form-title-wrapper">
                     <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h1>
                     <ul class="u-list-style-none list--tools screen-only">
-                        {% if slug != "basis-gegevens" %}
+                        {% if form_config_slug != "basis-gegevens" %}
                         <li>
                             <a role="button" data-handler="ajax-forms-submit print-page">
                                 <span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
@@ -70,7 +70,7 @@
                         {% endif %}
                         <li>
                             {% if form.instance.id and federation %}
-                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id slug %}" class="button text-link" >
+                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id form_config_slug %}" class="button text-link" >
                             <span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span><svg class="" width="20" height="20">
                                 <use href="#share" xlink:href="#share" width="20" height="16"></use>
                             </svg></button>{% endif %}
