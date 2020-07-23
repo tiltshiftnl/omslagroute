@@ -13,6 +13,7 @@
             cursor: pointer;
             padding-left: 30px;
             position: relative;
+            text-align: left;
         }
 
         svg {
@@ -25,6 +26,12 @@
         .print__icon {
             transform: scale(.7);
             margin-left: -2px;
+        }
+
+        .text-link {
+            padding: 0 0 0 30px;
+            margin: 0;
+            
         }
     }
 }

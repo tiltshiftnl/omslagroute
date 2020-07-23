@@ -111,12 +111,11 @@
                             </span>Mail samenwerker(s)</a>
                         </li>
                         <li>
-                            <label for="form-submit">
-                                <svg class="" width="20" height="20">
-                                    <use href="#share" xlink:href="#share" width="20" height="16"></use>
-                                </svg>
-                                <span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span>
-                            </label>
+                            {% if form.instance.id and federation %}
+                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id slug %}" class="button text-link" >
+                            <svg class="" width="20" height="20">
+                                <use href="#share" xlink:href="#share" width="20" height="16"></use>
+                            </svg><span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span></button>{% endif %}
                         </li>
                     </ul>
                     
@@ -370,11 +369,7 @@
                         <input {% if object.delete_request_date %}disabled{% endif %} type="submit" value="Opslaan" class="button button--primary">
                         {% endif %}
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
-                        {% if form.instance.id and federation %}
-                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id slug %}" class="sr-only" >
-                            <svg class="u-margin-right-half" width="16" height="20">
-                                <use href="#email" xlink:href="#email" width="16" height="20"></use>
-                            </svg><span>Controleren en versturen naar {% if federation %}{{federation.name}}{% endif %}</span></button>{% endif %}
+                        
                     </div>        
                 </div>
 
