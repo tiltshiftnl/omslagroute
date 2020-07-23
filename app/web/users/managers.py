@@ -1,7 +1,11 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from .statics import *
-from web.organizations.statics import FEDERATION_TYPE_ADW, FEDERATION_TYPE_ZORGINSTELLING, FEDERATION_TYPE_WONINGCORPORATIE
+from web.organizations.statics import (
+    FEDERATION_TYPE_ADW, 
+    FEDERATION_TYPE_ZORGINSTELLING, 
+    FEDERATION_TYPE_WONINGCORPORATIE
+)
 
 
 class UserManager(BaseUserManager):
@@ -35,6 +39,27 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(username, email, password, **extra_fields)
+
+    def beheerders(self):
+        queryset = self.get_queryset()
+        queryset = queryset.filter(
+            user_type__in=[
+                BEHEERDER,
+            ],
+        )
+        return queryset
+
+    def federation_beheerders_by_federation_type(self, federation_type):
+        queryset = self.get_queryset()
+        queryset = queryset.filter(
+            user_type__in=[
+                PB_FEDERATIE_BEHEERDER,
+                FEDERATIE_BEHEERDER,
+                WONEN,
+            ],
+            federation__organization__federation_type=federation_type,
+        )
+        return queryset
 
     def woningcorporatie_medewerkers(self, case):
         queryset = self.get_queryset()

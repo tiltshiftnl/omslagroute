@@ -82,11 +82,17 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
         profile = Profile()
         profile.user = user
         profile.save()
-        addresses = [
-            user.username for user in self.UserModel.objects.all().filter(user_type=BEHEERDER)
-            if validate_email_wrapper(user.username)
-        ]
-        if settings.SENDGRID_KEY and addresses:
+
+        beheerder_recipient_list = list(self.UserModel.objects.beheerders().values_list('username', flat=True))
+        federation = Federation.objects.filter(federation_id=claims.get(settings.OIDC_FEDERATION_KEY)).first()
+        if federation and federation.organization and federation.organization.federation_type:
+            federatie_beheerder_recipient_list = list(self.UserModel.objects.federation_beheerders_by_federation_type(
+                federation.organization.federation_type
+            ).values_list('username', flat=True))
+            if federatie_beheerder_recipient_list:
+                beheerder_recipient_list = federatie_beheerder_recipient_list
+
+        if settings.SENDGRID_KEY and beheerder_recipient_list:
             current_site = get_current_site(self.request)
             data = {
                 'site': current_site.domain,
@@ -96,7 +102,7 @@ class OIDCAuthenticationBackend(DatapuntOIDCAuthenticationBackend):
             sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
             email = Mail(
                 from_email='no-reply@%s' % current_site.domain,
-                to_emails=addresses,
+                to_emails=beheerder_recipient_list,
                 subject='Omslagroute - gebruiker aangemaakt',
                 plain_text_content=body
             )
