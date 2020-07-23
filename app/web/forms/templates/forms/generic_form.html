@@ -29,7 +29,7 @@
         </div>
         <div class="flex-item u-clearfix screen-only">
                 <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length }})
+                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
                 </a>
                 
                     {% if object.get_linked_users|length > 0 %}
