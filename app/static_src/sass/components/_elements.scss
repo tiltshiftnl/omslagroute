@@ -1,0 +1,52 @@
+//lists
+
+.list--tools {
+    margin-top: 1rem;
+    li {
+        margin-bottom: .5rem;
+        
+        
+        > * {
+            color: $primary-darkblue;
+            text-decoration: underline;
+            font-weight: normal;
+            cursor: pointer;
+            padding-left: 30px;
+            position: relative;
+            text-align: left;
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            fill: currentColor;
+        }
+
+        .print__icon {
+            transform: scale(.7);
+            margin-left: -2px;
+        }
+
+        .text-link {
+            padding: 0 0 0 30px;
+            margin: 0;
+            
+        }
+    }
+}
+
+.tool--email {
+    color: $primary-darkblue;
+    text-align: center;
+    > * {
+        display: block;
+    }
+
+    .client-header details summary & {
+        svg {
+            color: currentColor;
+        }
+
+    }
+}

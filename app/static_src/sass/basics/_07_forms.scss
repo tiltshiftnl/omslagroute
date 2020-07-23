@@ -53,13 +53,6 @@ body:not(:-moz-handler-blocked) fieldset {
     .text-link {
         flex-grow: 0;
         padding: 5px 0 0;
-
-        svg {
-            margin-left: 5px;
-            transform: scale(.7);
-            fill: currentColor;
-            vertical-align: middle;
-        }
     }
     h1 + .text-link {
         margin: 2rem 0 0;

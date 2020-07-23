@@ -982,6 +982,16 @@ class Case(CaseBase):
         case_version.save()
         return case_version
 
+    def get_linked_users(self):
+        from web.organizations.statics import FEDERATION_TYPE_ZORGINSTELLING
+        from web.users.statics import PB_FEDERATIE_BEHEERDER, BEGELEIDER
+        from web.users.models import User
+        return User.objects.filter(
+            profile__in=self.profile_set.all(),
+            federation__organization__federation_type=FEDERATION_TYPE_ZORGINSTELLING,
+            user_type__in=[PB_FEDERATIE_BEHEERDER, BEGELEIDER],
+        )
+        
     def delete_related(self):
         document_path = os.path.join(
             'uploads',

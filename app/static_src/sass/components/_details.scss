@@ -36,8 +36,15 @@
             margin: 3px 0 20px;
             padding: 8px 10px 10px;
             border: 1px solid $neutral-grey4;
+
             *:last-child {
                 margin-bottom: 0;
+            }
+
+            .u-scroll-wrapper {
+                max-height: 15rem;
+                overflow: scroll;
+                
             }
         }
     }

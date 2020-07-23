@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load client_status_tags client_data_tags html_tags tz %}
+
 {% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
 {% block breadcrumb %}
@@ -26,8 +27,50 @@
         <div class="flex-item">
             <h1>{{ object.client_name }}</h1>
         </div>
-        <div class="flex-item u-clearfix"></div>
+        <div class="flex-item u-clearfix screen-only">
+                <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length }})
+                </a>
+                
+                    {% if object.get_linked_users|length > 0 %}
+                    <details class="u-margin-top-half container--tool">
+                        <summary>
+                            <div class="tool--email">
+                                <svg class="u-margin-none" width="20" height="16">
+                                    <use href="#email" xlink:href="#email" width="20" height="16"></use>
+                                </svg><svg class="icon-details--closed u-margin-none" width="14" height="9">
+                                    <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
+                                </svg><svg class="icon-details--open u-margin-none" width="14" height="9">
+                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                </svg>
+                            </div>
+                        </summary>
+                        <div class="content u-margin-none">
+                            <button type="button" data-handler="close-details" class="button button--close">
+                                <svg class="icon close__icon" width="12" height="12">
+                                    <use href="#close" xlink:href="#close" width="12" height="12"></use>
+                                </svg>
+                            </button>
+                            <ul class="u-list-style-none">
+                                {% for user in object.get_linked_users %}
+                                {% if request.user.id != user.id %}
+                                <li>
+                                    <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Hallo,%20...">{{user.username}}</a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    {% endif %}
+                            
+        </div>
     </div>
+    <div role="dialog" class="modal" id="modalInvite">
+        <iframe class="modal--invite" id="iframeInvite" data-src="{% url 'case_invite_users' object.id  %}" src="about:blank" title="Uitnodiging tot samenwerking">
+        </iframe>
+      </div>  
 </section>
 
 <section class="section section--form section--form-{{ title|slugify }}{% if request.GET.control %} section--form--control{% endif %} u-margin-bottom-sticky">
@@ -38,12 +81,32 @@
             <div class="grid__main">
                 <div class="form-title-wrapper">
                     <h1 class="h2">{% if title %}{{ title }}{% else %}Generiek formulier{% endif %}</h1>
-
-                    {% if slug != "basis-gegevens" %}
-                    <button type="button" data-handler="ajax-forms-submit print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
-                        <use href="#print" xlink:href="#print" width="24" height="24"></use>
-                    </svg></button>
+                    <ul class="u-list-style-none list--tools screen-only">
+                        {% if slug != "basis-gegevens" %}
+                        <li>
+                            <a role="button" data-handler="ajax-forms-submit print-page">
+                                <svg class="icon print__icon" width="24" height="24">
+                                <use href="#print" xlink:href="#print" width="24" height="24"></use>
+                            </svg><span>Print of bewaar als pdf</span></a>
+                        </li>
                     {% endif %}
+                        <li>
+                            
+                            <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Hallo,%20...">
+                                <span class=""><svg class="u-margin-right-half" width="20" height="20">
+                                    <use href="#email" xlink:href="#email" width="20" height="20"></use>
+                                </svg>
+                            </span>Mail samenwerker(s)</a>
+                        </li>
+                        <li>
+                            {% if form.instance.id and federation %}
+                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id slug %}" class="button text-link" >
+                            <svg class="" width="20" height="20">
+                                <use href="#share" xlink:href="#share" width="20" height="16"></use>
+                            </svg><span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span></button>{% endif %}
+                        </li>
+                    </ul>
+                    
                 </div>
 
                 <div class="section--client">
@@ -261,7 +324,7 @@
                                                     <div class="content u-clearfix">
                                                         <span data-handler="copy-text">{{ h.value }}</span>
                                                         {% if field.object.field_type == "textarea" or field.object.field_type == "textinput"%}
-                                                        <button type="button" class="text-link u-float-right" data-handler="copy-to-input" data-targetinput="{{ field.object.name }}" type="button">
+                                                        <button type="button" class="text-link u-float-right" data-handler="copy-to-input" data-targetinput="{{ field.object.name }}" type="button" title="Gebruik deze tekst opnieuw">
                                                             <svg class="icon-recycle" width="18" height="18">
                                                                 <use href="#recycle" xlink:href="#recycle" width="18" height="18"></use>
                                                             </svg>
@@ -294,11 +357,7 @@
                         <input {% if object.delete_request_date %}disabled{% endif %} type="submit" value="Opslaan" class="button button--primary">
                         {% endif %}
                         <a href="{{ discard_url }}" class="button button--secondary">Annuleren</a>
-                        {% if form.instance.id and federation %}
-                        <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" value="{% url 'send_case' form.instance.id slug %}" class="text-link u-float-right" >
-                            <svg class="u-margin-right-half" width="16" height="20">
-                                <use href="#email" xlink:href="#email" width="16" height="20"></use>
-                            </svg><span>Controleren en versturen naar {% if federation %}{{federation.name}}{% endif %}</span></button>{% endif %}
+                        
                     </div>        
                 </div>
 
