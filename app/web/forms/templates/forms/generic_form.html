@@ -29,7 +29,7 @@
         </div>
         <div class="flex-item u-clearfix screen-only">
                 <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length }})
+                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
                 </a>
                 
                     {% if object.get_linked_users|length > 0 %}
@@ -85,25 +85,26 @@
                         {% if slug != "basis-gegevens" %}
                         <li>
                             <a role="button" data-handler="ajax-forms-submit print-page">
-                                <svg class="icon print__icon" width="24" height="24">
-                                <use href="#print" xlink:href="#print" width="24" height="24"></use>
-                            </svg><span>Print of bewaar als pdf</span></a>
+                                <span>Print of bewaar als pdf</span><svg class="icon print__icon" width="24" height="24">
+                                    <use href="#print" xlink:href="#print" width="24" height="24"></use>
+                                </svg>
+                            </a>
                         </li>
                     {% endif %}
                         <li>
                             
                             <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Hallo,%20...">
-                                <span class=""><svg class="u-margin-right-half" width="20" height="20">
+                                <span>Mail samenwerker(s)</span><svg width="20" height="20">
                                     <use href="#email" xlink:href="#email" width="20" height="20"></use>
                                 </svg>
-                            </span>Mail samenwerker(s)</a>
+                            </a>
                         </li>
                         <li>
                             {% if form.instance.id and federation %}
                         <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id slug %}" class="button text-link" >
-                            <svg class="" width="20" height="20">
+                            <span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span><svg class="" width="20" height="20">
                                 <use href="#share" xlink:href="#share" width="20" height="16"></use>
-                            </svg><span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span></button>{% endif %}
+                            </svg></button>{% endif %}
                         </li>
                     </ul>
                     
