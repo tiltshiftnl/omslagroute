@@ -53,7 +53,6 @@ def status_verbose(status):
 
 @register.filter()
 def status_template(case_status):
-    print(case_status)
     return 'cases/status/%s' % CASE_STATUS_DICT.get(case_status, {}).get('template')
 
 
