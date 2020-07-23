@@ -39,6 +39,7 @@ class PrintableModel(models.Model):
                 if f.name in textile_fields:
                     data[f.name] = textile(data[f.name])
                 data[f.name] = {
+                    'raw': f.value_from_object(self),
                     'value': data[f.name],
                     'label': str(f.verbose_name)
                 }

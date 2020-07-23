@@ -28,7 +28,7 @@
                 <section class="section section--client u-margin-bottom-2x">
                     <div class="details-client">
                         {% case_form_data form.instance federation.organization slug as data %}
-                        {% include 'forms/snippets/readonly_form_data.html' with form_sections=form_data.sections data=data bijlages=form_data.options.bijlages %}
+                        {% include 'forms/snippets/readonly_form_data.html' with form_config=form_data data=data %}
                     </div>
                 </section>
                 {% if document_list %}

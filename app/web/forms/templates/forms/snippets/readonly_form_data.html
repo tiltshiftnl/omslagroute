@@ -1,7 +1,9 @@
 {% load static i18n html_tags client_status_tags auth_tags client_data_tags tz %}
 
-{% for section in form_sections %}
-{% if not forloop.last or not bijlages %}
+{% get_rules_reversed form_config as rules_reversed %}
+
+{% for section in form_config.sections %}
+{% if not forloop.last or not form_config.options.bijlages %}
 
 <fieldset class="section section--step">
     {% if section.title %}
@@ -28,11 +30,13 @@
             {% endif %}
             <dl>
             {% for field in sub_section.fields %}
+            {% case_data_by_field_name data field rules_reversed as field_data %} 
+            {% if field_data %}
             <div>
-                {% case_data_by_field_name data field as field_data %}
                 <dt>{{ field_data.label }}</dt>
                 <dd>{{ field_data.value }}</dd>
             </div>
+            {% endif %}
             {% endfor %}
             </dl>
         </div>
