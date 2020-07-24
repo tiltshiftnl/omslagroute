@@ -24,11 +24,11 @@
     {% comment %} <p><strong>Je hebt de volgnde mogelijke optie</strong></p> {% endcomment %}
     <form method="post">
         {% csrf_token %}
-        <div class="form-field form-field--radioselect" data-decorator='form-rule' data-rule-data='[{"values": [2], "fields": ["form_new_options"]}]'>
+        <div class="form-field form-field--radioselect form-field-history-container" data-decorator='form-rule' data-rule-data='[{"values": [2], "fields": ["form_new_options"]}]'>
             <label for="{{ form.form_continue_options.id_for_label }}">{{ form.form_continue_options.label }}</label>
             {{ form.form_continue_options }}
         </div>
-        <div class="form-field form-field--radioselect">
+        <div class="form-field form-field--radioselect form-field-history-container">
             <label for="{{ form.form_new_options.id_for_label }}">{{ form.form_new_options.label }}</label>
             {{ form.form_new_options }}
         </div>
