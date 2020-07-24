@@ -322,7 +322,7 @@
                                 {% if case_status and request.user.federation.organization.federation_type == moment.form|form_federation_type %}
                                     {% include 'cases/status/current.html' with object=case_status %}
                                 {% elif request.user.federation.organization.federation_type == moment.form|form_federation_type %}
-                                    {% include 'cases/status/current.html' %}
+                                    {% include 'cases/status/current.html'  with object=case_status %}
                                 {% endif %}
                             {% endif %}
                         </td>
