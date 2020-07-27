@@ -62,11 +62,11 @@
         {% endlanguage %}
     </p>
 
-    <section class="section-details-client">
+    <section class="section-details-client section--bordered section--lightgrey">
 
         <div class="details-client details-client--basic u-width-50">
             <header>
-                <h2 class="h3">Basisgegevens</h2>
+                <h2 class="h3 u-margin-top-none">Basisgegevens</h2>
             </header>
 
             {% include 'cases/snippets/case_basis_gegevens.html' with data=object.to_dict %}
@@ -75,7 +75,26 @@
             {% include 'cases/snippets/case_address.html'  with class='u-margin-top-none u-margin-bottom-half' %}
             {% endif %}
 
-            {% if form_data.options.bijlages %}
+            
+        </div>
+
+
+        <div class="details-client details-client--status details-client--approve u-width-50"
+            data-case-id="{{ object.id }}" 
+            data-form="{{ form_data.slug }}" 
+            data-case-status-options="{{ status_options }}" 
+            data-title="{{ form_data.title }}" 
+            data-email-list="{{ user_list }}" 
+            >
+            {% csrf_token %}
+            <div id="app"></div>
+        </div>
+        
+
+    </section>
+
+        {% if form_data.options.bijlages %}
+        <section>
             <header>
                 <h2 class="h3">Bijlagen <small>({{ document_list|length }})</small></h2>
             </header>
@@ -95,24 +114,9 @@
                 </li>
             {% endif %}
             </ul>
-            {% endif %}
 
-        </div>
-
-
-        <div class="details-client details-client--status details-client--approve u-width-50"
-            data-case-id="{{ object.id }}" 
-            data-form="{{ form_data.slug }}" 
-            data-case-status-options="{{ status_options }}" 
-            data-title="{{ form_data.title }}" 
-            data-email-list="{{ user_list }}" 
-            >
-            {% csrf_token %}
-            <div id="app"></div>
-        </div>
-        
-
-    </section>
+        </section>
+        {% endif %}
     <section class="section section--forms">
         <!-- START Client basis gegevens -->
         <div class="details-client">

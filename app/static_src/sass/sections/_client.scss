@@ -12,6 +12,14 @@
                 max-width: 600px;
             }
         }
+
+        summary {
+            font-size: .9rem;
+            
+            svg {
+                margin-left: 0.25rem !important;
+            }
+        }
     }
     .details-client {
 
@@ -107,14 +115,16 @@
                 }
             }
                 .status--wrapper {
-                    border: 2px solid $neutral-grey3;
-                    background-color: $neutral-grey1;
-                    padding: .5rem;
+                    border: 1px solid $neutral-grey3;
+                    background-color: $primary-white;
+                    padding: 1rem;
 
                     .h3 {
                         font-weight: bold;
                     }
                 }
+
+                
         }
 
 
@@ -192,7 +202,6 @@
                 }
             }
         }
-        
     }
     .section--forms {
 
@@ -427,6 +436,7 @@
         
     }
 }
+
 
 .section--mijn-clienten,
 .status-history-container {

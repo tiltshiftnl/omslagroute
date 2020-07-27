@@ -1,7 +1,7 @@
 <template>
     <div>
         <header>
-            <h2 class="h3">Status aanvraag</h2>
+            <h2 class="h3 u-margin-top-none">Status aanvraag</h2>
         </header>
         <div class="status--wrapper">
             <div>

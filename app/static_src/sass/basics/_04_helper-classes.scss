@@ -331,6 +331,10 @@
     text-align: right;
 }
 
+.u-text-align--left {
+    text-align: left !important;
+}
+
 .u-indent-no-icon {
     a {
         &:first-child {
@@ -383,6 +387,11 @@
         opacity: 1;
         transition: transform .36s ease-out;
     }
+}
+
+.section--lightgrey {
+    background-color: $neutral-grey1;
+    padding: 1rem;
 }
 
 //js-trick to scroll element in view with offset
