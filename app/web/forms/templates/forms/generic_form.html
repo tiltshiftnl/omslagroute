@@ -28,43 +28,9 @@
             <h1>{{ object.client_name }}</h1>
         </div>
         <div class="flex-item u-clearfix screen-only">
-                <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
-                </a>
-                
-                    {% if object.get_linked_users|length > 1 %}
-                    <details class="u-margin-top-half container--tool">
-                        <summary>
-                            <div class="tool--email">
-                                <svg class="u-margin-none" width="20" height="16">
-                                    <use href="#email" xlink:href="#email" width="20" height="16"></use>
-                                </svg><svg class="icon-details--closed u-margin-none" width="14" height="9">
-                                    <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                                </svg><svg class="icon-details--open u-margin-none" width="14" height="9">
-                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
-                                </svg>
-                            </div>
-                        </summary>
-                        <div class="content u-margin-none">
-                            <button type="button" data-handler="close-details" class="button button--close">
-                                <svg class="icon close__icon" width="12" height="12">
-                                    <use href="#close" xlink:href="#close" width="12" height="12"></use>
-                                </svg>
-                            </button>
-                            <ul class="u-list-style-none">
-                                {% for user in object.get_linked_users %}
-                                {% if request.user.id != user.id %}
-                                <li>
-                                    <a href="mailto:{{user.username}}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Ondestaande is de link naar het formulier:%0D%0A{{request.build_absolute_uri}}">{{user.username}}</a>
-                                </li>
-                                {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </details>
-                    
-                    {% endif %}
-                            
+            <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
+            </a>        
         </div>
     </div>
     <div role="dialog" class="modal" id="modalInvite">
@@ -93,7 +59,7 @@
                     {% endif %}
                         <li>
                             
-                            <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Ondestaande is de link naar het formulier:%0D%0A{{request.build_absolute_uri}}">
+                            <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Onderstaande is de link naar het formulier:%0D%0D%0A{{request.build_absolute_uri}}">
                                 <span>Mail samenwerker(s)</span><svg width="20" height="20">
                                     <use href="#email" xlink:href="#email" width="20" height="20"></use>
                                 </svg>
