@@ -28,9 +28,10 @@
             <h1>{{ object.client_name }}</h1>
         </div>
         <div class="flex-item u-clearfix screen-only">
-            <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
-            </a>        
+                <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
+                </a>
+                            
         </div>
     </div>
     <div role="dialog" class="modal" id="modalInvite">
@@ -57,6 +58,7 @@
                             </a>
                         </li>
                     {% endif %}
+                    {% if object.get_linked_users|length > 1 %}
                         <li>
                             
                             <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Onderstaande is de link naar het formulier:%0D%0D%0A{{request.build_absolute_uri}}">
@@ -65,6 +67,7 @@
                                 </svg>
                             </a>
                         </li>
+                        {% endif %}
                         <li>
                             {% if form.instance.id and federation %}
                         <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id slug %}" class="button text-link" >
