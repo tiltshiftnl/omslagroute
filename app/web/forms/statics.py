@@ -1578,19 +1578,19 @@ FORMS = (
                 {
                     'values': [3],
                     'fields': [
-                        'jonger_dan_26_plaatsing_project',
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
                     ],
                     'required_fields': [
-                        'jonger_dan_26_plaatsing_project',
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
                     ],
                 },
                 {
                     'values': [4],
                     'fields': [
-                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                        'jonger_dan_26_plaatsing_project',
                     ],
                     'required_fields': [
-                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                        'jonger_dan_26_plaatsing_project',
                     ],
                 },
             ],
@@ -1654,19 +1654,19 @@ FORMS = (
                 {
                     'values': [3],
                     'fields': [
-                        'jonger_dan_26_plaatsing_project',
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
                     ],
                     'required_fields': [
-                        'jonger_dan_26_plaatsing_project',
+                        'jonger_dan_26_motivatie_contract_onbepaalde',
                     ],
                 },
                 {
                     'values': [4],
                     'fields': [
-                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                        'jonger_dan_26_plaatsing_project',
                     ],
                     'required_fields': [
-                        'jonger_dan_26_motivatie_contract_onbepaalde',
+                        'jonger_dan_26_plaatsing_project',
                     ],
                 },
             ],
