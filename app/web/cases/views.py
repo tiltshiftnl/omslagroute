@@ -1129,31 +1129,18 @@ def download_document(request, case_pk, document_pk):
         raise PermissionDenied
     document = get_object_or_404(Document, id=document_pk)
 
-    # if request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
-    #     try:
-    #         case = request.user.profile.cases.get(id=case_pk)
-    #     except:
-    #         raise PermissionDenied
-    #     document = get_object_or_404(Document, id=document_pk)
-
-    # if request.user.user_type == WONEN:
-    #     try:
-    #         case = Case.objects.get(id=case_pk)
-    #     except:
-    #         raise PermissionDenied
-    #     document = get_object_or_404(Document, id=document_pk)
-
-    #     form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
-    #     shared_in_forms = [f for f in document.forms if f in form_status_list]
-    #     if not shared_in_forms:
-    #         raise PermissionDenied
+    if request.user.user_type in [WONEN, WONINGCORPORATIE_MEDEWERKER]:
+        form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
+        shared_in_forms = [f for f in document.forms if f in form_status_list]
+        if not shared_in_forms:
+            raise PermissionDenied
 
     if document.case != case:
         raise PermissionDenied
 
     if not default_storage.exists(default_storage.generate_filename(document.uploaded_file.name)):
         raise Http404()
-
+    
     return HttpResponseRedirect(document.uploaded_file.url)
 
 
