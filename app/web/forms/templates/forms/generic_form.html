@@ -79,13 +79,13 @@
                     
                 </div>
 
-                <div class="section--client">
+                <div class="section--client section--lightgrey u-margin-bottom-4x">
                     <section class="section-details-client u-margin-none">
                         <!-- START Client persoonsgegevens -->
                         
                         <div class="details-client details-client--basic">
                             <header>
-                                <h2 class="h3">Basisgegevens</h2>
+                                <h2 class="h3 u-margin-top-none">Basisgegevens</h2>
                             </header>
                 
                             {% include 'cases/snippets/case_basis_gegevens.html' with data=object.to_dict %}
@@ -99,7 +99,7 @@
                                 
                         <!-- START STATUS -->
                         <div class="details-client details-client--status">
-                            <h2 class="h3">Status aanvraag</h2>
+                            <h2 class="h3 u-margin-top-none">Status aanvraag</h2>
                             <div class="status--wrapper">
                                 {% if case_status_list %}
                                 <p class="u-margin-bottom-half">
@@ -120,10 +120,10 @@
                                     <div class="status-history-container form-field-history screen-only">
                                         
                                         <details>
-                                            <summary>Historie<svg class="icon-details--closed" width="14" height="9">
-                                                    <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
-                                                </svg><svg class="icon-details--open" width="14" height="9">
-                                                    <use href="#chevron-up" xlink:href="#chevron-up" width="14" height="9"></use>
+                                            <summary>Historie<svg class="icon-details--closed" width="12" height="9">
+                                                    <use href="#chevron-down" xlink:href="#chevron-down" width="12" height="9"></use>
+                                                </svg><svg class="icon-details--open" width="12" height="9">
+                                                    <use href="#chevron-up" xlink:href="#chevron-up" width="12" height="9"></use>
                                                 </svg>
                                             </summary>
                                             <div class="content">

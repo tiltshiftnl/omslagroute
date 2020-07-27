@@ -1253,7 +1253,7 @@ class Document(models.Model):
 
     def __str__(self):
         timezone.activate(settings.FRONTEND_TIMEZONE)
-        return mark_safe('<div><span><a href=%s target="_blank">%s</a></span><small>%s</small><small>%s</small></div>' % (
+        return mark_safe('<div><span><a href=%s target="_blank" rel="noopener noreferrer">%s</a></span><small>%s</small><small>%s</small></div>' % (
                 reverse('download_case_document', args=[self.case.id, self.id]),
                 self.name,
                 self.extension,
