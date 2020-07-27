@@ -4,7 +4,7 @@ from .statics import CASE_STATUS_INGEDIEND, CASE_STATUS_DICT
 from .serializers import CaseStatusSerializer, CaseDossierNrSerializer
 from django.contrib.auth.mixins import UserPassesTestMixin
 from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER
-from web.forms.statics import FORM_TITLE_BY_SLUG
+from web.forms.statics import FORMS_BY_SLUG
 from web.users.auth import auth_test
 from web.users.utils import get_zorginstelling_medewerkers_email_list
 from rest_framework.views import APIView
@@ -50,9 +50,10 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
 
         if serializer.instance.status != CASE_STATUS_INGEDIEND:
             current_site = get_current_site(request)
+            form_config = FORMS_BY_SLUG.get(serializer.instance.form)
             body = render_to_string('cases/mail/case_status_to_pb.txt', {
                 'case_status': serializer.instance,
-                'form_name': FORM_TITLE_BY_SLUG.get(serializer.instance.form),
+                'form_name': form_config.get('title'),
                 'case_form_url': 'https://%s%s' % (
                     current_site.domain,
                     reverse('update_case', kwargs={
@@ -68,7 +69,7 @@ class CaseStatusUpdateViewSet(UserPassesTestMixin, viewsets.ModelViewSet):
                     from_email='noreply@%s' % current_site.domain,
                     to_emails=email_adresses,
                     subject='Omslagroute - %s, status: %s' % (
-                        FORM_TITLE_BY_SLUG.get(serializer.instance.form),
+                        form_config.get('title'),
                         CASE_STATUS_DICT.get(serializer.instance.status).get('current'),
                     ),
                     plain_text_content=body

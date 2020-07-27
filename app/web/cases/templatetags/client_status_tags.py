@@ -1,5 +1,5 @@
 from django import template
-from web.forms.statics import FORMS_BY_KEY, FORMS_BY_SLUG
+from web.forms.statics import FORMS_BY_SLUG
 from ..models import CaseVersion, CaseStatus
 from web.organizations.models import Organization, Federation
 from web.organizations.statics import FEDERATION_TYPE_WONINGCORPORATIE, FEDERATION_TYPE_ADW

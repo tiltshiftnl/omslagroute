@@ -3,7 +3,7 @@ from .models import *
 from web.forms.forms import GenericModelForm
 from web.forms.widgets import RadioSelect, CheckboxSelectMultipleDocument, CheckboxSelectMultiple, CheckboxSelectMultipleUser
 from .statics import GESLACHT
-from web.forms.statics import FORMS_PROCESSTAP_CHOICES
+from web.forms.statics import FORMS_CHOICES
 from django.utils.translation import ugettext_lazy as _
 from web.forms.fields import MultiSelectFormField, GroupedModelChoiceField
 from web.users.models import User
@@ -239,7 +239,7 @@ class DocumentForm(forms.ModelForm):
     forms = MultiSelectFormField(
         label=_('Formulieren'),
         help_text=_('Als er formulieren zijn waar deze bijlage aan toegevoegd moet worden, dan kun je die hier aanvinken'),
-        choices=FORMS_PROCESSTAP_CHOICES,
+        choices=FORMS_CHOICES,
         required=False
     )
 

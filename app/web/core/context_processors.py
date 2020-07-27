@@ -4,7 +4,7 @@ from django.contrib.auth.forms import (
 )
 from constance import config
 import os.path
-from web.forms.statics import FORMS_PROCESSTAP_CHOICES
+from web.forms.statics import FORMS_CHOICES
 from web.cases.statics import CASE_STATUS_DICT, CASE_STATUS_DICT_JSON, BASIS_GEGEVENS_FIELDS
 
 SOURCE_COMMIT = settings.SOURCE_COMMIT
@@ -33,8 +33,7 @@ def app_settings(request=None):
         'BRANCH_NAME': BRANCH_NAME,
         'HOMEPAGE_INTRO': config.HOMEPAGE_INTRO,
         'NEW_USER_INTRO': config.NEW_USER_INTRO,
-        'FORMS_PROCESSTAP_CHOICES': FORMS_PROCESSTAP_CHOICES,
         'login_form': AuthenticationForm(),
         'FRONTEND_TIMEZONE': settings.FRONTEND_TIMEZONE,
-        'BASIS_GEGEVENS_FIELDS': BASIS_GEGEVENS_FIELDS
+        'BASIS_GEGEVENS_FIELDS': BASIS_GEGEVENS_FIELDS,
     }
