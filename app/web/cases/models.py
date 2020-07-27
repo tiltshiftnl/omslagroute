@@ -5,7 +5,7 @@ from .statics import *
 from web.core.models import PrintableModel
 from web.forms.forms import BaseGenericForm
 from web.forms.utils import get_sections_fields
-from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT, FORMS_PROCESSTAP_CHOICES
+from web.forms.statics import FIELDS_DICT, FIELDS_REQUIRED_DICT, FORMS_CHOICES
 import os
 from multiselectfield import MultiSelectField
 from django.utils.safestring import mark_safe
@@ -1246,7 +1246,7 @@ class Document(models.Model):
     )
     forms = MultiSelectField(
         verbose_name=_('Formulieren'),
-        choices=FORMS_PROCESSTAP_CHOICES,
+        choices=FORMS_CHOICES,
         blank=True,
         null=True,
     )

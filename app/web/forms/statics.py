@@ -1810,13 +1810,6 @@ FORMS = (
     ),
 )
 
-FORMS_PROCESSTAP = [
-    'aanvraag-omslag-en-urgentie',
-    'kennismaking-woningcorporatie',
-    'evaluatie-wonen',
-    'aanvraag-omklap',
-]
-
 
 def map_form_keys(f):
     return {
@@ -1830,12 +1823,7 @@ def map_form_keys(f):
         'options': f[7] if len(f) > 7 else {},
     }
 
-
-FORMS_BY_KEY = dict((s[0], map_form_keys(s)) for s in FORMS)
 FORMS_BY_SLUG = dict((s[2], map_form_keys(s)) for s in FORMS)
 FORMS_CHOICES = [[s[2], s[3]] for s in FORMS]
-FORMS_PROCESSTAP_CHOICES = [[s[2], s[3]] for s in FORMS if s[2] in FORMS_PROCESSTAP]
-
-FORM_TITLE_BY_SLUG = dict((s[2], s[3]) for s in FORMS)
 
 FORMS_SLUG_BY_FEDERATION_TYPE = dict((ft[0], [f[2] for f in FORMS if f[6] == ft[0]])for ft in FEDERATION_TYPE_CHOICES)

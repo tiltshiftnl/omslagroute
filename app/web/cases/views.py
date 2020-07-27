@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from web.users.statics import BEGELEIDER, WONEN, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER
 from web.profiles.models import Profile
-from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, FORM_TITLE_BY_SLUG, FORMS_SLUG_BY_FEDERATION_TYPE
+from web.forms.statics import URGENTIE_AANVRAAG, FORMS_BY_SLUG, FORMS_SLUG_BY_FEDERATION_TYPE
 from web.forms.views import GenericUpdateFormView, GenericCreateFormView
 from web.forms.utils import get_sections_fields
 import sendgrid
@@ -183,25 +183,8 @@ class CaseDetailView(UserPassesTestMixin, DetailView):
     template_name_suffix = '_page'
 
     def get_context_data(self, **kwargs):
-        qs = self.object.case_version_list.all()
-        qs = qs.annotate(address=Concat(
-            'adres_straatnaam', 
-            'adres_huisnummer', 
-            'adres_toevoeging', 
-            'adres_postcode', 
-            'adres_plaatsnaam', 
-            'adres_wijziging_reden', 
-            output_field=TextField()
-            ))
-        qs = qs.order_by('address')
-        qs = qs.distinct('address')
-        qs = qs.filter(adres_straatnaam__isnull=False)
-        qs = qs.values('address', 'id')
-
         kwargs.update({
             'moment_list': Moment.objects.all(),
-            'basis_gegevens_fields': get_sections_fields(BASIS_GEGEVENS),
-            'address_history': self.object.case_version_list.filter(id__in=[o.get('id') for o in qs]).order_by('-saved')
         })
         return super().get_context_data(**kwargs)
 
@@ -670,8 +653,8 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
         version = self.object.create_version(self.kwargs.get('form_config_slug'))
-
         case_status_dict = {
             'form': self.kwargs.get('form_config_slug'),
             'case': self.object,
@@ -686,7 +669,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
         if recipient_list:
             current_site = get_current_site(self.request)
             body = render_to_string('cases/mail/case_link.txt', {
-                'form_name': FORM_TITLE_BY_SLUG.get(self.kwargs.get('form_config_slug')),
+                'form_name': form_config.get('title'),
                 'case_url': 'https://%s%s' % (
                     current_site.domain,
                     reverse('case_version_form', kwargs={
@@ -701,7 +684,7 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
                 email = Mail(
                     from_email='noreply@%s' % current_site.domain,
                     to_emails=recipient_list,
-                    subject='Omslagroute - %s' % FORM_TITLE_BY_SLUG.get(self.kwargs.get('form_config_slug')),
+                    subject='Omslagroute - %s' % form_config.get('title'),
                     plain_text_content=body
                 )
                 sg.send(email)
