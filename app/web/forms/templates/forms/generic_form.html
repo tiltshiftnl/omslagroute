@@ -32,7 +32,7 @@
                     Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
                 </a>
                 
-                    {% if object.get_linked_users|length > 0 %}
+                    {% if object.get_linked_users|length > 1 %}
                     <details class="u-margin-top-half container--tool">
                         <summary>
                             <div class="tool--email">
@@ -55,7 +55,7 @@
                                 {% for user in object.get_linked_users %}
                                 {% if request.user.id != user.id %}
                                 <li>
-                                    <a href="mailto:{% for user in object.get_linked_users %}{% if request.user.id != user.id %}{{user.username}},{% endif %}{% endfor %}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Ondestaande is de link naar het formulier:%0D%0A{{request.build_absolute_uri}}">{{user.username}}</a>
+                                    <a href="mailto:{{user.username}}?SUBJECT=Contact over Omslagroute - {{ title }}&BODY=Ondestaande is de link naar het formulier:%0D%0A{{request.build_absolute_uri}}">{{user.username}}</a>
                                 </li>
                                 {% endif %}
                                 {% endfor %}
