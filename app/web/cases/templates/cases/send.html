@@ -18,7 +18,7 @@
     <h1 class="u-margin-bottom">Controleer de gegevens '{{ title }}'</h1>
     <form method="post" novalidate class="u-padding-bottom-4x">
         {% csrf_token %}
-        {% client_status form.instance slug as status %}
+        {% client_status form.instance form_config_slug as status %}
         {% if status.percentage >= 100 %}
 
             {% if recipient_list  %}
@@ -27,8 +27,8 @@
                 
                 <section class="section section--client u-margin-bottom-2x">
                     <div class="details-client">
-                        {% case_form_data form.instance federation.organization slug as data %}
-                        {% include 'forms/snippets/readonly_form_data.html' with form_config=form_data data=data %}
+                        {% case_form_data form.instance federation.organization form_config_slug as data %}
+                        {% include 'forms/snippets/readonly_form_data.html' with form_config=form_config data=data %}
                     </div>
                 </section>
                 {% if document_list %}
@@ -62,7 +62,7 @@
                 {% endfor %}
             </ul>
             <div data-submit-container class="form-field form-field--buttons form-field--buttons-sticky screen-only">
-                <a href="{% url 'update_case' form.instance.id slug %}" class="button button--primary">Terug naar '{{ title }}'</a>
+                <a href="{% url 'update_case' form.instance.id form_config_slug %}" class="button button--primary">Terug naar '{{ title }}'</a>
             </div>
         {% endif %}
     </form>

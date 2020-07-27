@@ -66,26 +66,26 @@ class GenericUpdateFormView(UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        if not form_context:
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        if not form_config:
             raise Http404
         kwargs.update({
-            'form_context': form_context,
+            'form_config': form_config,
             'path': self.request.path,
         })
         return kwargs
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'), {})
         kwargs.update(
             self.kwargs
         )
-        kwargs.update(form_context)
+        kwargs.update(form_config)
         kwargs.update({
             'discard_url': self.get_discard_url(),
             'federation': Federation.objects.filter(
-                organization__federation_type=form_context.get('federation_type'),
+                organization__federation_type=form_config.get('federation_type'),
             ).first(),
         })
         return kwargs
@@ -101,25 +101,25 @@ class GenericCreateFormView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'))
-        if not form_context:
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        if not form_config:
             raise Http404
         kwargs.update({
-            'form_context': form_context,
+            'form_config': form_config,
             'path': self.request.path,
         })
         return kwargs
 
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
-        form_context = FORMS_BY_SLUG.get(self.kwargs.get('slug'), {})
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'), {})
         kwargs.update(
             self.kwargs
         )
-        kwargs.update(form_context)
-        self.kwargs.update(form_context)
+        kwargs.update(form_config)
+        self.kwargs.update(form_config)
         kwargs.update({
             'discard_url': self.get_discard_url(),
-            'title': form_context.get('title_new'),
+            'title': form_config.get('title_new'),
         })
         return kwargs

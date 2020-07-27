@@ -1030,7 +1030,7 @@ class Case(CaseBase):
 
     def get_history(self, form_config):
         qs = self.case_version_list.all().order_by('-saved')
-        qs = qs.filter(version_verbose=form_config.get('slug'))
+        qs = qs.filter(version_verbose=form_config.get('form_config_slug'))
 
         fields = [f for f in get_sections_fields(form_config.get('sections')) if f not in form_config.get('options', {}).get('no_history', [])]
         if 'document_list' in fields: fields.remove('document_list')

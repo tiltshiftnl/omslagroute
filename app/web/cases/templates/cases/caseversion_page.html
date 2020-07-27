@@ -41,7 +41,7 @@
 
 
     <div class="form-title-wrapper">
-        <h2 class="h3">{{ form_context.title }} (ter inzage)</h2>
+        <h2 class="h3">{{ form_config.title }} (ter inzage)</h2>
     <button type="button" data-handler="print-page" class="button text-link text-link--small screen-only"><span>Print of bewaar als pdf</span><svg class="icon print__icon" width="32" height="32">
         <use href="#print" xlink:href="#print" width="32" height="32"></use>
     </svg></button>
@@ -88,7 +88,7 @@
         <div class="details-client">
             
             {% case_form_data object.case request.user.federation.organization object.version_verbose as data %}
-            {% include 'forms/snippets/readonly_form_data.html' with form_config=form_context data=data %}
+            {% include 'forms/snippets/readonly_form_data.html' with form_config=form_config data=data %}
         </div>
         <!-- END Client basis gegevens -->
 
