@@ -68,7 +68,7 @@
             {% for document in document_list %}
                 <li>
                     <div><a href="{% url 'download_case_document' object.id document.id %}
-                    " target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
+                    " target="_blank" rel="noopener noreferrer"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
                     
                 </li>
             {% endfor %}

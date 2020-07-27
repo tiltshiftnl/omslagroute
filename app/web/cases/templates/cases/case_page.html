@@ -172,7 +172,7 @@
             {% for document in object.document_set.all %}
                 {% if forloop.counter0 < 4 %}
                     <li>
-                        <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
+                        <div><a href="{% url 'download_case_document' object.id document.id %}" target="_blank" rel="noopener noreferrer"><span>{{ document.name }}</span></a> <span>{{ document.extension }}</span><span> {{ document.uploaded|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }} </span></div>
                         {% if not object.delete_request_date %}
                         <div>
                             
