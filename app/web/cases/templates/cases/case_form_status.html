@@ -81,9 +81,9 @@
 
         <div class="details-client details-client--status details-client--approve u-width-50"
             data-case-id="{{ object.id }}" 
-            data-form="{{ form_data.slug }}" 
+            data-form="{{ form_config.form_config_slug }}" 
             data-case-status-options="{{ status_options }}" 
-            data-title="{{ form_data.title }}" 
+            data-title="{{ form_config.title }}" 
             data-email-list="{{ user_list }}" 
             >
             {% csrf_token %}
@@ -93,7 +93,7 @@
 
     </section>
 
-        {% if form_data.options.bijlages %}
+        {% if form_config.options.bijlages %}
         <section>
             <header>
                 <h2 class="h3">Bijlagen <small>({{ document_list|length }})</small></h2>
