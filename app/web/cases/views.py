@@ -1121,26 +1121,32 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
         return response
 
 
-@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER])
+@user_passes_test(auth_test, user_type=[WONEN, BEGELEIDER, PB_FEDERATIE_BEHEERDER, WONINGCORPORATIE_MEDEWERKER])
 def download_document(request, case_pk, document_pk):
-    if request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
-        try:
-            case = request.user.profile.cases.get(id=case_pk)
-        except:
-            raise PermissionDenied
-        document = get_object_or_404(Document, id=document_pk)
+    qs = Case._default_manager.by_user(user=request.user)
+    case = qs.filter(pk=case_pk).first()
+    if not case:
+        raise PermissionDenied
+    document = get_object_or_404(Document, id=document_pk)
 
-    if request.user.user_type == WONEN:
-        try:
-            case = Case.objects.get(id=case_pk)
-        except:
-            raise PermissionDenied
-        document = get_object_or_404(Document, id=document_pk)
+    # if request.user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
+    #     try:
+    #         case = request.user.profile.cases.get(id=case_pk)
+    #     except:
+    #         raise PermissionDenied
+    #     document = get_object_or_404(Document, id=document_pk)
 
-        form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
-        shared_in_forms = [f for f in document.forms if f in form_status_list]
-        if not shared_in_forms:
-            raise PermissionDenied
+    # if request.user.user_type == WONEN:
+    #     try:
+    #         case = Case.objects.get(id=case_pk)
+    #     except:
+    #         raise PermissionDenied
+    #     document = get_object_or_404(Document, id=document_pk)
+
+    #     form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
+    #     shared_in_forms = [f for f in document.forms if f in form_status_list]
+    #     if not shared_in_forms:
+    #         raise PermissionDenied
 
     if document.case != case:
         raise PermissionDenied
@@ -1149,6 +1155,7 @@ def download_document(request, case_pk, document_pk):
         raise Http404()
 
     return HttpResponseRedirect(document.uploaded_file.url)
+
 
 
 
