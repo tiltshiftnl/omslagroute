@@ -17,6 +17,7 @@ from django.urls import reverse_lazy, reverse
 from django.core.files.storage import default_storage
 from constance import config
 from .managers import *
+from django.db.models.functions import Concat
 
 
 class CaseBase(PrintableModel):
@@ -1007,6 +1008,25 @@ class Case(CaseBase):
         CaseStatus.objects.filter(case=self).delete()
         Document.objects.filter(case=self).delete()
         return True
+
+    def address_history(self):
+        qs = self.case_version_list.all()
+        qs = qs.annotate(address=Concat(
+            'adres_straatnaam', 
+            'adres_huisnummer', 
+            'adres_toevoeging', 
+            'adres_postcode', 
+            'adres_plaatsnaam', 
+            'adres_wijziging_reden', 
+            'woningcorporatie', 
+            output_field=models.TextField()
+            )
+        )
+        qs = qs.order_by('address')
+        qs = qs.distinct('address')
+        qs = qs.filter(adres_straatnaam__isnull=False)
+        qs = qs.values('address', 'id')
+        return self.case_version_list.filter(id__in=[o.get('id') for o in qs]).order_by('-saved')
 
     def get_history(self, form_config):
         qs = self.case_version_list.all().order_by('-saved')

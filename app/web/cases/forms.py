@@ -161,14 +161,14 @@ class CaseCleanForm(forms.ModelForm):
 
 
 class CaseAddressForm(forms.ModelForm):
-    woningcorporatie_medewerker = GroupedModelChoiceField(
-        label=_('Woningcorporatie medewerker'),
-        queryset=Profile.objects.filter(
-            user__federation__organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
-        ).exclude(user__federation=None), 
-        choices_groupby='federation',
-        required=False,
-    )
+    # woningcorporatie_medewerker = GroupedModelChoiceField(
+    #     label=_('Woningcorporatie medewerker'),
+    #     queryset=Profile.objects.filter(
+    #         user__federation__organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
+    #     ).exclude(user__federation=None), 
+    #     choices_groupby='federation',
+    #     required=False,
+    # )
     class Meta:
         model = Case
         fields = [
@@ -203,14 +203,14 @@ class CaseAddressUpdateForm(forms.ModelForm):
         ),
         required=True,
     )
-    woningcorporatie_medewerker = GroupedModelChoiceField(
-        label=_('Woningcorporatie medewerker'),
-        queryset=Profile.objects.filter(
-            user__federation__organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
-        ).exclude(user__federation=None), 
-        choices_groupby='federation',
-        required=False,
-    )
+    # woningcorporatie_medewerker = GroupedModelChoiceField(
+    #     label=_('Woningcorporatie medewerker'),
+    #     queryset=Profile.objects.filter(
+    #         user__federation__organization__federation_type=FEDERATION_TYPE_WONINGCORPORATIE,
+    #     ).exclude(user__federation=None), 
+    #     choices_groupby='federation',
+    #     required=False,
+    # )
     class Meta:
         model = Case
         fields = [

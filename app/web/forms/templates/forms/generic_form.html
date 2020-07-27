@@ -119,41 +119,10 @@
                                 <h2 class="h3">Basisgegevens</h2>
                             </header>
                 
-                            <dl>
-                                <div>
-                                    <dt>Voornaam: </dt>
-                                    <dd>{{ form.instance.client_first_name }}</dd>
-                                </div>
-                                <div>
-                                    <dt>Achternaam: </dt>
-                                    <dd>{{ form.instance.client_last_name }}</dd>
-                                </div>
-                                <div>
-                                    <dt>Geboortedatum: </dt>
-                                    <dd>{% if form.instance.geboortedatum %}{{ form.instance.geboortedatum|timezone:FRONTEND_TIMEZONE|date:'j b Y' }}{% else %}—{% endif %}</dd>
-                                </div>
-                                <div>
-                                    <dt>E-mailadres: </dt>
-                                    <dd class="u-ellipsis">{% if form.instance.emailadres %}{{ form.instance.emailadres }}{% else %}—{% endif %}</dd>
-                                </div>
-                            </dl>
-                            {% if object.address_complete %}
-                            <h2 class="h3 u-margin-bottom-half">Woning</h2>
-                            <p>{{ object.adres_straatnaam }} {{ object.adres_huisnummer }}{% if object.adres_toevoeging %} {{ object.adres_toevoeging }}{% endif %}<br/>
-                            {{ object.adres_postcode }} {{ object.adres_plaatsnaam }}</p>
+                            {% include 'cases/snippets/case_basis_gegevens.html' with data=object.to_dict %}
 
-                            <dl>
-                                <div>
-                                    <dt>Woningcorporatie: </dt>
-                                    <dd>{{ object.woningcorporatie }}</dd>
-                                </div>
-                                {% if object.woningcorporatie_medewerker %}
-                                <div>
-                                    <dt>Medewerker: </dt>
-                                    <dd>{{ object.woningcorporatie_medewerker }}</dd>
-                                </div>
-                                {% endif %}
-                            </dl>
+                            {% if object.address_complete %}
+                            {% include 'cases/snippets/case_address.html'  with class='u-margin-top-none u-margin-bottom-half' %}
                             {% endif %}
 
                         </div>

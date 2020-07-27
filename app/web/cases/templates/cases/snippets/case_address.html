@@ -14,14 +14,8 @@
             <dt>Woningcorporatie: </dt>
             <dd>{{ object.woningcorporatie }}</dd>
         </div>
-        {% if object.woningcorporatie_medewerker %}
-        <div>
-            <dt>Medewerker: </dt>
-            <dd>{{ object.woningcorporatie_medewerker }}</dd>
-        </div>
-        {% endif %}
     </dl>
-    {% if address_history|length > 1 %}
+    {% if object.address_history|length > 1 %}
     <details>
         <summary>Historie<svg class="icon-details--closed" width="14" height="9">
                 <use href="#chevron-down" xlink:href="#chevron-down" width="14" height="9"></use>
@@ -38,10 +32,10 @@
             </button>
             <div class="u-scroll-wrapper">
                 <ul class="u-list-style-none">
-                    {% for h in address_history %}
+                    {% for h in object.address_history %}
                     <li>
                         <p class="u-margin-bottom-none">{{ h.adres_straatnaam }} {{ h.adres_huisnummer }}, {{ h.adres_postcode }} {{ h.adres_plaatsnaam }}</p>
-                        <p class="u-margin-bottom-none">{{ object.woningcorporatie }}{% if object.woningcorporatie_medewerker %}, {{ object.woningcorporatie_medewerker }}{% endif %}</p>
+                        <p class="u-margin-bottom-none">{{ object.woningcorporatie }}</p>
                         {% if h.adres_wijziging_reden %}<p class="u-margin-bottom-none"><i>'{{ h.adres_wijziging_reden }}'</i></p>{% endif %}
                         <small>{{ h.saved|date:"d-m-y H:i" }} - {{ h.saved_by.user }}</small>
                     </li>

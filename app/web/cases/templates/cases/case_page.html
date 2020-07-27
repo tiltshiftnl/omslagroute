@@ -141,6 +141,8 @@
                 {% endif %}
                 {% endfor %}
             </dl>
+            {% include 'cases/snippets/case_basis_gegevens.html' with data=object.to_dict %}
+
             {% if object.address_complete %}
             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
             {% include 'cases/snippets/case_address.html'  with class='u-margin-top-none u-margin-bottom-half' %}
@@ -203,8 +205,10 @@
         <!-- END BIJLAGE -->
         {% endif %}
 
-        {% if request.user|is_wonen_medewerker and object.address_complete %}
+        {% if object.address_complete %}
+        {% if not request.user|is_begeleider and not request.user|is_pb_federatie_beheerder %}
         {% include 'cases/snippets/case_address.html' %}
+        {% endif %}
         {% endif %}
     </section>
 
