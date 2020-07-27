@@ -182,3 +182,11 @@ def map_case_version_keys(f):
     }
 
 CASE_VERSION_BY_SLUG = dict((s[0], map_case_version_keys(s)) for s in CASE_VERSION)
+
+
+BASIS_GEGEVENS_FIELDS = [
+    'client_first_name',
+    'client_last_name',
+    'geboortedatum',
+    'emailadres',
+]

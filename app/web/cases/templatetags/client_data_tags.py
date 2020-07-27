@@ -18,7 +18,7 @@ def case_form_data(case, organization, form, *args, **kwargs):
 
 
 @register.simple_tag()
-def case_data_by_field_name(data, field_name, rules_reversed, *args, **kwargs):
+def case_data_by_field_name(data, field_name, rules_reversed={}, *args, **kwargs):
     if rules_reversed.get(field_name, []):
         if data.get(rules_reversed.get(field_name, [])[0], {}).get('raw') not in rules_reversed.get(field_name, [])[1]:
             return False

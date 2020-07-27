@@ -1,0 +1,12 @@
+{% load static i18n html_tags client_status_tags auth_tags client_data_tags tz %}
+<dl>
+    {% for f in BASIS_GEGEVENS_FIELDS %}
+    <div>
+        {% case_data_by_field_name data f as field_data %} 
+        <dt>{{ field_data.label }}: </dt>
+        <dd>
+            {{ field_data.value }}
+        </dd>
+    </div>
+    {% endfor %}
+</dl>

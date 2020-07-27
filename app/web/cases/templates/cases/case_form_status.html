@@ -64,14 +64,17 @@
 
     <section class="section-details-client">
 
-        <!-- START BIJLAGE -->
-        <div class="details-client details-client--appendix u-width-50"
-            data-case-id="{{ object.id }}" 
-            data-form="{{ form_data.slug }}" 
-            data-case-status-options="{{ status_options }}" 
-            data-title="{{ form_data.title }}" 
-            data-email-list="{{ user_list }}" 
-            >
+        <div class="details-client details-client--basic u-width-50">
+            <header>
+                <h2 class="h3">Basisgegevens</h2>
+            </header>
+
+            {% include 'cases/snippets/case_basis_gegevens.html' with data=object.to_dict %}
+
+            {% if object.address_complete %}
+            {% include 'cases/snippets/case_address.html'  with class='u-margin-top-none u-margin-bottom-half' %}
+            {% endif %}
+
             {% if form_data.options.bijlages %}
             <header>
                 <h2 class="h3">Bijlagen <small>({{ document_list|length }})</small></h2>
@@ -93,12 +96,20 @@
             {% endif %}
             </ul>
             {% endif %}
+
         </div>
-        {% csrf_token %}
-        <div class="details-client details-client--status details-client--approve u-width-50">
-        <div id="app"></div>
+
+
+        <div class="details-client details-client--status details-client--approve u-width-50"
+            data-case-id="{{ object.id }}" 
+            data-form="{{ form_data.slug }}" 
+            data-case-status-options="{{ status_options }}" 
+            data-title="{{ form_data.title }}" 
+            data-email-list="{{ user_list }}" 
+            >
+            {% csrf_token %}
+            <div id="app"></div>
         </div>
-        <!-- END BIJLAGE -->
         
 
     </section>

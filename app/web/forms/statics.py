@@ -898,25 +898,6 @@ FIELDS = (
 FIELDS_DICT = dict((f[0], f[1]) for f in FIELDS)
 FIELDS_REQUIRED_DICT = dict((f[0], f[2].get('step_required', False)) for f in FIELDS)
 
-BASIS_GEGEVENS = [
-    {
-        'title': '',
-        'description': '',
-        'section_list': [
-            {
-                'title': '',
-                'description': '',
-                'fields': [
-                    'client_first_name',
-                    'client_last_name',
-                    'geboortedatum',
-                    'emailadres',
-                ],
-            },
-        ]
-    },
-]
-
 URGENTIE_AANVRAAG = [
     {
         'title': 'Centrale toegang',
