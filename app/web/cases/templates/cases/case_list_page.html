@@ -55,7 +55,7 @@
                     </td>
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
-                        {% if case_status_list %}
+                        {% if case_status_list and case_status_list.0.form %}
                         <a href="{% url 'update_case' object.id case_status_list.0.form %}">{{ case_status_list.0.form|form_verbose }}</a>
                         {% else %}
                         <span class="u-text-color-grey4">Er is nog geen aanvraag verstuurd voor deze cliënt</span>
@@ -63,7 +63,7 @@
                     </td>
                     <td>
                         <span class="show-on-mobile">Status:</span>
-                        {% if case_status_list %}
+                        {% if case_status_list and case_status_list.0.form %}
                         <span class="label {% if case_status_list.0.status == 2 %}label--status-disapproved{% elif case_status_list.0.status == 3 %}label--status-approved{% elif case_status_list.0.status == 4 %}label--status-pending{% endif %}">
                             {% if case_status_list.0.status == 1 and not case_status_list.0.is_first_of_statustype %}Opnieuw {% endif %}{{ case_status_list.0.status|status_verbose }}
                         </span>
@@ -72,14 +72,14 @@
                     </td>
                     <td class="help-text">
                         <span class="show-on-mobile">Status datum:</span>
-                        {% if case_status_list %}
+                        {% if case_status_list and case_status_list.0.form %}
                         {{ case_status_list.0.created|timezone:FRONTEND_TIMEZONE|date:"d-m-y H:i" }}
                         {% else %}
                         {% endif %}
                     </td>
                     <td class="help-text">
                         <span class="show-on-mobile">Status door:</span>
-                        {% if case_status_list %}
+                        {% if case_status_list and case_status_list.0.form %}
                         {{ case_status_list.0.profile.user.username }}
                         {% else %}
                         {% endif %}
