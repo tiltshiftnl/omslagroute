@@ -480,6 +480,12 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    kennismaking_wooncorporatie_goed_huurderschap_naam_bewoner = models.CharField(
+        verbose_name=_('Naam bewoner'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
     kennismaking_wooncorporatie_kennisgemaakt_buren = models.PositiveSmallIntegerField(
         verbose_name=_('Heb je kennisgemaakt met je buren?'),
         choices=DEFAULT_YES_OR_NO,
