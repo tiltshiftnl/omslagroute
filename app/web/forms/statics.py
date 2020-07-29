@@ -749,6 +749,10 @@ FIELDS = (
         label=_('Ik verklaar dat ik me als een goed huurder zal gedragen. Dit houdt in dat ik me houd aan de woonregels, geen overlast veroorzaak en mijn huur op tijd betaal.'),
         required=False,
     ), {'step_required': True}),
+    ('kennismaking_wooncorporatie_goed_huurderschap_naam_bewoner', forms.CharField(
+        label=_('Naam bewoner'),
+        required=False,
+    ), {'step_required': True}),
     ('kennismaking_wooncorporatie_kennisgemaakt_buren', forms.IntegerField(
         label=_('Heb je kennisgemaakt met je buren?'),
         widget=RadioSelect(
@@ -1399,6 +1403,7 @@ KENNISMAKING_WONINGCORPORATIE = [
                 'description': '',
                 'fields': [
                     'kennismaking_wooncorporatie_goed_huurderschap',
+                    'kennismaking_wooncorporatie_goed_huurderschap_naam_bewoner'
                 ],
             },
         ]
