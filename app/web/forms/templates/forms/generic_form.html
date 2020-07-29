@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load client_status_tags client_data_tags html_tags tz %}
 
-{% block title %} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
+{% block title %} - {{ object.client_name }} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
 {% block breadcrumb %}
 <nav class="breadcrumb screen-only" aria-label="Kruimelpad">
