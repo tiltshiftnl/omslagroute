@@ -281,7 +281,7 @@ body:not(:-moz-handler-blocked) fieldset {
     // position: -webkit-sticky;
     bottom: 0;
     background-color: $primary-white;
-    padding: 2rem;
+    padding: 1rem 2rem 2rem;
     width: 100%;
     display: block;
     left: 50%;
@@ -291,10 +291,11 @@ body:not(:-moz-handler-blocked) fieldset {
         content: ' ';
         display: block;
         position: absolute;
-        top: -4rem;
+        top: -3rem;
         left: 0;
         right: 0;
         bottom: 100%;
+        pointer-events: none;
 
         background: rgba(255,255,255,0);
         background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
