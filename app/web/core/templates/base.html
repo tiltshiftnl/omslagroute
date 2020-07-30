@@ -29,8 +29,16 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'bundles/main.css' %}?v={{ SOURCE_COMMIT }}">
     <link rel="icon" href="https://www.amsterdam.nl/favicon.ico" type="image/x-icon">
-
+    <style>
+        .no-js .modal,
+        .no-js .modal-inner,
+        .no-js .js-spinner {
+            opacity: 0;
+            display: none;  
+        }
+    </style>
     <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/t/1.css?apiType=css&amp;projectid=3680cf49-2b05-4b8a-af28-fa9e27d2bed0">
+    
 </head>
 <body>
 
@@ -128,7 +136,7 @@
     {% endblock %}
 
     </main>
-    
+    <div class="js-spinner-container"><div class="js-spinner"></div></div>
 </div>
 {% block js %}
 <script type="text/javascript" src="{% static "js/details-element-polyfill.js" %}"></script>

@@ -86,7 +86,7 @@
             {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}{% if request.GET.hash %}#{{ request.GET.hash }}{% endif %}">
             {% endif %}
-            <input type="submit" value="Upload" class="button button--primary">
+            <input type="submit" value="Upload" class="button button--primary" data-handler="show-loading">
             <a href="#" class="button button--secondary" data-handler="modal-close">Annuleer</a>
         </div>
     </form>

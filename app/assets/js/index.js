@@ -126,6 +126,9 @@ Array.prototype.sortOnData = function (key) {
         modal.parentNode.removeChild(modal);
       }
     },
+    "show-loading": function (e) {
+      document.body.classList.add("show-loading");
+    },
     "form-approve": function (e) {
       var prompt = parent.document.querySelector('[data-handler="prompt-approve"]');
       prompt.classList.remove("show-prompt-disapprove");
