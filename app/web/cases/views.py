@@ -98,6 +98,8 @@ class UserCaseListAll(UserPassesTestMixin, TemplateView):
         casestatus_list = CaseStatus.objects.all()
         casestatus_list = casestatus_list.filter(
             case__in=Case.objects.by_user(self.request.user).values_list('id', flat=True),
+        ).exclude(
+            status=CASE_STATUS_AFGESLOTEN
         )
 
         qs = casestatus_list.exclude(
@@ -233,6 +235,9 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         return self.model._default_manager.by_user(user=self.request.user)
 
     def test_func(self):
+        # self.object = self.get_object()
+        # if self.request.user.user_type in [WONEN, WONINGCORPORATIE_MEDEWERKER]:
+            # print(self.object.is_most_recent)
         form_slug_list = FORMS_SLUG_BY_FEDERATION_TYPE.get(self.request.user.federation.organization.federation_type)
         if not self.kwargs.get('form_config_slug') in form_slug_list:
             return False

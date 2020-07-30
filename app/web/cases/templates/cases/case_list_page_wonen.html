@@ -60,7 +60,12 @@
                     </td>
                     <td>
                         <span class="show-on-mobile">Stap in omslagroute:</span>
+
+                        {% if object.form|form_list_versions and not object.is_most_recent %}
+                        <a href="{% url 'case_version' object.case_version.id %}">{{ object.form|form_verbose }} (Ter inzage)</a>
+                        {% else %}
                         <a href="{% url 'case_version_form' object.case.id object.form %}">{{ object.form|form_verbose }}</a>
+                        {% endif %}
                     </td>
                     <td>
                         <span class="show-on-mobile">Aanvraag door:</span>

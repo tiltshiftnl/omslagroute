@@ -1174,6 +1174,14 @@ class CaseStatus(models.Model):
     )
 
     @property
+    def is_most_recent(self):
+        qs = CaseStatus.objects.filter(
+            case=self.case, 
+            form=self.form, 
+        ).order_by('-created')
+        return self.id == qs.first().id
+
+    @property
     def is_first_of_statustype(self):
         return CaseStatus.objects.filter(
             case=self.case, 
