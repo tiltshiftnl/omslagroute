@@ -5,6 +5,7 @@ from web.cases.models import Case
 from web.users.models import User
 from web.forms.statics import FORMS_BY_SLUG
 from web.forms.utils import get_sections_fields
+from web.core.utils import validate_email_wrapper
 from .statics import FEDERATION_TYPE_CHOICES, FEDERATION_TYPE_ZORGINSTELLING
 
 def get_fields():
@@ -92,9 +93,15 @@ class Federation(models.Model):
         blank=True,
         null=True,
     )
-    main_email = models.EmailField(
-        verbose_name=('Standaard e-mailadres'),
+    name_form_validation_team = models.CharField(
+        verbose_name=('Naam controle afdeling'),
         max_length=100,
+        blank=True,
+        null=True,
+    )
+    main_email = models.TextField(
+        verbose_name=('Standaard e-mailadres(sen)'),
+        help_text=_('Als je meerdere e-mailadressen wil gebruiken, kun je dat doen door ze met een comma te scheiden.'),
         blank=True,
         null=True,
     )
@@ -111,6 +118,13 @@ class Federation(models.Model):
         if self.name_abbreviation:
             return self.name_abbreviation
         return self.name
+
+    @property
+    def main_email_list(self):
+        if self.main_email:
+            return [e.strip() for e in self.main_email.split(',') if validate_email_wrapper(e.strip())]
+        return []
+
 
     def __str__(self):
         return self.name

@@ -23,7 +23,7 @@
 
             {% if recipient_list  %}
             <div class="u-margin-bottom-4x u-border-bottom">
-                <p class="u-margin-bottom-2x">Controleer onderstaande gegevens van <strong>{{ form.instance.client_name }}</strong>.<br>Een verzoek om deze aanvraag te bekijken, zal verstuurd worden naar {% for recipient in  recipient_list %}{% if forloop.counter0 >= 1  and not forloop.last %}, {% elif forloop.counter0 >= 1 and forloop.last %} en {% endif %}<strong>{{ recipient }}</strong>{% endfor %} van <strong>{{ federation.name }}</strong>.</p>
+                <p class="u-margin-bottom-2x">Controleer onderstaande gegevens van <strong>{{ form.instance.client_name }}</strong>.<br>Een verzoek om deze aanvraag te bekijken, zal verstuurd worden naar {% for recipient in  recipient_list %}{% if forloop.counter0 >= 1  and not forloop.last %}, {% elif forloop.counter0 >= 1 and forloop.last %} en {% endif %}<strong>{{ recipient }}</strong>{% endfor %}.</p>
                 
                 <section class="section section--client u-margin-bottom-2x">
                     <div class="details-client">
@@ -48,7 +48,7 @@
             {% endif %}
             <div data-submit-container class="form-field form-field--buttons-sticky screen-only">
                 <div class="button-wrapper">
-                    <input type="submit" value="Versturen" class="button button--primary">
+                    <input type="submit" value="Indienen bij {% if federation %}{{federation.name}}{% endif %}" class="button button--primary">
                     <a href="{% url 'case' form.instance.id %}" class="button button--secondary">Annuleren</a>
                 </div>    
             </div>

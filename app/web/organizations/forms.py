@@ -30,12 +30,11 @@ class FederationForm(forms.ModelForm):
         exclude = [
             'name_abbreviation',
         ]
-        # # enable readonly widget when Keycloak send federation id.
-        # widgets = {
-        #     'federation_id': forms.TextInput(attrs={
-        #         'readonly': 'readonly',
-        #     }),
-        # }
+        widgets = {
+            'main_email': forms.Textarea(
+                attrs={'rows': 2},
+            )
+        }
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
@@ -47,4 +46,6 @@ class FederationForm(forms.ModelForm):
         else:
             self.fields['organization'].label = _('Organisatie type')
         if user.federation.organization.federation_type in [FEDERATION_TYPE_ADW, FEDERATION_TYPE_WONINGCORPORATIE]:
-            self.fields['main_email'].label = 'Centraal e-mail adres voor notificaties'
+            self.fields['main_email'].label = 'Centraal e-mailadres voor notificaties'
+        else:
+            self.fields['main_email'].label = 'Controleurs e-mailadres(sen)'
