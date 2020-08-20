@@ -992,6 +992,12 @@ class Case(CaseBase):
     def get_linked_users(self):
         from web.users.models import User
         return User.objects.zorginstelling_medewerkers(self)
+
+    def get_linked_federations(self):
+        from web.organizations.models import Federation
+        return Federation.objects.filter(
+            federation_id__in=list(set([u.federation.federation_id for u in self.get_linked_users()]))
+        )
         
     def delete_related(self):
         document_path = os.path.join(

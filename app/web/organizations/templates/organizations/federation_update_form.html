@@ -37,11 +37,11 @@
         {{ form.as_p }}
         {% if not request.user|is_beheerder %}
         {% if request.user|user_federation_type_is_adw or request.user|user_federation_type_is_woningcorporatie %}
-        <p>Vul een e-mail-adres in:<br>alleen dit centrale e-mail adres ontvangt een notificatie wanneer een formulier wordt ingediend</p>
+        <p>Vul e-mailadres(sen) in:<br>alleen dit centrale e-mail adres ontvangt een notificatie wanneer een formulier wordt ingediend</p>
 
-        <p>Vul géén e-mail adres in:<br>alle medewerkers van {{ request.user.federation.name }} met een omslagroute-account, ontvangen een notificatie wanneer een formulier wordt ingediend</p>
+        <p>Vul géén e-mailadres(sen) in:<br>alle medewerkers van {{ request.user.federation.name }} met een omslagroute-account, ontvangen een notificatie wanneer een formulier wordt ingediend</p>
         {% else %}
-        <p>Dit e-mailadres heeft (nog) geen functie binnen de omslagroute website.</p>
+        <p>Als er e-mailadres(sen) zijn ingevoerd dan worden de status verandering van alle cliënten van deze organisatie ook gestuurd naar deze e-mailadres(sen).</p>
         {% endif %}
         {% endif %}
 

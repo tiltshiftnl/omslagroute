@@ -23,6 +23,7 @@ urlpatterns = [
     path('<int:pk>/adres-aanpassen/', CaseAddressUpdate.as_view(), name='update_case_address'),
     path('<int:pk>/<str:form_config_slug>/nieuw/', CaseCleanView.as_view(), name='update_case_clean'),
     path('<int:pk>/<str:form_config_slug>/', GenericCaseUpdateFormView.as_view(), name='update_case'),
+    path('<int:pk>/<str:form_config_slug>/controleren/', ValidateCaseView.as_view(), name='validate_case'),
     path('<int:pk>/<str:form_config_slug>/verstuur', SendCaseView.as_view(), name='send_case'),
 
     path('<int:pk>/form/<str:form_config_slug>/', CaseVersionFormDetailView.as_view(), name='case_version_form'),

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load client_status_tags client_data_tags html_tags tz %}
+{% load client_status_tags client_data_tags html_tags tz auth_tags %}
 
 {% block title %} - {{ object.client_name }} - {% if title %}{{ title }}{% else %}Generiek formulier{% endif %}{% endblock %}
 
@@ -27,12 +27,24 @@
         <div class="flex-item">
             <h1>{{ object.client_name }}</h1>
         </div>
-        <div class="flex-item u-clearfix screen-only">
-                <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                    Samenwerken aan deze cliënt ({{ object.get_linked_users|length|add:-1 }})
-                </a>
-                            
+        <div class="flex-item u-clearfix">
+            <div class="flex-container">
+                {% if request.user|is_begeleider and request.user.federation.main_email %}
+                <div class="flex-item screen-only u-margin-right-half">
+                    <a href="{% url 'validate_case' object.id form_config_slug %}" class="button button--secondary">
+                        Laat&nbsp;controleren&nbsp;door&nbsp;{% if request.user.federation.name_form_validation_team %}{{ request.user.federation.name_form_validation_team }}{% else %}{{ request.user.federation.name }}{% endif %}
+                    </a>
+                </div>
+                {% endif %}
+                <div class="flex-item u-clearfix screen-only">
+                    <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                        Samenwerken&nbsp;aan&nbsp;deze&nbsp;cliënt&nbsp;({{ object.get_linked_users|length|add:-1 }})
+                    </a>
+                                    
+                </div>
+            </div>
         </div>
+
     </div>
     <div role="dialog" class="modal" id="modalInvite">
         <iframe class="modal--invite" id="iframeInvite" data-src="{% url 'case_invite_users' object.id  %}" src="about:blank" title="Uitnodiging tot samenwerking">
@@ -71,7 +83,7 @@
                         <li>
                             {% if form.instance.id and federation %}
                         <button {% if object.delete_request_date %}disabled{% endif %} type="submit" name="next" id="form-submit" value="{% url 'send_case' form.instance.id form_config_slug %}" class="button text-link" >
-                            <span>Controleren en indienen bij {% if federation %}{{federation.name}}{% endif %}</span><svg class="" width="20" height="20">
+                            <span>Indienen bij {% if federation %}{{federation.name}}{% endif %}</span><svg class="" width="20" height="20">
                                 <use href="#share" xlink:href="#share" width="20" height="16"></use>
                             </svg></button>{% endif %}
                         </li>

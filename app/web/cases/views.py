@@ -1,4 +1,5 @@
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, DetailView, FormView, TemplateView
+from django.views.generic.base import RedirectView
 from .models import *
 from .statics import CASE_STATUS_AFGEKEURD, CASE_STATUS_GOEDGEKEURD, CASE_STATUS_IN_BEHANDELING, CASE_STATUS_INGEDIEND
 from django.urls import reverse_lazy, reverse
@@ -599,6 +600,50 @@ class GenericCaseCreateFormView(UserPassesTestMixin, GenericCreateFormView):
         messages.add_message(self.request, messages.INFO, "De cliënt '%s' is aangemaakt." % case.client_name)
         return response
 
+class ValidateCaseView(UserPassesTestMixin, RedirectView):
+    model = Case
+    permanent = False
+    query_string = True
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
+
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
+    def get_redirect_url(self, *args, **kwargs):
+        self.object = get_object_or_404(self.model, pk=kwargs['pk'])
+        form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
+        redirect_url = reverse('update_case', args=[
+            self.object.id,
+            self.kwargs.get('form_config_slug'),
+        ])
+        recipient_list = self.request.user.federation.main_email_list
+        current_site = get_current_site(self.request)
+        body = render_to_string('cases/mail/validate_case.txt', {
+            'form_name': form_config.get('title'),
+            'case_url': 'https://%s%s' % (
+                current_site.domain,
+                redirect_url,
+            ),
+            'user': self.request.user,
+        })
+        if settings.SENDGRID_KEY and recipient_list:
+            sg = sendgrid.SendGridAPIClient(settings.SENDGRID_KEY)
+            email = Mail(
+                from_email='noreply@%s' % current_site.domain,
+                to_emails=recipient_list,
+                subject='Omslagroute - %s controleren' % form_config.get('title'),
+                plain_text_content=body
+            )
+            sg.send(email)
+            messages.add_message(
+                self.request, messages.INFO, "De aanvraag is ter controle gestuurd naar '%s'." % (
+                    self.request.user.federation.name_form_validation_team if self.request.user.federation.name_form_validation_team else self.request.user.federation.name,
+                )
+            )
+        return redirect_url
+
 
 class SendCaseView(UserPassesTestMixin, UpdateView):
     model = Case
@@ -625,11 +670,12 @@ class SendCaseView(UserPassesTestMixin, UpdateView):
     def get_recipient_list(self):
         form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
         federation_type = form_config.get('federation_type')
-        recipient_list = [] 
+        recipient_list = get_zorginstelling_medewerkers_email_list(self.object)
         if federation_type == FEDERATION_TYPE_ADW:
-            recipient_list = get_wonen_medewerkers_email_list()
+            recipient_list += get_wonen_medewerkers_email_list()
         elif federation_type == FEDERATION_TYPE_WONINGCORPORATIE:
-            recipient_list = get_woningcorporatie_medewerkers_email_list(self.object)
+            recipient_list += get_woningcorporatie_medewerkers_email_list(self.object)
+        recipient_list = list(set(recipient_list))
         return recipient_list
 
 
