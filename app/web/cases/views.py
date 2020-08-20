@@ -44,10 +44,7 @@ class UserCaseList(UserPassesTestMixin, ListView):
         return auth_test(self.request.user, [PB_FEDERATIE_BEHEERDER, BEGELEIDER])
 
     def get_queryset(self):
-        datetime_treshold = datetime.datetime.now() - datetime.timedelta(seconds=config.CASE_DELETE_SECONDS)
-        return self.request.user.profile.cases.all().exclude(
-            delete_request_date__lte=datetime_treshold
-        ).order_by('-saved')
+        return self.model._default_manager.by_user(user=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         kwargs = super().get_context_data(object_list=object_list, **kwargs)
@@ -69,7 +66,6 @@ class CaseListArchive(UserPassesTestMixin, ListView):
         return auth_test(self.request.user, WONEN)
 
     def get_queryset(self):
-        case_list = CaseVersion.objects.order_by('case').distinct().values_list('case')
         return super().get_queryset().filter(
             delete_request_date__isnull=False
         )
@@ -721,7 +717,7 @@ class CaseInviteUsers(UserPassesTestMixin, SessionWizardView):
     def get_all_users(self):
         return User.objects.filter(
             profile__isnull=False,
-            user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
+            user_type__in=[BEGELEIDER]
         ).exclude(id=self.request.user.id).order_by('federation', 'username')
 
     def get_user_options(self):
@@ -821,7 +817,7 @@ class CaseRemoveInvitedUsers(UserPassesTestMixin, FormView):
     def get_all_users(self):
         return User.objects.filter(
             profile__isnull=False,
-            user_type__in=[BEGELEIDER, PB_FEDERATIE_BEHEERDER]
+            user_type__in=[BEGELEIDER]
         ).exclude(id=self.request.user.id).order_by('federation', 'username')
 
     def get_user_options(self):
