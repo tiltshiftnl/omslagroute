@@ -46,6 +46,12 @@ class FederationCreateView(UserPassesTestMixin, CreateView):
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('federation_list')
 
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def test_func(self):
         return auth_test(self.request.user, [BEHEERDER]) and hasattr(self.request.user, 'profile')
 
