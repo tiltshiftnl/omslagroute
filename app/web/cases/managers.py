@@ -2,6 +2,7 @@ from django.db import models
 from web.users.statics import *
 from web.forms.statics import FORMS_SLUG_BY_FEDERATION_TYPE
 from web.organizations.statics import FEDERATION_TYPE_WONINGCORPORATIE, FEDERATION_TYPE_ADW
+from web.profiles.models import Profile
 from .statics import CASE_STATUS_AFGESLOTEN
 import datetime
 from constance import config
@@ -13,13 +14,24 @@ class CaseManager(models.Manager):
         datetime_treshold = datetime.datetime.now() - datetime.timedelta(seconds=config.CASE_DELETE_SECONDS)
         queryset = self.get_queryset()
 
-        if user.user_type in [BEGELEIDER, PB_FEDERATIE_BEHEERDER]:
+        if user.user_type in [PB_FEDERATIE_BEHEERDER]:
+            queryset = queryset.filter(
+                profile__in=Profile.objects.filter(
+                    user__federation=user.federation,
+                )
+            ).exclude(
+                delete_request_date__lte=datetime_treshold
+            ).order_by('-saved').distinct('id', 'saved')
+            return queryset
+
+        if user.user_type in [BEGELEIDER]:
             queryset = queryset.filter(
                 id__in=user.profile.cases.all().values_list('id', flat=True)
             ).exclude(
                 delete_request_date__lte=datetime_treshold
             ).order_by('-saved')
             return queryset
+            
         if user.user_type in [WONINGCORPORATIE_MEDEWERKER]:
             queryset = queryset.filter(
                 id__in=CaseVersion.objects.filter(
