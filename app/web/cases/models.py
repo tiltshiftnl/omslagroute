@@ -1258,12 +1258,11 @@ class CaseStatus(models.Model):
         status_list = CaseStatus.objects.order_by('-created')
         status_list = status_list.filter(
                 form=self.form, 
-                case=self.case
+                case=self.case,
         )
-        # for cs in status_list:
-        #     print(cs.status)
         first = status_list.first()
-        return first.status == 1 if first else False
+        is_first = first.status == CASE_STATUS_INGEDIEND if first else False
+        return is_first and status_list.count() > 1
         
     class Meta:
         verbose_name = _('Cliënt status')
