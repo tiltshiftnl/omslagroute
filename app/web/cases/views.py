@@ -614,9 +614,8 @@ class ValidateCaseView(UserPassesTestMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         self.object = get_object_or_404(self.model, pk=kwargs['pk'])
         form_config = FORMS_BY_SLUG.get(self.kwargs.get('form_config_slug'))
-        redirect_url = reverse('update_case', args=[
+        redirect_url = reverse('case', args=[
             self.object.id,
-            self.kwargs.get('form_config_slug'),
         ])
         recipient_list = self.request.user.federation.main_email_list
         current_site = get_current_site(self.request)
@@ -624,7 +623,10 @@ class ValidateCaseView(UserPassesTestMixin, RedirectView):
             'form_name': form_config.get('title'),
             'case_url': 'https://%s%s' % (
                 current_site.domain,
-                redirect_url,
+                reverse('update_case', args=[
+                    self.object.id,
+                    self.kwargs.get('form_config_slug'),
+                ]),
             ),
             'user': self.request.user,
         })
