@@ -74,7 +74,7 @@
             <div id="file-upload-filename" class="form-field__uploaded"></div>
         </div>
 
-        <div class="form-field form-field--checkboxselectmultiple">
+        <div class="form-field form-field--checkboxselectmultiple" data-decorator="select-form-option">
             {{ form.forms.label_tag }}
             {% if form.forms.help_text %}
                 <div class="help-text">{{ form.forms.help_text|safe }}</div>

@@ -1079,7 +1079,7 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
                 '?iframe=true' if self.request.GET.get('open-in-iframe') else ''
             )
             return url
-        return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
+        return '.?iframe=true'
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
@@ -1110,7 +1110,7 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('home')
 
     def get_success_url(self):
-        return reverse('case', kwargs={'pk': self.kwargs.get('case_pk')})
+        return '.?iframe=true'
 
     def test_func(self):
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])

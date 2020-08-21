@@ -161,6 +161,7 @@ class GenericModelForm(BaseGenericForm, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields = {}
         self.sections = form_config.get('sections', [])
+        self.form_config_slug = form_config.get('form_config_slug')
         self.federation_types = form_config.get('federation_types', [])
         self.options = form_config.get('options', {})
         exclude_fields = self.options.get('exclude_fields', [])
