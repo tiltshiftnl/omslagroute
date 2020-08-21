@@ -216,6 +216,24 @@ FIELDS = (
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         required=False,
     ), {}),
+    ('aanvraagurgentie_akkoord_client', forms.BooleanField(
+        label=_('Akkoord cliënt'),
+        required=False,
+    ), {'step_required': True}),
+    ('aanvraagurgentie_akkoord_client_naam', forms.CharField(
+        label=_('Naam'),
+        required=False,
+    ), {'step_required': True}),
+    ('aanvraagurgentie_akkoord_client_datum', forms.DateField(
+        label=_('Datum'),
+        required=False,
+        localize=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
     ('organisatie', forms.CharField(
         label=_('Organisatie'),
         required=False,
@@ -420,7 +438,25 @@ FIELDS = (
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 15, 'placeholder': ' '}),
         help_text='Bijvoorbeeld: doelen niet behaald maar geen risico voor zelfstandig wonen',
         required=False,
-    ), {}),
+    ), {}), 
+    ('omklap_akkoord_client', forms.BooleanField(
+        label=_('Akkoord cliënt'),
+        required=False,
+    ), {'step_required': True}),
+    ('omklap_akkoord_client_naam', forms.CharField(
+        label=_('Naam'),
+        required=False,
+    ), {'step_required': True}),
+    ('omklap_akkoord_client_datum', forms.DateField(
+        label=_('Datum'),
+        required=False,
+        localize=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+    ), {'step_required': True}),
     ('omklap_akkoord_derde', forms.IntegerField(
         label=_('Akkoord'),
         widget=RadioSelect(
@@ -1014,6 +1050,21 @@ URGENTIE_AANVRAAG = [
         ]
     },
     {
+        'title': 'Akkoord',
+        'description': "",
+        'section_list': [
+            {
+                'title': 'Cliënt',
+                'description': '',
+                'fields': [
+                    'aanvraagurgentie_akkoord_client',
+                    'aanvraagurgentie_akkoord_client_naam',
+                    'aanvraagurgentie_akkoord_client_datum'
+                ],
+            },
+        ]
+    },
+    {
         'title': 'Bijlagen',
         'description': "<strong>Nodige bijlagen bij aanvraag Urgentie onder voorwaarden</strong><ul><li>kopie ID</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst)</li><li>meest recente loonstrook</li><li>meest recente plaatsingsbesluit veldtafel, WMO beschikking of SPIC</li></ul><p><strong>Indien partner in zelfde woning zal wonen:</strong></p><ul><li>kopie ID partner (geen rijbewijs)</li><li>meest recente IB60/ IBRI (jaaropgave van de belastingdienst) partner</li><li>meest recente loonstrook partner</li></ul><p><strong>Let op: </strong>Medische gegevens mogen niet bij de aanvraag meegestuurd worden</p>",
         'section_list': [
@@ -1183,11 +1234,20 @@ OMKLAP_AANVRAAG = [
         ],
     },
     {
-        'title': 'Akkoord objectieve derde',
+        'title': 'Akkoord',
         'description': "",
         'section_list': [
             {
-                'title': '',
+                'title': 'Cliënt',
+                'description': '',
+                'fields': [
+                    'omklap_akkoord_client',
+                    'omklap_akkoord_client_naam',
+                    'omklap_akkoord_client_datum'
+                ],
+            },
+            {
+                'title': 'Akkoord objectieve derde',
                 'description': '',
                 'fields': [
                     'omklap_akkoord_derde',
