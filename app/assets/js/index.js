@@ -84,7 +84,6 @@ Array.prototype.sortOnData = function (key) {
         if(iframe !== null) {
           iframe.setAttribute('src', iframe.dataset.src);
           iframe.onload = function() {
-            console.log('iframe loaded');
             modal.classList.add("active");
             var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
             var innerElement = doc.querySelector(".site-container");
@@ -325,6 +324,18 @@ Array.prototype.sortOnData = function (key) {
     },
   };
   var decorators = {
+    "select-form-option": function () {
+      var self = this,
+        urlParams = new URLSearchParams(window.location.search),
+        formConfigSlug=urlParams.get('form_config_slug'),
+        input = d.querySelector('input[value="'+formConfigSlug+'"]'),
+        _init = function(){
+          if (input){
+            input.checked = true;
+          }
+        };
+      _init();
+    },
     "form-rule": function () {
       var self = this,
         ruleData = JSON.parse(self.dataset.ruleData),
@@ -346,7 +357,6 @@ Array.prototype.sortOnData = function (key) {
               var f = document.querySelector('[name="'+ruleData[i].fields[j]+'"]'),
                   s = document.querySelector('.section#'+ruleData[i].fields[j]),
                   sn = document.querySelector('#section_nav_'+ruleData[i].fields[j]);
-              console.log(sn);
               if (f) {
                 var c = _closest(f, '.form-field-history-container');
                 c.classList[show?'remove':'add']('hide-animated');
