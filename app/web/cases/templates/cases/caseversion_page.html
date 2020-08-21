@@ -87,7 +87,7 @@
         <!-- START Client basis gegevens -->
         <div class="details-client">
             
-            {% case_form_data object.case request.user.federation.organization object.version_verbose as data %}
+            {% case_form_data object request.user.federation.organization object.version_verbose as data %}
             {% include 'forms/snippets/readonly_form_data.html' with form_config=form_config data=data %}
         </div>
         <!-- END Client basis gegevens -->
