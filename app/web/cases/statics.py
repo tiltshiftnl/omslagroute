@@ -20,7 +20,7 @@ JONGER_DAN_26 = (
     (1, 'Nee'),
     (2, 'Ja: standaard plaatsing jongerenwoning (5 jaar contract bij omklap)'),
     (3, 'Ja: plaatsing reguliere woning noodzakelijk (onbepaalde tijd bij omklap)'),
-    (4, 'Ja: Plaatsing in een project (Licht dit toe bij de volgende vraag)'),
+    (4, 'Ja: Plaatsing in een project'),
 )
 
 DEFAULT_YES_OR_NO = (
