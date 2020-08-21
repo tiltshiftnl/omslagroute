@@ -222,6 +222,24 @@ class CaseBase(PrintableModel):
         blank=True,
         null=True,
     )
+    aanvraagurgentie_akkoord_client = models.BooleanField(
+        verbose_name=_('Akkoord cliënt'),
+        blank=True,
+        null=True,
+    )
+    aanvraagurgentie_akkoord_client_naam = models.CharField(
+        verbose_name=_('Naam cliënt'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    aanvraagurgentie_akkoord_client_datum = models.DateField(
+        verbose_name=_('Datum akkoord cliënt'),
+        blank=True,
+        null=True,
+    )
+
+
     # omklap form
     organisatie = models.CharField(
         verbose_name=_('Organisatie'),
@@ -409,6 +427,22 @@ class CaseBase(PrintableModel):
     )
     omklap_akkoord_derde_datum = models.DateField(
         verbose_name=_('Datum van akkoord'),
+        blank=True,
+        null=True,
+    )
+    omklap_akkoord_client = models.BooleanField(
+        verbose_name=_('Akkoord cliënt'),
+        blank=True,
+        null=True,
+    )
+    omklap_akkoord_client_naam = models.CharField(
+        verbose_name=_('Naam cliënt'),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+    omklap_akkoord_client_datum = models.DateField(
+        verbose_name=_('Datum akkoord cliënt'),
         blank=True,
         null=True,
     )
