@@ -4,5 +4,5 @@ Als je bent ingelogd kun je deze cliënt met de onderstaande url beheren.
 {{ case_url}}{% if message %}
 
 De medewerker die je heeft uitgenodigd heeft het volgende bericht meegestuurd:
-{{ message }}
+{{ message|safe }}
 {% endif %}
