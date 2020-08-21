@@ -344,7 +344,9 @@ Array.prototype.sortOnData = function (key) {
             var show = ruleData[i].values.includes(v);
             for (j = 0; j < ruleData[i].fields.length; j++){
               var f = document.querySelector('[name="'+ruleData[i].fields[j]+'"]'),
-                  s = document.querySelector('.section#'+ruleData[i].fields[j]);
+                  s = document.querySelector('.section#'+ruleData[i].fields[j]),
+                  sn = document.querySelector('#section_nav_'+ruleData[i].fields[j]);
+              console.log(sn);
               if (f) {
                 var c = _closest(f, '.form-field-history-container');
                 c.classList[show?'remove':'add']('hide-animated');
@@ -353,6 +355,9 @@ Array.prototype.sortOnData = function (key) {
               }else if (s){
                 s.classList[show?'remove':'add']('hide-animated');
                 s.classList[show?'add':'remove']('show-animated');
+              }
+              if (sn) {
+                sn.classList[show?'remove':'add']('hide');
               }
             }
           }

@@ -331,7 +331,7 @@
                                         <ul>
                                             {% for sub_section in section.section_list %}
                                                 {% if sub_section.title %}
-                                                <li class="{% if sub_section.step_complete %}section-complete{% endif %}">
+                                                <li class="{% if sub_section.step_complete %}section-complete{% endif %}" {% if sub_section.id %}id="section_nav_{{ sub_section.id }}"{% endif %}>
                                                     <a href="#{{ sub_section.title|slugify }}">
                                                         <span class="dot dot--small"></span>
                                                         {{ sub_section.title }}
