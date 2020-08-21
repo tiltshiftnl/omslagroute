@@ -40,12 +40,13 @@ FIELDS = (
         required=False,
     ), {}),
     ('woningnet_nummer', forms.CharField(
-        label=_('Woningnetnummer'),
-        widget=forms.TextInput(attrs={'placeholder': ' ', 'pattern': '^[0-9]*$'}),
+        label=_('Woningnetnummer of woningnet gebruikersnaam'),
+        widget=forms.TextInput(attrs={'placeholder': ' '}),
+        help_text='Woningnet stapt over van registratienummers naar gebruikersnamen. Nieuwe gebruikersnamen zijn gelijk aan het e-mailadres van de cliënt.',
         required=False,
     ), {'step_required': True}),
     ('woningnet_geldigheid', forms.DateField(
-        label=_('Geldigheid woningnet'),
+        label=_('Geldigheid inschrijving WoningNet'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -229,6 +230,12 @@ FIELDS = (
     ), {'step_required': True}),
     ('datum_voordracht', forms.DateField(
         label=_('Datum voordracht'),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'dd-mm-jjjj',
+            }
+        ),
+        localize=True,
         required=False,
     ), {'step_required': True}),
     ('woningcorporatie_akkoord_met_omklap', forms.IntegerField(
@@ -433,6 +440,7 @@ FIELDS = (
     ('omklap_akkoord_derde_datum', forms.DateField(
         label=_('Datum akkoord'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -482,6 +490,7 @@ FIELDS = (
     ('woningcorporatie_start_intermediaire_verhuur', forms.DateField(
         label=_('Startdatum intermediaire verhuur'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -491,6 +500,7 @@ FIELDS = (
     ('woningcorporatie_datum_kennismakingsgesprek', forms.DateField(
         label=_('Datum kennismakingsgesprek'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -500,6 +510,7 @@ FIELDS = (
     ('woonevaluatie_woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
         label=_('Datum woonevaluatiegesprek'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -509,6 +520,7 @@ FIELDS = (
     ('kennismaking_woningcorporatie_datum_woonevaluatiegesprek', forms.DateField(
         label=_('Datum woonevaluatiegesprek'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -704,6 +716,7 @@ FIELDS = (
     ('woonevaluatie_akkoord_bewoner_datum', forms.DateField(
         label=_('Datum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -721,6 +734,7 @@ FIELDS = (
     ('woonevaluatie_akkoord_zorgaanbieder_datum', forms.DateField(
         label=_('Datum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -738,6 +752,7 @@ FIELDS = (
     ('woonevaluatie_akkoord_woningcorporatie_datum', forms.DateField(
         label=_('Datum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -857,6 +872,7 @@ FIELDS = (
     ('kennismaking_wooncorporatie_akkoord_bewoner_datum', forms.DateField(
         label=_('Datum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -874,6 +890,7 @@ FIELDS = (
     ('kennismaking_wooncorporatie_akkoord_zorgaanbieder_datum', forms.DateField(
         label=_('Datum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
@@ -891,6 +908,7 @@ FIELDS = (
     ('kennismaking_wooncorporatie_akkoord_woningcorporatie_datum', forms.DateField(
         label=_('Datum'),
         required=False,
+        localize=True,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'dd-mm-jjjj',
