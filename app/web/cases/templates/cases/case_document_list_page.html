@@ -52,16 +52,14 @@
                         <a href="#" title="Bijlage aanpassen" class="u-margin-right u-color-black" data-handler="modal" data-contentid="modalDocumentUpdate-{{ document.id }}">
                             <svg class="button__icon"  width="20" height="20" >
                                 <use href="#edit-document" xlink:href="#edit-document"  width="20" height="20"></use>
-                            </svg>
-                        </a>
+                            </svg></a>
                         <div role="dialog" class="modal" id="modalDocumentUpdate-{{ document.id }}">
                             <iframe class="modal--update-document" id="iFrameDocumentUpdate-{{ document.id }}" data-src="{% url 'update_case_document' object.id document.id %}?next=open-in-iframe=true" src="about:blank" title="Bijlage {{ document.name }} aanpassen"></iframe>
                         </div>
                         <a href="#" title="Bijlage verwijderen" class="u-color-black" data-handler="modal" data-contentid="modalDocumentDelete-{{ document.id }}">
                             <svg class="button__icon"  width="20" height="20" >
                                 <use href="#trash" xlink:href="#trash"  width="20" height="20"></use>
-                            </svg>
-                        </a>
+                            </svg></a>
                         <div role="dialog" class="modal" id="modalDocumentDelete-{{ document.id }}">
                             <iframe class="modal--delete-document" id="iFrameDocumentDelete-{{ document.id }}" data-src="{% url 'delete_case_document' object.id document.id %}" src="about:blank" title="Verwijder bijlage {{ document.name }}"></iframe>
                         </div>  

@@ -94,6 +94,11 @@ body:not(:-moz-handler-blocked) fieldset {
 
 .sub-section__title {
     margin-top: 0;
+
+    @media print {
+    
+        padding-left: .938rem;
+}
 }
 
 .section--step__description,

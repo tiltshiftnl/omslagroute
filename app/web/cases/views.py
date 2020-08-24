@@ -232,9 +232,6 @@ class CaseVersionFormDetailView(UserPassesTestMixin, DetailView):
         return self.model._default_manager.by_user(user=self.request.user)
 
     def test_func(self):
-        # self.object = self.get_object()
-        # if self.request.user.user_type in [WONEN, WONINGCORPORATIE_MEDEWERKER]:
-            # print(self.object.is_most_recent)
         form_slug_list = FORMS_SLUG_BY_FEDERATION_TYPE.get(self.request.user.federation.organization.federation_type)
         if not self.kwargs.get('form_config_slug') in form_slug_list:
             return False
@@ -1082,22 +1079,21 @@ class DocumentCreate(UserPassesTestMixin, CreateView):
         return '.?iframe=true'
 
     def test_func(self):
+        cases = Case._default_manager.by_user(user=self.request.user)
+        self.case = get_object_or_404(Case, id=self.kwargs.get('case_pk'))
+        if self.case not in cases:
+            return False
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
 
     def get_context_data(self, **kwargs):
-        try:
-            case = self.request.user.profile.cases.get(id=self.kwargs.get('case_pk'))
-        except:
-            raise Http404
-
         kwargs.update({
-            'case': case,
+            'case': self.case,
         })
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         document = form.save(commit=False)
-        document.case = Case.objects.get(id=self.kwargs.get('case_pk'))
+        document.case = self.case
 
         messages.add_message(self.request, messages.INFO, "De bijlage '%s' is opgeslagen." % document.name)
         return super().form_valid(form)
@@ -1109,26 +1105,28 @@ class DocumentUpdate(UserPassesTestMixin, UpdateView):
     template_name_suffix = '_create_form'
     success_url = reverse_lazy('home')
 
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
     def get_success_url(self):
         return '.?iframe=true'
 
     def test_func(self):
+        cases = Case._default_manager.by_user(user=self.request.user)
+        self.case = get_object_or_404(Case, id=self.kwargs.get('case_pk'))
+        if self.case not in cases:
+            return False
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
 
     def get_context_data(self, **kwargs):
-        try:
-            case = self.request.user.profile.cases.get(id=self.kwargs.get('case_pk'))
-        except:
-            raise Http404
-
         kwargs.update({
-            'case': case,
+            'case': self.case,
         })
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         document = form.save(commit=False)
-        document.case = Case.objects.get(id=self.kwargs.get('case_pk'))
+        document.case = self.case
 
         messages.add_message(self.request, messages.INFO, "De bijlage '%s' is opgeslagen." % document.name)
         return super().form_valid(form)
@@ -1140,6 +1138,9 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
     template_name_suffix = '_delete_form'
     success_url = reverse_lazy('home')
 
+    def get_queryset(self):
+        return self.model._default_manager.by_user(user=self.request.user)
+
     def get_success_url(self):
         return '%s?iframe=true' % reverse(
             'case', 
@@ -1147,18 +1148,17 @@ class DocumentDelete(UserPassesTestMixin, DeleteView):
         )
 
     def test_func(self):
+        cases = Case._default_manager.by_user(user=self.request.user)
+        self.case = get_object_or_404(Case, id=self.kwargs.get('case_pk'))
+        if self.case not in cases:
+            return False
         return auth_test(self.request.user, [BEGELEIDER, PB_FEDERATIE_BEHEERDER])
 
     def get_context_data(self, **kwargs):
-        try:
-            case = self.request.user.profile.cases.get(id=self.kwargs.get('case_pk'))
-        except:
-            raise Http404
-
-        form_status_list = [f[0] for f in case.casestatus_set.all().order_by('form').distinct().values_list('form')]
+        form_status_list = [f[0] for f in self.case.casestatus_set.all().order_by('form').distinct().values_list('form')]
 
         kwargs.update({
-            'case': case,
+            'case': self.case,
             'shared_in_forms': [f for f in self.object.forms if f in form_status_list],
         })
         return super().get_context_data(**kwargs)
