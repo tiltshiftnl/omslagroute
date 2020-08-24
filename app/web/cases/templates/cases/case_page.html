@@ -125,22 +125,6 @@
                 <h2 class="h3">Basisgegevens</h2>
             </header>
 
-            <dl>
-                {% for k, client_info in object.to_dict.items %}
-                {% if not forloop.first and k in basis_gegevens_fields %}
-                <div>
-                    <dt>{{ client_info.label }}: </dt>
-                    <dd>
-                        {% if client_info.value|is_date %}
-                            {{ client_info.value|str_date_to_date|timezone:FRONTEND_TIMEZONE|date:"j b Y" }}
-                        {% else %}
-                            {{ client_info.value }}
-                        {% endif %}
-                    </dd>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </dl>
             {% include 'cases/snippets/case_basis_gegevens.html' with data=object.to_dict %}
 
             {% if object.address_complete %}
