@@ -101,7 +101,7 @@ class Federation(models.Model):
     )
     main_email = models.TextField(
         verbose_name=('Standaard e-mailadres(sen)'),
-        help_text=_('Als je meerdere e-mailadressen wil gebruiken, kun je dat doen door ze met een comma te scheiden.'),
+        help_text=_('Als je meerdere e-mailadressen wil gebruiken, kun je dat doen door ze met een komma te scheiden.'),
         blank=True,
         null=True,
     )
