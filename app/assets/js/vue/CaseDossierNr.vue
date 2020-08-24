@@ -11,7 +11,7 @@
                 <div class="">
                     <label for="input_casenumber">Dossier nr</label>
                     <input v-model="caseDossierNr" type="text" placeholder="123456" id="input_casenumber" />
-                    <button v-on:click="updateCaseDossierNr()" type="submit" class="button button--primary">Bewaar</button>
+                    <button v-on:click="updateCaseDossierNr()" type="submit" class="button button--primary screen-only">Bewaar</button>
                 </div>
             </form>
         </div>
