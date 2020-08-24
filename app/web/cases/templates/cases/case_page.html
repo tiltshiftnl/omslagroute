@@ -122,7 +122,7 @@
         <!-- START Client basis gegevens -->
         <div class="details-client details-client--basic">
             <header>
-                <h2 class="h3 u-margin-top-none">Basisgegevens</h2>
+                <h2 class="h3">Basisgegevens</h2>
             </header>
 
             <dl>
@@ -145,7 +145,7 @@
 
             {% if object.address_complete %}
             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-            {% include 'cases/snippets/case_address.html'  with class='u-margin-top-none u-margin-bottom-half' %}
+            {% include 'cases/snippets/case_address.html'  with class='u-margin-bottom-half' %}
             {% endif %}
             {% endif %}
 
