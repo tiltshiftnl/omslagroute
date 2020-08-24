@@ -60,11 +60,11 @@
 .js-spinner-container {
     position: fixed;
     top: -1000px;
-    left: 50%;
+    left: 0;
+    right: 0;
+    z-index: 2000;
     padding: 4rem;
-    border: 2px solid $neutral-grey3;
-    background-color: $primary-white;
-    transform: translate(-50%, -50%);
+    background-color: rgba(255,255,255,.75);
 
     .js-spinner {
         position: relative;
@@ -78,11 +78,14 @@
         transform: translateZ(0);  
         z-index: 500;
         border-radius: 50%;
+        transform: translateY(40vh);
 
     }
 
     .show-loading & {
-        top: 50%;
+        top: 0;
+        bottom: 0;
+        
 
         .js-spinner {
 
