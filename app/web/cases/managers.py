@@ -57,3 +57,13 @@ class CaseVersionManager(models.Manager):
         return queryset.filter(
             case__in=Case._default_manager.by_user(user=user)
         )
+
+
+class DocumentManager(models.Manager):
+    def by_user(self, user):
+        from .models import Case
+        queryset = self.get_queryset()
+
+        return queryset.filter(
+            case__in=Case._default_manager.by_user(user=user)
+        )
