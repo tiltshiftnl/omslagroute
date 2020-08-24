@@ -23,26 +23,19 @@
     {% if object.delete_request_date %}
     {% include 'cases/snippets/case_delete_request_header.html' with object=form.instance %}
     {% endif %}
-    <div class="client-header flex-container">
-        <div class="flex-item">
+    <div class="client-header u-clearfix">
+        <div class="u-float-left">
             <h1>{{ object.client_name }}</h1>
         </div>
-        <div class="flex-item u-clearfix">
-            <div class="flex-container">
-                {% if request.user|is_begeleider and request.user.federation.main_email %}
-                <div class="flex-item screen-only u-margin-right-half">
-                    <a href="{% url 'validate_case' object.id form_config_slug %}" class="button button--secondary">
-                        Laat&nbsp;controleren&nbsp;door&nbsp;{% if request.user.federation.name_form_validation_team %}{{ request.user.federation.name_form_validation_team }}{% else %}{{ request.user.federation.name }}{% endif %}
-                    </a>
-                </div>
-                {% endif %}
-                <div class="flex-item u-clearfix screen-only">
-                    <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
-                        Samenwerken&nbsp;aan&nbsp;deze&nbsp;cliënt&nbsp;({{ object.get_linked_users|length|add:-1 }})
-                    </a>
-                                    
-                </div>
-            </div>
+        <div class="u-float-right screen-only">
+        {% if request.user|is_begeleider and request.user.federation.main_email %}
+            <a href="{% url 'validate_case' object.id form_config_slug %}" class="button button--secondary">
+                Laat&nbsp;controleren&nbsp;door&nbsp;{% if request.user.federation.name_form_validation_team %}{{ request.user.federation.name_form_validation_team }}{% else %}{{ request.user.federation.name }}{% endif %}
+            </a>
+        {% endif %}
+            <a href="{% url 'case_invite_users' object.id %}" class="button button--secondary" data-handler="modal" data-contentid="modalInvite">
+                Samenwerken&nbsp;aan&nbsp;deze&nbsp;cliënt&nbsp;({{ object.get_linked_users|length|add:-1 }})
+            </a>
         </div>
 
     </div>
