@@ -46,6 +46,7 @@ class FederationForm(forms.ModelForm):
         else:
             self.fields['organization'].label = _('Organisatie type')
         if user.federation.organization.federation_type in [FEDERATION_TYPE_ADW, FEDERATION_TYPE_WONINGCORPORATIE]:
-            self.fields['main_email'].label = 'Centraal e-mailadres voor notificaties'
+            self.fields['main_email'].label = 'Centrale e-mailadres(sen) voor notificaties'
+            del self.fields['name_form_validation_team']
         else:
             self.fields['main_email'].label = 'Controleurs e-mailadres(sen)'
