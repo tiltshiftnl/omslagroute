@@ -139,7 +139,7 @@
         {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
         <!-- START BIJLAGE -->
         <div class="details-client details-client--appendix">
-            <header>
+            <header class="u-clearfix">
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
                 {% if not object.delete_request_date %}
                 <a href="#" class="u-float-right u-underline--none u-margin-top-2x screen-only" title="Voeg een nieuwe bijlage toe" data-handler="modal" data-contentid="modalUploads">
