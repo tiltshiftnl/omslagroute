@@ -4,7 +4,7 @@
     <div>
         {% case_data_by_field_name data f as field_data %} 
         <dt>{{ field_data.label }}: </dt>
-        <dd>
+        <dd class="{% if field_data.label == 'E-mailadres' %}u-break-word{% endif %}">
             {{ field_data.value }}
         </dd>
     </div>

@@ -350,6 +350,12 @@ body:not(:-moz-handler-blocked) fieldset {
         padding-bottom: .5rem;
     }
 }
+input,
+textarea {
+    + .helptext {
+        display: block;
+    } 
+}
 
 .error-text,
 .errorlist {
