@@ -242,8 +242,8 @@
                             </strong>
                         </td>
                         <td>
-                            <span class="show-on-mobile">Organisatie type:</span>
                             {% if moment.form %}
+                            <span class="show-on-mobile">Organisatie type:</span>
                             <span class="tinytag">{{ moment.form|form_organization_type_abbreviation }}</span>
                             {% endif %}
                         </td>
@@ -290,10 +290,10 @@
                         </td>
                         {% else %}
                         <td>
-                            <span class="show-on-mobile">Status:</span>
                             {% if moment.form %}
                             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-
+                            <span class="show-on-mobile">Status:</span>
+                            
 
                                 {% include 'cases/status/current.html' with object=case_status %}
 
