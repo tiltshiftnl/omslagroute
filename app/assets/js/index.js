@@ -87,9 +87,10 @@ Array.prototype.sortOnData = function (key) {
             modal.classList.add("active");
             var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
             var innerElement = doc.querySelector(".site-container");
+            var yPos = (window.innerHeight - innerElement.offsetHeight)/2;
             doc.querySelector("body").classList.add('isInIframe');
             iframe.style.height = innerElement.offsetHeight + 20 + "px";
-            modal.querySelector('.modal-inner').style.top = (window.innerHeight - innerElement.offsetHeight)/2 +"px";
+            modal.querySelector('.modal-inner').style.top = yPos > 0 ? yPos : 0 +"px";
           }
         }else{
           setTimeout(function () {
