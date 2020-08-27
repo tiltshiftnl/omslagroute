@@ -15,6 +15,13 @@ from .utils import *
 from django.contrib.auth.decorators import user_passes_test
 from django.core.management import call_command
 from django.http import HttpResponse
+from web.users.statics import BEHEERDER
+from web.organizations.statics import FEDERATION_TYPE_ADW, FEDERATION_TYPE_ZORGINSTELLING
+from web.users.auth import auth_test
+from web.cases.statics import *
+from web.cases.models import Case, CaseStatus
+import datetime
+import calendar
 
 
 class HomePageView(TemplateView):
@@ -98,6 +105,112 @@ class SendMailView(UserPassesTestMixin, RedirectView):
             sg.send(email)
 
         return super().get(request, *args, **kwargs)
+
+
+class DataView(UserPassesTestMixin, TemplateView):
+    template_name = "data.html"
+
+    def test_func(self):
+        return auth_test(self.request.user, [BEHEERDER])
+
+    def get_context_data(self, **kwargs):
+        month = datetime.datetime.now().strftime('%m')
+        year = datetime.datetime.now().strftime('%Y')
+        monthrange = calendar.monthrange(int(year), int(month))
+        try:
+            monthrange = calendar.monthrange(int(self.request.GET.get('jaar')), int(self.request.GET.get('maand')))
+            month = self.request.GET.get('maand')
+            year = self.request.GET.get('jaar')
+            
+        except:
+            print('querystring params wrong format')
+        start_month = datetime.datetime(year=int(year), month=int(month), day=1)
+        end_month = datetime.datetime(year=int(year), month=int(month), day=monthrange[1]) + datetime.timedelta(days=1)
+        data = []
+        zorginstelling_list = Federation.objects.filter(
+            organization__federation_type=FEDERATION_TYPE_ZORGINSTELLING,
+        )
+        all_cases = Case.objects.all()
+        next_month = end_month.strftime('?jaar=%Y&maand=%m') if end_month < datetime.datetime.now() else None 
+        prev_month = (start_month - datetime.timedelta(days=1)).strftime('?jaar=%Y&maand=%m')
+
+        for zorginstelling in zorginstelling_list:
+            case_list = all_cases.filter(
+                profile__user__federation=zorginstelling,
+            )
+            case_list_period = case_list.filter(
+                created__gt=start_month,
+                created__lte=end_month,
+            )
+
+            casestatus_list = CaseStatus.objects.filter(
+                case__in=case_list,
+            )
+            urgentie = casestatus_list.filter(
+                form=CASE_VERSION_FORM_URGENTIE,
+            )
+            omklap = casestatus_list.filter(
+                form=CASE_VERSION_FORM_OMKLAP,
+            )
+
+            urgentie_ingediend = urgentie.filter(
+                status=CASE_STATUS_INGEDIEND,
+            )
+            urgentie_ingediend_period = urgentie_ingediend.filter(
+                created__gt=start_month,
+                created__lte=end_month,
+            )
+
+            urgentie_goedgekeurd = urgentie.filter(
+                status=CASE_STATUS_GOEDGEKEURD,
+            )
+            urgentie_goedgekeurd_period = urgentie_goedgekeurd.filter(
+                created__gt=start_month,
+                created__lte=end_month,
+            )
+
+            omklap_ingediend = omklap.filter(
+                status=CASE_STATUS_INGEDIEND,
+            )
+            omklap_ingediend_period = omklap_ingediend.filter(
+                created__gt=start_month,
+                created__lte=end_month,
+            )
+
+            omklap_goedgekeurd = omklap.filter(
+                status=CASE_STATUS_GOEDGEKEURD,
+            )
+            omklap_goedgekeurd_period = omklap_goedgekeurd.filter(
+                created__gt=start_month,
+                created__lte=end_month,
+            )
+
+            user_list = User.objects.filter(
+                federation=zorginstelling,
+            )
+            data.append({
+                'zorginstelling': zorginstelling,
+                'case_list': case_list,
+                'case_list_period': case_list_period,
+                'user_list': user_list,
+                'urgentie_ingediend': urgentie_ingediend.order_by('case__id', 'created').distinct('case__id'),
+                'urgentie_ingediend_period': urgentie_ingediend_period.order_by('case__id', 'created').distinct('case__id'),
+                'urgentie_goedgekeurd': urgentie_goedgekeurd.order_by('case__id', '-created').distinct('case__id'),
+                'urgentie_goedgekeurd_period': urgentie_goedgekeurd_period.order_by('case__id', '-created').distinct('case__id'),
+                'omklap_ingediend': omklap_ingediend.order_by('case__id', 'created').distinct('case__id'),
+                'omklap_ingediend_period': omklap_ingediend_period.order_by('case__id', 'created').distinct('case__id'),
+                'omklap_goedgekeurd': omklap_goedgekeurd.order_by('case__id', '-created').distinct('case__id'),
+                'omklap_goedgekeurd_period': omklap_goedgekeurd_period.order_by('case__id', '-created').distinct('case__id'),
+            })
+        kwargs.update({
+            'zorginstelling_list': data,
+            'all_cases': all_cases,
+            'start_month': start_month,
+            'next_month': next_month,
+            'prev_month': prev_month,
+        })
+        return super().get_context_data(**kwargs)
+
 
 
 @user_passes_test(lambda u: u.is_superuser)
