@@ -119,10 +119,13 @@ table table {
     
     td {
         position: relative;
-        @media all and (min-width: $tablets) and  (max-width: "1023px") {  
-            &:last-child { 
+        &:last-child { 
+        margin-bottom: 1rem;
+            @media all and (min-width: $tablets) and  (max-width: "1023px") {  
+            
                 overflow-wrap: break-word;
                 word-break: break-word;
+                margin-bottom: 0;
             }
         }
     }
