@@ -293,7 +293,7 @@
 
                 {{ form.as_sections.hidden_fields }}
                 <p class="u-margin-bottom-4x">* Verplicht veld</p>
-                <div class="form-field form-field--buttons-sticky screen-only">
+                <div class="form-field form-field--buttons-sticky screen-only" id="stickyButtons">
                     <div class="button-wrapper">
                         {% if not object.delete_request_date %}
                         <a href="javascript:void(0);" {% if object.delete_request_date %}disabled{% else %} data-handler="ajax-forms-submit" {% endif %} class="button button--primary">Opslaan</a>

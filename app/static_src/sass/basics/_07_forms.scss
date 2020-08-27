@@ -320,6 +320,11 @@ body:not(:-moz-handler-blocked) fieldset {
         //min-width: 680px; //IE11
         max-width: 87.5rem;
     }
+
+    .footer & {
+        position: absolute;
+        bottom: -80px;
+    }
 }
 // ********************
 // HELPFUL INFORMATION

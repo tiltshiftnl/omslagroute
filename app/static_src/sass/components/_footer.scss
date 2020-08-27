@@ -1,0 +1,18 @@
+footer {
+    padding-top: 4rem;
+    .section-wrapper {
+        &--top {
+            background: $neutral-grey3;
+            color: $primary-white;
+        }
+
+        &--bottom {
+            background-color: $primary-white;
+            color: $primary-black;
+        }
+    }
+    section {
+
+       
+    }
+}

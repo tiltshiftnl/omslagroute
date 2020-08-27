@@ -21,8 +21,28 @@ window.onload = function() {
     }());
     
   }
+
+  
 };
 
+window.onscroll = function() {checkOffset()};
+
+function checkOffset() {
+
+  if(document.getElementById('stickyButtons')) {
+    console.log("pageYOffset", window.pageYOffset);
+    
+    var scrollHeight = document.documentElement.scrollHeight;
+    var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    var footer = document.getElementById('pageFooter');
+
+    if(scrollHeight - windowHeight - window.pageYOffset - footer.offsetHeight - 80 <= 0) {
+      document.body.classList.add("footer")
+    }else {
+      document.body.classList.remove("footer")
+    }
+  }
+}
 
 function showFileName(event) {
   var input = event.srcElement;

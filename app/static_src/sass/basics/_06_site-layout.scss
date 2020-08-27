@@ -129,6 +129,25 @@ body {
     padding-bottom: 2rem;
 }
 
+
+// ********************
+// FOOTER
+// ********************
+footer {
+
+    width: calc(100% + 1.876rem);
+    margin: 4rem -.938rem 0;
+
+    .section-wrapper {
+        width: 100%;
+    }
+    section {
+        max-width: 60rem;
+        margin: 0 auto;
+        padding: 1rem 0;
+    }
+}
+
 // ********************
 // SIMPLE FLEXBOX GRID
 // ********************
