@@ -119,6 +119,9 @@
 .u-border-top {
     border-top: 2px solid $neutral-grey2;
 }
+.u-border-top-none {
+    border-top: 0;
+}
 
 .u-no-wrap {
     white-space: nowrap;
@@ -145,6 +148,12 @@
 .u-font-size-small {
     font-size: .9rem;
 }
+
+.u-font-weight-normal {
+    font-weight: normal;
+}
+
+
 
 
 // ********************
