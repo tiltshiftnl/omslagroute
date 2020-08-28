@@ -25,6 +25,10 @@ window.onload = function() {
   
 };
 
+window.onorientationchange = function() {
+  positionFooter();
+}
+
 window.onscroll = function() {checkOffset()};
 
 function checkOffset() {
@@ -50,7 +54,6 @@ function positionFooter() {
   
   if(offsetY > 0){
     var currentPaddingTop = parseInt(window.getComputedStyle(footer, null).getPropertyValue('padding-top'))
-    console.log("currentPaddingTop", currentPaddingTop);
     footer.style.marginTop = offsetY + currentPaddingTop + "px";
   }
 }

@@ -135,8 +135,12 @@ body {
 // ********************
 footer {
 
-    width: calc(100% + 1.876rem);
-    margin: 4rem -.938rem 0;
+    width: 100%;
+    margin: 4rem 0 0;
+    @media all and (min-width: $tablets) {
+        width: calc(100% + 1.876rem);
+        margin: 4rem -.938rem 0;
+    }
 
     .section-wrapper {
         width: 100%;
