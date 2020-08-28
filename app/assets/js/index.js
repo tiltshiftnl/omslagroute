@@ -19,9 +19,9 @@ window.onload = function() {
       autoGrow(area);
       area.addEventListener('keyup', function() { autoGrow(area);});
     }());
-    
   }
 
+  positionFooter();
   
 };
 
@@ -30,8 +30,6 @@ window.onscroll = function() {checkOffset()};
 function checkOffset() {
 
   if(document.getElementById('stickyButtons')) {
-    console.log("pageYOffset", window.pageYOffset);
-    
     var scrollHeight = document.documentElement.scrollHeight;
     var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
     var footer = document.getElementById('pageFooter');
@@ -41,6 +39,19 @@ function checkOffset() {
     }else {
       document.body.classList.remove("footer")
     }
+  }
+}
+
+function positionFooter() {
+  var footer = document.getElementById('pageFooter');
+  var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+  var offsetY = windowHeight - footer.offsetTop - footer.offsetHeight;
+  footer.style.visibility = "visible";
+  
+  if(offsetY > 0){
+    var currentPaddingTop = parseInt(window.getComputedStyle(footer, null).getPropertyValue('padding-top'))
+    console.log("currentPaddingTop", currentPaddingTop);
+    footer.style.marginTop = offsetY + currentPaddingTop + "px";
   }
 }
 
