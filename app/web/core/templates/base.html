@@ -69,7 +69,7 @@
                         {% endif %}
                         <p>
                             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder or request.user|is_wonen_medewerker %}
-                            <small><a href=" {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}quickguide-zorginstelling.pdf {%elif request.user|is_wonen_medewerker %}quickguide-wonen.pdf{% endif %}" target="_blank">Help</a>
+                            <small><a href="{% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}{% static "documents/quickguide-zorginstellingen.pdf" %}{% elif request.user|is_wonen_medewerker %}{% static "documents/quickguide-wonen.pdf" %}{% endif %}" target="_blank">Help</a>
                             &nbsp;|&nbsp;</small>
                             {% endif%}
                             <a href="{% url LOGOUT_URL_NAME %}"><small>Uitloggen</small></a>
