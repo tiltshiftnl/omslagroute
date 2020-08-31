@@ -11,7 +11,7 @@
 <section class="section section--client u-margin-top-4x">
     <div class="client-header flex-container">
         <div class="flex-item">
-            <h1>Data</h1>
+            <h1>Analytics</h1>
         </div>
         <div class="flex-item u-clearfix">
             
@@ -29,11 +29,11 @@
 </section>
 
 <section class="section section--client u-margin-bottom-4x">
-    <div class="details-client details-client--basic u-width-50 u-margin-top-2x">
+    <div class="details-client details-client--basic u-width-60 u-margin-top-2x">
         <dl>
             <div>
                 <dt>
-                    Cliënten aangemaakt
+                    Totaal aangemaakte cliënten:&nbsp;
                 </dt>
                 <dd>
                     {{ all_cases|length }}
@@ -109,7 +109,7 @@ link.addEventListener('click', function(e){
     TableToExcel.convert(document.getElementById("excel-data"), {
     name: "omslagroute-data.xlsx",
     sheet: {
-        name: "Zorginstellingen data"
+        name: "Zorginstellingen analytics"
     }
     });
 });
