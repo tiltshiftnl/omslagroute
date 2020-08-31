@@ -350,6 +350,14 @@
     }
 }
 
+.u-text-inherit {
+    color: inherit;
+    font-weight: inherit;
+    &:hover {
+        color: inherit;
+    }
+}
+
 // ********************
 // COLORS
 // ********************
