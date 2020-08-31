@@ -134,6 +134,11 @@ class DataView(UserPassesTestMixin, TemplateView):
         next_month = end_month.strftime('?jaar=%Y&maand=%m') if end_month < datetime.datetime.now() else None 
         prev_month = (start_month - datetime.timedelta(days=1)).strftime('?jaar=%Y&maand=%m')
 
+        casestatus_period = CaseStatus.objects.filter(
+            created__gt=start_month,
+            created__lte=end_month,
+        )
+
         for zorginstelling in zorginstelling_list:
             case_list = all_cases.filter(
                 profile__user__federation=zorginstelling,
@@ -155,34 +160,29 @@ class DataView(UserPassesTestMixin, TemplateView):
 
             urgentie_ingediend = urgentie.filter(
                 status=CASE_STATUS_INGEDIEND,
-            )
-            urgentie_ingediend_period = urgentie_ingediend.filter(
-                created__gt=start_month,
-                created__lte=end_month,
-            )
-
+            ).order_by('case__id', 'created').distinct('case__id')
             urgentie_goedgekeurd = urgentie.filter(
                 status=CASE_STATUS_GOEDGEKEURD,
-            )
-            urgentie_goedgekeurd_period = urgentie_goedgekeurd.filter(
-                created__gt=start_month,
-                created__lte=end_month,
-            )
-
+            ).order_by('case__id', '-created').distinct('case__id')
             omklap_ingediend = omklap.filter(
                 status=CASE_STATUS_INGEDIEND,
-            )
-            omklap_ingediend_period = omklap_ingediend.filter(
-                created__gt=start_month,
-                created__lte=end_month,
-            )
-
+            ).order_by('case__id', 'created').distinct('case__id')
             omklap_goedgekeurd = omklap.filter(
                 status=CASE_STATUS_GOEDGEKEURD,
+            ).order_by('case__id', '-created').distinct('case__id')
+
+
+            urgentie_ingediend_period = casestatus_period.filter(
+                id__in=urgentie_ingediend.values_list('id', flat=True)
             )
-            omklap_goedgekeurd_period = omklap_goedgekeurd.filter(
-                created__gt=start_month,
-                created__lte=end_month,
+            urgentie_goedgekeurd_period = casestatus_period.filter(
+                id__in=urgentie_goedgekeurd.values_list('id', flat=True)
+            )
+            omklap_ingediend_period = casestatus_period.filter(
+                id__in=omklap_ingediend.values_list('id', flat=True)
+            )
+            omklap_goedgekeurd_period = casestatus_period.filter(
+                id__in=omklap_goedgekeurd.values_list('id', flat=True)
             )
 
             user_list = User.objects.filter(
@@ -190,17 +190,17 @@ class DataView(UserPassesTestMixin, TemplateView):
             )
             data.append({
                 'zorginstelling': zorginstelling,
-                'case_list': case_list,
-                'case_list_period': case_list_period,
+                'case_list': case_list.order_by('id', 'created').distinct('id'),
+                'case_list_period': case_list_period.order_by('id', 'created').distinct('id'),
                 'user_list': user_list,
-                'urgentie_ingediend': urgentie_ingediend.order_by('case__id', 'created').distinct('case__id'),
-                'urgentie_ingediend_period': urgentie_ingediend_period.order_by('case__id', 'created').distinct('case__id'),
-                'urgentie_goedgekeurd': urgentie_goedgekeurd.order_by('case__id', '-created').distinct('case__id'),
-                'urgentie_goedgekeurd_period': urgentie_goedgekeurd_period.order_by('case__id', '-created').distinct('case__id'),
-                'omklap_ingediend': omklap_ingediend.order_by('case__id', 'created').distinct('case__id'),
-                'omklap_ingediend_period': omklap_ingediend_period.order_by('case__id', 'created').distinct('case__id'),
-                'omklap_goedgekeurd': omklap_goedgekeurd.order_by('case__id', '-created').distinct('case__id'),
-                'omklap_goedgekeurd_period': omklap_goedgekeurd_period.order_by('case__id', '-created').distinct('case__id'),
+                'urgentie_ingediend': urgentie_ingediend,
+                'urgentie_ingediend_period': urgentie_ingediend_period,
+                'urgentie_goedgekeurd': urgentie_goedgekeurd,
+                'urgentie_goedgekeurd_period': urgentie_goedgekeurd_period,
+                'omklap_ingediend': omklap_ingediend,
+                'omklap_ingediend_period': omklap_ingediend_period,
+                'omklap_goedgekeurd': omklap_goedgekeurd,
+                'omklap_goedgekeurd_period': omklap_goedgekeurd_period,
             })
         kwargs.update({
             'zorginstelling_list': data,
