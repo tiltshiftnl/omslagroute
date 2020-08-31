@@ -229,3 +229,12 @@ table table {
         background-color: transparent;
     }
 }
+
+.table--condensed {
+    tbody {
+        th,
+        td {
+            padding: .5rem;
+        }
+    }
+}
