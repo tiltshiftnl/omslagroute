@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(Case)
+# @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
     list_display = (
         'id',
@@ -25,7 +25,7 @@ class CaseVersionAdmin(CaseAdmin):
         'client_last_name',
     )
 
-@admin.register(CaseStatus)
+# @admin.register(CaseStatus)
 class CaseStatusAdmin(admin.ModelAdmin):
     list_display = (
         'id',
