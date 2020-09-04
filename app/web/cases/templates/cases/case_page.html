@@ -139,7 +139,7 @@
         {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
         <!-- START BIJLAGE -->
         <div class="details-client details-client--appendix">
-            <header>
+            <header class="u-clearfix">
                 <h2 class="h3">Bijlagen <small>({{ object.document_set.all|length }})</small></h2>
                 {% if not object.delete_request_date %}
                 <a href="#" class="u-float-right u-underline--none u-margin-top-2x screen-only" title="Voeg een nieuwe bijlage toe" data-handler="modal" data-contentid="modalUploads">
@@ -242,8 +242,8 @@
                             </strong>
                         </td>
                         <td>
-                            <span class="show-on-mobile">Organisatie type:</span>
                             {% if moment.form %}
+                            <span class="show-on-mobile">Organisatie type:</span>
                             <span class="tinytag">{{ moment.form|form_organization_type_abbreviation }}</span>
                             {% endif %}
                         </td>
@@ -290,10 +290,10 @@
                         </td>
                         {% else %}
                         <td>
-                            <span class="show-on-mobile">Status:</span>
                             {% if moment.form %}
                             {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}
-
+                            <span class="show-on-mobile">Status:</span>
+                            
 
                                 {% include 'cases/status/current.html' with object=case_status %}
 

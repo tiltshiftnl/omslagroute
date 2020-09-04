@@ -1,0 +1,28 @@
+footer {
+    padding-top: 4rem;
+    visibility: hidden;
+
+    .section-wrapper {
+        &--top {
+            background: $neutral-grey4;
+            color: $primary-white;
+            padding: 1rem;
+        }
+
+        &--bottom {
+            background-color: $primary-white;
+            color: $primary-black;
+            padding: .5rem 1rem;
+        }
+
+        @media all and (min-width: $large) {
+            &--top {
+                padding: 1rem 0;
+            }
+    
+            &--bottom {
+                padding: .75rem 0;
+            }
+        }
+    }
+}

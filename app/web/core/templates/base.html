@@ -67,7 +67,13 @@
                         {% else %}
                             <p class="site-userinfo__username">{{ request.user.username }}</p>
                         {% endif %}
-                        <a href="{% url LOGOUT_URL_NAME %}"><small>Uitloggen</small></a>
+                        <p>
+                            {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder or request.user|is_wonen_medewerker %}
+                            <small><a href="{% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}{% static "documents/quickguide-zorginstellingen.pdf" %}{% elif request.user|is_wonen_medewerker %}{% static "documents/quickguide-wonen.pdf" %}{% endif %}" target="_blank" rel="noopener noreferrer">Help</a>
+                            &nbsp;|&nbsp;</small>
+                            {% endif%}
+                            <a href="{% url LOGOUT_URL_NAME %}"><small>Uitloggen</small></a>
+                        </p>
                     </div>
                 {% else %}
                     <div class="site-userinfo">
@@ -101,7 +107,7 @@
                             </svg>
                             {% endif %}
 
-                            <p class="alert__message">{{ message|safe }}</p>
+                            <p class="alert__message">{{ message }}</p>
 
                             <!--
                                 We're not using a close button on alerts just yet, but we have styling for it:
@@ -136,6 +142,35 @@
     {% endblock %}
 
     </main>
+    <footer id="pageFooter" class="page-footer">
+        <div class="section-wrapper section-wrapper--top">
+            <section>
+                <h3>Vragen? Neem contact op met de <a href="mailto:woonzaken.omslag@amsterdam.nl" class="u-text-inherit">Afdeling Wonen (gemeente Amsterdam)</a>.</h3>
+            </section>    
+        </div>
+
+        <div class="section-wrapper section-wrapper--bottom">
+        <section>
+            <ul class="list-inline">
+                <li class="u-margin-right-2x">
+                    <a href="{% static "documents/privacy-omslagroute.pdf" %}" class="u-underline--none">
+                        <svg class="button__icon" width="10" height="15"><use href="#chevron-right" xlink:href="#chevron-right" width="10" height="15"></use></svg>
+                        Privacy
+                    </a>
+                </li>
+                
+                {% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder or request.user|is_wonen_medewerker %}
+                <li class="u-margin-right-2x">
+                    <a href="{% if request.user|is_begeleider or request.user|is_pb_federatie_beheerder %}{% static "documents/quickguide-zorginstellingen.pdf" %}{% elif request.user|is_wonen_medewerker %}{% static "documents/quickguide-wonen.pdf" %}{% endif %}" target="_blank" rel="noopener noreferrer" class="u-underline--none">
+                        <svg class="button__icon" width="10" height="15"><use href="#chevron-right" xlink:href="#chevron-right" width="10" height="15"></use></svg>
+                        Help
+                    </a>
+                </li>
+                {% endif%}
+            </ul>
+        </section>
+        </div>
+    </footer>
     <div class="js-spinner-container"><div class="js-spinner"></div></div>
 </div>
 {% block js %}

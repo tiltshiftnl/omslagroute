@@ -129,6 +129,28 @@ body {
     padding-bottom: 2rem;
 }
 
+
+// ********************
+// FOOTER
+// ********************
+footer {
+
+    width: 100%;
+    margin: 4rem 0 0;
+    @media all and (min-width: $tablets) {
+        width: calc(100% + 1.876rem);
+        margin: 4rem -.938rem 0;
+    }
+
+    .section-wrapper {
+        width: 100%;
+    }
+    section {
+        max-width: 60rem;
+        margin: 0 auto;
+    }
+}
+
 // ********************
 // SIMPLE FLEXBOX GRID
 // ********************
@@ -147,7 +169,7 @@ body {
     flex-grow: 0;
     margin-right: 2rem;
 
-@media screen and (min-width: $tablets) {
+@media screen and (min-width: $large) {
     display: block;
 }
 }

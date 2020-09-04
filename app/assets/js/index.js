@@ -19,10 +19,44 @@ window.onload = function() {
       autoGrow(area);
       area.addEventListener('keyup', function() { autoGrow(area);});
     }());
-    
   }
+
+  positionFooter();
+  
 };
 
+window.onorientationchange = function() {
+  positionFooter();
+}
+
+window.onscroll = function() {checkOffset()};
+
+function checkOffset() {
+
+  if(document.getElementById('stickyButtons')) {
+    var scrollHeight = document.documentElement.scrollHeight;
+    var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    var footer = document.getElementById('pageFooter');
+
+    if(scrollHeight - windowHeight - window.pageYOffset - footer.offsetHeight - 80 <= 0) {
+      document.body.classList.add("footer")
+    }else {
+      document.body.classList.remove("footer")
+    }
+  }
+}
+
+function positionFooter() {
+  var footer = document.getElementById('pageFooter');
+  var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+  var offsetY = windowHeight - footer.offsetTop - footer.offsetHeight;
+  footer.style.visibility = "visible";
+  
+  if(offsetY > 0){
+    var currentPaddingTop = parseInt(window.getComputedStyle(footer, null).getPropertyValue('padding-top'))
+    footer.style.marginTop = offsetY + currentPaddingTop + "px";
+  }
+}
 
 function showFileName(event) {
   var input = event.srcElement;
@@ -87,9 +121,10 @@ Array.prototype.sortOnData = function (key) {
             modal.classList.add("active");
             var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
             var innerElement = doc.querySelector(".site-container");
+            var yPos = (window.innerHeight - innerElement.offsetHeight)/2;
             doc.querySelector("body").classList.add('isInIframe');
             iframe.style.height = innerElement.offsetHeight + 20 + "px";
-            modal.querySelector('.modal-inner').style.top = (window.innerHeight - innerElement.offsetHeight)/2 +"px";
+            modal.querySelector('.modal-inner').style.top = yPos > 0 ? yPos : 0 +"px";
           }
         }else{
           setTimeout(function () {

@@ -35,7 +35,9 @@ tbody td {
     @media all and (max-width: $tablets) {
         display: block;
         width: 100%; 
+        padding: 1rem 0 0;
     }
+    
 
     // &:first-child {
     //     font-weight: bold;
@@ -117,6 +119,15 @@ table table {
     
     td {
         position: relative;
+        &:last-child { 
+        margin-bottom: 1rem;
+            @media all and (min-width: $tablets) and  (max-width: "1023px") {  
+            
+                overflow-wrap: break-word;
+                word-break: break-word;
+                margin-bottom: 0;
+            }
+        }
     }
 }
 
@@ -144,23 +155,29 @@ table table {
                 }
             }
         }
+        
     }
     td{
-        padding-top: 1.1rem;
-        padding-bottom: 1.1rem;
+        padding: 1.1rem 1rem 0;
+        @media all and (min-width: $tablets) {
+            padding: 1.1rem 0;
+        }
         &:first-of-type {
             padding-left: 55px;
-            &:before {
-                content: '';
-                position: absolute;
-                z-index: 2;
-                left: 1.75rem;
-                top: 1.25rem;
-                bottom: -1.5rem;
-                width: 2px;
-                margin-left: -1px;
-                background-color: #767676;
-                pointer-events: none;
+            @media all and (min-width: $tablets) {
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    z-index: 2;
+                    left: 1.75rem;
+                    top: 1.25rem;
+                    bottom: -1.5rem;
+                    width: 2px;
+                    margin-left: -1px;
+                    background-color: #767676;
+                    pointer-events: none;
+                }
             }
         }
         
@@ -185,21 +202,39 @@ table table {
     .dot {
         display: block;
         position: absolute;
-        top: 1.6rem;
+        top: 2rem;
         left: 1rem;
         transform: translateY(-.75rem);
         z-index: 2;
+
+        @media all and (min-width: $tablets) {
+            top: 1.6rem;
+        }
     }
 
     .button--new-form {
-        position: absolute;
-        left: 55px;
-        bottom: 1rem
+        position: relative;
+        margin-top: 1rem;
+
+        @media all and (min-width: $tablets) {
+            position: absolute;
+            left: 55px;
+            bottom: 1rem
+        }
     }
 }
 
 .table--double-row {
     tr:nth-of-type(even) {
         background-color: transparent;
+    }
+}
+
+.table--condensed {
+    tbody {
+        th,
+        td {
+            padding: .5rem;
+        }
     }
 }

@@ -43,25 +43,32 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 .form-title-wrapper {
-    display: flex;
+
     margin-bottom: 1rem;
     position: relative;
     z-index: 20;
     background-color: $primary-white;
-    h1,
-    h2 {
-        flex-grow: 1;
-        padding-right: 30px;
-    }
-    .text-link {
-        flex-grow: 0;
-        padding: 5px 0 0;
-    }
+
+   
+    
     h1 + .text-link {
         margin: 2rem 0 0;
     }
     h2 + .text-link {
         margin: 1rem 0 0;
+    }
+
+    @media all and (min-width: $tablets){
+        display: flex;
+        h1,
+        h2 {
+            flex-grow: 1;
+            padding-right: 30px;
+        }
+        .text-link {
+            flex-grow: 0;
+            padding: 5px 0 0;
+        }
     }
 }
 // ********************
@@ -320,6 +327,11 @@ body:not(:-moz-handler-blocked) fieldset {
         //min-width: 680px; //IE11
         max-width: 87.5rem;
     }
+
+    .footer & {
+        position: absolute;
+        bottom: -80px;
+    }
 }
 // ********************
 // HELPFUL INFORMATION
@@ -342,6 +354,12 @@ body:not(:-moz-handler-blocked) fieldset {
     li {
         padding-bottom: .5rem;
     }
+}
+input,
+textarea {
+    + .helptext {
+        display: block;
+    } 
 }
 
 .error-text,

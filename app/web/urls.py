@@ -15,6 +15,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
+    path('data/', DataView.as_view(), name='data'),
     path('admin/settings', VariablesView.as_view(), name='variables'),
     path('admin/dumpdata', dumpdata, name='dumpdata'),
     path('admin/objectstore', ObjectStoreView.as_view(), name='objectstore'),
