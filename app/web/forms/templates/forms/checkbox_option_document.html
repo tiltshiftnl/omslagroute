@@ -1,1 +1,19 @@
-{% include "django/forms/widgets/input.html" %}{% if widget.wrap_label %}<label class="form-field__checkboxlabel" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>{% endif %}{% if widget.wrap_label %} {{ widget.label }}</label>{% endif %}
+{% load client_data_tags tz static %}
+{% get_document_by_id widget.value as document %}
+{% include "django/forms/widgets/input.html" %}{% if widget.wrap_label %}<label class="form-field__checkboxlabel" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>{% endif %}{% if widget.wrap_label %}
+
+<div>
+    <span>
+        <a href="{% url 'download_case_document' document.case.id document.id %}" target="_blank" rel="noopener noreferrer">
+            {{ document.name }}
+        </a>
+    </span>
+    <small>
+        {{ document.extension }}
+    </small>
+    <small>
+        {{ document.uploaded|timezone:'Europe/Amsterdam'|date:"d-m-Y H:i" }}
+    </small>
+</div>
+
+</label>{% endif %}
