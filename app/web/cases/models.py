@@ -1307,15 +1307,7 @@ class Document(models.Model):
     objects = DocumentManager()
 
     def __str__(self):
-        timezone.activate(settings.FRONTEND_TIMEZONE)
-        return mark_safe('<div><span><a href=%s target="_blank" rel="noopener noreferrer">%s</a></span><small>%s</small><small>%s</small></div>' % (
-                reverse('download_case_document', args=[self.case.id, self.id]),
-                self.name,
-                self.extension,
-                timezone.localtime(self.uploaded).strftime('%d %b %Y %H:%M:%S').lower() if timezone.is_aware(self.uploaded) else self.uploaded.strftime('%d %b %Y %H:%M:%S').lower()
-            )
-        )
-        timezone.deactivate()
+        return self.name
 
     @property
     def extension(self):

@@ -2,6 +2,7 @@ from django import template
 from ..models import CaseStatus 
 from web.forms.utils import get_rules_reversed as rules_reversed
 from ..statics import CASE_STATUS_WONINGCORPORATIE_GOEDGEKEURD
+from django.shortcuts import get_object_or_404
 register = template.Library()
 
 
@@ -44,3 +45,10 @@ def get_case_status_list(case, form, *args, **kwargs):
 @register.simple_tag()
 def get_rules_reversed(form_cnfig, *args, **kwargs):
     return rules_reversed(form_cnfig)
+
+
+@register.simple_tag()
+def get_document_by_id(id, *args, **kwargs):
+    from web.cases.models import Document
+    document = get_object_or_404(Document, id=id)
+    return document
