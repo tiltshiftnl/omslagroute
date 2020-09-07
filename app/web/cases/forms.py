@@ -240,7 +240,7 @@ class DocumentForm(forms.ModelForm):
             'case',
         )
         widgets = {
-            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'required': 'required'}),
+            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload','accept':'image/*,.doc,.docx,.xls,.xlsx,.pdf', 'required': 'required'}),
         }
 
 
