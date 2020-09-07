@@ -22,7 +22,7 @@ class DocumentVersionForm(forms.ModelForm):
         model = DocumentVersion
         exclude = ()
         widgets = {
-            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'required': 'required'}),
+            'uploaded_file': forms.FileInput(attrs={'id': 'file-upload', 'accept':'image/*,.doc,.docx,.xls,.xlsx,.pdf', 'required': 'required'}),
             'document': forms.HiddenInput,
         }
 
