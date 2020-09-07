@@ -34,7 +34,9 @@ body.isInIframe,
   .site-container {
     min-height: auto;
   }
-
+  .page-footer {
+    display: none;
+  }
 
   .content-container {
     background-color: white;
@@ -108,6 +110,8 @@ body.isInIframe,
     right: 0;
     color: $primary-black;
   }
+
+  
 
 }
 
