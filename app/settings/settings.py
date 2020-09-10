@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'webpack_loader',
     'multiselectfield',
     'keycloak_oidc',
+    'corsheaders',
 
     'web.core',
     'web.documents',
@@ -72,7 +73,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 SENDGRID_KEY = os.environ.get("SENDGRID_KEY")
 
 ADMINS = (
-    ('admin', 'maurice@mgui.nl'),
+    ('admin', 'name@email.com'),
 )
 
 AUTH_USER_MODEL = 'users.User'
@@ -189,10 +190,17 @@ REST_FRAMEWORK = {
 
 # CORS and allowed hosts
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
-CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ORIGIN_WHITELIST', '').split(',')
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
 CORS_ORIGIN_ALLOW_ALL = False
 
 AUTH_GROUPNAME_PROCESS = 'proces'
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Strict'
 
 LOGIN_URL = '/#login'
 LOGIN_URL_NAME = 'inloggen'
