@@ -48,4 +48,13 @@
     margin-bottom: 15px;
     margin-right: 0;
     width: 100% !important;
+    flex-basis: 100% !important;
+}
+.login-pf-page .form-control {
+    max-width: 305px !important;
+    width: 100% !important;
+}
+.login-pf-page .card-pf {
+    max-width: 385px !important;
+    width: 100% !important;
 }
